@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/house
+    username: ${MY_DATABASE_USERNAME}
+    password: ${MY_DATABASE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+
+logging:
+  level:
+    org.hibernate.SQL: debug
