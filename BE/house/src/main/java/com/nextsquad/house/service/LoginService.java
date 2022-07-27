@@ -28,7 +28,7 @@ public class LoginService {
                 .orElseThrow(() -> new RuntimeException());
         UserInfo userInfo = oauthClient.getUserInfo(requestDto.getAuthCode());
 
-        User user = userRepository.findByEmail(userInfo.getAccountId())
+        User user = userRepository.findByAccountId(userInfo.getAccountId())
                 .orElseGet(() -> registerUser(userInfo));
 
         JwtToken accessToken = jwtProvider.createToken(user, JwtTokenType.ACCESS);
