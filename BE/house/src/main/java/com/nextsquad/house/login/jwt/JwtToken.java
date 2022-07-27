@@ -10,6 +10,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class JwtToken {
-    private String token;
-    private Date expiresAt;
+    private Token accessToken;
+    private Token refreshToken;
 }

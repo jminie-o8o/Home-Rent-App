@@ -18,7 +18,13 @@ public class JwtProvider {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public JwtToken createToken(User user, JwtTokenType tokenType) {
+    public JwtToken createJwtToken(User user) {
+        Token accessToken = createToken(user, JwtTokenType.ACCESS);
+        Token refreshToken = createToken(user, JwtTokenType.REFRESH);
+        return new JwtToken(accessToken, refreshToken);
+    }
+
+    private Token createToken(User user, JwtTokenType tokenType) {
         Date now = new Date();
         Date expiresAt = new Date(now.getTime() + tokenType.getDuration());
         String token = Jwts.builder()
@@ -31,7 +37,7 @@ public class JwtProvider {
                 .claim("displayName", user.getDisplayName())
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-        return new JwtToken(token, expiresAt);
+        return new Token(token, expiresAt);
     }
 
     public boolean validateToken(String token) {
