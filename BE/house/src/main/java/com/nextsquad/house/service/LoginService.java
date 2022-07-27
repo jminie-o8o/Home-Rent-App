@@ -31,14 +31,18 @@ public class LoginService {
         User user = userRepository.findByAccountId(userInfo.getAccountId())
                 .orElseGet(() -> registerUser(userInfo));
 
-        JwtToken accessToken = jwtProvider.createToken(user, JwtTokenType.ACCESS);
-        JwtToken refreshToken = jwtProvider.createToken(user, JwtTokenType.REFRESH);
-        return JwtResponseDto.of(accessToken, refreshToken);
+        JwtToken jwtToken = jwtProvider.createJwtToken(user);
+        return JwtResponseDto.from(jwtToken);
     }
 
     private User registerUser(UserInfo userInfo) {
         User user = userInfo.toUser();
         return userRepository.save(user);
+    }
+
+    public JwtResponseDto refreshJwtToken(String accessToken, String refreshToken) {
+//        JwtToken refreshedToken = JwtProvider.refreshToken(accessToken, refreshToken);
+        return null;
     }
 }
 
