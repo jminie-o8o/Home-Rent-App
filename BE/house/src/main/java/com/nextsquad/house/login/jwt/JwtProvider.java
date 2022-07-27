@@ -1,5 +1,9 @@
 package com.nextsquad.house.login.jwt;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.user.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -42,6 +46,14 @@ public class JwtProvider {
 
     public boolean validateToken(String token) {
         return parseClaims(token) != null;
+    }
+
+    public DecodedJWT verifyToken(String token){
+        JWTVerifier verifier = JWT.require()
+                .withIssuer("codesquad-team-5")
+                .acceptExpiresAt(900000)
+                .build();
+        return verifier.verify(token);
     }
 
     private Claims parseClaims(String token) {
