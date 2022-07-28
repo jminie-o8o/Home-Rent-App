@@ -6,8 +6,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.user.User;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.impl.crypto.JwtSignatureValidator;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -28,6 +30,13 @@ public class JwtProvider {
         return new JwtToken(accessToken, refreshToken);
     }
 
+    public JwtToken createRefreshedToken(User user, String refeshToken) {
+        Token accessToken = createToken(user, JwtTokenType.ACCESS);
+        Token refreshToken = new Token(refeshToken, decode(refeshToken).getExpiresAt());
+
+        return new JwtToken(accessToken, refreshToken);
+    }
+
     private Token createToken(User user, JwtTokenType tokenType) {
         Date now = new Date();
         Date expiresAt = new Date(now.getTime() + tokenType.getDuration());
@@ -44,19 +53,19 @@ public class JwtProvider {
         return new Token(token, expiresAt);
     }
 
-    public boolean validateToken(String token) {
-        return parseClaims(token) != null;
-    }
-
     public DecodedJWT verifyToken(String token){
-        JWTVerifier verifier = JWT.require()
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256("codesquadhonux220629wefhkufhkwefjwlfjwlfijwlj%60%60"))
                 .withIssuer("codesquad-team-5")
                 .acceptExpiresAt(900000)
                 .build();
         return verifier.verify(token);
     }
 
-    private Claims parseClaims(String token) {
+    public DecodedJWT decode(String token) {
+        return JWT.decode(token);
+    }
+
+    public Claims parseClaims(String token) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(key)
