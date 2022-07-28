@@ -35,13 +35,15 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-	implementation 'com.auth0:java-jwt:3.19.1'
+	implementation 'com.auth0:java-jwt:3.19.2'
 
 	// webclient dns
-	runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.77.Final:osx-aarch_64'
+//	runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.77.Final:osx-aarch_64'
 
 	//redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'io.lettuce:lettuce-core:6.1.9.RELEASE'
+	implementation 'redis.clients:jedis:4.2.3'
 
 	implementation group: 'com.google.code.gson', name: 'gson'
 }
