@@ -24,7 +24,7 @@ public abstract class OauthClient {
         return convertToUserInfoFrom(oauthResponse);
     }
 
-    private String getOauthResponse(String accessToken) {
+    protected String getOauthResponse(String accessToken) {
         WebClient webClient = WebClient.create();
         return webClient.get()
                 .uri(resourceServerUrl)
@@ -36,6 +36,7 @@ public abstract class OauthClient {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException());
     }
+
 
     protected abstract String getAccessToken(String authCode);
 
