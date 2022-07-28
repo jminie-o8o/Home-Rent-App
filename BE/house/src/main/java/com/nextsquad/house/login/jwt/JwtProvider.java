@@ -19,9 +19,12 @@ import java.util.Date;
 public class JwtProvider {
 
     private final Key key;
+    private final String keyString;
+
 
     public JwtProvider(String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.keyString = secret;
     }
 
     public JwtToken createJwtToken(User user) {
@@ -54,7 +57,7 @@ public class JwtProvider {
     }
 
     public DecodedJWT verifyToken(String token){
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256("codesquadhonux220629wefhkufhkwefjwlfjwlfijwlj%60%60"))
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyString))
                 .withIssuer("codesquad-team-5")
                 .acceptExpiresAt(900000)
                 .build();
