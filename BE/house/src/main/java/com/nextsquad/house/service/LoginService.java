@@ -1,6 +1,7 @@
 package com.nextsquad.house.service;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.JwtResponseDto;
@@ -25,9 +26,10 @@ public class LoginService {
     private final UserRepository userRepository;
     private final OauthClientMapper oauthClientMapper;
     private final JwtProvider jwtProvider;
-    private final UserRefreshTokenRepository refreshTokenRepository;
+    private final RedisService redisService;
 
     public JwtResponseDto loginWithOauth(OauthLoginRequestDto requestDto) {
+        log.info("login started!");
         OauthClient oauthClient = oauthClientMapper.getOauthClient(requestDto.getOauthClientName())
                 .orElseThrow(() -> new RuntimeException());
         UserInfo userInfo = oauthClient.getUserInfo(requestDto.getAuthCode());
@@ -36,6 +38,8 @@ public class LoginService {
                 .orElseGet(() -> registerUser(userInfo));
 
         JwtToken jwtToken = jwtProvider.createJwtToken(user);
+        log.info("saving refresh token... key: {}, value: {}", user.getAccountId(), jwtToken.getRefreshToken().getTokenCode());
+        redisService.save(user.getAccountId(), jwtToken.getRefreshToken().getTokenCode());
         return JwtResponseDto.from(jwtToken);
     }
 
@@ -46,12 +50,28 @@ public class LoginService {
 
     //TODO: Refresh token 관련 로직 작성
     public JwtResponseDto refreshJwtToken(String accessToken, String refreshToken) {
-//        JwtToken refreshedToken = JwtProvider.refreshToken(accessToken, refreshToken);
-        DecodedJWT decodedJWT = jwtProvider.verifyToken(accessToken);
-        String payload = decodedJWT.getPayload();
+        jwtProvider.verifyToken(accessToken);
+        DecodedJWT decode = jwtProvider.decode(refreshToken);
+        String accountId = decode.getClaim("accountId").asString();
 
+        log.info(accountId);
 
-        return null;
+        String storedRefreshToken = redisService.getRefreshToken(accountId);
+        log.info("stored refreshToken: {}", storedRefreshToken);
+        validateRefreshToken(refreshToken, storedRefreshToken);
+
+        User user = userRepository.findByAccountId(accountId)
+                .orElseThrow(() -> new RuntimeException());
+        JwtToken newJwtToken = jwtProvider.createRefreshedToken(user, refreshToken);
+
+        return new JwtResponseDto(newJwtToken.getAccessToken(), newJwtToken.getRefreshToken());
+
+    }
+
+    private void validateRefreshToken(String refreshToken, String storedRefreshToken) {
+        if (!refreshToken.equals(storedRefreshToken)) {
+            throw new RuntimeException();
+        }
     }
 }
 

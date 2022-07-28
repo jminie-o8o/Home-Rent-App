@@ -7,13 +7,13 @@ spring:
   config:
     import: classpath:oauth.yml
   redis:
-    host: localhost
+    host: 127.0.0.1
     port: 6379
 
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
