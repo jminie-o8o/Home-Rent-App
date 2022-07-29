@@ -15,5 +15,6 @@ oauth:
     auth-server-url: ${NAVER_AUTH_URL}
     resource-server-url: ${NAVER_USER_URL}
     secret-key: ${NAVER_SECRET_KEY}
+    state: ${NAVER_STATE}
 jwt:
   secret: ${JWT_SECRET}

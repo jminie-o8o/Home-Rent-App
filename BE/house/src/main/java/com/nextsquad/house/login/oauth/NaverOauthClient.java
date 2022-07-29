@@ -1,20 +1,22 @@
 package com.nextsquad.house.login.oauth;
 
-import com.google.gson.Gson;
 import com.nextsquad.house.dto.NaverAccessTokenResponseDto;
 import com.nextsquad.house.dto.NaverUserInfoDto;
 import com.nextsquad.house.login.userinfo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
-import java.util.Map;
 
 @Slf4j
 public class NaverOauthClient extends OauthClient{
+
+    @Value("${spring.oauth.naver.state}")
+    private String state;
 
     public NaverOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
         super(clientId, authServerUrl, resourceServerUrl, secretKey);
@@ -33,6 +35,7 @@ public class NaverOauthClient extends OauthClient{
                         .queryParam("client_id", clientId)
                         .queryParam("client_secret", secretKey)
                         .queryParam("code", authCode)
+                        .queryParam("state", state)
                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
