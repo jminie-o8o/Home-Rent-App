@@ -20,9 +20,9 @@ public abstract class OauthClient {
 
     public UserInfo getUserInfo(String authCode) {
         String accessToken = getAccessToken(authCode);
-        String oauthResponse = getOauthResponse(accessToken);
-        return convertToUserInfoFrom(oauthResponse);
+        return getOauthUserInfo(accessToken);
     }
+    protected abstract UserInfo getOauthUserInfo(String accessToken);
 
     protected String getOauthResponse(String accessToken) {
         WebClient webClient = WebClient.create();
@@ -41,5 +41,4 @@ public abstract class OauthClient {
     protected abstract String getAccessToken(String authCode);
 
     protected abstract String parseToken(String rawToken);
-    protected abstract UserInfo convertToUserInfoFrom(String rawInfo);
 }

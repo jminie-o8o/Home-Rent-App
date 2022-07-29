@@ -44,14 +44,28 @@ public class GithubOauthClient extends OauthClient {
     }
 
     @Override
+    protected UserInfo getOauthUserInfo(String accessToken) {
+        WebClient webClient = WebClient.create();
+        String response = webClient.get()
+                .uri(resourceServerUrl)
+                .header("authorization", accessToken)
+                .acceptCharset(StandardCharsets.UTF_8)
+                .retrieve()
+                .bodyToFlux(String.class)
+                .toStream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException());
+        return convertToUserInfoFrom(response);
+    }
+
+    @Override
     protected String parseToken(String rawToken) {
         return String.format("token %s", rawToken);
     }
 
-    @Override
     protected UserInfo convertToUserInfoFrom(String rawInfo) {
         Map<String, String> infoMap = new Gson().fromJson(rawInfo, Map.class);
-        return new UserInfo(infoMap.get("login"), infoMap.get("login"), OauthClientType.GITHUB);
+        return new UserInfo(infoMap.get("login"), infoMap.get("login"), null, OauthClientType.GITHUB);
     }
 }
 

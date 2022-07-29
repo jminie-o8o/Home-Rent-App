@@ -2,8 +2,9 @@ package com.nextsquad.house.login.oauth;
 
 import com.google.gson.Gson;
 import com.nextsquad.house.dto.NaverAccessTokenResponseDto;
-import com.nextsquad.house.dto.NaverUserInfo;
+import com.nextsquad.house.dto.NaverUserInfoDto;
 import com.nextsquad.house.login.userinfo.UserInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
+@Slf4j
 public class NaverOauthClient extends OauthClient{
 
     public NaverOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
@@ -52,10 +54,25 @@ public class NaverOauthClient extends OauthClient{
                 .header("authorization", accessToken)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(NaverUserInfo.class)
+                .bodyToFlux(String.class)
                 .toStream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException());
+    }
+
+    @Override
+    protected UserInfo getOauthUserInfo(String accessToken) {
+        WebClient webClient = WebClient.create();
+        NaverUserInfoDto infoDto = webClient.get()
+                .uri(resourceServerUrl)
+                .header("authorization", accessToken)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(NaverUserInfoDto.class)
+                .toStream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException());
+        return infoDto.toUserInfo();
     }
 
     @Override
@@ -63,9 +80,4 @@ public class NaverOauthClient extends OauthClient{
         return String.format("Bearer %s", rawToken);
     }
 
-    @Override
-    protected UserInfo convertToUserInfoFrom(String rawInfo) {
-        Map<String, String> infoMap = new Gson().fromJson(rawInfo, Map.class);
-        return new UserInfo(infoMap.get("login"), infoMap.get("login"), OauthClientType.NAVER);
-    }
 }
