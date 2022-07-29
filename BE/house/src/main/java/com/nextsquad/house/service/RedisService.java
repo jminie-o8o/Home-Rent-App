@@ -12,9 +12,9 @@ import java.time.Duration;
 public class RedisService {
     private final RedisTemplate<String, String> redisTemplate;
 
-    public String getRefreshToken(String accountId){
+    public String get(String key){
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        return values.get(accountId);
+        return values.get(key);
     }
     public void save(String key, String value) {
         redisTemplate.opsForValue().set(key, value);

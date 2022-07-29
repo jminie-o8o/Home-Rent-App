@@ -52,7 +52,7 @@ public class LoginService {
 
         log.info(accountId);
 
-        String storedRefreshToken = redisService.getRefreshToken(accountId);
+        String storedRefreshToken = redisService.get(accountId);
         log.info("stored refreshToken: {}", storedRefreshToken);
         validateRefreshToken(refreshToken, storedRefreshToken);
 
