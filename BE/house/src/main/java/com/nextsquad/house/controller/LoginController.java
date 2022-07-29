@@ -11,21 +11,22 @@ import java.security.NoSuchAlgorithmException;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/login")
 public class LoginController {
 
     private final LoginService loginService;
 
-    @GetMapping("/login/oauth/callback")
+    @GetMapping("/oauth/callback")
     public String getOauthAuthCode() {
         return "URL 쿼리로 응답받은 auth 코드로 서버에 로그인 요청을 보내주세요.";
     }
 
-    @PostMapping("/login/oauth")
+    @PostMapping("/oauth")
     public ResponseEntity<JwtResponseDto> loginWithOauth(@RequestBody OauthLoginRequestDto requestDto) {
         return ResponseEntity.ok(loginService.loginWithOauth(requestDto));
     }
 
-    @PostMapping("/login/refresh")
+    @PostMapping("/refresh")
     public ResponseEntity<JwtResponseDto> refreshJwtToken(@RequestHeader(value = "access-token") String accessToken, @RequestHeader(value = "refresh-token") String refreshToken) {
         return ResponseEntity.ok(loginService.refreshJwtToken(accessToken, refreshToken));
     }
