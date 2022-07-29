@@ -19,5 +19,11 @@ public class OauthPropertiesConfiguration {
     public OauthProperties kakaoProperties() {
         return new OauthProperties();
     }
+
+    @Bean
+    @ConfigurationProperties(prefix = "oauth.naver")
+    public OauthProperties naverProperties() {
+        return new OauthProperties();
+    }
 }
 
