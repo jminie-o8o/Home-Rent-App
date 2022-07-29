@@ -1,22 +1,24 @@
 package com.nextsquad.house.login.oauth;
 
-import com.google.gson.Gson;
-import com.nextsquad.house.dto.KakaoAccessTokenResponseDto;
-import com.nextsquad.house.dto.KakaoUserInfoDto;
+import com.nextsquad.house.dto.NaverAccessTokenResponseDto;
 import com.nextsquad.house.dto.NaverUserInfoDto;
 import com.nextsquad.house.login.userinfo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
-import java.util.Map;
 
 @Slf4j
-public class KakaoOauthClient extends OauthClient {
-    public KakaoOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
+public class NaverOauthClient extends OauthClient{
+
+    @Value("${spring.oauth.naver.state}")
+    private String state;
+
+    public NaverOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
         super(clientId, authServerUrl, resourceServerUrl, secretKey);
     }
 
@@ -27,19 +29,20 @@ public class KakaoOauthClient extends OauthClient {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
-        KakaoAccessTokenResponseDto rawToken = webClient.post()
+        NaverAccessTokenResponseDto rawToken = webClient.post()
                 .uri(uriBuilder -> uriBuilder
-                        .queryParam("client_id", "9dc5e51153cd29428199781510c17a32")
-                        .queryParam("redirect_url", "http://52.79.243.28:8080/login/oauth/callback")
-                        .queryParam("code", authCode)
                         .queryParam("grant_type", "authorization_code")
+                        .queryParam("client_id", clientId)
+                        .queryParam("client_secret", secretKey)
+                        .queryParam("code", authCode)
+                        .queryParam("state", state)
                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
                 .ifNoneMatch("*")
                 .ifModifiedSince(ZonedDateTime.now())
                 .retrieve()
-                .bodyToFlux(KakaoAccessTokenResponseDto.class)
+                .bodyToFlux(NaverAccessTokenResponseDto.class)
                 .toStream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException());
@@ -47,14 +50,28 @@ public class KakaoOauthClient extends OauthClient {
     }
 
     @Override
-    protected UserInfo getOauthUserInfo(String accessToken) {
+    protected String getOauthResponse(String accessToken) {
         WebClient webClient = WebClient.create();
-        KakaoUserInfoDto infoDto = webClient.get()
+        return webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(KakaoUserInfoDto.class)
+                .bodyToFlux(String.class)
+                .toStream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException());
+    }
+
+    @Override
+    protected UserInfo getOauthUserInfo(String accessToken) {
+        WebClient webClient = WebClient.create();
+        NaverUserInfoDto infoDto = webClient.get()
+                .uri(resourceServerUrl)
+                .header("authorization", accessToken)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(NaverUserInfoDto.class)
                 .toStream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException());
@@ -66,9 +83,4 @@ public class KakaoOauthClient extends OauthClient {
         return String.format("Bearer %s", rawToken);
     }
 
-    protected UserInfo convertToUserInfoFrom(String rawInfo) {
-        Map<String, String> infoMap = new Gson().fromJson(rawInfo, Map.class);
-        return new UserInfo(infoMap.get("email"), infoMap.get("nickname"), null, OauthClientType.KAKAO);
-    }
 }
-

@@ -10,9 +10,11 @@ import lombok.Getter;
 public class UserInfo {
     protected String accountId;
     protected String displayName;
+
+    protected String profileImageUrl;
     private OauthClientType oauthClientType;
 
     public User toUser() {
-        return new User(accountId, displayName, oauthClientType);
+        return new User(accountId, displayName, profileImageUrl, oauthClientType);
     }
 }

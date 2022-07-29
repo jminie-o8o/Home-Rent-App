@@ -20,11 +20,11 @@ public abstract class OauthClient {
 
     public UserInfo getUserInfo(String authCode) {
         String accessToken = getAccessToken(authCode);
-        String oauthResponse = getOauthResponse(accessToken);
-        return convertToUserInfoFrom(oauthResponse);
+        return getOauthUserInfo(accessToken);
     }
+    protected abstract UserInfo getOauthUserInfo(String accessToken);
 
-    private String getOauthResponse(String accessToken) {
+    protected String getOauthResponse(String accessToken) {
         WebClient webClient = WebClient.create();
         return webClient.get()
                 .uri(resourceServerUrl)
@@ -37,8 +37,8 @@ public abstract class OauthClient {
                 .orElseThrow(() -> new RuntimeException());
     }
 
+
     protected abstract String getAccessToken(String authCode);
 
     protected abstract String parseToken(String rawToken);
-    protected abstract UserInfo convertToUserInfoFrom(String rawInfo);
 }

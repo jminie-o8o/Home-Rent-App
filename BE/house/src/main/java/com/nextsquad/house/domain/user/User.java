@@ -20,9 +20,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private OauthClientType oauthClientType;
 
-    public User(String accountId, String displayName, OauthClientType oauthClientType) {
+    public User(String accountId, String displayName, String profileImageUrl, OauthClientType oauthClientType) {
         this.accountId = accountId;
         this.displayName = displayName;
+        this.profileImageUrl = profileImageUrl;
         this.oauthClientType = oauthClientType;
     }
 }
