@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="jipnumgigi.com/login/oauth/callback"
+                    android:host="jipnumgigi.com/"
                     android:scheme="http" />
             </intent-filter>
         </activity>
