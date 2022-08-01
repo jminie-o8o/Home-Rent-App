@@ -13,9 +13,10 @@ class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
