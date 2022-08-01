@@ -14,12 +14,11 @@ public class webConfig implements WebMvcConfigurer {
     private final JwtProvider jwtProvider;
     private final RedisService redisService;
 
-    //TODO: 기능 구현시 인터셉터 작동하는지 확인해야함
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor(jwtProvider, redisService))
                 .order(1)
-                .addPathPatterns("/")
+                .addPathPatterns("/**")
                 .excludePathPatterns("/login/**");
     }
 }

@@ -17,7 +17,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String accessToken = request.getHeader("access-token");
-        if (redisService.get(accessToken) != null){
+
+        if (accessToken == null || redisService.get(accessToken) != null) {
             return false;
         }
         jwtProvider.verifyToken(accessToken);
