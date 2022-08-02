@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_home"
+        android:title="@string/home_label"
+        android:icon="@drawable/ic_favorite"
+        app:showAsAction="withText"/>
+    <item android:id="@+id/action_chatting"
+        android:title="@string/chatting_label"
+        android:icon="@drawable/ic_chatting"
+        app:showAsAction="withText"/>
+    <item android:id="@+id/action_bookmark"
+        android:title="@string/bookmark_label"
+        android:icon="@drawable/ic_interest"
+        app:showAsAction="withText"/>
+    <item android:id="@+id/action_my"
+        android:title="@string/profile_label"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="withText"/>
+</menu>

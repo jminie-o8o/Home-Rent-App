@@ -2,4 +2,8 @@
     <string name="app_name">Home-Rent-App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_label">홈</string>
+    <string name="chatting_label">채팅</string>
+    <string name="bookmark_label">찜</string>
+    <string name="profile_label">프로필</string>
 </resources>
