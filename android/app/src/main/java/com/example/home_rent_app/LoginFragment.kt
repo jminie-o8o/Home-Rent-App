@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.databinding.FragmentLoginBinding
 import okhttp3.HttpUrl
 
@@ -27,8 +29,15 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val navigationController = findNavController()
         binding.btnKakaoLogin.setOnClickListener {
-            kakaoLogin()
+            setClickButton(navigationController)
+        }
+    }
+
+    private fun setClickButton(navController: NavController) {
+        binding.btnKakaoLogin.setOnClickListener {
+            navController.navigate(R.id.action_loginFragment_to_kakaoWebViewFragment)
         }
     }
 
