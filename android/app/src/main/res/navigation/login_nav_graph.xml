@@ -7,16 +7,24 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.home_rent_app.LoginFragment"
+        android:name="com.example.home_rent_app.ui.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_kakaoWebViewFragment"
+            app:destination="@id/kakaoWebViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.home_rent_app.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/kakaoWebViewFragment"
+        android:name="com.example.home_rent_app.ui.login.KakaoWebViewFragment"
+        android:label="KakaoWebViewFragment"
+        tools:layout="@layout/fragment_kakao_web_view"/>
 </navigation>

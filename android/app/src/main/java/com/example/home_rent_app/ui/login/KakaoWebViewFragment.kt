@@ -1,4 +1,4 @@
-package com.example.home_rent_app
+package com.example.home_rent_app.ui.login
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -15,6 +15,8 @@ import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.home_rent_app.BuildConfig
+import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentKakaoWebViewBinding
 
 class KakaoWebViewFragment : Fragment() {
@@ -42,8 +44,8 @@ class KakaoWebViewFragment : Fragment() {
             settings.javaScriptEnabled = true
             loadUrl(
                 "https://kauth.kakao.com/oauth/authorize?client_id=" +
-                    BuildConfig.kakaoClientId +
-                    "&redirect_uri=http://3.34.188.98:8080/login/oauth/callback&response_type=code"
+                        BuildConfig.kakaoCientId +
+                        "&redirect_uri=http://3.34.188.98:8080/login/oauth/callback&response_type=code"
             )
         }
     }
@@ -56,7 +58,8 @@ class KakaoWebViewFragment : Fragment() {
 
             if (url.scheme == KAKAO_OAUTH_REDIRECTION_SCHEME &&
                 url.host == KAKAO_OAUTH_REDIRECTION_HOST &&
-                code != null) {
+                code != null
+            ) {
                 Log.d("WebViewCode in If", code)
             }
         }
