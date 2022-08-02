@@ -1,5 +1,6 @@
 package com.nextsquad.house.domain.user;
 
+import com.nextsquad.house.dto.UserInfoDto;
 import com.nextsquad.house.login.oauth.OauthClientType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,8 @@ public class User {
     private String displayName;
     private String profileImageUrl;
     @Enumerated(EnumType.STRING)
+    private Gender gender;
+    @Enumerated(EnumType.STRING)
     private OauthClientType oauthClientType;
 
     public User(String accountId, String displayName, String profileImageUrl, OauthClientType oauthClientType) {
@@ -25,6 +28,12 @@ public class User {
         this.displayName = displayName;
         this.profileImageUrl = profileImageUrl;
         this.oauthClientType = oauthClientType;
+    }
+
+    public void modifyInfo(UserInfoDto userInfoDto){
+        this.displayName = userInfoDto.getDisplayName();
+        this.profileImageUrl = userInfoDto.getProfileImageUrl();
+        this.gender = Gender.valueOf(userInfoDto.getGender());
     }
 }
 

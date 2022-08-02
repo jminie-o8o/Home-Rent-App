@@ -11,8 +11,9 @@ public class UserResponseDto {
     private String accountId;
     private String displayName;
     private String profileImageUrl;
+    private String gender;
 
     public static UserResponseDto from(User user) {
-        return new UserResponseDto(user.getId(), user.getAccountId(), user.getDisplayName(), user.getProfileImageUrl());
+        return new UserResponseDto(user.getId(), user.getAccountId(), user.getDisplayName(), user.getProfileImageUrl(), user.getGender().name());
     }
 }
