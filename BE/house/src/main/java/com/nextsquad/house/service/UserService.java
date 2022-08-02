@@ -13,7 +13,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserResponseDto getUserInfo(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 유저 입니다."));
         return UserResponseDto.from(user);
     }
 }
