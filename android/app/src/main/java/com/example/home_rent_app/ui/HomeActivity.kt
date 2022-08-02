@@ -17,8 +17,8 @@ class HomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         binding.lifecycleOwner = this
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         binding.navigation.setupWithNavController(navHostFragment.navController)
-
     }
 }

@@ -30,7 +30,6 @@ class LoginFragment : Fragment() {
         val navigationController = findNavController()
 
         setClickButton(navigationController)
-
     }
 
     private fun setClickButton(navController: NavController) {

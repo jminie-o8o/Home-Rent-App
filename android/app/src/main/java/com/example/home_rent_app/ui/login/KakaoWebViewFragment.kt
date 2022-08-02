@@ -44,8 +44,8 @@ class KakaoWebViewFragment : Fragment() {
             settings.javaScriptEnabled = true
             loadUrl(
                 "https://kauth.kakao.com/oauth/authorize?client_id=" +
-                        BuildConfig.kakaoCientId +
-                        "&redirect_uri=http://3.34.188.98:8080/login/oauth/callback&response_type=code"
+                    BuildConfig.kakaoCientId +
+                    "&redirect_uri=http://3.34.188.98:8080/login/oauth/callback&response_type=code"
             )
         }
     }
