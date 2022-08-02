@@ -62,11 +62,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1'
 
     // Coroutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     // Coil
-    implementation 'io.coil-kt:coil:2.0.0-rc03'
+    implementation 'io.coil-kt:coil:2.1.0'
 
     // Jetpack Navigation Kotlin
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
