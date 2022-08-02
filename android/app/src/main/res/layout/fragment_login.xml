@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginFragment">
+        tools:context=".ui.login.LoginFragment">
 
         <TextView
             android:id="@+id/tv_login_title"
@@ -24,23 +24,31 @@
 
         <Button
             android:id="@+id/btn_kakao_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="카카오"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="20dp"
+            android:text="카카오톡으로 계속하기"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:backgroundTint="@color/kakao_yello"
             app:layout_constraintTop_toBottomOf="@+id/tv_login_title"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="30dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/btn_naver_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="네이버"
-            app:layout_constraintTop_toBottomOf="@+id/tv_login_title"
-            app:layout_constraintStart_toEndOf="@+id/btn_kakao_login"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="30dp" />
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="20dp"
+            android:text="네이버로 계속하기"
+            app:layout_constraintTop_toBottomOf="@+id/btn_kakao_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
