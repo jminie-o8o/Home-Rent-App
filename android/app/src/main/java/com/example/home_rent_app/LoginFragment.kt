@@ -39,7 +39,7 @@ class LoginFragment : Fragment() {
             .addPathSegment("oauth")
             .addPathSegment("authorize")
             .addQueryParameter("client_id", "9dc5e51153cd29428199781510c17a32")
-            .addQueryParameter("redirect_uri", "http://jipnumgigi.com/login/oauth/callback")
+            .addQueryParameter("redirect_uri", "http://3.34.188.98/login/oauth/callback")
             .addQueryParameter("response_type", "code")
             .build()
 
