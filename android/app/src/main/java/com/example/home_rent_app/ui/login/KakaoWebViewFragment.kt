@@ -13,16 +13,22 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
+import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.databinding.FragmentKakaoWebViewBinding
+import com.example.home_rent_app.ui.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class KakaoWebViewFragment : Fragment() {
 
     lateinit var binding: FragmentKakaoWebViewBinding
     private lateinit var navigator: NavController
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,7 +66,7 @@ class KakaoWebViewFragment : Fragment() {
                 url.host == KAKAO_OAUTH_REDIRECTION_HOST &&
                 code != null
             ) {
-                Log.d("WebViewCode in If", code)
+                viewModel.getKakaoToken(KakaoOauthRequest(code.toString()))
             }
         }
 
