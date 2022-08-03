@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Builder
@@ -45,6 +46,8 @@ public class RentArticle {
     private LocalDateTime modifiedAt;
     private int maxFloor;
     private int thisFloor;
+    @OneToMany(mappedBy = "facility", fetch = FetchType.LAZY)
+    private List<RentArticleFacility> facilities;
     private boolean hasParkingLot;
     private boolean hasBalcony;
 

@@ -1,15 +1,17 @@
 package com.nextsquad.house.service;
 
-import com.nextsquad.house.domain.house.ContractType;
-import com.nextsquad.house.domain.house.HouseType;
-import com.nextsquad.house.domain.house.RentArticle;
+import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.RentArticleCreationRequest;
 import com.nextsquad.house.dto.RentArticleCreationResponse;
+import com.nextsquad.house.repository.FacilityRepository;
+import com.nextsquad.house.repository.RentArticleFacilityRepository;
 import com.nextsquad.house.repository.RentArticleRepository;
 import com.nextsquad.house.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +19,8 @@ public class RentArticleService {
 
     private final RentArticleRepository rentArticleRepository;
     private final UserRepository userRepository;
+    private final FacilityRepository facilityRepository;
+    private final RentArticleFacilityRepository rentArticleFacilityRepository;
 
     public RentArticleCreationResponse writeRentArticle(RentArticleCreationRequest request){
         User user = userRepository.findById(request.getUserId()).orElseThrow();
@@ -40,6 +44,13 @@ public class RentArticleService {
                 .build();
 
         RentArticle savedArticle = rentArticleRepository.save(rentArticle);
+
+        for (String facilityName : request.getFacilities()) {
+            Facility facility = facilityRepository.findByName(facilityName)
+                    .orElseThrow(() -> new RuntimeException());
+            rentArticleFacilityRepository.save(new RentArticleFacility(rentArticle, facility));
+        }
+
         return new RentArticleCreationResponse(savedArticle.getId());
     }
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -16,6 +17,7 @@ public class RentArticleCreationRequest {
     private String content;
     private String contractType;
     private String houseType;
+    private List<String> facilities;
     private int deposit;
     private int rentFee;
     private int maintenanceFee;
