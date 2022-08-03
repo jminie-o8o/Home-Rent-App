@@ -1,6 +1,11 @@
 package com.nextsquad.house.domain.house;
 
 import com.nextsquad.house.domain.user.User;
+import com.nextsquad.house.dto.RentArticleCreationRequest;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -8,6 +13,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RentArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "rent_article_id")
@@ -16,6 +25,7 @@ public class RentArticle {
     @JoinColumn
     private User user;
     private String address;
+    private String addressDetail;
     private String title;
     private String content;
     @Enumerated(EnumType.STRING)
@@ -35,5 +45,7 @@ public class RentArticle {
     private LocalDateTime modifiedAt;
     private int maxFloor;
     private int thisFloor;
+    private boolean hasParkingLot;
+    private boolean hasBalcony;
 
 }
