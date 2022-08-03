@@ -11,6 +11,7 @@
     <queries>
         <package android:name="com.kakao.talk" />
     </queries>
+
     <application
         android:name=".util.MainApplication"
         android:allowBackup="true"
@@ -21,9 +22,11 @@
         android:theme="@style/Theme.HomeRentApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".TransferActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.HomeActivity"
-            android:exported="true" >
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true">
