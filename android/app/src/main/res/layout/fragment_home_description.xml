@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="vm"
+            type="com.example.home_rent_app.ui.transfer.TransferViewModel" />
 
     </data>
 
@@ -29,6 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
+                    android:clickable="false"
                     android:text="Step 1"/>
 
                 <com.google.android.material.chip.Chip
@@ -36,6 +40,7 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
                     android:checked="false"
                     android:text="2"/>
 
@@ -44,6 +49,7 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
                     android:checked="false"
                     android:text="3"/>
 
@@ -65,7 +71,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cg_step"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="20dp"
                 tools:text="1/20"/>
@@ -79,10 +85,12 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_title_label"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="15dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:background="@drawable/shape_title_edittext"
                 android:autofillHints="no"
+                android:text="@={vm.title}"
                 android:inputType="text" />
 
             <TextView
@@ -106,6 +114,7 @@
                 app:singleSelection="true"
                 app:selectionRequired="true"
                 android:layout_marginTop="15dp"
+                roomTypeFilter="@={vm.roomType}"
                 app:layout_constraintTop_toBottomOf="@id/tv_category_label">
 
                 <com.google.android.material.chip.Chip
@@ -120,7 +129,7 @@
                     android:text="원 룸"/>
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_teo_room"
+                    android:id="@+id/chip_two_room"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     style="@style/Widget.HomeRent.Chip.Choice"
@@ -182,6 +191,7 @@
                 app:singleSelection="true"
                 app:selectionRequired="true"
                 android:layout_marginTop="15dp"
+                rentTypeFilter="@={vm.rentType}"
                 app:layout_constraintTop_toBottomOf="@id/tv_rent_format_label">
 
                 <com.google.android.material.chip.Chip
@@ -248,7 +258,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
-                    android:paddingBottom="0dp"/>
+                    android:paddingBottom="0dp"
+                    android:text="@={vm.deposit}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -289,7 +300,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
-                    android:paddingBottom="0dp"/>
+                    android:paddingBottom="0dp"
+                    android:text="@={vm.monthly}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -330,7 +342,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
-                    android:paddingBottom="0dp"/>
+                    android:paddingBottom="0dp"
+                    android:text="@={vm.maintenance}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -360,7 +373,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="top"/>
+                    android:gravity="top"
+                    android:windowSoftInputMode="adjustPan"
+                    android:text="@={vm.maintenanceDescription}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -398,10 +413,12 @@
                 style="@style/editTextStyle">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_start_date"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
-                    android:paddingBottom="0dp"/>
+                    android:paddingBottom="0dp"
+                    android:focusableInTouchMode="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -428,10 +445,12 @@
                 style="@style/editTextStyle">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_end_date"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
-                    android:paddingBottom="0dp"/>
+                    android:paddingBottom="0dp"
+                    android:focusableInTouchMode="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

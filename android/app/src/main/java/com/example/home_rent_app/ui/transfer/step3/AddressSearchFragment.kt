@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.address
+package com.example.home_rent_app.ui.transfer.step3
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

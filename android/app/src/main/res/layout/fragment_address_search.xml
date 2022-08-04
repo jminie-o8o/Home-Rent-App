@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.address..AddressSearchFragment">
+        tools:context=".ui.transfer.step3..AddressSearchFragment">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/cg_step"
@@ -26,7 +26,8 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
+                android:checked="false"
+                android:clickable="false"
                 android:text="1"/>
 
             <com.google.android.material.chip.Chip
@@ -35,6 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
+                android:clickable="false"
                 android:text="2"/>
 
             <com.google.android.material.chip.Chip
@@ -42,7 +44,8 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
+                android:checked="true"
+                android:clickable="false"
                 android:text="Step 3"/>
 
         </com.google.android.material.chip.ChipGroup>

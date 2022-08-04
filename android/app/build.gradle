@@ -95,6 +95,8 @@ dependencies {
 
     // Circle ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    // date4j
+    implementation("com.darwinsys:hirondelle-date4j:1.5.1")
 }
 
 kapt {
