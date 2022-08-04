@@ -13,10 +13,10 @@ public class RentArticleFacility {
     @Column(name = "rent_article_facility_id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "rent_article_id")
     private RentArticle rentArticle;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "facility_id")
     private Facility facility;
 
     public RentArticleFacility(RentArticle rentArticle, Facility facility) {

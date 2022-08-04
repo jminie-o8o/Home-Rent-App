@@ -23,7 +23,7 @@ public class RentArticle {
     @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "rent_article_id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "user_id")
     private User user;
     private String address;
     private String addressDetail;

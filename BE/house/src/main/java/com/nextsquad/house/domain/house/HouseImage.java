@@ -1,6 +1,5 @@
 package com.nextsquad.house.domain.house;
 
-import com.nextsquad.house.domain.house.RentArticle;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -19,10 +18,10 @@ public class HouseImage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rent_article_id")
     private RentArticle rentArticle;
-    private int order;
+    private int orderInList;
 
-    public HouseImage(String storeFileUrl, int order) {
+    public HouseImage(String storeFileUrl, int orderInList) {
         this.imageUrl = storeFileUrl;
-        this.order = order;
+        this.orderInList = orderInList;
     }
 }
