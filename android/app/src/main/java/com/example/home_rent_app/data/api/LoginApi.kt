@@ -1,7 +1,7 @@
 package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.model.KakaoOauthRequest
-import com.example.home_rent_app.data.model.OAuthTokenResponse
+import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
