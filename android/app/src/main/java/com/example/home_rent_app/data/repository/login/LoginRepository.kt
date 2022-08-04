@@ -1,7 +1,7 @@
 package com.example.home_rent_app.data.repository.login
 
 import com.example.home_rent_app.data.model.KakaoOauthRequest
-import com.example.home_rent_app.data.model.OAuthTokenResponse
+import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import kotlinx.coroutines.flow.Flow
 
 interface LoginRepository {

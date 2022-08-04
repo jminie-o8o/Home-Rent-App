@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.home_rent_app.data.api.LoginApi
 import com.example.home_rent_app.data.model.KakaoOauthRequest
-import com.example.home_rent_app.data.model.OAuthTokenResponse
+import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.ACCESS_TOKEN
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.LOGIN_CHECK
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.REFRESH_TOKEN
