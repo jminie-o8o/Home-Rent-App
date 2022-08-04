@@ -27,4 +27,5 @@ public class RentArticleCreationRequest {
     private int thisFloor;
     private boolean hasParkingLot;
     private boolean hasBalcony;
+    private List<String> houseImages;
 }

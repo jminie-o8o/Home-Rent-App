@@ -33,6 +33,8 @@ public class RentArticle {
     private ContractType contractType;
     @Enumerated(EnumType.STRING)
     private HouseType houseType;
+    private String locationInfo;
+    private String maintenanceFeeInfo;
     private int deposit;
     private int rentFee;
     private int maintenanceFee;
@@ -46,9 +48,11 @@ public class RentArticle {
     private LocalDateTime modifiedAt;
     private int maxFloor;
     private int thisFloor;
-    @OneToMany(mappedBy = "facility", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<RentArticleFacility> facilities;
     private boolean hasParkingLot;
     private boolean hasBalcony;
+    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
+    private List<HouseImage> houseImages;
 
 }

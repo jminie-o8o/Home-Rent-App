@@ -4,10 +4,7 @@ import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.RentArticleCreationRequest;
 import com.nextsquad.house.dto.RentArticleCreationResponse;
-import com.nextsquad.house.repository.FacilityRepository;
-import com.nextsquad.house.repository.RentArticleFacilityRepository;
-import com.nextsquad.house.repository.RentArticleRepository;
-import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +18,11 @@ public class RentArticleService {
     private final UserRepository userRepository;
     private final FacilityRepository facilityRepository;
     private final RentArticleFacilityRepository rentArticleFacilityRepository;
+    private final HouseImageRepository houseImageRepository;
 
     public RentArticleCreationResponse writeRentArticle(RentArticleCreationRequest request){
         User user = userRepository.findById(request.getUserId()).orElseThrow();
+        List<HouseImage> houseImages = houseImageRepository.findAllByImageUrlIn(request.getHouseImages());
         RentArticle rentArticle = RentArticle.builder()
                 .user(user)
                 .title(request.getTitle())
@@ -41,6 +40,7 @@ public class RentArticleService {
                 .thisFloor(request.getThisFloor())
                 .hasParkingLot(request.isHasParkingLot())
                 .hasBalcony(request.isHasBalcony())
+                .houseImages(houseImages)
                 .build();
 
         RentArticle savedArticle = rentArticleRepository.save(rentArticle);
