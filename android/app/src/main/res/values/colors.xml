@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="kakao_yello">#FEE500</color>
+    <color name="main_color">#A566FF</color>
 </resources>

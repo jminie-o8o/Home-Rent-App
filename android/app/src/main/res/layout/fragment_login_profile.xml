@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.loginprofile.LoginProfileFragment">
+
+        <TextView
+            android:id="@+id/tv_login_profile_choose_image"
+            style="@style/TextSubtitle1.18.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="80dp"
+            android:text="프로필 사진을 선택하세요"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_login_profile"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="140dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/default_profile_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_login_profile_write_nickname"
+            style="@style/TextSubtitle1.18.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="80dp"
+            android:text="닉네임을 입력하세요"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_login_profile" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_login_profile_nickname"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_login_profile_write_nickname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_login_profile_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textAutoComplete" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_nickname_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="2dp"
+            android:text="*닉네임은 나중에 언제든 변경 가능합니다"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_login_profile_nickname" />
+
+        <TextView
+            android:id="@+id/tv_choose_sex"
+            style="@style/TextSubtitle1.18.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="46dp"
+            android:text="성별"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname_hint" />
+
+        <RadioGroup
+            android:id="@+id/rg_choose_sex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_choose_sex">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_accuracy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/main_color"
+                android:text="남성" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_latest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:buttonTint="@color/main_color"
+                android:text="여성" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_login_profile"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/custom_button_background"
+            android:text="계정만들기"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
