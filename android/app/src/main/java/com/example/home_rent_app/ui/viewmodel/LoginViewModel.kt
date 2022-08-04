@@ -19,6 +19,12 @@ class LoginViewModel @Inject constructor(
             val response = loginRepository.getKakaoToken(kakaoOauthRequest)
             Log.d("AccessToken", response.accessToken.tokenCode)
             Log.d("RefreshToken", response.refreshToken.tokenCode)
+            loginRepository.saveToken(
+                listOf(
+                    response.accessToken.tokenCode,
+                    response.refreshToken.tokenCode
+                )
+            )
         }
     }
 }

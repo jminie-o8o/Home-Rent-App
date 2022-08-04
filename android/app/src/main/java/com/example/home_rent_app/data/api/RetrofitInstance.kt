@@ -1,5 +1,6 @@
 package com.example.home_rent_app.data.api
 
+import com.example.home_rent_app.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,8 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitInstance {
-
-    private const val BASE_URL = "http://3.34.188.98:8080/"
 
     @Provides
     @Singleton
