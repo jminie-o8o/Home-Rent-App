@@ -16,6 +16,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_step"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_step_one"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Step 1"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_step_two"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="2"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_step_three"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="3"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
             <TextView
                 android:id="@+id/tv_title_label"
                 android:layout_width="0dp"
@@ -24,7 +57,7 @@
                 android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cg_step"
                 app:layout_constraintWidth_percent="0.95"
                 android:layout_marginTop="10dp"
                 android:text="제 목"/>
@@ -34,7 +67,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 tools:text="1/20"/>
 
             <EditText
@@ -72,6 +105,7 @@
                 app:chipSpacingHorizontal="10dp"
                 app:singleSelection="true"
                 app:selectionRequired="true"
+                android:layout_marginTop="15dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_category_label">
 
                 <com.google.android.material.chip.Chip
@@ -147,6 +181,7 @@
                 app:chipSpacingHorizontal="10dp"
                 app:singleSelection="true"
                 app:selectionRequired="true"
+                android:layout_marginTop="15dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_rent_format_label">
 
                 <com.google.android.material.chip.Chip

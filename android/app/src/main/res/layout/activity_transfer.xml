@@ -32,44 +32,12 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/cg_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/al_appbar_layout">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_step_one"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Step 1"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_step_two"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="Step 2"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_step_three"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="Step 3"/>
-
-        </com.google.android.material.chip.ChipGroup>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_view_in_transfer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/cg_step"
+            app:layout_constraintTop_toBottomOf="@id/al_appbar_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
