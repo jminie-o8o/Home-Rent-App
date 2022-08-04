@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_loginFragment_to_kakaoWebViewFragment"
             app:destination="@id/kakaoWebViewFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_loginProfileFragment"
+            app:destination="@id/loginProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -27,4 +30,9 @@
         android:name="com.example.home_rent_app.ui.login.KakaoWebViewFragment"
         android:label="KakaoWebViewFragment"
         tools:layout="@layout/fragment_kakao_web_view"/>
+    <fragment
+        android:id="@+id/loginProfileFragment"
+        android:name="com.example.home_rent_app.ui.loginprofile.LoginProfileFragment"
+        android:label="LoginProfileFragment"
+        tools:layout="@layout/fragment_login_profile"/>
 </navigation>
