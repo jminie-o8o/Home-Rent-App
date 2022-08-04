@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -17,8 +18,6 @@ import androidx.databinding.DataBindingUtil
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
-import com.example.home_rent_app.ui.LoginActivity
-import java.util.jar.Manifest
 
 class LoginProfileFragment : Fragment() {
 
@@ -36,8 +35,22 @@ class LoginProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.ivLoginProfile.setOnClickListener {
-            selectGallery()
+            if (isAllPermissionGranted()) {
+                selectGallery()
+            } else {
+                requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
+            }
         }
+    }
+
+    private fun selectGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        // intent 의 data 와 type 을 동시에 설정하는 메서드
+        intent.setDataAndType(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            "image/*"
+        )
+        imageResult.launch(intent)
     }
 
     private val imageResult =
@@ -45,44 +58,54 @@ class LoginProfileFragment : Fragment() {
             if (result.resultCode == RESULT_OK) {
                 val imageUri = result.data?.data
                 imageUri?.let {
-                    // 서버 업로드를 위해 파일 형태로 변환
                     binding.ivLoginProfile.load(it)
                 }
             }
         }
 
-    private fun selectGallery() {
-        val writePermission = ContextCompat.checkSelfPermission(
-            requireContext(),
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-        val readPermission = ContextCompat.checkSelfPermission(
-            requireContext(),
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(activity as Activity, REQUIRED_PERMISSIONS, REQ_GALLERY)
+    }
 
-        if (writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(
-                activity as Activity,
-                arrayOf(
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                REQ_GALLERY
-            )
-        } else {
-            // 권한이 있는 경우 갤러리 실행
-            val intent = Intent(Intent.ACTION_PICK)
-            // intent 의 data 와 type 을 동시에 설정하는 메서드
-            intent.setDataAndType(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                "image/*"
-            )
-            imageResult.launch(intent)
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+            val deniedList = result.filter {
+                !it.value
+            }.map {
+                it.key
+            }
+
+            when {
+                deniedList.isNotEmpty() -> {
+                    val map = deniedList.groupBy { permission ->
+                        if (shouldShowRequestPermissionRationale(permission)) "DENIED" else "EXPLAINED"
+                    }
+                    map["DENIED"]?.let {
+                        // 한번 거절했을 경우 재요청
+                        Toast.makeText(requireContext(), "앨범에 접근하려면 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+                        requestPermissions()
+                    }
+                    map["EXPLAINED"]?.let {
+                        // 두번 거절했을 경우
+                        Toast.makeText(requireContext(), "설정에서 미디어 접근 권한을 허용해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
+
+    // 권한 중 하나라도 허용되지 않았다면 false 를 반환하는 함수
+    private fun isAllPermissionGranted(): Boolean = REQUIRED_PERMISSIONS.all { permission ->
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     companion object {
-        const val REQ_GALLERY = 1
+        private const val REQ_GALLERY = 1
+        private val REQUIRED_PERMISSIONS = arrayOf(
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
     }
 }
