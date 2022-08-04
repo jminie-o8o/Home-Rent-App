@@ -24,13 +24,8 @@ public class NaverOauthClient extends OauthClient{
 
     @Override
     protected String getAccessToken(String authCode) {
-        WebClient webClient = WebClient.builder()
-                .baseUrl(authServerUrl)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-
         NaverAccessTokenResponseDto rawToken = webClient.post()
-                .uri(uriBuilder -> uriBuilder
+                .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("grant_type", "authorization_code")
                         .queryParam("client_id", clientId)
                         .queryParam("client_secret", secretKey)
@@ -50,22 +45,7 @@ public class NaverOauthClient extends OauthClient{
     }
 
     @Override
-    protected String getOauthResponse(String accessToken) {
-        WebClient webClient = WebClient.create();
-        return webClient.get()
-                .uri(resourceServerUrl)
-                .header("authorization", accessToken)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToFlux(String.class)
-                .toStream()
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException());
-    }
-
-    @Override
     protected UserInfo getOauthUserInfo(String accessToken) {
-        WebClient webClient = WebClient.create();
         NaverUserInfoDto infoDto = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)

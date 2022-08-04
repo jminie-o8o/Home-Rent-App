@@ -22,13 +22,8 @@ public class KakaoOauthClient extends OauthClient {
 
     @Override
     protected String getAccessToken(String authCode) {
-        WebClient webClient = WebClient.builder()
-                .baseUrl(authServerUrl)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-
         KakaoAccessTokenResponseDto rawToken = webClient.post()
-                .uri(uriBuilder -> uriBuilder
+                .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("client_id", "9dc5e51153cd29428199781510c17a32")
                         .queryParam("redirect_url", "http://52.79.243.28:8080/login/oauth/callback")
                         .queryParam("code", authCode)
@@ -48,7 +43,6 @@ public class KakaoOauthClient extends OauthClient {
 
     @Override
     protected UserInfo getOauthUserInfo(String accessToken) {
-        WebClient webClient = WebClient.create();
         KakaoUserInfoDto infoDto = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)

@@ -20,13 +20,8 @@ public class GithubOauthClient extends OauthClient {
 
     @Override
     protected String getAccessToken(String authCode) {
-        WebClient webClient = WebClient.builder()
-                .baseUrl(authServerUrl)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-
         GithubAccessTokenResponseDto rawToken = webClient.post()
-                .uri(uriBuilder -> uriBuilder
+                .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("client_id", clientId)
                         .queryParam("client_secret", secretKey)
                         .queryParam("code", authCode)
@@ -45,7 +40,6 @@ public class GithubOauthClient extends OauthClient {
 
     @Override
     protected UserInfo getOauthUserInfo(String accessToken) {
-        WebClient webClient = WebClient.create();
         String response = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)

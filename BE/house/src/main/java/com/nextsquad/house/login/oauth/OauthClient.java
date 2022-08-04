@@ -10,6 +10,7 @@ public abstract class OauthClient {
     protected String authServerUrl;
     protected String resourceServerUrl;
     protected String secretKey;
+    protected WebClient webClient = WebClient.create();
 
     protected OauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
         this.clientId = clientId;
@@ -24,18 +25,6 @@ public abstract class OauthClient {
     }
     protected abstract UserInfo getOauthUserInfo(String accessToken);
 
-    protected String getOauthResponse(String accessToken) {
-        WebClient webClient = WebClient.create();
-        return webClient.get()
-                .uri(resourceServerUrl)
-                .header("authorization", accessToken)
-                .acceptCharset(StandardCharsets.UTF_8)
-                .retrieve()
-                .bodyToFlux(String.class)
-                .toStream()
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException());
-    }
 
 
     protected abstract String getAccessToken(String authCode);
