@@ -51,7 +51,7 @@ class KakaoWebViewFragment : Fragment() {
             loadUrl(
                 "https://kauth.kakao.com/oauth/authorize?client_id=" +
                     BuildConfig.kakaoCientId +
-                    "&redirect_uri=http://3.34.188.98:8080/login/oauth/callback&response_type=code"
+                    "&redirect_uri=http://54.180.8.0:8080/login/oauth/callback&response_type=code"
             )
         }
     }
@@ -82,7 +82,7 @@ class KakaoWebViewFragment : Fragment() {
 
     companion object {
         private const val KAKAO_OAUTH_REDIRECTION_SCHEME = "http"
-        private const val KAKAO_OAUTH_REDIRECTION_HOST = "3.34.188.98"
+        private const val KAKAO_OAUTH_REDIRECTION_HOST = "54.180.8.0"
         private const val KAKAO_OAUTH_CODE_PARAM_KEY = "code"
     }
 }
