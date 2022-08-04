@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -53,6 +54,6 @@ public class RentArticle {
     private boolean hasParkingLot;
     private boolean hasBalcony;
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
-    private List<HouseImage> houseImages;
+    private List<HouseImage> houseImages = new ArrayList<>();
 
 }

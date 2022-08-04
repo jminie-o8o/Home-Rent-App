@@ -7,10 +7,12 @@ import com.nextsquad.house.dto.RentArticleCreationResponse;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RentArticleService {
 
@@ -40,8 +42,13 @@ public class RentArticleService {
                 .thisFloor(request.getThisFloor())
                 .hasParkingLot(request.isHasParkingLot())
                 .hasBalcony(request.isHasBalcony())
-                .houseImages(houseImages)
+//                .houseImages(houseImages)
                 .build();
+
+        for (HouseImage houseImage : houseImages) {
+            rentArticle.getHouseImages().add(houseImage);
+        }
+
 
         RentArticle savedArticle = rentArticleRepository.save(rentArticle);
 
