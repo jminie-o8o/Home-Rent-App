@@ -51,11 +51,12 @@ public class RentArticle {
     private int thisFloor;
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<RentArticleFacility> facilities;
-    private boolean hasParkingLot;
-    private boolean hasBalcony;
-    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
-    private List<HouseImage> houseImages = new ArrayList<>();
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<RentArticleSecurityFacility> securityFacilities;
+    private boolean hasParkingLot;
+    private boolean hasBalcony;
+    private boolean hasElevator;
+    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
+    private List<HouseImage> houseImages = new ArrayList<>();
 
 }

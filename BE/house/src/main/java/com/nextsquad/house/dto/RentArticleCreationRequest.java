@@ -18,6 +18,7 @@ public class RentArticleCreationRequest {
     private String contractType;
     private String houseType;
     private List<String> facilities;
+    private List<String> securityFacilities;
     private int deposit;
     private int rentFee;
     private int maintenanceFee;
@@ -27,6 +28,6 @@ public class RentArticleCreationRequest {
     private int thisFloor;
     private boolean hasParkingLot;
     private boolean hasBalcony;
+    private boolean hasElevator;
     private List<String> houseImages;
-    private List<String> securityFacilities;
 }
