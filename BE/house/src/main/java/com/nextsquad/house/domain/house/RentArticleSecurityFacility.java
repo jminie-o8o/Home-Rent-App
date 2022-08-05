@@ -1,11 +1,13 @@
 package com.nextsquad.house.domain.house;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class RentArticleSecurityFacility {
 
     @Id

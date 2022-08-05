@@ -6,6 +6,7 @@ import com.nextsquad.house.dto.RentArticleCreationRequest;
 import com.nextsquad.house.dto.RentArticleCreationResponse;
 import com.nextsquad.house.dto.RentArticleListElement;
 import com.nextsquad.house.dto.RentArticleListResponse;
+import com.nextsquad.house.dto.RentArticleResponse;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -79,5 +80,10 @@ public class RentArticleService {
                 .collect(Collectors.toList());
 
         return new RentArticleListResponse(responseElements);
+    }
+    
+    public RentArticleResponse getRentArticle(Long id){
+        RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        return RentArticleResponse.from(rentArticle);
     }
 }
