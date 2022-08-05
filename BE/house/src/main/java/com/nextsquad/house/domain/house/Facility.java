@@ -1,8 +1,11 @@
 package com.nextsquad.house.domain.house;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
