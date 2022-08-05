@@ -11,6 +11,7 @@
     </data>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/ns_home_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".ui.transfer.step1.HomeDescriptionFragment">
@@ -259,6 +260,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
+                    android:inputType="number"
                     android:text="@={vm.deposit}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -301,6 +303,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
+                    android:inputType="number"
                     android:text="@={vm.monthly}" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -343,6 +346,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
+                    android:inputType="number"
                     android:text="@={vm.maintenance}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -418,6 +422,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
+                    android:text="@={vm.startDate}"
                     android:focusableInTouchMode="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -450,6 +455,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
+                    android:text="@={vm.endDate}"
                     android:focusableInTouchMode="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
