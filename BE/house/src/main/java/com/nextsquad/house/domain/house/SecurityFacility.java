@@ -1,9 +1,11 @@
 package com.nextsquad.house.domain.house;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
-
+@Getter
 public class SecurityFacility {
 
     @Id
