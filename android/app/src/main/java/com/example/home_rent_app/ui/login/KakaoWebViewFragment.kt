@@ -15,11 +15,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.databinding.FragmentKakaoWebViewBinding
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
+import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,7 +45,7 @@ class KakaoWebViewFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navigator = Navigation.findNavController(view)
+        val navigationController = findNavController()
         binding.kakaoWebView.run {
             webViewClient = CustomWebViewClient()
             settings.javaScriptEnabled = true
@@ -52,6 +54,15 @@ class KakaoWebViewFragment : Fragment() {
                     BuildConfig.kakaoCientId +
                     "&redirect_uri=http://54.180.8.0:8080/login/oauth/callback&response_type=code"
             )
+        }
+        setupObserveAndMove(navigationController)
+    }
+
+    private fun setupObserveAndMove(navController: NavController) {
+        collectStateFlow(viewModel.accessToken) { accessToken ->
+            if (!accessToken.isNullOrEmpty()) {
+                navController.navigate(R.id.action_kakaoWebViewFragment_to_loginProfileFragment)
+            }
         }
     }
 
