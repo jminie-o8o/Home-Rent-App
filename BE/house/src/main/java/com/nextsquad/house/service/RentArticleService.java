@@ -21,8 +21,10 @@ public class RentArticleService {
     private final RentArticleRepository rentArticleRepository;
     private final UserRepository userRepository;
     private final FacilityRepository facilityRepository;
-    private final RentArticleFacilityRepository rentArticleFacilityRepository;
+    private final FacilityInHomeRepository facilityInHomeRepository;
     private final HouseImageRepository houseImageRepository;
+    private final SecurityRepository securityRepository;
+    private final SecurityInHomeRepository securityInHomeRepository;
 
     public RentArticleCreationResponse writeRentArticle(RentArticleCreationRequest request){
         User user = userRepository.findById(request.getUserId()).orElseThrow();
@@ -55,7 +57,13 @@ public class RentArticleService {
         for (String facilityName : request.getFacilities()) {
             Facility facility = facilityRepository.findByName(facilityName)
                     .orElseThrow(() -> new RuntimeException());
-            rentArticleFacilityRepository.save(new RentArticleFacility(rentArticle, facility));
+            facilityInHomeRepository.save(new RentArticleFacility(rentArticle, facility));
+        }
+
+        for (String securityFacilityName : request.getSecurityFacilities()) {
+            SecurityFacility securityFacility = securityRepository.findByName(securityFacilityName)
+                    .orElseThrow(() -> new RuntimeException());
+            securityInHomeRepository.save(new RentArticleSecurityFacility(rentArticle, securityFacility));
         }
 
         return new RentArticleCreationResponse(rentArticle.getId());
