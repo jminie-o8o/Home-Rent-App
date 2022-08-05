@@ -24,6 +24,7 @@ public class RentArticleController {
     @GetMapping
     public ResponseEntity<RentArticleListResponse> getRentArticles(String keyword, String sortedBy) {
         return ResponseEntity.ok(rentArticleService.getRentArticles(keyword, sortedBy));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<RentArticleResponse> getRentArticle(@PathVariable Long id) {
