@@ -51,6 +51,7 @@ public class RentArticleService {
                 .thisFloor(request.getThisFloor())
                 .hasParkingLot(request.isHasParkingLot())
                 .hasBalcony(request.isHasBalcony())
+                .hasElevator(request.isHasElevator())
                 .build();
         rentArticleRepository.save(rentArticle);
 
@@ -84,6 +85,6 @@ public class RentArticleService {
     
     public RentArticleResponse getRentArticle(Long id){
         RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
-        return RentArticleResponse.from(rentArticle);
+        return new RentArticleResponse(rentArticle);
     }
 }

@@ -5,6 +5,7 @@ import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.RentArticleFacility;
 import com.nextsquad.house.domain.house.RentArticleSecurityFacility;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -31,19 +32,33 @@ public class RentArticleResponse {
     private int thisFloor;
     private boolean hasParkingLot;
     private boolean hasBalcony;
+    private boolean hasElevator;
     private List<String> houseImages;
     private List<String> securityFacilities;
 
 
-    public static RentArticleResponse from (RentArticle rentArticle) {
-        return new RentArticleResponse(rentArticle.getId(), rentArticle.getAddress(),
-                rentArticle.getAddressDetail(), rentArticle.getTitle(), rentArticle.getContent(),
-                String.valueOf(rentArticle.getContractType()), String.valueOf(rentArticle.getHouseType()),
-                RentArticleResponse.convertFacilityList(rentArticle.getFacilities()),
-                rentArticle.getDeposit(), rentArticle.getRentFee(), rentArticle.getMaintenanceFee(),
-                rentArticle.getAvailableFrom(), rentArticle.getContractExpiresAt(), rentArticle.getMaxFloor(),
-                rentArticle.getThisFloor(), rentArticle.isHasParkingLot(), rentArticle.isHasParkingLot(),
-                convertHouseImageList(rentArticle.getHouseImages()), convertSecurityFacilityList(rentArticle.getSecurityFacilities()));
+    @Builder
+    public RentArticleResponse(RentArticle rentArticle) {
+        this.userId = rentArticle.getId();
+        this.address = rentArticle.getAddress();
+        this.addressDetail = rentArticle.getAddressDetail();
+        this.title = rentArticle.getTitle();
+        this.content = rentArticle.getContent();
+        this.contractType = String.valueOf(rentArticle.getContractType());
+        this.houseType = String.valueOf(rentArticle.getHouseType());
+        this.facilities = convertFacilityList(rentArticle.getFacilities());
+        this.deposit = rentArticle.getDeposit();
+        this.rentFee = rentArticle.getRentFee();
+        this.maintenanceFee = rentArticle.getMaintenanceFee();
+        this.availableFrom = rentArticle.getAvailableFrom();
+        this.contractExpiresAt = rentArticle.getContractExpiresAt();
+        this.maxFloor = rentArticle.getMaxFloor();
+        this.thisFloor = rentArticle.getThisFloor();
+        this.hasParkingLot = rentArticle.isHasParkingLot();
+        this.hasBalcony = rentArticle.isHasBalcony();
+        this.hasElevator = rentArticle.isHasElevator();
+        this.houseImages = convertHouseImageList(rentArticle.getHouseImages());
+        this.securityFacilities = convertSecurityFacilityList(rentArticle.getSecurityFacilities());
     }
 
     private static List<String> convertFacilityList(List<RentArticleFacility> facilityList){
