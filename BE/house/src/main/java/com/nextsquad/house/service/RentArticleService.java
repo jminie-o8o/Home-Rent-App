@@ -6,11 +6,13 @@ import com.nextsquad.house.dto.RentArticleCreationRequest;
 import com.nextsquad.house.dto.RentArticleCreationResponse;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -24,7 +26,8 @@ public class RentArticleService {
 
     public RentArticleCreationResponse writeRentArticle(RentArticleCreationRequest request){
         User user = userRepository.findById(request.getUserId()).orElseThrow();
-        List<HouseImage> houseImages = houseImageRepository.findAllByImageUrlIn(request.getHouseImages());
+        List<String> houseImageUrls = request.getHouseImages();
+
         RentArticle rentArticle = RentArticle.builder()
                 .user(user)
                 .title(request.getTitle())
@@ -42,15 +45,12 @@ public class RentArticleService {
                 .thisFloor(request.getThisFloor())
                 .hasParkingLot(request.isHasParkingLot())
                 .hasBalcony(request.isHasBalcony())
-//                .houseImages(houseImages)
                 .build();
+        rentArticleRepository.save(rentArticle);
 
-        for (HouseImage houseImage : houseImages) {
-            rentArticle.getHouseImages().add(houseImage);
+        for (int i = 0; i < houseImageUrls.size(); i++) {
+            houseImageRepository.save(new HouseImage(houseImageUrls.get(i), rentArticle, i));
         }
-
-
-        RentArticle savedArticle = rentArticleRepository.save(rentArticle);
 
         for (String facilityName : request.getFacilities()) {
             Facility facility = facilityRepository.findByName(facilityName)
@@ -58,6 +58,6 @@ public class RentArticleService {
             rentArticleFacilityRepository.save(new RentArticleFacility(rentArticle, facility));
         }
 
-        return new RentArticleCreationResponse(savedArticle.getId());
+        return new RentArticleCreationResponse(rentArticle.getId());
     }
 }

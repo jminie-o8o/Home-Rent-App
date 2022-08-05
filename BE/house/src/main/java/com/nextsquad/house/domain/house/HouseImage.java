@@ -20,8 +20,9 @@ public class HouseImage {
     private RentArticle rentArticle;
     private int orderInList;
 
-    public HouseImage(String storeFileUrl, int orderInList) {
+    public HouseImage(String storeFileUrl, RentArticle rentArticle, int orderInList) {
         this.imageUrl = storeFileUrl;
+        this.rentArticle = rentArticle;
         this.orderInList = orderInList;
     }
 }
