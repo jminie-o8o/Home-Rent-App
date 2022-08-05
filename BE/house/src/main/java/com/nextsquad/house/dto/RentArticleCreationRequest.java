@@ -28,4 +28,5 @@ public class RentArticleCreationRequest {
     private boolean hasParkingLot;
     private boolean hasBalcony;
     private List<String> houseImages;
+    private List<String> securityFacilities;
 }

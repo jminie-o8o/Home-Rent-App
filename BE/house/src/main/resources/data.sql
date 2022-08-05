@@ -4,3 +4,6 @@ VALUES ( 1, 'street62',  'lee', 'KAKAO', 'lucas.com', 'MALE');
 
 INSERT INTO facility (facility_id, name)
 VALUES ( 1, '에어컨'), ( 2, '세탁기'), ( 3, '침대'), ( 4, '냉장고');
+
+INSERT INTO security_facility(security_facility_id, name)
+VALUES (1, 'CCTV'), (2, '비디오픈'), (3, '공동현관');
