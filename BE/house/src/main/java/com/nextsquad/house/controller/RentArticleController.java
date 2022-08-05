@@ -1,15 +1,12 @@
 package com.nextsquad.house.controller;
 
-import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.dto.RentArticleCreationRequest;
 import com.nextsquad.house.dto.RentArticleCreationResponse;
+import com.nextsquad.house.dto.RentArticleResponse;
 import com.nextsquad.house.service.RentArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,5 +18,10 @@ public class RentArticleController {
     @PostMapping
     public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@RequestBody RentArticleCreationRequest rentArticleCreationRequest){
         return ResponseEntity.ok(rentArticleService.writeRentArticle(rentArticleCreationRequest));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RentArticleResponse> getRentArticle(@PathVariable Long id) {
+        return ResponseEntity.ok(rentArticleService.getRentArticle(id));
     }
 }

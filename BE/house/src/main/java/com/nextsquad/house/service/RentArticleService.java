@@ -4,6 +4,7 @@ import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.RentArticleCreationRequest;
 import com.nextsquad.house.dto.RentArticleCreationResponse;
+import com.nextsquad.house.dto.RentArticleResponse;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,5 +68,10 @@ public class RentArticleService {
         }
 
         return new RentArticleCreationResponse(rentArticle.getId());
+    }
+
+    public RentArticleResponse getRentArticle(Long id){
+        RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        return RentArticleResponse.from(rentArticle);
     }
 }
