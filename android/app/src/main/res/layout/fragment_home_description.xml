@@ -92,6 +92,7 @@
                 android:background="@drawable/shape_title_edittext"
                 android:autofillHints="no"
                 android:text="@={vm.title}"
+                android:maxLength="20"
                 android:inputType="text" />
 
             <TextView
