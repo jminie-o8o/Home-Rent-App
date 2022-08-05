@@ -1,6 +1,7 @@
 package com.nextsquad.house.domain.house;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class HouseImage {
 
     @Id

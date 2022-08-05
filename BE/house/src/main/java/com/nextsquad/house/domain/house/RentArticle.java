@@ -59,4 +59,7 @@ public class RentArticle {
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<HouseImage> houseImages = new ArrayList<>();
 
+    public HouseImage getMainImage() {
+        return houseImages.get(0);
+    }
 }
