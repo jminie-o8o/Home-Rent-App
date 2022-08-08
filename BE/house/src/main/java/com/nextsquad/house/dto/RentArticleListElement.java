@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -19,6 +20,9 @@ public class RentArticleListElement {
     private Integer rentFee;
     private LocalDate availableFrom;
     private LocalDate contractExpiresAt;
+    private LocalDateTime createdAt;
+    private boolean isCompleted;
+    private boolean isDeleted;
 
     public static RentArticleListElement from(RentArticle article) {
         return RentArticleListElement.builder()
@@ -29,6 +33,9 @@ public class RentArticleListElement {
                 .rentFee(article.getRentFee())
                 .availableFrom(article.getAvailableFrom())
                 .contractExpiresAt(article.getContractExpiresAt())
+                .createdAt(article.getCreatedAt())
+                .isCompleted(article.isCompleted())
+                .isDeleted(article.isDeleted())
                 .build();
     }
 

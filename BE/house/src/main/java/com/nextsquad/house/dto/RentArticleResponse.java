@@ -7,8 +7,10 @@ import com.nextsquad.house.domain.house.RentArticleSecurityFacility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,11 @@ public class RentArticleResponse {
     private boolean hasElevator;
     private List<String> houseImages;
     private List<String> securityFacilities;
+    @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
+    private LocalDateTime createdAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
+    private LocalDateTime modifiedAt;
+    private boolean isCompleted;
 
 
     @Builder
@@ -59,6 +66,9 @@ public class RentArticleResponse {
         this.hasElevator = rentArticle.isHasElevator();
         this.houseImages = convertHouseImageList(rentArticle.getHouseImages());
         this.securityFacilities = convertSecurityFacilityList(rentArticle.getSecurityFacilities());
+        this.createdAt = rentArticle.getCreatedAt();
+        this.modifiedAt = rentArticle.getModifiedAt();
+        this.isCompleted = rentArticle.isCompleted();
     }
 
     private static List<String> convertFacilityList(List<RentArticleFacility> facilityList){
