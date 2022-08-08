@@ -2,11 +2,7 @@ package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.RentArticleCreationRequest;
-import com.nextsquad.house.dto.RentArticleCreationResponse;
-import com.nextsquad.house.dto.RentArticleListElement;
-import com.nextsquad.house.dto.RentArticleListResponse;
-import com.nextsquad.house.dto.RentArticleResponse;
+import com.nextsquad.house.dto.*;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -89,5 +85,19 @@ public class RentArticleService {
     public RentArticleResponse getRentArticle(Long id){
         RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
         return new RentArticleResponse(rentArticle);
+    }
+
+    public GeneralResponseDto toggleIsCompleted(Long id) {
+        RentArticle rentArticle = rentArticleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
+        rentArticle.toggleIsCompleted();
+        return new GeneralResponseDto(200, "게시글 상태가 변경되었습니다.");
+    }
+
+    public GeneralResponseDto deleteArticle(Long id) {
+        RentArticle rentArticle = rentArticleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
+        rentArticle.markAsDeleted();
+        return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
     }
 }

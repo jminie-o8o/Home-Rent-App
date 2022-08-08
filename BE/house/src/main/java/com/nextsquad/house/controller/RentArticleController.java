@@ -1,9 +1,6 @@
 package com.nextsquad.house.controller;
 
-import com.nextsquad.house.dto.RentArticleCreationRequest;
-import com.nextsquad.house.dto.RentArticleCreationResponse;
-import com.nextsquad.house.dto.RentArticleListResponse;
-import com.nextsquad.house.dto.RentArticleResponse;
+import com.nextsquad.house.dto.*;
 import com.nextsquad.house.service.RentArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +26,16 @@ public class RentArticleController {
     @GetMapping("/{id}")
     public ResponseEntity<RentArticleResponse> getRentArticle(@PathVariable Long id) {
         return ResponseEntity.ok(rentArticleService.getRentArticle(id));
+    }
 
+    @PatchMapping("/{id}/isCompleted")
+    public ResponseEntity<GeneralResponseDto> toggleIsCompleted(@PathVariable Long id) {
+        return ResponseEntity.ok(rentArticleService.toggleIsCompleted(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<GeneralResponseDto> deleteArticle(@PathVariable Long id) {
+        return ResponseEntity.ok(rentArticleService.deleteArticle(id));
     }
 }
 

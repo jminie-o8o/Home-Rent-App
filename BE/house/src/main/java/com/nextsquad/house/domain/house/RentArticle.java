@@ -64,4 +64,12 @@ public class RentArticle {
     public HouseImage getMainImage() {
         return houseImages.get(0);
     }
+
+    public void toggleIsCompleted() {
+        isCompleted = !isCompleted;
+    }
+
+    public void markAsDeleted() {
+        isDeleted = true;
+    }
 }
