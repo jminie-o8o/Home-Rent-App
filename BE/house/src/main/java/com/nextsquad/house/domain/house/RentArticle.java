@@ -72,4 +72,8 @@ public class RentArticle {
     public void markAsDeleted() {
         isDeleted = true;
     }
+
+    public void addViewCount(){
+        viewCount++;
+    }
 }

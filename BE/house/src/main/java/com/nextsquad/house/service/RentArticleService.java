@@ -87,6 +87,8 @@ public class RentArticleService {
         if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
             throw new RuntimeException("삭제되었거나 거래가 완료된 글입니다.");
         }
+        rentArticle.addViewCount();
+
         return new RentArticleResponse(rentArticle);
     }
 
