@@ -148,9 +148,11 @@ class HomeDescriptionFragment : Fragment() {
         repeatOnStarted {
             viewModel.isCorrectDate.collect {
                 if (!it) {
-                    Toast.makeText(binding.root.context,
+                    Toast.makeText(
+                        binding.root.context,
                         "올바른 날짜를 입력해주세요.",
-                        Toast.LENGTH_SHORT)
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                     binding.tietStartDate.setText("")
                     binding.tietEndDate.setText("")
@@ -163,8 +165,8 @@ class HomeDescriptionFragment : Fragment() {
     private fun setTitleObserver() {
         repeatOnStarted {
             viewModel.title.collect {
-                logger("title change")
                 viewModel.setHomeDescriptionState()
+                binding.tvTitleLength.text = getString(R.string.title_length, it.length)
             }
         }
     }
@@ -173,7 +175,6 @@ class HomeDescriptionFragment : Fragment() {
     private fun setDepositObserver() {
         repeatOnStarted {
             viewModel.deposit.collect {
-                logger("deposit change")
                 viewModel.setHomeDescriptionState()
             }
         }
@@ -183,7 +184,6 @@ class HomeDescriptionFragment : Fragment() {
     private fun setMaintenanceObserver() {
         repeatOnStarted {
             viewModel.maintenance.collect {
-                logger("maintenance change")
                 viewModel.setHomeDescriptionState()
             }
         }
