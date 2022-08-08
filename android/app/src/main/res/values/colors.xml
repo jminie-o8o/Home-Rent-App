@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="kakao_yello">#FEE500</color>
     <color name="main_color">#A566FF</color>
+    <color name="gray">#CCCCCC</color>
 </resources>
