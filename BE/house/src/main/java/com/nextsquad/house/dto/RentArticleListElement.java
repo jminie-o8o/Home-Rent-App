@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class RentArticleListElement {
+    private Long id;
     private String title;
     private String houseImage;
     private ContractType contractType;
@@ -26,6 +27,7 @@ public class RentArticleListElement {
 
     public static RentArticleListElement from(RentArticle article) {
         return RentArticleListElement.builder()
+                .id(article.getId())
                 .title(article.getTitle())
                 .houseImage(article.getMainImage().getImageUrl())
                 .contractType(article.getContractType())

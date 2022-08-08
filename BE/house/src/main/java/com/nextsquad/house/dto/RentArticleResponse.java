@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class RentArticleResponse {
+    private Long id;
     private Long userId;
     private String address;
     private String addressDetail;
@@ -46,7 +47,8 @@ public class RentArticleResponse {
 
     @Builder
     public RentArticleResponse(RentArticle rentArticle) {
-        this.userId = rentArticle.getId();
+        this.id = rentArticle.getId();
+        this.userId = rentArticle.getUser().getId();
         this.address = rentArticle.getAddress();
         this.addressDetail = rentArticle.getAddressDetail();
         this.title = rentArticle.getTitle();

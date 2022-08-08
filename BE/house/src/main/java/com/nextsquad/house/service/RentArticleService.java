@@ -74,7 +74,7 @@ public class RentArticleService {
     }
 
     public RentArticleListResponse getRentArticles(String keyword, String sortedBy) {
-        List<RentArticle> rentArticles = rentArticleRepository.findAll();
+        List<RentArticle> rentArticles = rentArticleRepository.findAllAvailable();
         List<RentArticleListElement> responseElements = rentArticles.stream()
                 .map(RentArticleListElement::from)
                 .collect(Collectors.toList());
@@ -84,6 +84,9 @@ public class RentArticleService {
     
     public RentArticleResponse getRentArticle(Long id){
         RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
+            throw new RuntimeException("삭제되었거나 거래가 완료된 글입니다.");
+        }
         return new RentArticleResponse(rentArticle);
     }
 
