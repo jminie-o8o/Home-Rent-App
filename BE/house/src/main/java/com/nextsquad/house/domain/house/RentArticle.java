@@ -56,6 +56,8 @@ public class RentArticle {
     private boolean hasParkingLot;
     private boolean hasBalcony;
     private boolean hasElevator;
+    private boolean isCompleted;
+    private boolean isDeleted;
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<HouseImage> houseImages = new ArrayList<>();
 
