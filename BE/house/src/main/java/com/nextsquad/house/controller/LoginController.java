@@ -18,7 +18,7 @@ public class LoginController {
 
     @GetMapping("/oauth/callback")
     public String getOauthAuthCode() {
-        return "URL 쿼리로 응답받은 auth 코드로 서버에 로그인 요청을 보내주세요.";
+        return "";
     }
 
     @PostMapping("/oauth")
