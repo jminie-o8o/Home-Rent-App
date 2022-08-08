@@ -1,6 +1,7 @@
 package com.nextsquad.house.controller;
 
 import com.nextsquad.house.dto.*;
+import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.service.RentArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,11 @@ public class RentArticleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponseDto> deleteArticle(@PathVariable Long id) {
         return ResponseEntity.ok(rentArticleService.deleteArticle(id));
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<GeneralResponseDto> addBookmark(@PathVariable Long id, @RequestBody BookmarkRequestDto bookmarkRequestDto){
+        return ResponseEntity.ok(rentArticleService.addBookmark(id, bookmarkRequestDto));
     }
 }
 

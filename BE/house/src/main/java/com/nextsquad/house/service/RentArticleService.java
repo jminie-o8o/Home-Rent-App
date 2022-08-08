@@ -3,6 +3,7 @@ package com.nextsquad.house.service;
 import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
+import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class RentArticleService {
     private final HouseImageRepository houseImageRepository;
     private final SecurityRepository securityRepository;
     private final SecurityInHomeRepository securityInHomeRepository;
+    private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
 
     public RentArticleCreationResponse writeRentArticle(RentArticleCreationRequest request){
         User user = userRepository.findById(request.getUserId()).orElseThrow();
@@ -104,5 +106,12 @@ public class RentArticleService {
                 .orElseThrow(() -> new RuntimeException());
         rentArticle.markAsDeleted();
         return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
+    }
+
+    public GeneralResponseDto addBookmark(Long id, BookmarkRequestDto bookmarkRequestDto) {
+        User user = userRepository.findById(bookmarkRequestDto.getUserId()).orElseThrow(() -> new RuntimeException());
+        RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
+        return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
     }
 }
