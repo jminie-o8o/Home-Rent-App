@@ -111,6 +111,12 @@ public class RentArticleService {
     public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto) {
         User user = userRepository.findById(bookmarkRequestDto.getUserId()).orElseThrow(() -> new RuntimeException());
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new RuntimeException());
+        if (rentArticle.isDeleted()) {
+            return new GeneralResponseDto(400, "삭제된 게시글은 추가할 수 없습니다.");
+        }
+        if (rentArticle.isCompleted()) {
+            return new GeneralResponseDto(400, "완료된 게시글은 추가할 수 없습니다.");
+        }
         rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
     }
