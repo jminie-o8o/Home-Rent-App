@@ -21,6 +21,9 @@ public class RentArticleResponse {
     private Long userId;
     private String address;
     private String addressDetail;
+    private String addressDescription;
+    private double latitude;
+    private double longitude;
     private String title;
     private String content;
     private String contractType;
@@ -29,6 +32,7 @@ public class RentArticleResponse {
     private int deposit;
     private int rentFee;
     private int maintenanceFee;
+    private String maintenanceFeeDescription;
     private LocalDate availableFrom;
     private LocalDate contractExpiresAt;
     private int bookmarkCount;
@@ -52,6 +56,9 @@ public class RentArticleResponse {
         this.userId = rentArticle.getUser().getId();
         this.address = rentArticle.getAddress();
         this.addressDetail = rentArticle.getAddressDetail();
+        this.addressDescription = rentArticle.getAddressDescription();
+        this.latitude = rentArticle.getLatitude();
+        this.longitude = rentArticle.getLongitude();
         this.title = rentArticle.getTitle();
         this.content = rentArticle.getContent();
         this.contractType = String.valueOf(rentArticle.getContractType());
@@ -60,6 +67,7 @@ public class RentArticleResponse {
         this.deposit = rentArticle.getDeposit();
         this.rentFee = rentArticle.getRentFee();
         this.maintenanceFee = rentArticle.getMaintenanceFee();
+        this.maintenanceFeeDescription = rentArticle.getMaintenanceFeeDescription();
         this.availableFrom = rentArticle.getAvailableFrom();
         this.contractExpiresAt = rentArticle.getContractExpiresAt();
         this.bookmarkCount = rentArticle.getBookmarks().size();
