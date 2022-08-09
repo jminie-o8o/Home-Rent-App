@@ -13,6 +13,9 @@ public class RentArticleCreationRequest {
     private Long userId;
     private String address;
     private String addressDetail;
+    private String addressDescription;
+    private double latitude;
+    private double longitude;
     private String title;
     private String content;
     private String contractType;
@@ -22,6 +25,7 @@ public class RentArticleCreationRequest {
     private int deposit;
     private int rentFee;
     private int maintenanceFee;
+    private String maintenanceFeeDescription;
     private LocalDate availableFrom;
     private LocalDate contractExpiresAt;
     private int maxFloor;

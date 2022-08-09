@@ -1,7 +1,6 @@
 package com.nextsquad.house.domain.house;
 
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.RentArticleCreationRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,17 +27,19 @@ public class RentArticle {
     private User user;
     private String address;
     private String addressDetail;
+    private String addressDescription;
+    private double latitude;
+    private double longitude;
     private String title;
     private String content;
     @Enumerated(EnumType.STRING)
     private ContractType contractType;
     @Enumerated(EnumType.STRING)
     private HouseType houseType;
-    private String locationInfo;
-    private String maintenanceFeeInfo;
     private int deposit;
     private int rentFee;
     private int maintenanceFee;
+    private String maintenanceFeeDescription;
     private LocalDate availableFrom;
     private LocalDate contractExpiresAt;
     private ArticleStatus status;
