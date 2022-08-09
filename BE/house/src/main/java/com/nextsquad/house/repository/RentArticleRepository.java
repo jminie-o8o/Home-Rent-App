@@ -1,6 +1,8 @@
 package com.nextsquad.house.repository;
 
 import com.nextsquad.house.domain.house.RentArticle;
+import com.nextsquad.house.domain.house.RentArticleBookmark;
+import com.nextsquad.house.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

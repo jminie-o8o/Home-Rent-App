@@ -108,10 +108,20 @@ public class RentArticleService {
         return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
     }
 
-    public GeneralResponseDto addBookmark(Long id, BookmarkRequestDto bookmarkRequestDto) {
+    public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto) {
         User user = userRepository.findById(bookmarkRequestDto.getUserId()).orElseThrow(() -> new RuntimeException());
-        RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new RuntimeException());
         rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
+    }
+
+    public GeneralResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequestDto) {
+        User user = userRepository.findById(bookmarkRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("해당 id에 맞는 유저가 없습니다."));
+        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId())
+                .orElseThrow(() -> new RuntimeException("해당 id에 맞는 양도 게시글이 없습니다."));
+        RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle);
+        rentArticleBookmarkRepository.delete(bookmark);
+        return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
     }
 }

@@ -39,9 +39,14 @@ public class RentArticleController {
         return ResponseEntity.ok(rentArticleService.deleteArticle(id));
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> addBookmark(@PathVariable Long id, @RequestBody BookmarkRequestDto bookmarkRequestDto){
-        return ResponseEntity.ok(rentArticleService.addBookmark(id, bookmarkRequestDto));
+    @PostMapping("/bookmarks")
+    public ResponseEntity<GeneralResponseDto> addBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto){
+        return ResponseEntity.ok(rentArticleService.addBookmark(bookmarkRequestDto));
+    }
+
+    @DeleteMapping("/bookmarks")
+    public ResponseEntity<GeneralResponseDto> deleteBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto) {
+        return ResponseEntity.ok(rentArticleService.deleteBookmark(bookmarkRequestDto));
     }
 }
 
