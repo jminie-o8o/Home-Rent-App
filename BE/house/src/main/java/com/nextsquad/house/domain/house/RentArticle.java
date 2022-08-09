@@ -60,7 +60,8 @@ public class RentArticle {
     private boolean isDeleted;
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<HouseImage> houseImages = new ArrayList<>();
-
+    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
+    private List<RentArticleBookmark> bookmarks = new ArrayList<>();
     public HouseImage getMainImage() {
         return houseImages.get(0);
     }

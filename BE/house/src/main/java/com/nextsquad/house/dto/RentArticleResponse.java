@@ -31,6 +31,7 @@ public class RentArticleResponse {
     private int maintenanceFee;
     private LocalDate availableFrom;
     private LocalDate contractExpiresAt;
+    private int bookmarkCount;
     private int maxFloor;
     private int thisFloor;
     private boolean hasParkingLot;
@@ -61,6 +62,7 @@ public class RentArticleResponse {
         this.maintenanceFee = rentArticle.getMaintenanceFee();
         this.availableFrom = rentArticle.getAvailableFrom();
         this.contractExpiresAt = rentArticle.getContractExpiresAt();
+        this.bookmarkCount = rentArticle.getBookmarks().size();
         this.maxFloor = rentArticle.getMaxFloor();
         this.thisFloor = rentArticle.getThisFloor();
         this.hasParkingLot = rentArticle.isHasParkingLot();
