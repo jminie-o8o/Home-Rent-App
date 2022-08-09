@@ -2,11 +2,8 @@ package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.RentArticleCreationRequest;
-import com.nextsquad.house.dto.RentArticleCreationResponse;
-import com.nextsquad.house.dto.RentArticleListElement;
-import com.nextsquad.house.dto.RentArticleListResponse;
-import com.nextsquad.house.dto.RentArticleResponse;
+import com.nextsquad.house.dto.*;
+import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +27,7 @@ public class RentArticleService {
     private final HouseImageRepository houseImageRepository;
     private final SecurityRepository securityRepository;
     private final SecurityInHomeRepository securityInHomeRepository;
+    private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
 
     public RentArticleCreationResponse writeRentArticle(RentArticleCreationRequest request){
         User user = userRepository.findById(request.getUserId()).orElseThrow();
@@ -78,7 +76,7 @@ public class RentArticleService {
     }
 
     public RentArticleListResponse getRentArticles(String keyword, String sortedBy) {
-        List<RentArticle> rentArticles = rentArticleRepository.findAll();
+        List<RentArticle> rentArticles = rentArticleRepository.findAllAvailable();
         List<RentArticleListElement> responseElements = rentArticles.stream()
                 .map(RentArticleListElement::from)
                 .collect(Collectors.toList());
@@ -88,6 +86,48 @@ public class RentArticleService {
     
     public RentArticleResponse getRentArticle(Long id){
         RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
+            throw new RuntimeException("삭제되었거나 거래가 완료된 글입니다.");
+        }
+        rentArticle.addViewCount();
+
         return new RentArticleResponse(rentArticle);
+    }
+
+    public GeneralResponseDto toggleIsCompleted(Long id) {
+        RentArticle rentArticle = rentArticleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
+        rentArticle.toggleIsCompleted();
+        return new GeneralResponseDto(200, "게시글 상태가 변경되었습니다.");
+    }
+
+    public GeneralResponseDto deleteArticle(Long id) {
+        RentArticle rentArticle = rentArticleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
+        rentArticle.markAsDeleted();
+        return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
+    }
+
+    public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto) {
+        User user = userRepository.findById(bookmarkRequestDto.getUserId()).orElseThrow(() -> new RuntimeException());
+        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new RuntimeException());
+        if (rentArticle.isDeleted()) {
+            return new GeneralResponseDto(400, "삭제된 게시글은 추가할 수 없습니다.");
+        }
+        if (rentArticle.isCompleted()) {
+            return new GeneralResponseDto(400, "완료된 게시글은 추가할 수 없습니다.");
+        }
+        rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
+        return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
+    }
+
+    public GeneralResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequestDto) {
+        User user = userRepository.findById(bookmarkRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("해당 id에 맞는 유저가 없습니다."));
+        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId())
+                .orElseThrow(() -> new RuntimeException("해당 id에 맞는 양도 게시글이 없습니다."));
+        RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle);
+        rentArticleBookmarkRepository.delete(bookmark);
+        return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
     }
 }

@@ -13,12 +13,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class RentArticleListElement {
+    private Long id;
     private String title;
     private String houseImage;
     private ContractType contractType;
     private Integer deposit;
     private Integer rentFee;
     private LocalDate availableFrom;
+    private Integer bookmarkCount;
     private LocalDate contractExpiresAt;
     private LocalDateTime createdAt;
     private boolean isCompleted;
@@ -26,12 +28,14 @@ public class RentArticleListElement {
 
     public static RentArticleListElement from(RentArticle article) {
         return RentArticleListElement.builder()
+                .id(article.getId())
                 .title(article.getTitle())
                 .houseImage(article.getMainImage().getImageUrl())
                 .contractType(article.getContractType())
                 .deposit(article.getDeposit())
                 .rentFee(article.getRentFee())
                 .availableFrom(article.getAvailableFrom())
+                .bookmarkCount(article.getBookmarks().size())
                 .contractExpiresAt(article.getContractExpiresAt())
                 .createdAt(article.getCreatedAt())
                 .isCompleted(article.isCompleted())
