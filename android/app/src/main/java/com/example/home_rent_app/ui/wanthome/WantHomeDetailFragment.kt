@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeDetailBinding
+import com.example.home_rent_app.ui.WantHomeActivity
 
 class WantHomeDetailFragment : Fragment() {
 
@@ -24,12 +27,20 @@ class WantHomeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        goHomeActivity()
         pressLikeButton()
     }
 
     private fun pressLikeButton() {
         binding.btnLike.setOnClickListener {
             binding.btnLike.isSelected = binding.btnLike.isSelected != true
+        }
+    }
+
+    private fun goHomeActivity() {
+        binding.btnGoToHome.setOnClickListener {
+            val activity = activity as WantHomeActivity
+            activity.onBackPressed()
         }
     }
 }
