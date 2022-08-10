@@ -12,6 +12,15 @@
         android:layout_height="match_parent"
         tools:context=".ui.wanthome.WantHomeSecondStepFragment">
 
+        <WebView
+            android:id="@+id/kakao_address_web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/abb_bar_want_home_second_step"
             android:layout_width="match_parent"
@@ -74,24 +83,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pb_want_home_second_step" />
 
-        <Button
-            android:id="@+id/btn_search_address"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_find_address"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="위치검색"
-            app:layout_constraintStart_toStartOf="@id/tv_locate_second_step"
-            app:layout_constraintTop_toBottomOf="@id/tv_locate_second_step" />
+            android:layout_marginHorizontal="20dp"
+            app:hintEnabled="false"
+            app:layout_constraintStart_toStartOf="@+id/tv_locate_second_step"
+            app:layout_constraintTop_toBottomOf="@+id/tv_locate_second_step">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_find_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:hint="주소 검색" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_title_second_step"
             style="@style/TextSubtitle1.18.bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="제목"
             app:layout_constraintStart_toStartOf="@id/tv_locate_second_step"
-            app:layout_constraintTop_toBottomOf="@+id/btn_search_address" />
+            app:layout_constraintTop_toBottomOf="@+id/til_find_address" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_title_second_step"
