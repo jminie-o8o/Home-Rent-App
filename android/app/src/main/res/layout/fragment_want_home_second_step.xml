@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.wantHome.WantHomeSecondStepFragment">
+        tools:context=".ui.wanthome.WantHomeSecondStepFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/abb_bar_want_home_second_step"

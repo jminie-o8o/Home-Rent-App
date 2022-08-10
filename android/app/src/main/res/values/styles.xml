@@ -17,4 +17,15 @@
     <style name="TextSubtitle1.18.bold">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="TextHeadline5" parent="TextAppearance.MaterialComponents.Headline5" />
+
+    <style name="TextHeadline5.22">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="TextHeadline5.22.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

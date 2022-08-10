@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wantHome
+package com.example.home_rent_app.ui.wanthome
 
 import android.os.Build
 import android.os.Bundle

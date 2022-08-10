@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wantHome
+package com.example.home_rent_app.ui.wanthome
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,5 +24,12 @@ class WantHomeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pressLikeButton()
+    }
+
+    private fun pressLikeButton() {
+        binding.btnLike.setOnClickListener {
+            binding.btnLike.isSelected = binding.btnLike.isSelected != true
+        }
     }
 }
