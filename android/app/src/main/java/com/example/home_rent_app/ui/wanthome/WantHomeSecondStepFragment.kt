@@ -17,7 +17,8 @@ class WantHomeSecondStepFragment : Fragment() {
     lateinit var binding: FragmentWantHomeSecondStepBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_want_home_second_step, container, false)

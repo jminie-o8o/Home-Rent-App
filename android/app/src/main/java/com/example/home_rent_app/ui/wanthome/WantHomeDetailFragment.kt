@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeDetailBinding
 import com.example.home_rent_app.ui.WantHomeActivity
@@ -17,10 +15,12 @@ class WantHomeDetailFragment : Fragment() {
     lateinit var binding: FragmentWantHomeDetailBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_want_home_detail, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_want_home_detail, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }

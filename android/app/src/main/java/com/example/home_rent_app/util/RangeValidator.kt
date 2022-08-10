@@ -4,8 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.android.material.datepicker.CalendarConstraints
 
-class RangeValidator(private val minDate:Long, private val maxDate:Long) : CalendarConstraints.DateValidator{
-
+class RangeValidator(private val minDate: Long, private val maxDate: Long) : CalendarConstraints.DateValidator {
 
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
@@ -21,7 +20,6 @@ class RangeValidator(private val minDate:Long, private val maxDate:Long) : Calen
 
     override fun isValid(date: Long): Boolean {
         return !(minDate > date || maxDate < date)
-
     }
 
     companion object CREATOR : Parcelable.Creator<RangeValidator> {
@@ -33,5 +31,4 @@ class RangeValidator(private val minDate:Long, private val maxDate:Long) : Calen
             return arrayOfNulls(size)
         }
     }
-
 }
