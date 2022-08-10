@@ -15,8 +15,8 @@ public class RentArticleController {
     private final RentArticleService rentArticleService;
 
     @PostMapping
-    public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@RequestBody RentArticleCreationRequest rentArticleCreationRequest){
-        return ResponseEntity.ok(rentArticleService.writeRentArticle(rentArticleCreationRequest));
+    public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@RequestBody RentArticleRequest rentArticleRequest){
+        return ResponseEntity.ok(rentArticleService.writeRentArticle(rentArticleRequest));
     }
 
     @GetMapping
@@ -27,6 +27,11 @@ public class RentArticleController {
     @GetMapping("/{id}")
     public ResponseEntity<RentArticleResponse> getRentArticle(@PathVariable Long id) {
         return ResponseEntity.ok(rentArticleService.getRentArticle(id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<GeneralResponseDto> modifyRentArticle(@PathVariable Long id, @RequestBody RentArticleRequest request) {
+        return ResponseEntity.ok(rentArticleService.modifyRentArticle(id, request));
     }
 
     @PatchMapping("/{id}/isCompleted")

@@ -1,6 +1,7 @@
 package com.nextsquad.house.domain.house;
 
 import com.nextsquad.house.domain.user.User;
+import com.nextsquad.house.dto.RentArticleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -77,5 +78,28 @@ public class RentArticle {
 
     public void addViewCount(){
         viewCount++;
+    }
+
+    public void modifyArticle(RentArticleRequest request) {
+        this.address = request.getAddress();
+        this.addressDetail = request.getAddressDetail();
+        this.addressDescription = request.getAddressDescription();
+        this.latitude = request.getLatitude();
+        this.longitude = request.getLongitude();
+        this.title = request.getTitle();
+        this.content = request.getContent();
+        this.contractType = ContractType.valueOf(request.getContractType());
+        this.houseType = HouseType.valueOf(request.getHouseType());
+        this.deposit = request.getDeposit();
+        this.rentFee = request.getRentFee();
+        this.maintenanceFee = request.getMaintenanceFee();
+        this.maintenanceFeeDescription = request.getMaintenanceFeeDescription();
+        this.availableFrom = request.getAvailableFrom();
+        this.contractExpiresAt = request.getContractExpiresAt();
+        this.maxFloor = request.getMaxFloor();
+        this.thisFloor = request.getThisFloor();
+        this.hasParkingLot = request.isHasParkingLot();
+        this.hasBalcony = request.isHasBalcony();
+        this.hasElevator = request.isHasElevator();
     }
 }

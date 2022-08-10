@@ -29,7 +29,8 @@ public class RentArticleService {
     private final SecurityInHomeRepository securityInHomeRepository;
     private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
 
-    public RentArticleCreationResponse writeRentArticle(RentArticleCreationRequest request){
+    public RentArticleCreationResponse writeRentArticle(RentArticleRequest request){
+        log.info("writing {}... ", request.getTitle());
         User user = userRepository.findById(request.getUserId()).orElseThrow();
         List<String> houseImageUrls = request.getHouseImages();
 
@@ -60,23 +61,27 @@ public class RentArticleService {
                 .build();
         rentArticleRepository.save(rentArticle);
 
-        for (int i = 0; i < houseImageUrls.size(); i++) {
-            houseImageRepository.save(new HouseImage(houseImageUrls.get(i), rentArticle, i));
-        }
+        saveHouseImage(rentArticle, houseImageUrls);
+        saveFacilityInHome(request.getFacilities(), rentArticle);
+        saveSecurityInHome(request.getSecurityFacilities(), rentArticle);
 
-        for (String facilityName : request.getFacilities()) {
-            Facility facility = facilityRepository.findByName(facilityName)
-                    .orElseThrow(() -> new RuntimeException());
-            facilityInHomeRepository.save(new RentArticleFacility(rentArticle, facility));
-        }
+        return new RentArticleCreationResponse(rentArticle.getId());
+    }
 
-        for (String securityFacilityName : request.getSecurityFacilities()) {
+    private void saveSecurityInHome(List<String> securityFacilities, RentArticle rentArticle) {
+        for (String securityFacilityName : securityFacilities) {
             SecurityFacility securityFacility = securityRepository.findByName(securityFacilityName)
                     .orElseThrow(() -> new RuntimeException());
             securityInHomeRepository.save(new RentArticleSecurityFacility(rentArticle, securityFacility));
         }
+    }
 
-        return new RentArticleCreationResponse(rentArticle.getId());
+    private void saveFacilityInHome(List<String> facilities, RentArticle rentArticle) {
+        for (String facilityName : facilities) {
+            Facility facility = facilityRepository.findByName(facilityName)
+                    .orElseThrow(() -> new RuntimeException());
+            facilityInHomeRepository.save(new RentArticleFacility(rentArticle, facility));
+        }
     }
 
     public RentArticleListResponse getRentArticles(String keyword, String sortedBy) {
@@ -133,5 +138,27 @@ public class RentArticleService {
         RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle);
         rentArticleBookmarkRepository.delete(bookmark);
         return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
+    }
+
+    public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request) {
+        log.info("updating {}... ", request.getTitle());
+        RentArticle rentArticle = rentArticleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("해당 id에 맞는 양도 게시글이 없습니다."));
+
+        facilityInHomeRepository.deleteAllByRentArticle(rentArticle);
+        securityInHomeRepository.deleteAllByRentArticle(rentArticle);
+        houseImageRepository.deleteAllByArticle(rentArticle);
+
+        saveFacilityInHome(request.getFacilities(), rentArticle);
+        saveSecurityInHome(request.getSecurityFacilities(), rentArticle);
+        saveHouseImage(rentArticle, request.getHouseImages());
+
+        return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
+    }
+
+    private void saveHouseImage(RentArticle rentArticle, List<String> houseImageUrls) {
+        for (int i = 0; i < houseImageUrls.size(); i++) {
+            houseImageRepository.save(new HouseImage(houseImageUrls.get(i), rentArticle, i));
+        }
     }
 }

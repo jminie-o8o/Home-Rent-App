@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class RentArticleCreationRequest {
+public class RentArticleRequest {
 
     private Long userId;
     private String address;
