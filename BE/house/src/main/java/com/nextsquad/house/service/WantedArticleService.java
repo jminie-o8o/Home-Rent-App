@@ -2,6 +2,7 @@ package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.user.User;
+import com.nextsquad.house.dto.GeneralResponseDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
@@ -11,13 +12,16 @@ import com.nextsquad.house.repository.UserRepository;
 import com.nextsquad.house.repository.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
-public class WantedArticleService {
+public class WantedArticleService {시
 
     private final WantedArticleRepository wantedArticleRepository;
     private final UserRepository userRepository;
@@ -52,5 +56,13 @@ public class WantedArticleService {
         List<WantedArticleElementResponse> elementResponseList = wantedArticleRepository.findByAvailable()
                 .stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
         return new WantedArticleListResponse(elementResponseList);
+    }
+
+    public GeneralResponseDto updateWantedArticle(Long id, WantedArticleRequest request) {
+        WantedArticle article = wantedArticleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("요청하신 id에 해당하는 게시글이 없습니다."));
+
+        article.modifyArticle(request);
+        return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
     }
 }

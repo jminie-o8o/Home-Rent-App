@@ -1,6 +1,7 @@
 package com.nextsquad.house.domain.house;
 
 import com.nextsquad.house.domain.user.User;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,4 +41,14 @@ public class WantedArticle {
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime modifiedAt;
 
+    public void modifyArticle(WantedArticleRequest request) {
+        this.address = request.getAddress();
+        this.title = request.getTitle();
+        this.content = request.getContent();
+        this.moveInDate = request.getMoveInDate();
+        this.moveOutDate = request.getMoveOutDate();
+        this.rentBudget = request.getRentBudget();
+        this.depositBudget = request.getDepositBudget();
+        this.modifiedAt = LocalDateTime.now();
+    }
 }
