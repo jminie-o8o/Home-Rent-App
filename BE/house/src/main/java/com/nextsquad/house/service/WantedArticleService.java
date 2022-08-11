@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class WantedArticleService {시
+public class WantedArticleService {
 
     private final WantedArticleRepository wantedArticleRepository;
     private final UserRepository userRepository;
