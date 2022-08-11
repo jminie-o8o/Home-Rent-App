@@ -1,14 +1,12 @@
 package com.nextsquad.house.controller;
 
+import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.service.WantedArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +18,11 @@ public class WantedArticleController {
     @PostMapping
     public ResponseEntity<SavedWantedArticleResponse> writeWantedArticle(@RequestBody WantedArticleRequest request) {
         return ResponseEntity.ok(wantedArticleService.writeWantedArticle(request));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id) {
+        return ResponseEntity.ok(wantedArticleService.getWantedArticle(id));
+
     }
 }

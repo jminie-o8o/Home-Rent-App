@@ -4,6 +4,7 @@ import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.repository.UserRepository;
 import com.nextsquad.house.repository.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +30,16 @@ public class WantedArticleService {
                 .rentBudget(request.getRentBudget())
                 .depositBudget(request.getDepositBudget())
                 .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
                 .build();
 
         wantedArticleRepository.save(wantedArticle);
         return new SavedWantedArticleResponse(wantedArticle.getId());
+    }
+
+    public WantedArticleResponse getWantedArticle(Long articleId) {
+        WantedArticle article = wantedArticleRepository.findById(articleId)
+                .orElseThrow(() -> new IllegalArgumentException("요청하신 id에 해당하는 게시글이 없습니다."));
+        return WantedArticleResponse.from(article);
     }
 }
