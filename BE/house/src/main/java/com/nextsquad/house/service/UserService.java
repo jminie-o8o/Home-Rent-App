@@ -28,6 +28,9 @@ public class UserService {
 
     public GeneralResponseDto modifyUserInfo(Long id, UserInfoDto userInfoDto){
         User user = userRepository.findById(id).orElseThrow();
+        if (userRepository.existsUserByDisplayName(userInfoDto.getDisplayName())) {
+            throw new IllegalArgumentException("중복된 닉네임 입니다.");
+        }
         user.modifyInfo(userInfoDto);
         return new GeneralResponseDto(200, "정보가 수정되었습니다");
     }
