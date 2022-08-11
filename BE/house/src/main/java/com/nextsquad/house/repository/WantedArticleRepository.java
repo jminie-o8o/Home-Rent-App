@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface WantedArticleRepository extends JpaRepository<WantedArticle, Long> {
-    @Query("select a from WantedArticle a where a.isCompleted = false")
+    @Query("select a from WantedArticle a where a.isCompleted = false and a.isDeleted = false")
     List<WantedArticle> findByAvailable();
 }

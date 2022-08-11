@@ -58,6 +58,15 @@ public class WantedArticleService {시
         return new WantedArticleListResponse(elementResponseList);
     }
 
+
+    public GeneralResponseDto deleteWantedArticle(Long id) {
+        WantedArticle wantedArticle = wantedArticleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("해당하는 ID의 게시글이 존재하지 않습니다"));
+        wantedArticle.markAsDeleted();
+        wantedArticleRepository.save(wantedArticle);
+        return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
+    }
+    
     public GeneralResponseDto updateWantedArticle(Long id, WantedArticleRequest request) {
         WantedArticle article = wantedArticleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("요청하신 id에 해당하는 게시글이 없습니다."));
