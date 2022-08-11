@@ -1,5 +1,6 @@
 package com.nextsquad.house.controller;
 
+import com.nextsquad.house.dto.GeneralResponseDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
@@ -25,6 +26,11 @@ public class WantedArticleController {
     @GetMapping("/{id}")
     public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id) {
         return ResponseEntity.ok(wantedArticleService.getWantedArticle(id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<GeneralResponseDto> updateWantedArticle(@PathVariable Long id, @RequestBody WantedArticleRequest request) {
+        return ResponseEntity.ok(wantedArticleService.updateWantedArticle(id, request));
     }
 
     @GetMapping
