@@ -2,6 +2,7 @@ package com.nextsquad.house.controller;
 
 import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.service.WantedArticleService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,14 @@ public class WantedArticleController {
         return ResponseEntity.ok(wantedArticleService.writeWantedArticle(request));
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id) {
         return ResponseEntity.ok(wantedArticleService.getWantedArticle(id));
+    }
 
+    @GetMapping
+    public ResponseEntity<WantedArticleListResponse> getWantedArticleList() {
+        return ResponseEntity.ok(wantedArticleService.getWantedArticleList());
     }
 }
