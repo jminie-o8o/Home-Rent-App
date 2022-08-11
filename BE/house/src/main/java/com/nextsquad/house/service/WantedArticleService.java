@@ -2,6 +2,7 @@ package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.user.User;
+import com.nextsquad.house.dto.GeneralResponseDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
@@ -52,5 +53,13 @@ public class WantedArticleService {
         List<WantedArticleElementResponse> elementResponseList = wantedArticleRepository.findByAvailable()
                 .stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
         return new WantedArticleListResponse(elementResponseList);
+    }
+
+    public GeneralResponseDto deleteWantedArticle(Long id) {
+        WantedArticle wantedArticle = wantedArticleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("해당하는 ID의 게시글이 존재하지 않습니다"));
+        wantedArticle.markAsDeleted();
+        wantedArticleRepository.save(wantedArticle);
+        return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
     }
 }

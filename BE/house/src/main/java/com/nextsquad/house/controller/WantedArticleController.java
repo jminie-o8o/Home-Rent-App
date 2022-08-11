@@ -1,5 +1,6 @@
 package com.nextsquad.house.controller;
 
+import com.nextsquad.house.dto.GeneralResponseDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
@@ -31,4 +32,10 @@ public class WantedArticleController {
     public ResponseEntity<WantedArticleListResponse> getWantedArticleList() {
         return ResponseEntity.ok(wantedArticleService.getWantedArticleList());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<GeneralResponseDto> deleteWantedArticle(@PathVariable Long id){
+        return ResponseEntity.ok(wantedArticleService.deleteWantedArticle(id));
+    }
+
 }

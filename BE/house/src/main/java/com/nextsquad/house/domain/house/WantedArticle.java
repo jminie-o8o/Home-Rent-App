@@ -39,5 +39,9 @@ public class WantedArticle {
     private LocalDateTime createdAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime modifiedAt;
+    private boolean isDeleted;
 
+    public void markAsDeleted(){
+        isDeleted = true;
+    }
 }
