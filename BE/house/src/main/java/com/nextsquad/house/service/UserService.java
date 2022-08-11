@@ -3,6 +3,7 @@ package com.nextsquad.house.service;
 import com.nextsquad.house.domain.house.RentArticleBookmark;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
+import com.nextsquad.house.dto.user.DuplicationCheckResponse;
 import com.nextsquad.house.repository.RentArticleBookmarkRepository;
 import com.nextsquad.house.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,9 @@ public class UserService {
 
     public GeneralResponseDto modifyUserInfo(Long id, UserInfoDto userInfoDto){
         User user = userRepository.findById(id).orElseThrow();
+        if (userRepository.existsUserByDisplayName(userInfoDto.getDisplayName())) {
+            throw new IllegalArgumentException("중복된 닉네임 입니다.");
+        }
         user.modifyInfo(userInfoDto);
         return new GeneralResponseDto(200, "정보가 수정되었습니다");
     }
@@ -36,5 +40,9 @@ public class UserService {
         List<RentArticleBookmark> bookmarks = rentArticleBookmarkRepository.findByUser(user);
         List<RentArticleListElement> elements = bookmarks.stream().map(RentArticleListElement::from).collect(Collectors.toList());
         return new RentArticleListResponse(elements);
+    }
+
+    public DuplicationCheckResponse checkDuplication(String nickname) {
+        return new DuplicationCheckResponse(userRepository.existsUserByDisplayName(nickname));
     }
 }
