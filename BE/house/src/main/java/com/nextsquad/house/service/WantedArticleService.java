@@ -2,13 +2,17 @@ package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.user.User;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.repository.UserRepository;
 import com.nextsquad.house.repository.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +37,11 @@ public class WantedArticleService {
 
         wantedArticleRepository.save(wantedArticle);
         return new SavedWantedArticleResponse(wantedArticle.getId());
+    }
+
+    public WantedArticleListResponse getWantedArticleList() {
+        List<WantedArticleElementResponse> elementResponseList = wantedArticleRepository.findByAvailable()
+                .stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
+        return new WantedArticleListResponse(elementResponseList);
     }
 }
