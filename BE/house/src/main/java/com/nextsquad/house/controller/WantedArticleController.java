@@ -1,5 +1,6 @@
 package com.nextsquad.house.controller;
 
+import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
@@ -18,6 +19,12 @@ public class WantedArticleController {
     @PostMapping
     public ResponseEntity<SavedWantedArticleResponse> writeWantedArticle(@RequestBody WantedArticleRequest request) {
         return ResponseEntity.ok(wantedArticleService.writeWantedArticle(request));
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id) {
+        return ResponseEntity.ok(wantedArticleService.getWantedArticle(id));
     }
 
     @GetMapping
