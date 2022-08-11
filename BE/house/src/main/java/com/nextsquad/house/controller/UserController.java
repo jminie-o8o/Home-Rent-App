@@ -4,6 +4,7 @@ import com.nextsquad.house.dto.GeneralResponseDto;
 import com.nextsquad.house.dto.RentArticleListResponse;
 import com.nextsquad.house.dto.UserInfoDto;
 import com.nextsquad.house.dto.UserResponseDto;
+import com.nextsquad.house.dto.user.DuplicationCheckResponse;
 import com.nextsquad.house.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,11 @@ public class UserController {
     @GetMapping("{userId}/bookmarks/rent")
     public ResponseEntity<RentArticleListResponse> getRentBookmark(@PathVariable long userId){
         return ResponseEntity.ok(userService.getRentBookmark(userId));
+    }
+
+    @GetMapping("/check-duplication")
+    public ResponseEntity<DuplicationCheckResponse> checkDuplication(@RequestParam String nickname) {
+        return ResponseEntity.ok(userService.checkDuplication(nickname));
     }
 
 }
