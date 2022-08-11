@@ -10,6 +10,7 @@ import com.example.home_rent_app.data.api.LoginApi
 import com.example.home_rent_app.data.dto.toJWT
 import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.KakaoOauthRequest
+import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.ACCESS_TOKEN
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.LOGIN_CHECK
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.REFRESH_TOKEN
@@ -29,6 +30,10 @@ class LoginRepositoryImpl @Inject constructor(
 
     override suspend fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest): JWT {
         return loginApi.getKakaoToken(kakaoOauthRequest).toJWT()
+    }
+
+    override suspend fun getNaverToken(naverOauthRequest: NaverOauthRequest): JWT {
+        return loginApi.getNaverToken(naverOauthRequest).toJWT()
     }
 
     private object PreferenceKeys {

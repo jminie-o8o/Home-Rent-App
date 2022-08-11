@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +11,13 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
-import com.example.home_rent_app.data.model.KakaoOauthRequest
+import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.databinding.FragmentNaverWebViewBinding
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.collectStateFlow
@@ -31,7 +30,8 @@ class NaverWebViewFragment : Fragment() {
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
@@ -49,8 +49,8 @@ class NaverWebViewFragment : Fragment() {
             settings.javaScriptEnabled = true
             loadUrl(
                 "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
-                        BuildConfig.naverClientId +
-                        "&redirect_uri=http://54.180.8.0:8080/login/oauth/callback&state=tany1004"
+                    BuildConfig.naverClientId +
+                    "&redirect_uri=http://54.180.8.0:8080/login/oauth/callback&state=tany1004"
             )
         }
         setupObserveAndMove(navigationController)
@@ -59,7 +59,7 @@ class NaverWebViewFragment : Fragment() {
     private fun setupObserveAndMove(navController: NavController) {
         collectStateFlow(viewModel.accessToken) { accessToken ->
             if (!accessToken.isNullOrEmpty()) {
-                navController.navigate(R.id.action_kakaoWebViewFragment_to_loginProfileFragment)
+                navController.navigate(R.id.action_naverWebViewFragment_to_loginProfileFragment)
             }
         }
     }
@@ -74,7 +74,7 @@ class NaverWebViewFragment : Fragment() {
                 url.host == NAVER_OAUTH_REDIRECTION_HOST &&
                 code != null
             ) {
-                Log.d("Naver", code)
+                viewModel.getNaverToken(NaverOauthRequest(code.toString()))
             }
         }
 

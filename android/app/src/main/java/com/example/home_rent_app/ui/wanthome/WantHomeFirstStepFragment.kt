@@ -19,9 +19,9 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 import java.util.Calendar
 import java.util.GregorianCalendar
+import java.util.Locale
 
 class WantHomeFirstStepFragment : Fragment() {
 
@@ -32,7 +32,13 @@ class WantHomeFirstStepFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_want_home_first_step, container, false)
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_want_home_first_step,
+                container,
+                false
+            )
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -48,7 +54,9 @@ class WantHomeFirstStepFragment : Fragment() {
 
     private fun goSecondStep(navController: NavController) {
         binding.btnGoSecondStep.setOnClickListener {
-            navController.navigate(R.id.action_wantHomeFirstStepFragment_to_wantHomeSecondStepFragment)
+            navController.navigate(
+                R.id.action_wantHomeFirstStepFragment_to_wantHomeSecondStepFragment
+            )
         }
     }
 

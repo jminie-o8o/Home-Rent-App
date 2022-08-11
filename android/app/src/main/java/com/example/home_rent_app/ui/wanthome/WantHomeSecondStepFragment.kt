@@ -5,13 +5,18 @@ import android.app.Dialog
 import android.net.http.SslError
 import android.os.Bundle
 import android.os.Message
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.*
+import android.webkit.JavascriptInterface
+import android.webkit.JsResult
+import android.webkit.SslErrorHandler
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
@@ -31,7 +36,13 @@ class WantHomeSecondStepFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_want_home_second_step, container, false)
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_want_home_second_step,
+                container,
+                false
+            )
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -65,12 +76,19 @@ class WantHomeSecondStepFragment : Fragment() {
 
     private val client: WebViewClient = object : WebViewClient() {
 
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
             return false
         }
 
         @SuppressLint("WebViewClientOnReceivedSslError")
-        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+        override fun onReceivedSslError(
+            view: WebView?,
+            handler: SslErrorHandler?,
+            error: SslError?
+        ) {
             handler?.proceed()
         }
     }
@@ -90,7 +108,12 @@ class WantHomeSecondStepFragment : Fragment() {
     private val chromeClient = object : WebChromeClient() {
 
         @SuppressLint("SetJavaScriptEnabled")
-        override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
+        override fun onCreateWindow(
+            view: WebView?,
+            isDialog: Boolean,
+            isUserGesture: Boolean,
+            resultMsg: Message?
+        ): Boolean {
 
             val newWebView = WebView(requireContext()).apply {
                 settings.javaScriptEnabled = true
@@ -109,7 +132,12 @@ class WantHomeSecondStepFragment : Fragment() {
             dialog.show()
 
             newWebView.webChromeClient = object : WebChromeClient() {
-                override fun onJsAlert(view: WebView, url: String, message: String, result: JsResult): Boolean {
+                override fun onJsAlert(
+                    view: WebView,
+                    url: String,
+                    message: String,
+                    result: JsResult
+                ): Boolean {
                     super.onJsAlert(view, url, message, result)
                     return true
                 }
