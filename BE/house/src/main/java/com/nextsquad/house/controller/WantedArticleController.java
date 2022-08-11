@@ -28,6 +28,11 @@ public class WantedArticleController {
         return ResponseEntity.ok(wantedArticleService.getWantedArticle(id));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<GeneralResponseDto> updateWantedArticle(@PathVariable Long id, @RequestBody WantedArticleRequest request) {
+        return ResponseEntity.ok(wantedArticleService.updateWantedArticle(id, request));
+    }
+
     @GetMapping
     public ResponseEntity<WantedArticleListResponse> getWantedArticleList() {
         return ResponseEntity.ok(wantedArticleService.getWantedArticleList());
