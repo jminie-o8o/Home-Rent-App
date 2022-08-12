@@ -89,4 +89,16 @@ public class WantedArticleService {
         wantedArticleBookmarkRepository.save(new WantedArticleBookmark(user, wantedArticle));
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
     }
+
+    public GeneralResponseDto deleteWantedBookmark(BookmarkRequestDto bookmarkRequestDto) {
+        WantedArticle wantedArticle = wantedArticleRepository.findById(bookmarkRequestDto.getArticleId())
+                .orElseThrow(() -> new RuntimeException("해당하는 ID의 게시글이 존재하지 않습니다"));
+        User user = userRepository.findById(bookmarkRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("해당 유저가 존재하지 않습니다"));
+        WantedArticleBookmark bookmark = wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, wantedArticle)
+                .orElseThrow(() -> new RuntimeException("북마크가 존재하지 않습니다."));
+
+        wantedArticleBookmarkRepository.delete(bookmark);
+        return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
+    }
 }

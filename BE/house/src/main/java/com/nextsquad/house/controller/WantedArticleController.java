@@ -49,4 +49,9 @@ public class WantedArticleController {
         return ResponseEntity.ok(wantedArticleService.addWantedBookmark(bookmarkRequestDto));
     }
 
+    @DeleteMapping("/bookmarks")
+    public ResponseEntity<GeneralResponseDto> deleteWantedBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto) {
+        return ResponseEntity.ok(wantedArticleService.deleteWantedBookmark(bookmarkRequestDto));
+    }
+
 }
