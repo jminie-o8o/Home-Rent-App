@@ -4,9 +4,10 @@
     package="com.example.home_rent_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <queries>
         <package android:name="com.kakao.talk" />
@@ -23,11 +24,16 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.transfer.TransferActivity"
-            android:exported="false" >
-        </activity>
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.WantHomeActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.HomeActivity"
             android:exported="true" />
+
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true">

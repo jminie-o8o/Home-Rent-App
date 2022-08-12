@@ -1,13 +1,13 @@
 package com.example.home_rent_app.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeBinding
+import com.example.home_rent_app.ui.WantHomeActivity
 
 class HomeFragment : Fragment() {
 
@@ -26,9 +26,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navigationController = findNavController()
         binding.tempButton.setOnClickListener {
-            navigationController.navigate(R.id.action_homeFragment_to_wantHomeFirstStepFragment)
+            val intent = Intent(activity, WantHomeActivity::class.java)
+            startActivity(intent)
         }
     }
 }

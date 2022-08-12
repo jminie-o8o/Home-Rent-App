@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeFirstStepBinding
-import com.example.home_rent_app.ui.HomeActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import dagger.hilt.android.AndroidEntryPoint
 
 class WantHomeFirstStepFragment : Fragment() {
 
@@ -28,11 +27,13 @@ class WantHomeFirstStepFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hideBottomNavigation()
+        val findNavController = findNavController()
+        goBack(findNavController)
     }
 
-    private fun hideBottomNavigation(boolean: Boolean = true) {
-        val homeActivity = activity as HomeActivity
-        homeActivity.hideBottomNavigationView(boolean)
+    private fun goBack(findNavController: NavController) {
+        binding.btnClose.setOnClickListener {
+            findNavController.popBackStack()
+        }
     }
 }

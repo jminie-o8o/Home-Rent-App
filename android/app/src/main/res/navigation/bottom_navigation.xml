@@ -9,11 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.home_rent_app.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_wantHomeFirstStepFragment"
-            app:destination="@id/wantHomeFirstStepFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/chattingFragment"
         android:name="com.example.home_rent_app.ui.chatting.ChattingFragment"
@@ -29,8 +25,4 @@
         android:name="com.example.home_rent_app.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"/>
-    <fragment
-        android:id="@+id/wantHomeFirstStepFragment"
-        android:name="com.example.home_rent_app.ui.wantHome.WantHomeFirstStepFragment"
-        android:label="WantHomeFirstStepFragment" />
 </navigation>

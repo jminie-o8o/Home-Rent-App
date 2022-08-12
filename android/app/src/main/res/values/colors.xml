@@ -10,4 +10,7 @@
     <color name="kakao_yello">#FEE500</color>
     <color name="main_color">#A566FF</color>
     <color name="gray">#CCCCCC</color>
+    <color name="gray01">#E5E5E5</color>
+    <color name="gray02">#BDBDBD</color>
+    <color name="gray03">#828282</color>
 </resources>
