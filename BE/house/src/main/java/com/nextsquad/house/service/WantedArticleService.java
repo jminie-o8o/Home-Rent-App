@@ -1,14 +1,17 @@
 package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.WantedArticle;
+import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.GeneralResponseDto;
+import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
 import com.nextsquad.house.repository.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,7 @@ public class WantedArticleService {
 
     private final WantedArticleRepository wantedArticleRepository;
     private final UserRepository userRepository;
+    private final WantedArticleBookmarkRepository wantedArticleBookmarkRepository;
 
     public SavedWantedArticleResponse writeWantedArticle(WantedArticleRequest request) {
         User user = userRepository.findById(request.getUserId()).orElseThrow();
@@ -74,5 +78,15 @@ public class WantedArticleService {
 
         article.modifyArticle(request);
         return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
+    }
+
+    public GeneralResponseDto addWantedBookmark(BookmarkRequestDto bookmarkRequestDto) {
+        WantedArticle wantedArticle = wantedArticleRepository.findById(bookmarkRequestDto.getArticleId())
+                .orElseThrow(() -> new RuntimeException("해당하는 ID의 게시글이 존재하지 않습니다"));
+        User user = userRepository.findById(bookmarkRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("해당 유저가 존재하지 않습니다"));
+
+        wantedArticleBookmarkRepository.save(new WantedArticleBookmark(user, wantedArticle));
+        return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
     }
 }
