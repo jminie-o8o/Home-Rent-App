@@ -5,6 +5,7 @@ import com.nextsquad.house.dto.RentArticleListResponse;
 import com.nextsquad.house.dto.UserInfoDto;
 import com.nextsquad.house.dto.UserResponseDto;
 import com.nextsquad.house.dto.user.DuplicationCheckResponse;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,11 @@ public class UserController {
     @GetMapping("/check-duplication")
     public ResponseEntity<DuplicationCheckResponse> checkDuplication(@RequestParam String nickname) {
         return ResponseEntity.ok(userService.checkDuplication(nickname));
+    }
+
+    @GetMapping("/{userId}/bookmarks/wanted")
+    public ResponseEntity<WantedArticleListResponse> getWantedBookmark(@PathVariable long userId) {
+        return ResponseEntity.ok(userService.getWantedBookmark(userId));
     }
 
 }
