@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui
+package com.example.home_rent_app.ui.wanthome
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityTakeHomeBinding
+import com.example.home_rent_app.ui.HomeActivity
 
 class WantHomeActivity : AppCompatActivity() {
 

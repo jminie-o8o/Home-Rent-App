@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wanthome
+package com.example.home_rent_app.ui.wanthome.step1
 
 import android.os.Build
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeFirstStepBinding
-import com.example.home_rent_app.ui.WantHomeActivity
+import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.RangeValidator
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker

@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wanthome
+package com.example.home_rent_app.ui.wanthome.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeDetailBinding
-import com.example.home_rent_app.ui.WantHomeActivity
+import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 
 class WantHomeDetailFragment : Fragment() {
 

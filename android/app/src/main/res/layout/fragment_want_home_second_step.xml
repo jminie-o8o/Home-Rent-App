@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.wanthome.WantHomeSecondStepFragment">
+        tools:context=".ui.wanthome.step2.WantHomeSecondStepFragment">
 
         <WebView
             android:id="@+id/kakao_address_web_view"
