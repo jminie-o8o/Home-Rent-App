@@ -87,8 +87,8 @@
         <View
             android:layout_width="30dp"
             android:layout_height="2dp"
-            app:layout_constraintStart_toEndOf="@+id/til_go_in"
-            app:layout_constraintTop_toTopOf="@+id/til_go_in"
+            app:layout_constraintStart_toEndOf="@+id/btn_go_in"
+            app:layout_constraintTop_toTopOf="@+id/btn_go_in"
             android:background="@color/gray02"
             android:layout_marginTop="24dp"
             android:layout_marginStart="34dp" />
@@ -104,39 +104,23 @@
             app:layout_constraintStart_toEndOf="@+id/tv_go_in_date"
             app:layout_constraintTop_toBottomOf="@+id/tv_date_range_want_home_first_step" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_go_in"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="120dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="10dp"
+        <Button
+            android:id="@+id/btn_go_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜 선택"
+            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date"
             app:layout_constraintStart_toStartOf="@+id/tv_go_in_date"
-            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date">
+            android:layout_marginTop="10dp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_go_in"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textAutoComplete" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_go_out"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="120dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="10dp"
+        <Button
+            android:id="@+id/btn_go_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜 선택"
+            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date"
             app:layout_constraintStart_toStartOf="@+id/tv_go_out_date"
-            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_go_out"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textAutoComplete" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/tv_budget"
@@ -146,7 +130,7 @@
             android:layout_marginTop="70dp"
             android:text="예산"
             app:layout_constraintStart_toStartOf="@+id/tv_date_range_want_home_first_step"
-            app:layout_constraintTop_toBottomOf="@+id/til_go_in" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_go_in" />
 
         <TextView
             android:id="@+id/tv_deposit"
