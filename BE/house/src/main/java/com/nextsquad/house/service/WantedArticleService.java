@@ -49,6 +49,7 @@ public class WantedArticleService {
     public WantedArticleResponse getWantedArticle(Long articleId) {
         WantedArticle article = wantedArticleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("요청하신 id에 해당하는 게시글이 없습니다."));
+        article.addViewCount();
         return WantedArticleResponse.from(article);
     }
     

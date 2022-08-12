@@ -57,4 +57,8 @@ public class WantedArticle {
         this.depositBudget = request.getDepositBudget();
         this.modifiedAt = LocalDateTime.now();
     }
+
+    public void addViewCount(){
+        viewCount++;
+    }
 }
