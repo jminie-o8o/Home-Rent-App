@@ -17,16 +17,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
-import com.example.home_rent_app.data.model.KakaoOauthRequest
-import com.example.home_rent_app.databinding.FragmentKakaoWebViewBinding
+import com.example.home_rent_app.data.model.NaverOauthRequest
+import com.example.home_rent_app.databinding.FragmentNaverWebViewBinding
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class KakaoWebViewFragment : Fragment() {
+class NaverWebViewFragment : Fragment() {
 
-    lateinit var binding: FragmentKakaoWebViewBinding
+    lateinit var binding: FragmentNaverWebViewBinding
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
@@ -35,7 +35,7 @@ class KakaoWebViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_kakao_web_view, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_naver_web_view, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -48,9 +48,9 @@ class KakaoWebViewFragment : Fragment() {
             webViewClient = CustomWebViewClient()
             settings.javaScriptEnabled = true
             loadUrl(
-                "https://kauth.kakao.com/oauth/authorize?client_id=" +
-                    BuildConfig.kakaoClientId +
-                    "&redirect_uri=http://54.180.8.0:8080/login/oauth/callback&response_type=code"
+                "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
+                    BuildConfig.naverClientId +
+                    "&redirect_uri=http://54.180.8.0:8080/login/oauth/callback&state=tany1004"
             )
         }
         setupObserveAndMove(navigationController)
@@ -59,7 +59,7 @@ class KakaoWebViewFragment : Fragment() {
     private fun setupObserveAndMove(navController: NavController) {
         collectStateFlow(viewModel.accessToken) { accessToken ->
             if (!accessToken.isNullOrEmpty()) {
-                navController.navigate(R.id.action_kakaoWebViewFragment_to_loginProfileFragment)
+                navController.navigate(R.id.action_naverWebViewFragment_to_loginProfileFragment)
             }
         }
     }
@@ -68,13 +68,13 @@ class KakaoWebViewFragment : Fragment() {
 
         private fun checkUrl(request: WebResourceRequest?) {
             val url = request?.url ?: return
-            val code = url.getQueryParameter(KAKAO_OAUTH_CODE_PARAM_KEY)
+            val code = url.getQueryParameter(NAVER_OAUTH_CODE_PARAM_KEY)
 
-            if (url.scheme == KAKAO_OAUTH_REDIRECTION_SCHEME &&
-                url.host == KAKAO_OAUTH_REDIRECTION_HOST &&
+            if (url.scheme == NAVER_OAUTH_REDIRECTION_SCHEME &&
+                url.host == NAVER_OAUTH_REDIRECTION_HOST &&
                 code != null
             ) {
-                viewModel.getKakaoToken(KakaoOauthRequest(code.toString()))
+                viewModel.getNaverToken(NaverOauthRequest(code.toString()))
             }
         }
 
@@ -89,8 +89,8 @@ class KakaoWebViewFragment : Fragment() {
     }
 
     companion object {
-        private const val KAKAO_OAUTH_REDIRECTION_SCHEME = "http"
-        private const val KAKAO_OAUTH_REDIRECTION_HOST = "54.180.8.0"
-        private const val KAKAO_OAUTH_CODE_PARAM_KEY = "code"
+        private const val NAVER_OAUTH_REDIRECTION_SCHEME = "http"
+        private const val NAVER_OAUTH_REDIRECTION_HOST = "54.180.8.0"
+        private const val NAVER_OAUTH_CODE_PARAM_KEY = "code"
     }
 }

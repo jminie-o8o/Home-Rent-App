@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -20,5 +21,10 @@ class HomeActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         binding.navigation.setupWithNavController(navHostFragment.navController)
+    }
+
+    fun goWantHomeActivity() {
+        val intent = Intent(this, WantHomeActivity::class.java)
+        startActivity(intent)
     }
 }

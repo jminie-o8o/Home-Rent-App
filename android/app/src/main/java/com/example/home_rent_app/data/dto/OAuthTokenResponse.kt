@@ -43,6 +43,3 @@ fun OAuthTokenResponse.toJWT(): JWT {
     val refresh = requireNotNull(refreshToken)
     return JWT(access.toAccessToken(), refresh.toRefreshToken())
 }
-
-
-

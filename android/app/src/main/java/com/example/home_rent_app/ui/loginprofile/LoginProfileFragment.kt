@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
@@ -24,7 +24,8 @@ class LoginProfileFragment : Fragment() {
     lateinit var binding: FragmentLoginProfileBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
@@ -78,16 +79,28 @@ class LoginProfileFragment : Fragment() {
             when {
                 deniedList.isNotEmpty() -> {
                     val map = deniedList.groupBy { permission ->
-                        if (shouldShowRequestPermissionRationale(permission)) "DENIED" else "EXPLAINED"
+                        if (shouldShowRequestPermissionRationale(permission)) {
+                            "DENIED"
+                        } else {
+                            "EXPLAINED"
+                        }
                     }
                     map["DENIED"]?.let {
                         // 한번 거절했을 경우 재요청
-                        Toast.makeText(requireContext(), "앨범에 접근하려면 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "앨범에 접근하려면 권한이 필요합니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         requestPermissions()
                     }
                     map["EXPLAINED"]?.let {
                         // 두번 거절했을 경우
-                        Toast.makeText(requireContext(), "설정에서 미디어 접근 권한을 허용해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "설정에서 미디어 접근 권한을 허용해주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

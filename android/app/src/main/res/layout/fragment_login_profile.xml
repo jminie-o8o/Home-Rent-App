@@ -17,9 +17,9 @@
             style="@style/TextSubtitle1.18.bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="80dp"
             android:text="프로필 사진을 선택하세요"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,6 +50,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="80dp"
+            android:layout_marginEnd="100dp"
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +63,15 @@
                 android:inputType="textAutoComplete" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_nickname_check"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:text="중복확인"
+            app:layout_constraintStart_toEndOf="@+id/til_login_profile_nickname"
+            app:layout_constraintTop_toTopOf="@+id/til_login_profile_nickname" />
 
         <TextView
             android:id="@+id/tv_nickname_hint"
