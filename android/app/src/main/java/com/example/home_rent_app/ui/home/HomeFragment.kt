@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -18,6 +20,15 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navigationController = findNavController()
+        binding.tempButton.setOnClickListener {
+            navigationController.navigate(R.id.action_homeFragment_to_wantHomeFirstStepFragment)
+        }
     }
 }

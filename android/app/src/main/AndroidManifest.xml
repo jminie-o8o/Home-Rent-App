@@ -23,13 +23,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.transfer.TransferActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-
-            </intent-filter>
+            android:exported="false" >
         </activity>
         <activity
             android:name=".ui.HomeActivity"
@@ -40,6 +34,10 @@
             <intent-filter>
 
                 <action android:name="android.intent.action.VIEW" />
+
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
