@@ -39,7 +39,7 @@ class LoginFragment : Fragment() {
             navController.navigate(R.id.action_loginFragment_to_kakaoWebViewFragment)
         }
         binding.btnNaverLogin.setOnClickListener {
-            navController.navigate(R.id.action_loginFragment_to_loginProfileFragment)
+            navController.navigate(R.id.action_loginFragment_to_naverWebViewFragment)
         }
     }
 }

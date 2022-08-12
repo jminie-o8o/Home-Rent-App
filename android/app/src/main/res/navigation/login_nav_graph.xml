@@ -14,8 +14,8 @@
             android:id="@+id/action_loginFragment_to_kakaoWebViewFragment"
             app:destination="@id/kakaoWebViewFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_loginProfileFragment"
-            app:destination="@id/loginProfileFragment" />
+            android:id="@+id/action_loginFragment_to_naverWebViewFragment"
+            app:destination="@id/naverWebViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/kakaoWebViewFragment"
@@ -31,4 +31,13 @@
         android:name="com.example.home_rent_app.ui.loginprofile.LoginProfileFragment"
         android:label="LoginProfileFragment"
         tools:layout="@layout/fragment_login_profile"/>
+    <fragment
+        android:id="@+id/naverWebViewFragment"
+        android:name="com.example.home_rent_app.ui.login.NaverWebViewFragment"
+        android:label="NaverWebViewFragment"
+        tools:layout="@layout/fragment_naver_web_view">
+        <action
+            android:id="@+id/action_naverWebViewFragment_to_loginProfileFragment"
+            app:destination="@id/loginProfileFragment" />
+    </fragment>
 </navigation>
