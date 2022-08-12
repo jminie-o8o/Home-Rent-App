@@ -1,5 +1,6 @@
 package com.nextsquad.house.service;
 
+import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.RentArticleBookmark;
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
@@ -62,6 +63,20 @@ public class UserService {
 
     }
 
+
+    public RentArticleListResponse getMyRentArticles(long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("요청하신 id에 해당하는 사용자가 없습니다."));
+
+        List<RentArticle> rentArticles = user.getRentArticles();
+
+        List<RentArticleListElement> responseElements = rentArticles.stream()
+                .map(RentArticleListElement::from)
+                .collect(Collectors.toList());
+
+        return new RentArticleListResponse(responseElements);
+    }
+    
     public WantedArticleListResponse getMyWantedArticles(long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당하는 ID의 사용자가 없습니다"));
         List<WantedArticle> articles = wantedArticleRepository.findByUser(user);
