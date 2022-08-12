@@ -135,7 +135,8 @@ public class RentArticleService {
                 .orElseThrow(() -> new RuntimeException("해당 id에 맞는 유저가 없습니다."));
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId())
                 .orElseThrow(() -> new RuntimeException("해당 id에 맞는 양도 게시글이 없습니다."));
-        RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle);
+        RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle)
+                .orElseThrow(() -> new RuntimeException("북마크가 존재하지 않습니다."));
         rentArticleBookmarkRepository.delete(bookmark);
         return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
     }
