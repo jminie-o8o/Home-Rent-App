@@ -1,11 +1,15 @@
 package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.RentArticleBookmark;
+import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.user.DuplicationCheckResponse;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.repository.RentArticleBookmarkRepository;
 import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +24,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
+    private final WantedArticleBookmarkRepository wantedArticleBookmarkRepository;
 
     public UserResponseDto getUserInfo(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 유저 입니다."));
@@ -44,5 +49,13 @@ public class UserService {
 
     public DuplicationCheckResponse checkDuplication(String nickname) {
         return new DuplicationCheckResponse(userRepository.existsUserByDisplayName(nickname));
+    }
+
+    public WantedArticleListResponse getWantedBookmark(long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당하는 ID의 사용자가 없습니다"));
+        List<WantedArticleBookmark> bookmarks = wantedArticleBookmarkRepository.findByUser(user);
+        List<WantedArticleElementResponse> elements = bookmarks.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
+        return new WantedArticleListResponse(elements);
+
     }
 }
