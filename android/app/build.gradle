@@ -97,6 +97,9 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     // date4j
     implementation("com.darwinsys:hirondelle-date4j:1.5.1")
+
+    // Splash Screen
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 }
 
 kapt {

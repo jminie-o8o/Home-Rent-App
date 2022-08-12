@@ -12,15 +12,13 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeDescriptionBinding
 import com.example.home_rent_app.ui.transfer.TransferViewModel
 import com.example.home_rent_app.util.RentType
-import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted
 import com.google.android.material.datepicker.MaterialDatePicker
 import hirondelle.date4j.DateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.*
-
+import java.util.TimeZone
 
 class HomeDescriptionFragment : Fragment() {
 
@@ -71,7 +69,6 @@ class HomeDescriptionFragment : Fragment() {
                         setMonthlyGone()
                     }
                 }
-
             }
         }
     }
@@ -113,7 +110,6 @@ class HomeDescriptionFragment : Fragment() {
                 CoroutineScope(Job()).launch {
                     viewModel.checkCorrectDate()
                 }
-
             }
         }
     }
@@ -137,7 +133,6 @@ class HomeDescriptionFragment : Fragment() {
                 CoroutineScope(Job()).launch {
                     viewModel.checkCorrectDate()
                 }
-
             }
         }
     }
@@ -233,7 +228,9 @@ class HomeDescriptionFragment : Fragment() {
                     binding.btnNext.apply {
                         isEnabled = true
                         backgroundTintList =
-                            ColorStateList.valueOf(binding.root.context.getColor(R.color.purple_200))
+                            ColorStateList.valueOf(
+                                binding.root.context.getColor(R.color.purple_200)
+                            )
                     }
                 }
             }

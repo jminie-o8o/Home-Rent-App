@@ -1,14 +1,15 @@
 package com.example.home_rent_app.ui.transfer
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.RoomType
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,7 +36,12 @@ class TransferViewModel @Inject constructor() : ViewModel() {
     private val _homeDescriptionState = MutableStateFlow(false)
     val homeDescriptionState = _homeDescriptionState.asStateFlow()
 
-    private val _isCorrectDate = MutableSharedFlow<Boolean>(replay = 0, extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _isCorrectDate =
+        MutableSharedFlow<Boolean>(
+            replay = 0,
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
+        )
     val isCorrectDate = _isCorrectDate.asSharedFlow()
 
     fun setHomeDescriptionState() {
@@ -46,25 +52,25 @@ class TransferViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun setJeonseHomeDescriptionState() {
-        if (title.value != ""
-            && deposit.value != ""
-            && maintenance.value != ""
-            && maintenanceDescription.value != ""
-            && startDate.value != ""
-            && endDate.value != ""
+        if (title.value != "" &&
+            deposit.value != "" &&
+            maintenance.value != "" &&
+            maintenanceDescription.value != "" &&
+            startDate.value != "" &&
+            endDate.value != ""
         ) {
             _homeDescriptionState.value = true
         }
     }
 
     private fun setMonthlyHomeDescriptionState() {
-        if (title.value != ""
-            && deposit.value != ""
-            && monthly.value != ""
-            && maintenance.value != ""
-            && maintenanceDescription.value != ""
-            && startDate.value != ""
-            && endDate.value != ""
+        if (title.value != "" &&
+            deposit.value != "" &&
+            monthly.value != "" &&
+            maintenance.value != "" &&
+            maintenanceDescription.value != "" &&
+            startDate.value != "" &&
+            endDate.value != ""
         ) {
             _homeDescriptionState.value = true
         }
@@ -72,12 +78,11 @@ class TransferViewModel @Inject constructor() : ViewModel() {
 
     suspend fun checkCorrectDate() {
         logger("compareToDate() < 0 ${compareToDate() < 0}")
-        if(startDate.value != "" && endDate.value != "") {
+        if (startDate.value != "" && endDate.value != "") {
 
             _isCorrectDate.emit(compareToDate() < 0)
         }
     }
 
     private fun compareToDate() = startDate.value.compareTo(endDate.value)
-
 }

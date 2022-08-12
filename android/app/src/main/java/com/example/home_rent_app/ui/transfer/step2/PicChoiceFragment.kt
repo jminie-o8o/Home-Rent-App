@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentPicChoiceBinding
 import com.example.home_rent_app.ui.transfer.TransferViewModel
 
@@ -19,10 +18,10 @@ class PicChoiceFragment : Fragment() {
     private val viewModel: TransferViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return binding.root
     }
-
 }
