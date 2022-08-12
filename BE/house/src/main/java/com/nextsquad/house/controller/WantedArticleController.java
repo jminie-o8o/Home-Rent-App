@@ -1,6 +1,7 @@
 package com.nextsquad.house.controller;
 
 import com.nextsquad.house.dto.GeneralResponseDto;
+import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
@@ -41,6 +42,11 @@ public class WantedArticleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponseDto> deleteWantedArticle(@PathVariable Long id){
         return ResponseEntity.ok(wantedArticleService.deleteWantedArticle(id));
+    }
+
+    @PostMapping("/bookmarks")
+    public ResponseEntity<GeneralResponseDto> addWantedBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto) {
+        return ResponseEntity.ok(wantedArticleService.addWantedBookmark(bookmarkRequestDto));
     }
 
 }

@@ -28,6 +28,7 @@ public class WantedArticleResponse {
     private LocalDateTime createdAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime modifiedAt;
+    private int bookmarkCount;
 
     public static WantedArticleResponse from(WantedArticle article) {
         UserInfoDto userInfoDto = UserInfoDto.from(article.getUser());
@@ -44,6 +45,7 @@ public class WantedArticleResponse {
                 .viewCount(article.getViewCount())
                 .createdAt(article.getCreatedAt())
                 .modifiedAt(article.getModifiedAt())
+                .bookmarkCount(article.getBookmarks().size())
                 .build();
     }
 
