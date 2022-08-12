@@ -8,6 +8,7 @@ import com.example.home_rent_app.data.repository.login.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +19,17 @@ class LoginViewModel @Inject constructor(
 
     private val _accessToken = MutableStateFlow<String?>(null)
     val accessToken: StateFlow<String?> get() = _accessToken
+
+    private val _isLogin = MutableStateFlow(false)
+    val isLogin: StateFlow<Boolean> get() = _isLogin
+
+    init {
+        viewModelScope.launch {
+            loginRepository.getIsLogin().collect { isLogin ->
+                _isLogin.value = isLogin
+            }
+        }
+    }
 
     fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest) {
         viewModelScope.launch {

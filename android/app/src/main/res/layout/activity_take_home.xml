@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.WantHomeActivity">
+        tools:context=".ui.wanthome.WantHomeActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_view_take_home"

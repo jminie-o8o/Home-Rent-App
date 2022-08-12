@@ -27,7 +27,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".ui.WantHomeActivity"
+            android:name=".ui.wanthome.WantHomeActivity"
             android:exported="false" />
 
         <activity

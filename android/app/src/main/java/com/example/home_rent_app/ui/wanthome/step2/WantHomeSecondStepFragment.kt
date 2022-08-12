@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wanthome
+package com.example.home_rent_app.ui.wanthome.step2
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
-import com.example.home_rent_app.ui.WantHomeActivity
+import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

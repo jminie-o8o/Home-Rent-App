@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityHomeBinding
+import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 
 class HomeActivity : AppCompatActivity() {
 

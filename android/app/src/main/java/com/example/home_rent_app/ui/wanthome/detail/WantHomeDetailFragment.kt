@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wanthome
+package com.example.home_rent_app.ui.wanthome.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeDetailBinding
-import com.example.home_rent_app.ui.WantHomeActivity
+import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.util.setLikeClickEvent
 
 class WantHomeDetailFragment : Fragment() {
 
@@ -28,19 +30,19 @@ class WantHomeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         goHomeActivity()
-        pressLikeButton()
-    }
-
-    private fun pressLikeButton() {
-        binding.btnLike.setOnClickListener {
-            binding.btnLike.isSelected = binding.btnLike.isSelected != true
-        }
+        clickLikeButton()
     }
 
     private fun goHomeActivity() {
         binding.btnGoToHome.setOnClickListener {
             val activity = activity as WantHomeActivity
             activity.onBackPressed()
+        }
+    }
+
+    private fun clickLikeButton() {
+        binding.btnLike.setLikeClickEvent(lifecycleScope) {
+            binding.btnLike.isSelected = binding.btnLike.isSelected != true
         }
     }
 }

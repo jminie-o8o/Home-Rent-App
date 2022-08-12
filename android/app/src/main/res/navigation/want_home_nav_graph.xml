@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/wantHomeFirstStepFragment"
-        android:name="com.example.home_rent_app.ui.wanthome.WantHomeFirstStepFragment"
+        android:name="com.example.home_rent_app.ui.wanthome.step1.WantHomeFirstStepFragment"
         android:label="WantHomeFirstStepFragment"
         tools:layout="@layout/fragment_want_home_first_step">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/wantHomeSecondStepFragment"
-        android:name="com.example.home_rent_app.ui.wanthome.WantHomeSecondStepFragment"
+        android:name="com.example.home_rent_app.ui.wanthome.step2.WantHomeSecondStepFragment"
         android:label="WantHomeSecondStepFragment"
         tools:layout="@layout/fragment_want_home_second_step">
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/wantHomeDetailFragment"
-        android:name="com.example.home_rent_app.ui.wanthome.WantHomeDetailFragment"
+        android:name="com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailFragment"
         android:label="WantHomeDetailFragment"
         tools:layout="@layout/fragment_want_home_detail"/>
 </navigation>
