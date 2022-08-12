@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
 import com.example.home_rent_app.ui.WantHomeActivity
@@ -25,13 +27,21 @@ class WantHomeSecondStepFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val navigationController = findNavController()
         goHomeActivity()
+        register(navigationController)
     }
 
     private fun goHomeActivity() {
         binding.btnClose.setOnClickListener {
             val activity = activity as WantHomeActivity
             activity.goHomeActivity()
+        }
+    }
+
+    private fun register(navController: NavController) {
+        binding.btnRegister.setOnClickListener {
+            navController.navigate(R.id.action_wantHomeSecondStepFragment_to_wantHomeDetailFragment)
         }
     }
 }

@@ -53,6 +53,7 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

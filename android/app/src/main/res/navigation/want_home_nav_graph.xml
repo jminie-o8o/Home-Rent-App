@@ -22,5 +22,16 @@
         android:id="@+id/wantHomeSecondStepFragment"
         android:name="com.example.home_rent_app.ui.wantHome.WantHomeSecondStepFragment"
         android:label="WantHomeSecondStepFragment"
-        tools:layout="@layout/fragment_want_home_second_step"/>
+        tools:layout="@layout/fragment_want_home_second_step">
+        <action
+            android:id="@+id/action_wantHomeSecondStepFragment_to_wantHomeDetailFragment"
+            app:destination="@id/wantHomeDetailFragment"
+            app:popUpTo="@id/take_home_nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/wantHomeDetailFragment"
+        android:name="com.example.home_rent_app.ui.wantHome.WantHomeDetailFragment"
+        android:label="WantHomeDetailFragment"
+        tools:layout="@layout/fragment_want_home_detail"/>
 </navigation>

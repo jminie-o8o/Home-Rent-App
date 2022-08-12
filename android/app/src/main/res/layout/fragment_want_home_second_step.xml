@@ -136,6 +136,7 @@
             android:layout_marginTop="10dp"
             app:counterEnabled="true"
             app:counterMaxLength="500"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_second_step">
@@ -143,8 +144,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_detail_second_step"
                 android:layout_width="match_parent"
-                android:gravity="top"
                 android:layout_height="150dp"
+                android:gravity="top"
+                android:hint="이 매물의 특징이 있다면 알려주세요"
                 android:inputType="text"
                 android:maxLength="500" />
 
