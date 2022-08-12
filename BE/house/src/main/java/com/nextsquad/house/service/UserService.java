@@ -2,6 +2,7 @@ package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.RentArticleBookmark;
+import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
@@ -11,6 +12,7 @@ import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.repository.RentArticleBookmarkRepository;
 import com.nextsquad.house.repository.UserRepository;
 import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
+import com.nextsquad.house.repository.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
     private final WantedArticleBookmarkRepository wantedArticleBookmarkRepository;
+    private final WantedArticleRepository wantedArticleRepository;
 
     public UserResponseDto getUserInfo(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 유저 입니다."));
@@ -60,6 +63,7 @@ public class UserService {
 
     }
 
+
     public RentArticleListResponse getMyRentArticles(long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("요청하신 id에 해당하는 사용자가 없습니다."));
@@ -71,5 +75,12 @@ public class UserService {
                 .collect(Collectors.toList());
 
         return new RentArticleListResponse(responseElements);
+    }
+    
+    public WantedArticleListResponse getMyWantedArticles(long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당하는 ID의 사용자가 없습니다"));
+        List<WantedArticle> articles = wantedArticleRepository.findByUser(user);
+        List<WantedArticleElementResponse> myArticles = articles.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
+        return new WantedArticleListResponse(myArticles);
     }
 }
