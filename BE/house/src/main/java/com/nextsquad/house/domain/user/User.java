@@ -1,5 +1,6 @@
 package com.nextsquad.house.domain.user;
 
+import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.RentArticleBookmark;
 import com.nextsquad.house.dto.UserInfoDto;
 import com.nextsquad.house.login.oauth.OauthClientType;
@@ -28,6 +29,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<RentArticleBookmark> rentArticleBookmarkList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<RentArticle> rentArticles = new ArrayList<>();
 
     public User(String accountId, String displayName, String profileImageUrl, OauthClientType oauthClientType) {
         this.accountId = accountId;

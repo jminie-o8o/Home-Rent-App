@@ -1,5 +1,6 @@
 package com.nextsquad.house.controller;
 
+import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.dto.GeneralResponseDto;
 import com.nextsquad.house.dto.RentArticleListResponse;
 import com.nextsquad.house.dto.UserInfoDto;
@@ -18,7 +19,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDto> getUserInfo(@PathVariable long userId) {
         return ResponseEntity.ok(userService.getUserInfo(userId));
@@ -27,6 +27,11 @@ public class UserController {
     @PatchMapping("/{userId}")
     public ResponseEntity<GeneralResponseDto> modifyUserInfo(@PathVariable long userId, @RequestBody UserInfoDto userInfoDto) {
         return ResponseEntity.ok(userService.modifyUserInfo(userId, userInfoDto));
+    }
+
+    @GetMapping("{userId}/articles/rent")
+    public ResponseEntity<RentArticleListResponse> getMyRentArticles(@PathVariable long userId) {
+        return ResponseEntity.ok(userService.getMyRentArticles(userId));
     }
 
     @GetMapping("{userId}/bookmarks/rent")
