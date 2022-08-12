@@ -1,15 +1,15 @@
 package com.example.home_rent_app.ui.wantHome
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeFirstStepBinding
 import com.example.home_rent_app.ui.WantHomeActivity
@@ -38,8 +38,16 @@ class WantHomeFirstStepFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val navigationController = findNavController()
         goBack()
         showDatePicker()
+        goSecondStep(navigationController)
+    }
+
+    private fun goSecondStep(navController: NavController) {
+        binding.btnGoSecondStep.setOnClickListener {
+            navController.navigate(R.id.action_wantHomeFirstStepFragment_to_wantHomeSecondStepFragment)
+        }
     }
 
     private fun goBack() {
@@ -77,6 +85,7 @@ class WantHomeFirstStepFragment : Fragment() {
         }
     }
 
+    // 오늘 날짜 이전은 선택할 수 없도록 설정
     @RequiresApi(Build.VERSION_CODES.O)
     private fun limitRange(): CalendarConstraints.Builder {
 

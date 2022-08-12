@@ -144,9 +144,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_deposit"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="70dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_deposit"
@@ -156,7 +156,7 @@
                 android:id="@+id/et_deposit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textAutoComplete" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,7 +168,7 @@
             app:layout_constraintStart_toEndOf="@+id/til_deposit"
             app:layout_constraintTop_toBottomOf="@+id/tv_deposit"
             android:text="만원"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="10dp" />
 
         <TextView
@@ -183,9 +183,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_monthly_rent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="70dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_deposit"
@@ -195,7 +195,7 @@
                 android:id="@+id/et_login_monthly_rent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textAutoComplete" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -207,11 +207,11 @@
             app:layout_constraintStart_toEndOf="@+id/til_monthly_rent"
             app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent"
             android:text="만원"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="10dp" />
 
         <Button
-            android:id="@+id/btn_want_home_first_step"
+            android:id="@+id/btn_go_second_step"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_margin="15dp"

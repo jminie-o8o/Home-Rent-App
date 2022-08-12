@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/take_home_nav_graph"
+    app:startDestination="@id/wantHomeFirstStepFragment">
+
+    <fragment
+        android:id="@+id/wantHomeFirstStepFragment"
+        android:name="com.example.home_rent_app.ui.wantHome.WantHomeFirstStepFragment"
+        android:label="WantHomeFirstStepFragment"
+        tools:layout="@layout/fragment_want_home_first_step">
+        <action
+            android:id="@+id/action_wantHomeFirstStepFragment_to_wantHomeSecondStepFragment"
+            app:destination="@id/wantHomeSecondStepFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/wantHomeSecondStepFragment"
+        android:name="com.example.home_rent_app.ui.wantHome.WantHomeSecondStepFragment"
+        android:label="WantHomeSecondStepFragment"
+        tools:layout="@layout/fragment_want_home_second_step"/>
+</navigation>
