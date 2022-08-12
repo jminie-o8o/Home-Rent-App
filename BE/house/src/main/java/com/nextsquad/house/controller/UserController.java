@@ -44,4 +44,8 @@ public class UserController {
         return ResponseEntity.ok(userService.getWantedBookmark(userId));
     }
 
+    @GetMapping("/{userId}/articles/wanted")
+    public ResponseEntity<WantedArticleListResponse> getMyWantedArticles (@PathVariable long userId) {
+        return ResponseEntity.ok(userService.getMyWantedArticles(userId));
+    }
 }
