@@ -9,11 +9,11 @@ import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.user.DuplicationCheckResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
-import com.nextsquad.house.repository.RentArticleBookmarkRepository;
-import com.nextsquad.house.repository.UserRepository;
-import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
-import com.nextsquad.house.repository.WantedArticleRepository;
+import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,12 +23,14 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
     private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
     private final WantedArticleBookmarkRepository wantedArticleBookmarkRepository;
     private final WantedArticleRepository wantedArticleRepository;
+    private final RentArticleRepository rentArticleRepository;
 
     public UserResponseDto getUserInfo(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 유저 입니다."));
@@ -44,43 +46,47 @@ public class UserService {
         return new GeneralResponseDto(200, "정보가 수정되었습니다");
     }
 
-    public RentArticleListResponse getRentBookmark(long userId) {
+    public RentArticleListResponse getRentBookmark(long userId, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
-        List<RentArticleBookmark> bookmarks = rentArticleBookmarkRepository.findByUser(user);
+        Page<RentArticleBookmark> bookmarks = rentArticleBookmarkRepository.findByUser(user, pageable);
         List<RentArticleListElement> elements = bookmarks.stream().map(RentArticleListElement::from).collect(Collectors.toList());
-        return new RentArticleListResponse(elements);
+        return new RentArticleListResponse(elements, hasNext(pageable, bookmarks));
     }
 
     public DuplicationCheckResponse checkDuplication(String nickname) {
         return new DuplicationCheckResponse(userRepository.existsUserByDisplayName(nickname));
     }
 
-    public WantedArticleListResponse getWantedBookmark(long userId) {
+    public WantedArticleListResponse getWantedBookmark(long userId, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당하는 ID의 사용자가 없습니다"));
-        List<WantedArticleBookmark> bookmarks = wantedArticleBookmarkRepository.findByUser(user);
+        Page<WantedArticleBookmark> bookmarks = wantedArticleBookmarkRepository.findByUser(user, pageable);
         List<WantedArticleElementResponse> elements = bookmarks.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
-        return new WantedArticleListResponse(elements);
+
+        return new WantedArticleListResponse(elements, hasNext(pageable, bookmarks));
 
     }
 
-
-    public RentArticleListResponse getMyRentArticles(long userId) {
+    public RentArticleListResponse getMyRentArticles(long userId, Pageable pageable) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("요청하신 id에 해당하는 사용자가 없습니다."));
 
-        List<RentArticle> rentArticles = user.getRentArticles();
-
+        Page<RentArticle> rentArticles = rentArticleRepository.findByUser(user, pageable);
         List<RentArticleListElement> responseElements = rentArticles.stream()
                 .map(RentArticleListElement::from)
                 .collect(Collectors.toList());
 
-        return new RentArticleListResponse(responseElements);
+        return new RentArticleListResponse(responseElements, hasNext(pageable, rentArticles));
     }
     
-    public WantedArticleListResponse getMyWantedArticles(long userId) {
+    public WantedArticleListResponse getMyWantedArticles(long userId, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당하는 ID의 사용자가 없습니다"));
-        List<WantedArticle> articles = wantedArticleRepository.findByUser(user);
+        Page<WantedArticle> articles = wantedArticleRepository.findByUser(user, pageable);
         List<WantedArticleElementResponse> myArticles = articles.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
-        return new WantedArticleListResponse(myArticles);
+
+        return new WantedArticleListResponse(myArticles, hasNext(pageable, articles));
+    }
+
+    private boolean hasNext(Pageable pageable, Page<?> articles) {
+        return pageable.getPageNumber() < articles.getTotalPages() - 1;
     }
 }
