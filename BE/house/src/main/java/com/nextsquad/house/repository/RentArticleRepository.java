@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface RentArticleRepository extends JpaRepository<RentArticle, Long> {
+public interface RentArticleRepository extends JpaRepository<RentArticle, Long>, CustomRentArticleRepository {
     @Query("select r from RentArticle r where r.isDeleted = false and r.isCompleted = false")
     Page<RentArticle> findAllAvailable(Pageable pageable);
 

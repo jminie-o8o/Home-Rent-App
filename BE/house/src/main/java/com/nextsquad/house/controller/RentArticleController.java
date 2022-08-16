@@ -21,8 +21,8 @@ public class RentArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<RentArticleListResponse> getRentArticles(Pageable pageable) {
-        return ResponseEntity.ok(rentArticleService.getRentArticles(pageable));
+    public ResponseEntity<RentArticleListResponse> getRentArticles(@RequestParam String keyword, Pageable pageable) {
+        return ResponseEntity.ok(rentArticleService.getRentArticles(keyword, pageable));
     }
 
     @GetMapping("/{id}")
@@ -54,5 +54,6 @@ public class RentArticleController {
     public ResponseEntity<GeneralResponseDto> deleteBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto) {
         return ResponseEntity.ok(rentArticleService.deleteBookmark(bookmarkRequestDto));
     }
+
 }
 

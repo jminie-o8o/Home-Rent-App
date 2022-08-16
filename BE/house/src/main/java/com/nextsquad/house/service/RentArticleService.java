@@ -86,8 +86,9 @@ public class RentArticleService {
         }
     }
 
-    public RentArticleListResponse getRentArticles(Pageable pageable) {
-        Page<RentArticle> rentArticles = rentArticleRepository.findAllAvailable(pageable);
+    public RentArticleListResponse getRentArticles(String keyword, Pageable pageable) {
+//        Page<RentArticle> rentArticles = rentArticleRepository.findAllAvailable(pageable);
+        Page<RentArticle> rentArticles = rentArticleRepository.findbyKeyword(keyword, pageable);
         List<RentArticleListElement> responseElements = rentArticles.stream()
                 .map(RentArticleListElement::from)
                 .collect(Collectors.toList());
