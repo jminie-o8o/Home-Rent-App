@@ -84,8 +84,6 @@ class PicChoiceFragment : Fragment(), PicControlListener {
                                     null
                                 }
 
-                                logger("result : $result selectedImageUri : $selectedImageUri index: $index selectedImageUri.path : ${selectedImageUri.path}")
-
                                 logger("result : $result selectedImageUri : $selectedImageUri uri : $ index: $index")
                                 val uri = selectedImageUri.path.orEmpty()
                                 val file = File(uri)
