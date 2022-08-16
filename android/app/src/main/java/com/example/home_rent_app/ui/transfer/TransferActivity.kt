@@ -18,5 +18,13 @@ class TransferActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transfer)
         binding.lifecycleOwner = this
+
+        setNavigationIconClick()
+    }
+
+    private fun setNavigationIconClick() {
+        binding.topAppBar.setNavigationOnClickListener {
+            finish()
+        }
     }
 }

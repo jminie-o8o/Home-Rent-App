@@ -1,9 +1,10 @@
 package com.example.home_rent_app.ui.transfer
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.RoomType
-import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -44,11 +45,39 @@ class TransferViewModel @Inject constructor() : ViewModel() {
         )
     val isCorrectDate = _isCorrectDate.asSharedFlow()
 
+    private val _picture = MutableStateFlow<List<Bitmap>>(emptyList())
+    val picture = _picture.asStateFlow()
+
+    private val _mainPicture = MutableStateFlow<UiState<Bitmap>>(UiState.Loading)
+    val mainPicture = _mainPicture.asStateFlow()
+
     fun setHomeDescriptionState() {
         when (rentType.value) {
             RentType.JEONSE -> setJeonseHomeDescriptionState()
             RentType.MONTHLY -> setMonthlyHomeDescriptionState()
         }
+    }
+
+    fun setPicture(bitmap: Bitmap) {
+        if(_mainPicture.value == UiState.Loading) {
+            _mainPicture.value = UiState.Success(bitmap)
+        } else {
+            val list = mutableListOf<Bitmap>()
+            list.addAll(_picture.value)
+            list.add(bitmap)
+            _picture.value = list
+        }
+    }
+
+    fun removePic(index : Int) {
+        val list = mutableListOf<Bitmap>()
+        list.addAll(_picture.value)
+        list.removeAt(index)
+        _picture.value = list
+    }
+
+    fun removeMainPic() {
+        _mainPicture.value = UiState.Loading
     }
 
     private fun setJeonseHomeDescriptionState() {
@@ -77,9 +106,8 @@ class TransferViewModel @Inject constructor() : ViewModel() {
     }
 
     suspend fun checkCorrectDate() {
-        logger("compareToDate() < 0 ${compareToDate() < 0}")
-        if (startDate.value != "" && endDate.value != "") {
 
+        if (startDate.value != "" && endDate.value != "") {
             _isCorrectDate.emit(compareToDate() < 0)
         }
     }

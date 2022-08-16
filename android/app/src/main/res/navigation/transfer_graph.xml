@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressSearchFragment"
-        android:name="com.example.home_rent_app.AddressSearchFragment"
+        android:name="com.example.home_rent_app.ui.transfer.step3.AddressSearchFragment"
         android:label="fragment_address_search"
         tools:layout="@layout/fragment_address_search" >
         <action

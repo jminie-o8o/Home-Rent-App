@@ -2,15 +2,20 @@ package com.example.home_rent_app.ui.transfer.step1
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeDescriptionBinding
 import com.example.home_rent_app.ui.transfer.TransferViewModel
+import com.example.home_rent_app.util.MoneyFormat
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.repeatOnStarted
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -55,6 +60,22 @@ class HomeDescriptionFragment : Fragment() {
         setEndDateObserver()
         setHomeDescriptionStateObserver()
         setNextButtonClickListener()
+        setMonthlyTextWatcher()
+        setDepositTextWatcher()
+        setMaintenanceTextWatcher()
+        setBackClick()
+    }
+
+    private fun setMonthlyTextWatcher() {
+        binding.petMonthly.addTextChangedListener(MoneyFormat(binding.petMonthly))
+    }
+
+    private fun setMaintenanceTextWatcher() {
+        binding.petMaintenance.addTextChangedListener(MoneyFormat(binding.petMaintenance))
+    }
+
+    private fun setDepositTextWatcher() {
+        binding.petDeposit.addTextChangedListener(MoneyFormat(binding.petDeposit))
     }
 
     // 전월세 구분
@@ -77,7 +98,6 @@ class HomeDescriptionFragment : Fragment() {
     private fun setMonthlyVisible() {
         binding.apply {
             tvMonthlyLabel.visibility = View.VISIBLE
-            tvMonthlyPriceMeasure.visibility = View.VISIBLE
             otfMonthly.visibility = View.VISIBLE
         }
     }
@@ -86,7 +106,6 @@ class HomeDescriptionFragment : Fragment() {
     private fun setMonthlyGone() {
         binding.apply {
             tvMonthlyLabel.visibility = View.GONE
-            tvMonthlyPriceMeasure.visibility = View.GONE
             otfMonthly.visibility = View.GONE
         }
     }
@@ -229,7 +248,9 @@ class HomeDescriptionFragment : Fragment() {
                         isEnabled = true
                         backgroundTintList =
                             ColorStateList.valueOf(
-                                binding.root.context.getColor(R.color.purple_200)
+                                binding.root.context.getColor(
+                                    R.color.purple_200
+                                )
                             )
                     }
                 }
@@ -240,6 +261,13 @@ class HomeDescriptionFragment : Fragment() {
     private fun setNextButtonClickListener() {
         binding.btnNext.setOnClickListener {
             // 다음 화면 이동 구현
+            findNavController().navigate(R.id.action_homeDescriptionFragment_to_picChoiceFragment)
+        }
+    }
+
+    private fun setBackClick() {
+        binding.btnPre.setOnClickListener {
+            requireActivity().finish()
         }
     }
 }

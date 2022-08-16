@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:clickable="false"
-                    android:text="Step 1"/>
+                    android:text="@string/step_one"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_step_two"
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="false"
                     android:checked="false"
-                    android:text="2"/>
+                    android:text="@string/step_two"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_step_three"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="false"
                     android:checked="false"
-                    android:text="3"/>
+                    android:text="@string/step_three"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/cg_step"
                 app:layout_constraintWidth_percent="0.95"
                 android:layout_marginTop="10dp"
-                android:text="제 목"/>
+                android:text="@string/title_label"/>
 
             <TextView
                 android:id="@+id/tv_title_length"
@@ -83,7 +83,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 app:layout_constraintWidth_percent="0.95"
-                android:hint="예시) 부경대 정문 월세 200/30"
+                android:hint="@string/title_hint"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_label"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
                 app:layout_constraintTop_toBottomOf="@id/et_title"
                 app:layout_constraintWidth_percent="0.95"
                 android:layout_marginTop="30dp"
-                android:text="매물종류"/>
+                android:text="@string/room_type_label"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup_category"
@@ -129,7 +129,7 @@
                     app:textStartPadding="40dp"
                     app:textEndPadding="40dp"
                     android:textSize="15sp"
-                    android:text="원 룸"/>
+                    android:text="@string/one_room_label"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_two_room"
@@ -139,7 +139,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="투 룸"/>
+                    android:text="@string/two_room"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_efficiency"
@@ -149,7 +149,7 @@
                     android:checked="false"
                     app:textStartPadding="30dp"
                     android:textSize="15sp"
-                    android:text="오피스텔"/>
+                    android:text="@string/efficiency_label"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_share_room"
@@ -159,7 +159,7 @@
                     android:checked="false"
                     app:textStartPadding="25dp"
                     android:textSize="15sp"
-                    android:text="쉐어하우스"/>
+                    android:text="@string/share_house"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_three_room"
@@ -169,7 +169,7 @@
                     android:checked="false"
                     app:textStartPadding="35dp"
                     android:textSize="15sp"
-                    android:text="쓰리룸"/>
+                    android:text="@string/three_room"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -184,7 +184,7 @@
                 app:layout_constraintTop_toBottomOf="@id/chipGroup_category"
                 app:layout_constraintWidth_percent="0.95"
                 android:layout_marginTop="30dp"
-                android:text="거래방식"/>
+                android:text="@string/rent_type_label"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup_rent_format"
@@ -206,7 +206,7 @@
                     app:textStartPadding="40dp"
                     app:textEndPadding="40dp"
                     android:textSize="15sp"
-                    android:text="월세"/>
+                    android:text="@string/monthly_label"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_jeonse"
@@ -216,7 +216,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="전세"/>
+                    android:text="@string/jeonse_label"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -233,7 +233,7 @@
                 android:layout_marginTop="30dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="가격"/>
+                android:text="@string/price_label"/>
 
             <TextView
                 android:id="@+id/tv_deposit_label"
@@ -244,7 +244,7 @@
                 android:textColor="@color/black"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="보증금"/>
+                android:text="@string/deposit_label"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/otf_deposit"
@@ -252,74 +252,60 @@
                 android:layout_height="50dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_deposit_label"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.8"
+                app:layout_constraintWidth_percent="0.45"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 style="@style/editTextStyle">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.example.home_rent_app.util.PriceEditText
+                    android:id="@+id/pet_deposit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
                     android:inputType="number"
+                    android:hint="@string/zero"
+                    android:maxLength="13"
                     android:text="@={vm.deposit}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/tv_deposit_price_measure"
+                android:id="@+id/tv_monthly_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/otf_deposit"
-                app:layout_constraintTop_toBottomOf="@id/tv_deposit_label"
-                android:layout_marginTop="25dp"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:text="만원"/>
-
-            <TextView
-                android:id="@+id/tv_monthly_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/otf_deposit"
+                android:layout_marginStart="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_price_label"
                 android:textColor="@color/black"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="월세"/>
+                android:text="@string/monthly_label"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/otf_monthly"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_monthly_label"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.8"
+                app:layout_constraintStart_toEndOf="@id/otf_deposit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.45"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 style="@style/editTextStyle">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.example.home_rent_app.util.PriceEditText
+                    android:id="@+id/pet_monthly"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
                     android:inputType="number"
+                    android:hint="@string/zero"
+                    android:maxLength="13"
                     android:text="@={vm.monthly}" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/tv_monthly_price_measure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/otf_monthly"
-                app:layout_constraintTop_toBottomOf="@id/tv_monthly_label"
-                android:layout_marginTop="25dp"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:text="만원"/>
 
             <TextView
                 android:id="@+id/tv_maintenance_label"
@@ -330,7 +316,7 @@
                 android:textColor="@color/black"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="관리비"/>
+                android:text="@string/maintenance_label"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/otf_maintenance"
@@ -338,42 +324,34 @@
                 android:layout_height="50dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_maintenance_label"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.8"
+                app:layout_constraintWidth_percent="0.45"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 style="@style/editTextStyle">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.example.home_rent_app.util.PriceEditText
+                    android:id="@+id/pet_maintenance"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
                     android:inputType="number"
+                    android:maxLength="13"
+                    android:hint="@string/zero"
                     android:text="@={vm.maintenance}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/tv_maintenance_price_measure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/otf_maintenance"
-                app:layout_constraintTop_toBottomOf="@id/tv_maintenance_label"
-                android:layout_marginTop="25dp"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:text="만원"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/otf_maintenance_description"
                 android:layout_width="0dp"
                 android:layout_height="125dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_maintenance_price_measure"
+                app:layout_constraintTop_toBottomOf="@id/otf_maintenance"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintWidth_percent="0.95"
                 android:layout_marginTop="20dp"
-                android:hint="관리비 설명(ex, 전기, 수도, 인터넷 포함 등)"
+                android:hint="@string/maintenance_hint"
                 style="@style/editTextStyle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -395,7 +373,7 @@
                 android:layout_marginStart="10dp"
                 app:layout_constraintWidth_percent="0.55"
                 android:textColor="@color/black"
-                android:text="입주 가능일"/>
+                android:text="@string/start_date_label"/>
 
             <TextView
                 android:id="@+id/tv_end_date_label"
@@ -405,7 +383,7 @@
                 app:layout_constraintStart_toEndOf="@id/tv_start_date_label"
                 android:layout_marginTop="30dp"
                 android:textColor="@color/black"
-                android:text="계약 만료일"/>
+                android:text="@string/end_date_label"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/otf_start_date"
@@ -463,20 +441,36 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btn_next"
+                android:id="@+id/btn_pre"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/otf_start_date"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_end_date_label"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintWidth_percent="0.35"
+                android:clickable="false"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:elevation="0dp"
+                android:text="@string/back_label"/>
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/otf_start_date"
+                app:layout_constraintStart_toEndOf="@id/btn_pre"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintWidth_percent="0.9"
-                android:clickable="false"
+                app:layout_constraintWidth_percent="0.35"
+                android:clickable="true"
                 android:backgroundTint="@color/gray"
-                android:text="다음으로"/>
-
+                android:text="@string/next"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
