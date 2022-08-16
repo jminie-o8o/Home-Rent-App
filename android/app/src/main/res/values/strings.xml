@@ -31,5 +31,5 @@
     <string name="next">다음으로</string>
     <string name="zero">0</string>
     <string name="back_label">이전으로</string>
->>>>>>> feat: 사진 불러오기 구현
+    <string name="pic_count">%d/6</string>
 </resources>

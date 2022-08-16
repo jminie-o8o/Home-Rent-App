@@ -5,10 +5,11 @@ import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.view.View
+import android.widget.ImageView
 
-class ShadowBuilder(v: View) : View.DragShadowBuilder(v) {
+class ShadowBuilder(view: View) : View.DragShadowBuilder(view) {
 
-    private val shadow = ColorDrawable(Color.LTGRAY)
+    private val shadow = (view as ImageView).drawable
 
     override fun onProvideShadowMetrics(size: Point, touch: Point) {
 

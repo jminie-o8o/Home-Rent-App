@@ -24,7 +24,7 @@ class MainImageView(context: Context, attributeSet: AttributeSet) :
         val width = measuredWidth
         val height = measuredHeight
 
-        val textX = (width / 2.5).toFloat()
+        val textX = (width / 3).toFloat()
         val textY = (height * 0.9).toFloat()
 
         val rectHeight = height * 0.7

@@ -1,17 +1,14 @@
 package com.example.home_rent_app.ui.transfer
 
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.example.home_rent_app.data.model.RoomPicture
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.RoomType
 import com.example.home_rent_app.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,19 +35,24 @@ class TransferViewModel @Inject constructor() : ViewModel() {
     private val _homeDescriptionState = MutableStateFlow(false)
     val homeDescriptionState = _homeDescriptionState.asStateFlow()
 
-    private val _isCorrectDate =
-        MutableSharedFlow<Boolean>(
-            replay = 0,
-            extraBufferCapacity = 1,
-            onBufferOverflow = BufferOverflow.DROP_OLDEST
-        )
+
+    private val _isCorrectDate = MutableSharedFlow<Boolean>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val isCorrectDate = _isCorrectDate.asSharedFlow()
 
-    private val _picture = MutableStateFlow<List<Uri>>(emptyList())
+    private val _picture = MutableStateFlow<List<RoomPicture>>(emptyList())
     val picture = _picture.asStateFlow()
 
     private val _mainPicture = MutableStateFlow<UiState<Uri>>(UiState.Loading)
     val mainPicture = _mainPicture.asStateFlow()
+
+    private val _overPictures = MutableStateFlow(false)
+    val overPictures = _overPictures.asStateFlow()
+
+    private var id = 0
 
     fun setHomeDescriptionState() {
         when (rentType.value) {
@@ -60,21 +62,31 @@ class TransferViewModel @Inject constructor() : ViewModel() {
     }
 
     fun setPictureUri(uri: Uri) {
-        if(_mainPicture.value == UiState.Loading) {
-            _mainPicture.value = UiState.Success(uri)
-        } else {
-            val list = mutableListOf<Uri>()
-            list.addAll(_picture.value)
-            list.add(uri)
-            _picture.value = list
+        when (_picture.value.size) {
+            0 -> {
+                _picture.value = listOf(RoomPicture(id, uri, true))
+                id++
+            }
+            6 -> {
+                _overPictures.value = true
+            }
+            else -> {
+                val list = mutableListOf<RoomPicture>()
+                list.addAll(_picture.value)
+                list.add(RoomPicture(id, uri))
+                _picture.value = list
+                id++
+            }
         }
     }
 
-    fun removePicUri(index : Int) {
-        val list = mutableListOf<Uri>()
+    fun removePicUri(index: Int) {
+        val list = mutableListOf<RoomPicture>()
         list.addAll(_picture.value)
         list.removeAt(index)
+        list[0].isMain = true
         _picture.value = list
+        _overPictures.value = false
     }
 
     fun removeMainPicUri() {
@@ -107,12 +119,39 @@ class TransferViewModel @Inject constructor() : ViewModel() {
     }
 
     fun replacePic(beforePosition: Int, targetPosition: Int) {
-        val list = mutableListOf<Uri>()
-        list.addAll(_picture.value)
-        val temp = list[beforePosition]
-        list[beforePosition] = list[targetPosition]
-        list[targetPosition] = temp
-        _picture.value = list
+        when {
+            targetPosition == 0 -> {
+                val list = mutableListOf<RoomPicture>()
+                list.addAll(_picture.value)
+                list[targetPosition].isMain = false
+                list[beforePosition].isMain = true
+
+                val temp = list[beforePosition]
+                list[beforePosition] = list[targetPosition]
+                list[targetPosition] = temp
+
+                _picture.value = list
+            }
+            beforePosition == 0 -> {
+                val list = mutableListOf<RoomPicture>()
+                list.addAll(_picture.value)
+                list[beforePosition].isMain = false
+                list[targetPosition].isMain = true
+
+                val temp = list[beforePosition]
+                list[beforePosition] = list[targetPosition]
+                list[targetPosition] = temp
+                _picture.value = list
+            }
+            else -> {
+                val list = mutableListOf<RoomPicture>()
+                list.addAll(_picture.value)
+                val temp = list[beforePosition]
+                list[beforePosition] = list[targetPosition]
+                list[targetPosition] = temp
+                _picture.value = list
+            }
+        }
     }
 
     suspend fun checkCorrectDate() {

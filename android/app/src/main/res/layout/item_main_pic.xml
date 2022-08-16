@@ -10,7 +10,7 @@
         android:layout_width="200dp"
         android:layout_height="150dp">
 
-        <ImageView
+        <com.example.home_rent_app.ui.custom.MainImageView
             android:id="@+id/iv_main_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -34,21 +34,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_close"
             app:tint="@color/white" />
-
-        <TextView
-            android:id="@+id/tv_main_label"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/lightBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/white"
-            android:gravity="center"
-            app:layout_constraintWidth_percent="0.9"
-            app:layout_constraintHeight_percent="0.2"
-            android:visibility="gone"
-            android:text="대표사진"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

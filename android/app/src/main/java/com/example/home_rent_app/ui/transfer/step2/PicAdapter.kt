@@ -2,16 +2,12 @@ package com.example.home_rent_app.ui.transfer.step2
 
 import android.app.Activity
 import android.content.ClipData
-import android.content.ClipDescription
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ContentResolver
-import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
-import android.view.View.DRAG_FLAG_GLOBAL
-import android.view.View.DRAG_FLAG_GLOBAL_URI_READ
+import android.view.View.*
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.util.component1
@@ -21,15 +17,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
+import com.example.home_rent_app.data.model.RoomPicture
 import com.example.home_rent_app.databinding.ItemRoomPicBinding
 import com.example.home_rent_app.util.PicControlListener
 import com.example.home_rent_app.util.ShadowBuilder
 import com.example.home_rent_app.util.getBitmap
 
+private const val MAIN = 0
+private const val OTHER = 1
+
 class PicAdapter(
     private val contentResolver: ContentResolver,
     private val listener: PicControlListener
-) : ListAdapter<Uri, PicAdapter.PicViewHolder>(PicDiffUtil) {
+) : ListAdapter<RoomPicture, PicAdapter.PicViewHolder>(PicDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PicViewHolder {
         return PicViewHolder(
@@ -41,7 +41,6 @@ class PicAdapter(
         )
     }
 
-    // 드래그 앤 드롭 성공시 데이터 변경하기
     override fun onBindViewHolder(holder: PicViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
@@ -49,10 +48,12 @@ class PicAdapter(
     inner class PicViewHolder(private val binding: ItemRoomPicBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(uri: Uri) {
-            binding.ivMainImage.setImageBitmap(getBitmap(contentResolver, uri))
+        fun bind(roomPicture: RoomPicture) {
+            binding.ivMainImage.setImageBitmap(getBitmap(contentResolver, roomPicture.uri))
+            setMainLabel(roomPicture)
             setRemoveClick()
-            dragAndDrop(uri)
+            drag()
+            drop()
         }
 
         private fun setRemoveClick() {
@@ -61,10 +62,17 @@ class PicAdapter(
             }
         }
 
-        private fun dragAndDrop(uri: Uri) {
-            binding.ivMainImage.setOnLongClickListener { view ->
+        private fun setMainLabel(roomPicture: RoomPicture) {
+            if(roomPicture.isMain) {
+                binding.tvMainLabel.visibility = VISIBLE
+            } else {
+                binding.tvMainLabel.visibility = GONE
+            }
+        }
 
-                val dragData = ClipData.newUri(contentResolver, "image", uri)
+        private fun drag() {
+            binding.ivMainImage.setOnLongClickListener { view ->
+//                val dragDate = ClipData.newUri(contentResolver, "image", uri)
                 val item = ClipData.Item(adapterPosition.toString())
                 val data = ClipData(adapterPosition.toString(), arrayOf(MIMETYPE_TEXT_PLAIN), item)
                 val shadow = ShadowBuilder(view)
@@ -74,7 +82,7 @@ class PicAdapter(
                         data,  // The data to be dragged
                         shadow,  // The drag shadow builder
                         null,      // No need to use local data
-                        0    // Flags (not currently used, set to 0)
+                        DRAG_FLAG_GLOBAL    // Flags (not currently used, set to 0)
                     )
                 } else {
                     Toast.makeText(binding.root.context, "버전이 낮아서 지원하지 않습니다.", Toast.LENGTH_SHORT)
@@ -84,6 +92,9 @@ class PicAdapter(
                 true
             }
 
+        }
+
+        private fun drop() {
             DropHelper.configureView(
                 binding.root.context as Activity,
                 itemView,
@@ -103,21 +114,26 @@ class PicAdapter(
                 handleImageDrop(item)
                 remaining
             }
-
         }
 
         private fun handleImageDrop(item: ClipData.Item) {
-            listener.changePic(item.text.toString().toInt(), adapterPosition)
+            val beforePosition = item.text.toString().toInt()
+            listener.changePic(beforePosition, adapterPosition)
+
+            if(beforePosition == 0 || adapterPosition == 0) {
+                notifyItemChanged(beforePosition)
+                notifyItemChanged(adapterPosition)
+            }
         }
     }
 
-    private object PicDiffUtil : DiffUtil.ItemCallback<Uri>() {
-        override fun areItemsTheSame(oldItem: Uri, newItem: Uri) =
-            oldItem.hashCode() == newItem.hashCode()
+    private object PicDiffUtil : DiffUtil.ItemCallback<RoomPicture>() {
+        override fun areItemsTheSame(oldItem: RoomPicture, newItem: RoomPicture): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-        override fun areContentsTheSame(oldItem: Uri, newItem: Uri) =
-            oldItem == newItem
-
+        override fun areContentsTheSame(oldItem: RoomPicture, newItem: RoomPicture): Boolean {
+            return oldItem.isMain == newItem.isMain
+        }
     }
-
 }
