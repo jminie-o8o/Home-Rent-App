@@ -87,17 +87,20 @@ public class RentArticleService {
     }
 
     public RentArticleListResponse getRentArticles(String keyword, Pageable pageable) {
-//        Page<RentArticle> rentArticles = rentArticleRepository.findAllAvailable(pageable);
-        Page<RentArticle> rentArticles = rentArticleRepository.findbyKeyword(keyword, pageable);
+        List<RentArticle> rentArticles = rentArticleRepository.findbyKeyword(keyword, pageable);
+        boolean hasNext = hasNext(pageable, rentArticles);
+        if (hasNext) {
+            rentArticles = rentArticles.subList(0, rentArticles.size()-1);
+        }
         List<RentArticleListElement> responseElements = rentArticles.stream()
                 .map(RentArticleListElement::from)
                 .collect(Collectors.toList());
 
-        return new RentArticleListResponse(responseElements,  hasNext(pageable, rentArticles));
+        return new RentArticleListResponse(responseElements, hasNext);
     }
 
-    private boolean hasNext(Pageable pageable, Page<RentArticle> rentArticles) {
-        return pageable.getPageNumber() < rentArticles.getTotalPages() - 1;
+    private boolean hasNext(Pageable pageable, List<RentArticle> rentArticles) {
+        return pageable.getPageSize() < rentArticles.size();
     }
 
     public RentArticleResponse getRentArticle(Long id){

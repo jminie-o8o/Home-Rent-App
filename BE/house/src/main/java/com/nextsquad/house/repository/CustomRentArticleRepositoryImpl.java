@@ -4,11 +4,13 @@ import com.nextsquad.house.domain.house.RentArticle;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQueryFactory;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
@@ -20,21 +22,18 @@ public class CustomRentArticleRepositoryImpl implements CustomRentArticleReposit
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public PageImpl<RentArticle> findbyKeyword(String keyword, Pageable pageable) {
+    public List<RentArticle> findbyKeyword(String keyword, Pageable pageable) {
         List<RentArticle> content = jpaQueryFactory
                 .select(rentArticle)
                 .from(rentArticle)
                 .where(rentArticle.isCompleted.eq(false),
                         rentArticle.isDeleted.eq(false),
-                        checkAddress(keyword),
-                        checkTitle(keyword))
+                        checkAddress(keyword).or(checkTitle(keyword)))
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-//                .fetchResults();
+                .limit(pageable.getPageSize() + 1)
                 .fetch();
 
-//        return new PageImpl<>(content.getResults(), pageable, content.getTotal());
-        return new PageImpl<>(content, pageable, content.size());
+        return content;
     }
 
     private BooleanExpression checkAddress(String keyword) {
