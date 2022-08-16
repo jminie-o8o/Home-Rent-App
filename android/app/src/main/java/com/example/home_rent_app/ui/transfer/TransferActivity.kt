@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityTransferBinding
 
-
 class TransferActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTransferBinding
@@ -19,7 +18,5 @@ class TransferActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transfer)
         binding.lifecycleOwner = this
-
     }
-
 }

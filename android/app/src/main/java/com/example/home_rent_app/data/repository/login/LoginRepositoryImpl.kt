@@ -46,13 +46,15 @@ class LoginRepositoryImpl @Inject constructor(
     private val Context.tokenDataStore by preferencesDataStore(TOKEN_DATASTORE)
 
     override suspend fun saveToken(token: List<String>) {
-        context.tokenDataStore.edit { prefs ->
-            prefs[ACCESS_TOKEN] = token.first()
-            prefs[REFRESH_TOKEN] = token.last()
-        }
-        // AccessToken, RefreshToken 이 제대로 들어온 여부를 확인하는 boolean 값
-        context.loginCheckDataStore.edit { prefs ->
-            prefs[LOGIN_CHECK] = true
+        if (token.isNotEmpty()) {
+            context.tokenDataStore.edit { prefs ->
+                prefs[ACCESS_TOKEN] = token.first()
+                prefs[REFRESH_TOKEN] = token.last()
+            }
+            // AccessToken, RefreshToken 이 제대로 들어온 여부를 확인하는 boolean 값
+            context.loginCheckDataStore.edit { prefs ->
+                prefs[LOGIN_CHECK] = true
+            }
         }
     }
 
