@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface RentArticleRepository extends JpaRepository<RentArticle, Long> {
     @Query("select r from RentArticle r where r.isDeleted = false and r.isCompleted = false")
-    List<RentArticle> findAllAvailable();
+    Page<RentArticle> findAllAvailable(Pageable pageable);
 
     Page<RentArticle> findByUser(User user, Pageable pageable);
 }
