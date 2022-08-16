@@ -4,6 +4,7 @@ import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.service.RentArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ public class RentArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<RentArticleListResponse> getRentArticles(String keyword, String sortedBy) {
-        return ResponseEntity.ok(rentArticleService.getRentArticles(keyword, sortedBy));
+    public ResponseEntity<RentArticleListResponse> getRentArticles(Pageable pageable) {
+        return ResponseEntity.ok(rentArticleService.getRentArticles(pageable));
     }
 
     @GetMapping("/{id}")
