@@ -168,5 +168,5 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
 
         transferRepository.getImageUrl()
     }
-
 }
+
