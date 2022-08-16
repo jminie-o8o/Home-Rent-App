@@ -6,6 +6,7 @@ import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ContentResolver
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
@@ -28,7 +29,8 @@ private const val OTHER = 1
 
 class PicAdapter(
     private val contentResolver: ContentResolver,
-    private val listener: PicControlListener
+    private val listener: PicControlListener,
+    private val drop: (View, Int) -> Unit
 ) : ListAdapter<RoomPicture, PicAdapter.PicViewHolder>(PicDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PicViewHolder {
@@ -53,7 +55,7 @@ class PicAdapter(
             setMainLabel(roomPicture)
             setRemoveClick()
             drag()
-            drop()
+            drop(itemView, adapterPosition)
         }
 
         private fun setRemoveClick() {
@@ -94,37 +96,37 @@ class PicAdapter(
 
         }
 
-        private fun drop() {
-            DropHelper.configureView(
-                binding.root.context as Activity,
-                itemView,
-                arrayOf(
-                    MIMETYPE_TEXT_PLAIN,
-                    "image/*",
-                    "application/x-arc-uri-list" // Support external items on Chrome OS Android 9
-                ),
-                DropHelper.Options.Builder()
-                    .setHighlightColor(getColor(binding.root.context, R.color.lightGray))
-                    .build()
-            ) { _, payload ->
-
-                val item = payload.clip.getItemAt(0)
-                val (_, remaining) = payload.partition { it == item }
-
-                handleImageDrop(item)
-                remaining
-            }
-        }
-
-        private fun handleImageDrop(item: ClipData.Item) {
-            val beforePosition = item.text.toString().toInt()
-            listener.changePic(beforePosition, adapterPosition)
-
-            if(beforePosition == 0 || adapterPosition == 0) {
-                notifyItemChanged(beforePosition)
-                notifyItemChanged(adapterPosition)
-            }
-        }
+//        private fun drop() {
+//            DropHelper.configureView(
+//                binding.root as Activity,
+//                itemView,
+//                arrayOf(
+//                    MIMETYPE_TEXT_PLAIN,
+//                    "image/*",
+//                    "application/x-arc-uri-list" // Support external items on Chrome OS Android 9
+//                ),
+//                DropHelper.Options.Builder()
+//                    .setHighlightColor(getColor(binding.root.context, R.color.lightGray))
+//                    .build()
+//            ) { _, payload ->
+//
+//                val item = payload.clip.getItemAt(0)
+//                val (_, remaining) = payload.partition { it == item }
+//
+//                handleImageDrop(item)
+//                remaining
+//            }
+//        }
+//
+//        private fun handleImageDrop(item: ClipData.Item) {
+//            val beforePosition = item.text.toString().toInt()
+//            listener.changePic(beforePosition, adapterPosition)
+//
+//            if(beforePosition == 0 || adapterPosition == 0) {
+//                notifyItemChanged(beforePosition)
+//                notifyItemChanged(adapterPosition)
+//            }
+//        }
     }
 
     private object PicDiffUtil : DiffUtil.ItemCallback<RoomPicture>() {

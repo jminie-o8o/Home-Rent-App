@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityTransferBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TransferActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTransferBinding

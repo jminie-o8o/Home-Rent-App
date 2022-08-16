@@ -1,6 +1,7 @@
 package com.example.home_rent_app.data
 
 import com.example.home_rent_app.util.AppSession
+import com.example.home_rent_app.util.logger
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
@@ -17,10 +18,16 @@ class AuthInterceptor @Inject constructor(
         val requestBuilder = chain.request()
             .newBuilder()
 
+//        jwt?.let {
+//            requestBuilder.addHeader(
+//                "Authorization",
+//                "${it.accessToken.tokenCode} ${it.refreshToken.tokenCode}"
+//            ) // 추후 수정
+//        }
         jwt?.let {
             requestBuilder.addHeader(
-                "Authorization",
-                "${it.accessToken.tokenCode} ${it.refreshToken.tokenCode}"
+                "access-token",
+                it.accessToken.tokenCode
             ) // 추후 수정
         }
 

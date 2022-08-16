@@ -468,7 +468,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintWidth_percent="0.35"
-                android:clickable="true"
+                android:clickable="false"
                 android:backgroundTint="@color/gray"
                 android:text="@string/next"/>
 

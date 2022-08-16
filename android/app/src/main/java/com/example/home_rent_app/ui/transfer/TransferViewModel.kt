@@ -2,18 +2,23 @@ package com.example.home_rent_app.ui.transfer
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.home_rent_app.data.model.ImageUrl
 import com.example.home_rent_app.data.model.RoomPicture
 import com.example.home_rent_app.data.repository.transfer.TransferRepository
+import com.example.home_rent_app.util.FileController
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.RoomType
 import com.example.home_rent_app.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
-class TransferViewModel @Inject constructor(private val transferRepository: TransferRepository) : ViewModel() {
+class TransferViewModel @Inject constructor(private val transferRepository: TransferRepository, private val fileController: FileController) : ViewModel() {
 
     val title = MutableStateFlow("")
 
@@ -47,11 +52,11 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
     private val _picture = MutableStateFlow<List<RoomPicture>>(emptyList())
     val picture = _picture.asStateFlow()
 
-    private val _mainPicture = MutableStateFlow<UiState<Uri>>(UiState.Loading)
-    val mainPicture = _mainPicture.asStateFlow()
-
     private val _overPictures = MutableStateFlow(false)
     val overPictures = _overPictures.asStateFlow()
+
+    private val _pictureUrl = MutableStateFlow<UiState<ImageUrl>>(UiState.Loading)
+    val pictureUrl = _pictureUrl.asStateFlow()
 
     private var id = 0
 
@@ -88,10 +93,6 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
         list[0].isMain = true
         _picture.value = list
         _overPictures.value = false
-    }
-
-    fun removeMainPicUri() {
-        _mainPicture.value = UiState.Loading
     }
 
     private fun setJeonseHomeDescriptionState() {
@@ -165,8 +166,16 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
     private fun compareToDate() = startDate.value.compareTo(endDate.value)
 
     fun getImageUrl() {
-
-        transferRepository.getImageUrl()
+        val list = mutableListOf<MultipartBody.Part>()
+        _picture.value.forEach { roomPic ->
+            list.add(fileController.uriToMultiPart(roomPic.uri))
+        }
+        viewModelScope.launch {
+            transferRepository.getImageUrl(list).catch {  e ->
+                _pictureUrl.value = UiState.Error(e.stackTraceToString())
+            }.collect {
+                _pictureUrl.value = UiState.Success(it)
+            }
+        }
     }
 }
-

@@ -6,5 +6,5 @@ import okhttp3.MultipartBody
 
 interface TransferDataSource {
 
-    fun getImageUrl(list : List<MultipartBody.Part>): Flow<Unit>
+    fun getImageUrl(list : List<MultipartBody.Part>): Flow<ImageUrlDTO>
 }

@@ -19,12 +19,14 @@ import com.example.home_rent_app.util.MoneyFormat
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.repeatOnStarted
 import com.google.android.material.datepicker.MaterialDatePicker
+import dagger.hilt.android.AndroidEntryPoint
 import hirondelle.date4j.DateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.TimeZone
 
+@AndroidEntryPoint
 class HomeDescriptionFragment : Fragment() {
 
     private val binding: FragmentHomeDescriptionBinding by lazy {

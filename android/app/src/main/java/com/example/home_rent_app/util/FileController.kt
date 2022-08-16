@@ -26,18 +26,16 @@ class FileController @Inject constructor(@ApplicationContext private val context
         c?.moveToFirst()
         val result = c?.getString(index).orEmpty()
         c?.close()
-        logger("result : $result selectedImageUri : $imageUri index: $index selectedImageUri.path : ${imageUri.path}")
-
-        val uri = imageUri.path.orEmpty()
 
         val file = File(result)
-        logger("file.name : ${file.name}")
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
 
         return MultipartBody.Part.createFormData("images", file.name, requestFile)
     }
 
+    // ACTION_GET_CONTENT를 사용할때 써야하는 방식
     fun uriToMulti(imageUri: Uri): MultipartBody.Part {
+
         val uri = imageUri.path.orEmpty()
         val fileName = uri.split("/").last()
         val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -54,15 +52,8 @@ class FileController @Inject constructor(@ApplicationContext private val context
 
         outputStream.flush()
         val file = File(tempFile.absolutePath)
-        logger("uri : ${uri} file.name : ${file.name} file path: ${file.absolutePath} imageUri.encodedPath : ${imageUri.encodedPath}")
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("images", file.name, requestFile)
     }
 
-    fun uriToPart(imageUri: Uri): MultipartBody.Part {
-        val file = File(imageUri.toString())
-        logger("imageUri : $imageUri file.name : ${file.name} file path: ${file.absolutePath} imageUri.encodedPath : ${imageUri.encodedPath}")
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        return MultipartBody.Part.createFormData("images", file.name, requestFile)
-    }
 }
