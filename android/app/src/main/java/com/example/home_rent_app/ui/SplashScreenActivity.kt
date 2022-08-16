@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 
+@SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -25,7 +27,7 @@ class SplashScreenActivity : AppCompatActivity() {
         checkIsLogin(content)
     }
 
-    fun checkIsLogin(content: View) {
+    private fun checkIsLogin(content: View) {
         collectStateFlow(viewModel.isLogin) { isLogin ->
             content.viewTreeObserver.addOnPreDrawListener(
                 object : ViewTreeObserver.OnPreDrawListener {
