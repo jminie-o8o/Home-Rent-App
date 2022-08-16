@@ -8,6 +8,7 @@ import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.service.WantedArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,8 @@ public class WantedArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<WantedArticleListResponse> getWantedArticleList() {
-        return ResponseEntity.ok(wantedArticleService.getWantedArticleList());
+    public ResponseEntity<WantedArticleListResponse> getWantedArticleList(Pageable pageable) {
+        return ResponseEntity.ok(wantedArticleService.getWantedArticleList(pageable));
     }
 
     @DeleteMapping("/{id}")
