@@ -160,3 +160,4 @@ class PicChoiceFragment : Fragment(), PicControlListener {
     }
 
 }
+

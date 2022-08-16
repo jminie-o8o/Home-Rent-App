@@ -3,6 +3,7 @@ package com.example.home_rent_app.ui.transfer
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.example.home_rent_app.data.model.RoomPicture
+import com.example.home_rent_app.data.repository.transfer.TransferRepository
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.RoomType
 import com.example.home_rent_app.util.UiState
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class TransferViewModel @Inject constructor() : ViewModel() {
+class TransferViewModel @Inject constructor(private val transferRepository: TransferRepository) : ViewModel() {
 
     val title = MutableStateFlow("")
 
@@ -162,4 +163,10 @@ class TransferViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun compareToDate() = startDate.value.compareTo(endDate.value)
+
+    fun getImageUrl() {
+
+        transferRepository.getImageUrl()
+    }
+
 }

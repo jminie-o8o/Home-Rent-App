@@ -1,5 +1,6 @@
 package com.example.home_rent_app.data.api
 
+import com.example.home_rent_app.data.AuthInterceptor
 import com.example.home_rent_app.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -9,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -17,6 +19,7 @@ object RetrofitInstance {
 
     @Provides
     @Singleton
+    @Named("login")
     fun loginOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(
@@ -28,12 +31,42 @@ object RetrofitInstance {
 
     @Provides
     @Singleton
-    fun loginRetrofit(): LoginApi {
+    @Named("jwt")
+    fun provideJwtOkHttpClient(
+        authInterceptor: AuthInterceptor
+    ): OkHttpClient {
+        val logger = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .addInterceptor(logger)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun loginRetrofit(
+        @Named("login") okHttpClient: OkHttpClient
+    ): LoginApi {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
-            .client(loginOkHttpClient())
+            .client(okHttpClient)
             .baseUrl(BASE_URL)
             .build()
             .create(LoginApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMenuListApi(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): TransferApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(TransferApi::class.java)
     }
 }
