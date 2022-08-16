@@ -1,19 +1,24 @@
 package com.example.home_rent_app.ui.transfer
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.home_rent_app.data.model.ImageUrl
+import com.example.home_rent_app.data.model.RoomPicture
+import com.example.home_rent_app.data.repository.transfer.TransferRepository
+import com.example.home_rent_app.util.FileController
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.RoomType
-import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
-class TransferViewModel @Inject constructor() : ViewModel() {
+class TransferViewModel @Inject constructor(private val transferRepository: TransferRepository, private val fileController: FileController) : ViewModel() {
 
     val title = MutableStateFlow("")
 
@@ -36,19 +41,58 @@ class TransferViewModel @Inject constructor() : ViewModel() {
     private val _homeDescriptionState = MutableStateFlow(false)
     val homeDescriptionState = _homeDescriptionState.asStateFlow()
 
-    private val _isCorrectDate =
-        MutableSharedFlow<Boolean>(
-            replay = 0,
-            extraBufferCapacity = 1,
-            onBufferOverflow = BufferOverflow.DROP_OLDEST
-        )
+
+    private val _isCorrectDate = MutableSharedFlow<Boolean>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val isCorrectDate = _isCorrectDate.asSharedFlow()
+
+    private val _picture = MutableStateFlow<List<RoomPicture>>(emptyList())
+    val picture = _picture.asStateFlow()
+
+    private val _overPictures = MutableStateFlow(false)
+    val overPictures = _overPictures.asStateFlow()
+
+    private val _pictureUrl = MutableStateFlow<UiState<ImageUrl>>(UiState.Loading)
+    val pictureUrl = _pictureUrl.asStateFlow()
+
+    private var id = 0
 
     fun setHomeDescriptionState() {
         when (rentType.value) {
             RentType.JEONSE -> setJeonseHomeDescriptionState()
             RentType.MONTHLY -> setMonthlyHomeDescriptionState()
         }
+    }
+
+    fun setPictureUri(uri: Uri) {
+        when (_picture.value.size) {
+            0 -> {
+                _picture.value = listOf(RoomPicture(id, uri, true))
+                id++
+            }
+            6 -> {
+                _overPictures.value = true
+            }
+            else -> {
+                val list = mutableListOf<RoomPicture>()
+                list.addAll(_picture.value)
+                list.add(RoomPicture(id, uri))
+                _picture.value = list
+                id++
+            }
+        }
+    }
+
+    fun removePicUri(index: Int) {
+        val list = mutableListOf<RoomPicture>()
+        list.addAll(_picture.value)
+        list.removeAt(index)
+        list[0].isMain = true
+        _picture.value = list
+        _overPictures.value = false
     }
 
     private fun setJeonseHomeDescriptionState() {
@@ -76,13 +120,62 @@ class TransferViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    suspend fun checkCorrectDate() {
-        logger("compareToDate() < 0 ${compareToDate() < 0}")
-        if (startDate.value != "" && endDate.value != "") {
+    fun replacePic(beforePosition: Int, targetPosition: Int) {
+        when {
+            targetPosition == 0 -> {
+                val list = mutableListOf<RoomPicture>()
+                list.addAll(_picture.value)
+                list[targetPosition].isMain = false
+                list[beforePosition].isMain = true
 
+                val temp = list[beforePosition]
+                list[beforePosition] = list[targetPosition]
+                list[targetPosition] = temp
+
+                _picture.value = list
+            }
+            beforePosition == 0 -> {
+                val list = mutableListOf<RoomPicture>()
+                list.addAll(_picture.value)
+                list[beforePosition].isMain = false
+                list[targetPosition].isMain = true
+
+                val temp = list[beforePosition]
+                list[beforePosition] = list[targetPosition]
+                list[targetPosition] = temp
+                _picture.value = list
+            }
+            else -> {
+                val list = mutableListOf<RoomPicture>()
+                list.addAll(_picture.value)
+                val temp = list[beforePosition]
+                list[beforePosition] = list[targetPosition]
+                list[targetPosition] = temp
+                _picture.value = list
+            }
+        }
+    }
+
+    suspend fun checkCorrectDate() {
+
+        if (startDate.value != "" && endDate.value != "") {
             _isCorrectDate.emit(compareToDate() < 0)
         }
     }
 
     private fun compareToDate() = startDate.value.compareTo(endDate.value)
+
+    fun getImageUrl() {
+        val list = mutableListOf<MultipartBody.Part>()
+        _picture.value.forEach { roomPic ->
+            list.add(fileController.uriToMultiPart(roomPic.uri))
+        }
+        viewModelScope.launch {
+            transferRepository.getImageUrl(list).catch {  e ->
+                _pictureUrl.value = UiState.Error(e.stackTraceToString())
+            }.collect {
+                _pictureUrl.value = UiState.Success(it)
+            }
+        }
+    }
 }

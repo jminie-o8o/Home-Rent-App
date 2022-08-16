@@ -8,14 +8,14 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.home_rent_app.data.api.LoginApi
 import com.example.home_rent_app.data.dto.toJWT
-import com.example.home_rent_app.data.model.JWT
-import com.example.home_rent_app.data.model.KakaoOauthRequest
-import com.example.home_rent_app.data.model.NaverOauthRequest
+import com.example.home_rent_app.data.model.*
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.ACCESS_TOKEN
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.LOGIN_CHECK
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.REFRESH_TOKEN
+import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.Constants.LOGIN_CHECK_DATASTORE
 import com.example.home_rent_app.util.Constants.TOKEN_DATASTORE
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -25,6 +25,7 @@ import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val loginApi: LoginApi,
+    private val appSession: AppSession,
     @ApplicationContext private val context: Context
 ) : LoginRepository {
 
@@ -73,6 +74,14 @@ class LoginRepositoryImpl @Inject constructor(
                     it.toString()
                 }
             }
+    }
+
+    override fun setAppSession(token: List<String>) {
+        val accessToken = AccessToken(token[0])
+        val refreshToken = RefreshToken(token[1])
+        logger("accessToken : $accessToken ")
+        logger("refreshToken : $refreshToken ")
+        appSession.jwt = JWT(accessToken, refreshToken)
     }
 
     override suspend fun getIsLogin(): Flow<Boolean> {

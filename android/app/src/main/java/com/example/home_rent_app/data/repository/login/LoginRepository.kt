@@ -17,4 +17,6 @@ interface LoginRepository {
     suspend fun getToken(): Flow<List<String>>
 
     suspend fun getIsLogin(): Flow<Boolean>
+
+    fun setAppSession(token: List<String>)
 }

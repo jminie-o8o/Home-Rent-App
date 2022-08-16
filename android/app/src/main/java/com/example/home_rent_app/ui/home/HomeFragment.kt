@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.home_rent_app.databinding.FragmentHomeBinding
 import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.transfer.TransferActivity
 
 class HomeFragment : Fragment() {
 
@@ -32,6 +34,11 @@ class HomeFragment : Fragment() {
         binding.tempButton.setOnClickListener {
             val activity = activity as HomeActivity
             activity.goWantHomeActivity()
+        }
+
+        binding.tempBtn.setOnClickListener {
+            val intent = Intent(binding.root.context, TransferActivity::class.java)
+            startActivity(intent)
         }
     }
 }
