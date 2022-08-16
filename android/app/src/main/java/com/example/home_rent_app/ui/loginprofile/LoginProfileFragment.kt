@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
+import com.example.home_rent_app.ui.transfer.TransferActivity
 
 class LoginProfileFragment : Fragment() {
 
@@ -41,6 +42,11 @@ class LoginProfileFragment : Fragment() {
             } else {
                 requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
             }
+        }
+
+        binding.btnLoginProfile.setOnClickListener {
+            val intent = Intent(binding.root.context, TransferActivity::class.java)
+            startActivity(intent)
         }
     }
 
