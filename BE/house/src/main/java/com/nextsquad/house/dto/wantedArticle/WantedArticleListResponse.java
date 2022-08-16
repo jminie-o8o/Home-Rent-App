@@ -9,4 +9,9 @@ import java.util.List;
 @AllArgsConstructor
 public class WantedArticleListResponse {
     private List<WantedArticleElementResponse> wantedArticles;
+    private boolean hasNext;
+
+    public WantedArticleListResponse(List<WantedArticleElementResponse> wantedArticles) {
+        this.wantedArticles = wantedArticles;
+    }
 }

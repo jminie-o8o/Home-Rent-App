@@ -9,6 +9,7 @@ import com.nextsquad.house.dto.user.DuplicationCheckResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,13 +31,13 @@ public class UserController {
     }
 
     @GetMapping("{userId}/articles/rent")
-    public ResponseEntity<RentArticleListResponse> getMyRentArticles(@PathVariable long userId) {
-        return ResponseEntity.ok(userService.getMyRentArticles(userId));
+    public ResponseEntity<RentArticleListResponse> getMyRentArticles(@PathVariable long userId, Pageable pageable) {
+        return ResponseEntity.ok(userService.getMyRentArticles(userId, pageable));
     }
 
     @GetMapping("{userId}/bookmarks/rent")
-    public ResponseEntity<RentArticleListResponse> getRentBookmark(@PathVariable long userId){
-        return ResponseEntity.ok(userService.getRentBookmark(userId));
+    public ResponseEntity<RentArticleListResponse> getRentBookmark(@PathVariable long userId, Pageable pageable){
+        return ResponseEntity.ok(userService.getRentBookmark(userId, pageable));
     }
 
     @GetMapping("/check-duplication")
@@ -45,12 +46,12 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/bookmarks/wanted")
-    public ResponseEntity<WantedArticleListResponse> getWantedBookmark(@PathVariable long userId) {
-        return ResponseEntity.ok(userService.getWantedBookmark(userId));
+    public ResponseEntity<WantedArticleListResponse> getWantedBookmark(@PathVariable long userId, Pageable pageable) {
+        return ResponseEntity.ok(userService.getWantedBookmark(userId, pageable));
     }
 
     @GetMapping("/{userId}/articles/wanted")
-    public ResponseEntity<WantedArticleListResponse> getMyWantedArticles (@PathVariable long userId) {
-        return ResponseEntity.ok(userService.getMyWantedArticles(userId));
+    public ResponseEntity<WantedArticleListResponse> getMyWantedArticles (@PathVariable long userId, Pageable pageable) {
+        return ResponseEntity.ok(userService.getMyWantedArticles(userId, pageable));
     }
 }

@@ -14,9 +14,12 @@ import com.nextsquad.house.repository.UserRepository;
 import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
 import com.nextsquad.house.repository.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,10 +60,11 @@ public class WantedArticleService {
         return WantedArticleResponse.from(article);
     }
     
-    public WantedArticleListResponse getWantedArticleList() {
-        List<WantedArticleElementResponse> elementResponseList = wantedArticleRepository.findByAvailable()
-                .stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
-        return new WantedArticleListResponse(elementResponseList);
+    public WantedArticleListResponse getWantedArticleList(Pageable pageable) {
+        Page<WantedArticle> articles = wantedArticleRepository.findByAvailable(pageable);
+        List<WantedArticleElementResponse> elementResponseList = articles.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
+        boolean hasNext = pageable.getPageNumber() < articles.getTotalPages() - 1;
+        return new WantedArticleListResponse(elementResponseList, hasNext);
     }
 
 
