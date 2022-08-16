@@ -1,6 +1,7 @@
 package com.example.home_rent_app.ui.transfer
 
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.RoomType
@@ -45,10 +46,10 @@ class TransferViewModel @Inject constructor() : ViewModel() {
         )
     val isCorrectDate = _isCorrectDate.asSharedFlow()
 
-    private val _picture = MutableStateFlow<List<Bitmap>>(emptyList())
+    private val _picture = MutableStateFlow<List<Uri>>(emptyList())
     val picture = _picture.asStateFlow()
 
-    private val _mainPicture = MutableStateFlow<UiState<Bitmap>>(UiState.Loading)
+    private val _mainPicture = MutableStateFlow<UiState<Uri>>(UiState.Loading)
     val mainPicture = _mainPicture.asStateFlow()
 
     fun setHomeDescriptionState() {
@@ -58,25 +59,25 @@ class TransferViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun setPicture(bitmap: Bitmap) {
+    fun setPictureUri(uri: Uri) {
         if(_mainPicture.value == UiState.Loading) {
-            _mainPicture.value = UiState.Success(bitmap)
+            _mainPicture.value = UiState.Success(uri)
         } else {
-            val list = mutableListOf<Bitmap>()
+            val list = mutableListOf<Uri>()
             list.addAll(_picture.value)
-            list.add(bitmap)
+            list.add(uri)
             _picture.value = list
         }
     }
 
-    fun removePic(index : Int) {
-        val list = mutableListOf<Bitmap>()
+    fun removePicUri(index : Int) {
+        val list = mutableListOf<Uri>()
         list.addAll(_picture.value)
         list.removeAt(index)
         _picture.value = list
     }
 
-    fun removeMainPic() {
+    fun removeMainPicUri() {
         _mainPicture.value = UiState.Loading
     }
 
@@ -103,6 +104,15 @@ class TransferViewModel @Inject constructor() : ViewModel() {
         ) {
             _homeDescriptionState.value = true
         }
+    }
+
+    fun replacePic(beforePosition: Int, targetPosition: Int) {
+        val list = mutableListOf<Uri>()
+        list.addAll(_picture.value)
+        val temp = list[beforePosition]
+        list[beforePosition] = list[targetPosition]
+        list[targetPosition] = temp
+        _picture.value = list
     }
 
     suspend fun checkCorrectDate() {

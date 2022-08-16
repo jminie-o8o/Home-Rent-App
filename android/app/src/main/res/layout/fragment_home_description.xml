@@ -257,7 +257,7 @@
                 android:layout_marginTop="8dp"
                 style="@style/editTextStyle">
 
-                <com.example.home_rent_app.util.PriceEditText
+                <com.example.home_rent_app.ui.custom.PriceEditText
                     android:id="@+id/pet_deposit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -294,7 +294,7 @@
                 android:layout_marginTop="8dp"
                 style="@style/editTextStyle">
 
-                <com.example.home_rent_app.util.PriceEditText
+                <com.example.home_rent_app.ui.custom.PriceEditText
                     android:id="@+id/pet_monthly"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -329,7 +329,7 @@
                 android:layout_marginTop="8dp"
                 style="@style/editTextStyle">
 
-                <com.example.home_rent_app.util.PriceEditText
+                <com.example.home_rent_app.ui.custom.PriceEditText
                     android:id="@+id/pet_maintenance"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package com.example.home_rent_app.util
+package com.example.home_rent_app.ui.custom
 
 import android.content.Context
 import android.graphics.Canvas

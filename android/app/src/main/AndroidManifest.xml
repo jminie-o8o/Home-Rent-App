@@ -9,6 +9,8 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-sdk tools:overrideLibrary="androidx.draganddrop:draganddrop:1.0.0" />
+
     <queries>
         <package android:name="com.kakao.talk" />
     </queries>

@@ -110,7 +110,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.example.home_rent_app.util.MainImageView
+        <com.example.home_rent_app.ui.custom.MainImageView
             android:id="@+id/iv_main_image"
             android:layout_width="0dp"
             android:layout_height="0dp"

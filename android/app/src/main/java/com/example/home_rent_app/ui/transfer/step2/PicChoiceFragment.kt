@@ -26,13 +26,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.home_rent_app.databinding.FragmentPicChoiceBinding
 import com.example.home_rent_app.ui.transfer.TransferViewModel
-import com.example.home_rent_app.util.ShadowBuilder
-import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.logger
-import com.example.home_rent_app.util.repeatOnStarted
+import com.example.home_rent_app.util.*
 import kotlinx.coroutines.flow.collect
 
-class PicChoiceFragment : Fragment() {
+class PicChoiceFragment : Fragment(), PicControlListener {
 
     private val binding: FragmentPicChoiceBinding by lazy {
         FragmentPicChoiceBinding.inflate(layoutInflater)
@@ -43,25 +40,37 @@ class PicChoiceFragment : Fragment() {
     private val albumLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK && it.data != null) {
-                val currentImageUri = it.data?.data
+//                val currentImageUri = it.data?.data
                 try {
-                    currentImageUri?.let {
-                        if (Build.VERSION.SDK_INT < 28) {
-                            val bitmap = MediaStore.Images.Media.getBitmap(
-                                requireActivity().contentResolver,
-                                currentImageUri
-                            )
-                            viewModel.setPicture(bitmap)
-                        } else {
-                            val source = ImageDecoder.createSource(
-                                requireActivity().contentResolver,
-                                currentImageUri
-                            )
-                            val bitmap = ImageDecoder.decodeBitmap(source)
-                            viewModel.setPicture(bitmap)
+                    val clipData = it?.data?.clipData
+                    val clipDataSize = clipData?.itemCount
+                    if (clipData == null) { //이미지를 하나만 선택할 경우 clipData가 null이 올수 있음
+                        val selectedImageUri = it?.data?.data!!
+                        viewModel.setPictureUri(selectedImageUri)
+                    } else {
+                        clipData.let { data ->
+                            for (i in 0 until clipDataSize!!) { //선택 한 사진수만큼 반복
+                                val selectedImageUri = data.getItemAt(i).uri
+                                viewModel.setPictureUri(selectedImageUri)
+                            }
                         }
                     }
-
+//                    currentImageUri?.let { uri ->
+//                        if (Build.VERSION.SDK_INT < 28) {
+//                            val bitmap = MediaStore.Images.Media.getBitmap(
+//                                requireActivity().contentResolver,
+//                                currentImageUri
+//                            )
+//                            viewModel.setPictureUri(uri)
+//                        } else {
+//                            val source = ImageDecoder.createSource(
+//                                requireActivity().contentResolver,
+//                                currentImageUri
+//                            )
+//                            val bitmap = ImageDecoder.decodeBitmap(source)
+//                            viewModel.setPictureUri(uri)
+//                        }
+//                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -87,13 +96,14 @@ class PicChoiceFragment : Fragment() {
             binding.ivMainImage.visibility = View.GONE
             binding.ivRemove.visibility = View.GONE
             binding.ivMainImage.setImageResource(0)
-            viewModel.removeMainPic()
+            viewModel.removeMainPicUri()
         }
 
         binding.cvUploadPic.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
-            albumLauncher.launch(intent)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            albumLauncher.launch(Intent.createChooser(intent, "Select Picture"))
         }
 
         binding.ivMainImage.setOnLongClickListener { v ->
@@ -115,106 +125,11 @@ class PicChoiceFragment : Fragment() {
             } else {
                 Toast.makeText(this.requireContext(), "버전이 낮아서 지원하지 않습니다.", Toast.LENGTH_SHORT).show()
             }
-
             // Indicate that the long-click was handled.
             true
         }
 
-        binding.ivMainImage.setOnDragListener { v, e ->
-
-            // Handles each of the expected events.
-            when (e.action) {
-                DragEvent.ACTION_DRAG_STARTED -> {
-                    // Determines if this View can accept the dragged data.
-                    if (e.clipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                        // As an example of what your application might do, applies a blue color tint
-                        // to the View to indicate that it can accept data.
-                        (v as? ImageView)?.setColorFilter(Color.BLUE)
-
-                        // Invalidate the view to force a redraw in the new tint.
-                        v.invalidate()
-
-                        // Returns true to indicate that the View can accept the dragged data.
-                        true
-                    } else {
-                        // Returns false to indicate that, during the current drag and drop operation,
-                        // this View will not receive events again until ACTION_DRAG_ENDED is sent.
-                        false
-                    }
-                }
-                DragEvent.ACTION_DRAG_ENTERED -> {
-                    // Applies a green tint to the View.
-                    (v as? ImageView)?.setColorFilter(Color.GREEN)
-
-                    // Invalidates the view to force a redraw in the new tint.
-                    v.invalidate()
-
-                    // Returns true; the value is ignored.
-                    true
-                }
-
-                DragEvent.ACTION_DRAG_LOCATION ->
-                    // Ignore the event.
-                    true
-                DragEvent.ACTION_DRAG_EXITED -> {
-                    // Resets the color tint to blue.
-                    (v as? ImageView)?.setColorFilter(Color.BLUE)
-
-                    // Invalidates the view to force a redraw in the new tint.
-                    v.invalidate()
-
-                    // Returns true; the value is ignored.
-                    true
-                }
-                DragEvent.ACTION_DROP -> {
-                    // Gets the item containing the dragged data.
-                    val item: ClipData.Item = e.clipData.getItemAt(0)
-
-                    // Gets the text data from the item.
-                    val dragData = item.text
-
-                    // Displays a message containing the dragged data.
-                    Toast.makeText(this.requireContext(), "Dragged data is $dragData", Toast.LENGTH_LONG).show()
-
-                    // Turns off any color tints.
-                    (v as? ImageView)?.clearColorFilter()
-
-                    // Invalidates the view to force a redraw.
-                    v.invalidate()
-
-                    // Returns true. DragEvent.getResult() will return true.
-                    true
-                }
-
-                DragEvent.ACTION_DRAG_ENDED -> {
-                    // Turns off any color tinting.
-                    (v as? ImageView)?.clearColorFilter()
-
-                    // Invalidates the view to force a redraw.
-                    v.invalidate()
-
-                    // Does a getResult(), and displays what happened.
-                    when(e.result) {
-                        true ->
-                            Toast.makeText(this.requireContext(), "The drop was handled.", Toast.LENGTH_LONG)
-                        else ->
-                            Toast.makeText(this.requireContext(), "The drop didn't work.", Toast.LENGTH_LONG)
-                    }.show()
-
-                    // Returns true; the value is ignored.
-                    true
-                }
-                else -> {
-                    // An unknown action type was received.
-                    Log.e("DragDrop Example", "Unknown action type received by View.OnDragListener.")
-                    false
-                }
-            }
-        }
-
-        val picAdapter = PicAdapter {
-            viewModel.removePic(it)
-        }
+        val picAdapter = PicAdapter(requireActivity().contentResolver, this)
 
         binding.rvPicList.apply {
             adapter = picAdapter
@@ -233,7 +148,8 @@ class PicChoiceFragment : Fragment() {
                     is UiState.Success -> {
                         binding.ivMainImage.visibility = View.VISIBLE
                         binding.ivRemove.visibility = View.VISIBLE
-                        binding.ivMainImage.setImageBitmap(it.data)
+                        val bitmap = getBitmap(requireActivity().contentResolver, it.data)
+                        binding.ivMainImage.setImageBitmap(bitmap)
                     }
                     is UiState.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
@@ -245,4 +161,13 @@ class PicChoiceFragment : Fragment() {
             }
         }
     }
+
+    override fun removePic(position: Int) {
+        viewModel.removePicUri(position)
+    }
+
+    override fun changePic(beforePosition: Int, targetPosition: Int) {
+        viewModel.replacePic(beforePosition, targetPosition)
+    }
+
 }
