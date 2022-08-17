@@ -22,7 +22,7 @@ public class CustomRentArticleRepositoryImpl implements CustomRentArticleReposit
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<RentArticle> findbyKeyword(String keyword, Pageable pageable) {
+    public List<RentArticle> findByKeyword(String keyword, Pageable pageable) {
         List<RentArticle> content = jpaQueryFactory
                 .select(rentArticle)
                 .from(rentArticle)

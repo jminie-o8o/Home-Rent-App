@@ -7,7 +7,6 @@ import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,7 +86,7 @@ public class RentArticleService {
     }
 
     public RentArticleListResponse getRentArticles(String keyword, Pageable pageable) {
-        List<RentArticle> rentArticles = rentArticleRepository.findbyKeyword(keyword, pageable);
+        List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(keyword, pageable);
         boolean hasNext = hasNext(pageable, rentArticles);
         if (hasNext) {
             rentArticles = rentArticles.subList(0, rentArticles.size()-1);
