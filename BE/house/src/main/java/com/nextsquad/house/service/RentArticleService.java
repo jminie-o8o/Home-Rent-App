@@ -4,6 +4,9 @@ import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.exception.ArticleNotFoundException;
+import com.nextsquad.house.exception.BookmarkNotFoundException;
+import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +35,7 @@ public class RentArticleService {
 
     public RentArticleCreationResponse writeRentArticle(RentArticleRequest request){
         log.info("writing {}... ", request.getTitle());
-        User user = userRepository.findById(request.getUserId()).orElseThrow();
+        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new UserNotFoundException());
         List<String> houseImageUrls = request.getHouseImages();
 
         RentArticle rentArticle = RentArticle.builder()
@@ -103,9 +106,9 @@ public class RentArticleService {
     }
 
     public RentArticleResponse getRentArticle(Long id){
-        RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new ArticleNotFoundException());
         if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
-            throw new RuntimeException("삭제되었거나 거래가 완료된 글입니다.");
+            throw new IllegalArgumentException("삭제되었거나 거래가 완료된 글입니다.");
         }
         rentArticle.addViewCount();
 
@@ -114,26 +117,26 @@ public class RentArticleService {
 
     public GeneralResponseDto toggleIsCompleted(Long id) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new ArticleNotFoundException());
         rentArticle.toggleIsCompleted();
         return new GeneralResponseDto(200, "게시글 상태가 변경되었습니다.");
     }
 
     public GeneralResponseDto deleteArticle(Long id) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new ArticleNotFoundException());
         rentArticle.markAsDeleted();
         return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
     }
 
     public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto) {
-        User user = userRepository.findById(bookmarkRequestDto.getUserId()).orElseThrow(() -> new RuntimeException());
-        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new RuntimeException());
+        User user = userRepository.findById(bookmarkRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException());
+        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new ArticleNotFoundException());
         if (rentArticle.isDeleted()) {
-            return new GeneralResponseDto(400, "삭제된 게시글은 추가할 수 없습니다.");
+            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
         }
         if (rentArticle.isCompleted()) {
-            return new GeneralResponseDto(400, "완료된 게시글은 추가할 수 없습니다.");
+            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
         }
         rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
@@ -141,11 +144,11 @@ public class RentArticleService {
 
     public GeneralResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequestDto) {
         User user = userRepository.findById(bookmarkRequestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("해당 id에 맞는 유저가 없습니다."));
+                .orElseThrow(() -> new UserNotFoundException());
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId())
-                .orElseThrow(() -> new RuntimeException("해당 id에 맞는 양도 게시글이 없습니다."));
+                .orElseThrow(() -> new ArticleNotFoundException());
         RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle)
-                .orElseThrow(() -> new RuntimeException("북마크가 존재하지 않습니다."));
+                .orElseThrow(() -> new BookmarkNotFoundException());
         rentArticleBookmarkRepository.delete(bookmark);
         return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
     }
@@ -153,7 +156,7 @@ public class RentArticleService {
     public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request) {
         log.info("updating {}... ", request.getTitle());
         RentArticle rentArticle = rentArticleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("해당 id에 맞는 양도 게시글이 없습니다."));
+                .orElseThrow(() -> new ArticleNotFoundException());
 
         facilityInHomeRepository.deleteAllByRentArticle(rentArticle);
         securityInHomeRepository.deleteAllByRentArticle(rentArticle);
