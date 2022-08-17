@@ -1,5 +1,6 @@
 package com.nextsquad.house.service;
 
+import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
@@ -60,11 +61,18 @@ public class WantedArticleService {
         return WantedArticleResponse.from(article);
     }
     
-    public WantedArticleListResponse getWantedArticleList(Pageable pageable) {
-        Page<WantedArticle> articles = wantedArticleRepository.findByAvailable(pageable);
-        List<WantedArticleElementResponse> elementResponseList = articles.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
-        boolean hasNext = pageable.getPageNumber() < articles.getTotalPages() - 1;
+    public WantedArticleListResponse getWantedArticleList(String keyword, Pageable pageable) {
+        List<WantedArticle> wantedArticles = wantedArticleRepository.findByKeyword(keyword, pageable);
+        boolean hasNext = hasNext(pageable, wantedArticles);
+        if (hasNext) {
+            wantedArticles = wantedArticles.subList(0, wantedArticles.size()-1);
+        }
+        List<WantedArticleElementResponse> elementResponseList = wantedArticles.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
         return new WantedArticleListResponse(elementResponseList, hasNext);
+    }
+
+    private boolean hasNext(Pageable pageable, List<?> rentArticles) {
+        return pageable.getPageSize() < rentArticles.size();
     }
 
 

@@ -36,8 +36,8 @@ public class WantedArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<WantedArticleListResponse> getWantedArticleList(Pageable pageable) {
-        return ResponseEntity.ok(wantedArticleService.getWantedArticleList(pageable));
+    public ResponseEntity<WantedArticleListResponse> getWantedArticleList(@RequestParam String keyword, Pageable pageable) {
+        return ResponseEntity.ok(wantedArticleService.getWantedArticleList(keyword, pageable));
     }
 
     @DeleteMapping("/{id}")
