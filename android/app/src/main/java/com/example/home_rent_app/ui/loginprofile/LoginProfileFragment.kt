@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +19,16 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
+import com.example.home_rent_app.util.FileController
+import com.example.home_rent_app.util.logger
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginProfileFragment : Fragment() {
 
     lateinit var binding: FragmentLoginProfileBinding
+    @Inject lateinit var fileController: FileController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +66,7 @@ class LoginProfileFragment : Fragment() {
             if (result.resultCode == RESULT_OK) {
                 val imageUri = result.data?.data
                 imageUri?.let {
+                    logger("URI: ${fileController.uriToMultiPart(it)}")
                     binding.ivLoginProfile.load(it)
                 }
             }
