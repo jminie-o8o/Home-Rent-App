@@ -4,11 +4,13 @@ import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.service.RentArticleService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/houses/rent")
 public class RentArticleController {
@@ -21,8 +23,8 @@ public class RentArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<RentArticleListResponse> getRentArticles(Pageable pageable) {
-        return ResponseEntity.ok(rentArticleService.getRentArticles(pageable));
+    public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchConditionDto searchCondition, Pageable pageable) {
+        return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable));
     }
 
     @GetMapping("/{id}")
@@ -54,5 +56,6 @@ public class RentArticleController {
     public ResponseEntity<GeneralResponseDto> deleteBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto) {
         return ResponseEntity.ok(rentArticleService.deleteBookmark(bookmarkRequestDto));
     }
+
 }
 

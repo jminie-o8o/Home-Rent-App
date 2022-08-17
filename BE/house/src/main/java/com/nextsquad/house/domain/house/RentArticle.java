@@ -103,3 +103,4 @@ public class RentArticle {
         this.hasElevator = request.isHasElevator();
     }
 }
+

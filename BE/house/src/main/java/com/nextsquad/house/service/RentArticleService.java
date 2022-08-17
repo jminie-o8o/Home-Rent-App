@@ -7,7 +7,6 @@ import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,17 +85,21 @@ public class RentArticleService {
         }
     }
 
-    public RentArticleListResponse getRentArticles(Pageable pageable) {
-        Page<RentArticle> rentArticles = rentArticleRepository.findAllAvailable(pageable);
+    public RentArticleListResponse getRentArticles(SearchConditionDto searchCondition, Pageable pageable) {
+        List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(searchCondition, pageable);
+        boolean hasNext = hasNext(pageable, rentArticles);
+        if (hasNext) {
+            rentArticles = rentArticles.subList(0, rentArticles.size()-1);
+        }
         List<RentArticleListElement> responseElements = rentArticles.stream()
                 .map(RentArticleListElement::from)
                 .collect(Collectors.toList());
 
-        return new RentArticleListResponse(responseElements,  hasNext(pageable, rentArticles));
+        return new RentArticleListResponse(responseElements, hasNext);
     }
 
-    private boolean hasNext(Pageable pageable, Page<RentArticle> rentArticles) {
-        return pageable.getPageNumber() < rentArticles.getTotalPages() - 1;
+    private boolean hasNext(Pageable pageable, List<RentArticle> rentArticles) {
+        return pageable.getPageSize() < rentArticles.size();
     }
 
     public RentArticleResponse getRentArticle(Long id){
