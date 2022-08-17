@@ -2,10 +2,11 @@ package com.nextsquad.house.repository;
 
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.WantedArticle;
+import com.nextsquad.house.dto.SearchConditionDto;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface CustomWantedArticleRepository {
-    List<WantedArticle> findByKeyword(String keyword, Pageable pageable);
+    List<WantedArticle> findByKeyword(SearchConditionDto searchCondition, Pageable pageable);
 }

@@ -5,6 +5,7 @@ import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.GeneralResponseDto;
+import com.nextsquad.house.dto.SearchConditionDto;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
@@ -61,8 +62,8 @@ public class WantedArticleService {
         return WantedArticleResponse.from(article);
     }
     
-    public WantedArticleListResponse getWantedArticleList(String keyword, Pageable pageable) {
-        List<WantedArticle> wantedArticles = wantedArticleRepository.findByKeyword(keyword, pageable);
+    public WantedArticleListResponse getWantedArticleList(SearchConditionDto searchCondition, Pageable pageable) {
+        List<WantedArticle> wantedArticles = wantedArticleRepository.findByKeyword(searchCondition, pageable);
         boolean hasNext = hasNext(pageable, wantedArticles);
         if (hasNext) {
             wantedArticles = wantedArticles.subList(0, wantedArticles.size()-1);

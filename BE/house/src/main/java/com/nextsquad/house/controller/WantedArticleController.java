@@ -1,6 +1,7 @@
 package com.nextsquad.house.controller;
 
 import com.nextsquad.house.dto.GeneralResponseDto;
+import com.nextsquad.house.dto.SearchConditionDto;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
@@ -36,8 +37,8 @@ public class WantedArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<WantedArticleListResponse> getWantedArticleList(@RequestParam String keyword, Pageable pageable) {
-        return ResponseEntity.ok(wantedArticleService.getWantedArticleList(keyword, pageable));
+    public ResponseEntity<WantedArticleListResponse> getWantedArticleList(@ModelAttribute SearchConditionDto searchConditionDto, Pageable pageable) {
+        return ResponseEntity.ok(wantedArticleService.getWantedArticleList(searchConditionDto, pageable));
     }
 
     @DeleteMapping("/{id}")
