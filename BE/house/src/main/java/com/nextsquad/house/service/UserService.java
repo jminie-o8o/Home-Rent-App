@@ -9,6 +9,7 @@ import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.user.DuplicationCheckResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
+import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +34,12 @@ public class UserService {
     private final RentArticleRepository rentArticleRepository;
 
     public UserResponseDto getUserInfo(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("없는 유저 입니다."));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
         return UserResponseDto.from(user);
     }
 
     public GeneralResponseDto modifyUserInfo(Long id, UserInfoDto userInfoDto){
-        User user = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
         if (userRepository.existsUserByDisplayName(userInfoDto.getDisplayName())) {
             throw new IllegalArgumentException("중복된 닉네임 입니다.");
         }
@@ -47,7 +48,7 @@ public class UserService {
     }
 
     public RentArticleListResponse getRentBookmark(long userId, Pageable pageable) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         Page<RentArticleBookmark> bookmarks = rentArticleBookmarkRepository.findByUser(user, pageable);
         List<RentArticleListElement> elements = bookmarks.stream().map(RentArticleListElement::from).collect(Collectors.toList());
         return new RentArticleListResponse(elements, hasNext(pageable, bookmarks));
@@ -58,7 +59,7 @@ public class UserService {
     }
 
     public WantedArticleListResponse getWantedBookmark(long userId, Pageable pageable) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당하는 ID의 사용자가 없습니다"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         Page<WantedArticleBookmark> bookmarks = wantedArticleBookmarkRepository.findByUser(user, pageable);
         List<WantedArticleElementResponse> elements = bookmarks.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
 
@@ -68,7 +69,7 @@ public class UserService {
 
     public RentArticleListResponse getMyRentArticles(long userId, Pageable pageable) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("요청하신 id에 해당하는 사용자가 없습니다."));
+                .orElseThrow(() -> new UserNotFoundException());
 
         Page<RentArticle> rentArticles = rentArticleRepository.findByUser(user, pageable);
         List<RentArticleListElement> responseElements = rentArticles.stream()
@@ -79,7 +80,7 @@ public class UserService {
     }
     
     public WantedArticleListResponse getMyWantedArticles(long userId, Pageable pageable) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당하는 ID의 사용자가 없습니다"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         Page<WantedArticle> articles = wantedArticleRepository.findByUser(user, pageable);
         List<WantedArticleElementResponse> myArticles = articles.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
 

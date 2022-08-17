@@ -1,5 +1,6 @@
 package com.nextsquad.house.config.webConfig;
 
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.service.RedisService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String accessToken = request.getHeader("access-token");
 
         if (accessToken == null || redisService.get(accessToken) != null) {
-            return false;
+            throw new JWTDecodeException("JWT 토큰이 올바르지 않습니다.");
         }
         jwtProvider.verifyToken(accessToken);
         return true;

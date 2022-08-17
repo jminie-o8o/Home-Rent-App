@@ -4,6 +4,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.JwtResponseDto;
 import com.nextsquad.house.dto.OauthLoginRequestDto;
+import com.nextsquad.house.exception.OauthClientNotFoundException;
+import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.login.oauth.OauthClient;
@@ -27,7 +29,7 @@ public class LoginService {
     public JwtResponseDto loginWithOauth(OauthLoginRequestDto requestDto) {
         log.info("login started!");
         OauthClient oauthClient = oauthClientMapper.getOauthClient(requestDto.getOauthClientName())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new OauthClientNotFoundException());
         UserInfo userInfo = oauthClient.getUserInfo(requestDto.getAuthCode());
 
         User user = userRepository.findByAccountId(userInfo.getAccountId())
@@ -57,7 +59,7 @@ public class LoginService {
         validateRefreshToken(refreshToken, storedRefreshToken);
 
         User user = userRepository.findByAccountId(accountId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new UserNotFoundException());
         JwtToken newJwtToken = jwtProvider.createRefreshedToken(user, refreshToken);
 
         return new JwtResponseDto(newJwtToken.getAccessToken(), newJwtToken.getRefreshToken());
