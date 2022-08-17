@@ -85,8 +85,8 @@ public class RentArticleService {
         }
     }
 
-    public RentArticleListResponse getRentArticles(String keyword, Pageable pageable) {
-        List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(keyword, pageable);
+    public RentArticleListResponse getRentArticles(SearchConditionDto searchCondition, Pageable pageable) {
+        List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(searchCondition, pageable);
         boolean hasNext = hasNext(pageable, rentArticles);
         if (hasNext) {
             rentArticles = rentArticles.subList(0, rentArticles.size()-1);

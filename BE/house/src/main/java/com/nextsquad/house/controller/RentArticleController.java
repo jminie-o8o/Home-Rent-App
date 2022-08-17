@@ -23,8 +23,8 @@ public class RentArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<RentArticleListResponse> getRentArticles(@RequestParam String keyword, Pageable pageable) {
-        return ResponseEntity.ok(rentArticleService.getRentArticles(keyword, pageable));
+    public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchConditionDto searchCondition, Pageable pageable) {
+        return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable));
     }
 
     @GetMapping("/{id}")
