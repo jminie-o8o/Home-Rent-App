@@ -12,15 +12,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.wanthome.step2.WantHomeSecondStepFragment">
 
-        <WebView
-            android:id="@+id/kakao_address_web_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/abb_bar_want_home_second_step"
             android:layout_width="match_parent"
@@ -59,18 +50,34 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ProgressBar
-            android:id="@+id/pb_want_home_second_step"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_step"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-6dp"
-            android:max="100"
-            android:progress="100"
-            android:progressTint="@color/main_color"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_second_step" />
+            app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_second_step">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_step_one"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:clickable="false"
+                android:text="@string/step_one"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_step_two"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:checked="true"
+                android:text="@string/step_two"/>
+
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/tv_locate_second_step"
@@ -78,10 +85,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="위치"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pb_want_home_second_step" />
+            app:layout_constraintTop_toBottomOf="@+id/cg_step" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_find_address"
