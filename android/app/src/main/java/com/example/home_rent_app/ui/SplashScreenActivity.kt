@@ -34,15 +34,15 @@ class SplashScreenActivity : AppCompatActivity() {
                     override fun onPreDraw(): Boolean {
                         return if (isLogin) {
                             val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
+                            finish()
                             content.viewTreeObserver.removeOnPreDrawListener(this)
                             true
                         } else {
                             val intent =
                                 Intent(this@SplashScreenActivity, LoginActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
+                            finish()
                             content.viewTreeObserver.removeOnPreDrawListener(this)
                             false
                         }
