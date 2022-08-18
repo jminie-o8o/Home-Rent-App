@@ -1,6 +1,5 @@
 package com.nextsquad.house.repository;
 
-import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.dto.SearchConditionDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -11,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+import static com.nextsquad.house.domain.house.QRentArticle.rentArticle;
 import static com.nextsquad.house.domain.house.QWantedArticle.wantedArticle;
 
 @Slf4j
@@ -26,7 +26,7 @@ public class CustomWantedArticleRepositoryImpl implements CustomWantedArticleRep
                 .from(wantedArticle)
                 .where(wantedArticle.isDeleted.eq(false),
                         checkAddressAndTitle(searchCondition.getKeyword()),
-                        checkIsCompleted(searchCondition.getIsCompleted())
+                        checkAvailableOnly(searchCondition.getAvailableOnly())
                 )
                 .orderBy(wantedArticle.createdAt.desc())
                 .offset(pageable.getOffset())
@@ -56,10 +56,10 @@ public class CustomWantedArticleRepositoryImpl implements CustomWantedArticleRep
         return wantedArticle.title.like("%" + keyword + "%");
     }
 
-    private BooleanExpression checkIsCompleted(Boolean isCompleted) {
-        if (isCompleted == null || !isCompleted) {
-            return wantedArticle.isCompleted.eq(false);
+    private BooleanExpression checkAvailableOnly(Boolean availableOnly) {
+        if (availableOnly != null && availableOnly) {
+            return rentArticle.isCompleted.eq(false);
         }
-        return wantedArticle.isCompleted.eq(true);
+        return null;
     }
 }

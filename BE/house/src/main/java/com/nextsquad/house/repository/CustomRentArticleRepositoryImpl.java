@@ -2,19 +2,13 @@ package com.nextsquad.house.repository;
 
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.dto.SearchConditionDto;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.jpa.JPQLQueryFactory;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
@@ -28,13 +22,13 @@ public class CustomRentArticleRepositoryImpl implements CustomRentArticleReposit
 
     @Override
     public List<RentArticle> findByKeyword(SearchConditionDto searchCondition, Pageable pageable) {
-        log.info("keyword: {}, isCompleted: {}, sortedBy: {}", searchCondition.getKeyword(), searchCondition.getIsCompleted(), searchCondition.getSortedBy());
+        log.info("keyword: {}, isCompleted: {}, sortedBy: {}", searchCondition.getKeyword(), searchCondition.getAvailableOnly(), searchCondition.getSortedBy());
         List<RentArticle> content = jpaQueryFactory
                 .select(rentArticle)
                 .from(rentArticle)
                 .where(rentArticle.isDeleted.eq(false),
                         checkAddressAndTitle(searchCondition.getKeyword()),
-                        checkIsCompleted(searchCondition.getIsCompleted()))
+                        checkAvailableOnly(searchCondition.getAvailableOnly()))
 
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1)
@@ -65,11 +59,11 @@ public class CustomRentArticleRepositoryImpl implements CustomRentArticleReposit
         return rentArticle.title.like("%" + keyword + "%");
     }
 
-    private BooleanExpression checkIsCompleted(Boolean isCompleted) {
-        if (isCompleted == null || !isCompleted) {
+    private BooleanExpression checkAvailableOnly(Boolean availableOnly) {
+        if (availableOnly != null && availableOnly) {
             return rentArticle.isCompleted.eq(false);
         }
-        return rentArticle.isCompleted.eq(true);
+        return null;
     }
 
     private OrderSpecifier checkSortCondition(String sortedBy) {
