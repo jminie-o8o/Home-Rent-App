@@ -111,6 +111,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="15dp"
                     app:chipSpacingHorizontal="10dp"
+                    locationTypeFilter="@={vm.location}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_locate_second_step"

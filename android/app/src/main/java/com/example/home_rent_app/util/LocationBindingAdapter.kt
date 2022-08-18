@@ -47,6 +47,6 @@ fun ChipGroup.convertToLocationTypeFilter(): Location = when (checkedChipId) {
     else -> Location.GYUNGNAM
 }
 
-@BindingAdapter("locationFilterAttrChanged")
+@BindingAdapter("locationTypeFilterAttrChanged")
 fun ChipGroup.setLocationListeners(attrChange: InverseBindingListener?) =
     setOnCheckedStateChangeListener { _, _ -> attrChange?.onChange() }
