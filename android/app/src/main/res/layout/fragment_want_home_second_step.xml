@@ -50,147 +50,310 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/cg_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_second_step">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_step_one"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:clickable="false"
-                android:text="@string/step_one"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_step_two"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:checked="true"
-                android:text="@string/step_two"/>
-
-        </com.google.android.material.chip.ChipGroup>
-
-        <TextView
-            android:id="@+id/tv_locate_second_step"
-            style="@style/TextSubtitle1.18.bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="위치"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cg_step" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_find_address"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            app:hintEnabled="false"
-            app:layout_constraintStart_toStartOf="@+id/tv_locate_second_step"
-            app:layout_constraintTop_toBottomOf="@+id/tv_locate_second_step">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_find_address"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:hint="주소 검색" />
+                android:layout_height="match_parent">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cg_step"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_second_step">
 
-        <TextView
-            android:id="@+id/tv_title_second_step"
-            style="@style/TextSubtitle1.18.bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="제목"
-            app:layout_constraintStart_toStartOf="@id/tv_locate_second_step"
-            app:layout_constraintTop_toBottomOf="@+id/til_find_address" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_step_one"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:clickable="false"
+                        android:text="@string/step_one" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_title_second_step"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="20"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_second_step">
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_step_two"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:clickable="false"
+                        android:text="@string/step_two" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_title_second_step"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="예시) 부경대 정문 월세 200/30"
-                android:inputType="text"
-                android:maxLength="20" />
+                </com.google.android.material.chip.ChipGroup>
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/tv_locate_second_step"
+                    style="@style/TextSubtitle1.18.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="위치"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cg_step" />
 
-        <TextView
-            android:id="@+id/tv_detail_second_step"
-            style="@style/TextSubtitle1.18.bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="상세설명"
-            app:layout_constraintStart_toStartOf="@id/tv_locate_second_step"
-            app:layout_constraintTop_toBottomOf="@+id/til_title_second_step" />
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="15dp"
+                    app:chipSpacingHorizontal="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_locate_second_step"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_detail_second_step"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="500"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_second_step">
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_seoul"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="서울특별시"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_detail_second_step"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:gravity="top"
-                android:hint="이 매물의 특징이 있다면 알려주세요"
-                android:inputType="text"
-                android:maxLength="500" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_incheon"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="인천광역시"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_busan"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="부산광역시"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_margin="15dp"
-            android:background="@drawable/custom_button_background"
-            android:text="등록하기"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_share_daejeon"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="대전광역시"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_ulsan"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="울산광역시"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_gwangju"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="광주광역시"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_daegu"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="대구광역시"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_gyeonggido"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="경기도"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_gangwon"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="강원도"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_chungbuk"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="충청북도"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_chungnam"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="충청남도"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_junbuk"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="전라북도"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_junnam"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="전라남도"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_gyungbuk"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="경상북도"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_gyungnam"
+                        style="@style/Widget.HomeRent.Chip.Choice"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="경상남도"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+
+                <TextView
+                    android:id="@+id/tv_title_second_step"
+                    style="@style/TextSubtitle1.18.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="제목"
+                    app:layout_constraintStart_toStartOf="@id/tv_locate_second_step"
+                    app:layout_constraintTop_toBottomOf="@+id/chipGroup_category" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_title_second_step"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="20"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_second_step">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_title_second_step"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="예시) 부경대 정문 월세 200/30"
+                        android:inputType="text"
+                        android:maxLength="20" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_detail_second_step"
+                    style="@style/TextSubtitle1.18.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="상세설명"
+                    app:layout_constraintStart_toStartOf="@id/tv_locate_second_step"
+                    app:layout_constraintTop_toBottomOf="@+id/til_title_second_step" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_detail_second_step"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="500"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_second_step">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_detail_second_step"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:gravity="top"
+                        android:hint="이 매물의 특징이 있다면 알려주세요"
+                        android:inputType="text"
+                        android:maxLength="500" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_margin="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/custom_button_background"
+                    android:text="등록하기"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_detail_second_step" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
