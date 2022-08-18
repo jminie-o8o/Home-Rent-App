@@ -1,23 +1,19 @@
 package com.example.home_rent_app.ui.transfer.step2
 
-import android.app.Activity
 import android.content.ClipData
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ContentResolver
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.DRAG_FLAG_GLOBAL
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.util.component1
-import androidx.core.util.component2
-import androidx.draganddrop.DropHelper
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.RoomPicture
 import com.example.home_rent_app.databinding.ItemRoomPicBinding
 import com.example.home_rent_app.util.PicControlListener

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +15,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
+import com.example.home_rent_app.ui.viewmodel.LoginProfileViewModel
 import com.example.home_rent_app.util.FileController
+import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,7 +30,10 @@ import javax.inject.Inject
 class LoginProfileFragment : Fragment() {
 
     lateinit var binding: FragmentLoginProfileBinding
-    @Inject lateinit var fileController: FileController
+
+    @Inject
+    lateinit var fileController: FileController
+    private val viewModel: LoginProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +54,7 @@ class LoginProfileFragment : Fragment() {
                 requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
             }
         }
+        checkNickName()
     }
 
     private fun selectGallery() {
@@ -120,6 +126,20 @@ class LoginProfileFragment : Fragment() {
             requireContext(),
             permission
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun checkNickName() {
+        binding.btnNicknameCheck.setOnClickListener {
+            binding.etLoginProfileNickname.text?.toString()
+                ?.let { nickName -> viewModel.checkNickName(nickName) }
+        }
+        collectStateFlow(viewModel.nickNameCheck) { nickNameCheck ->
+            if (nickNameCheck) binding.etLoginProfileNickname.error = "이미 존재하는 닉네임입니다."
+            else {
+                binding.etLoginProfileNickname.error = null
+                Toast.makeText(requireContext(), "사용가능한 닉네임 입니다", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     companion object {

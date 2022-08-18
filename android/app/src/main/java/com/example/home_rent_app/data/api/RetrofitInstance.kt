@@ -69,4 +69,17 @@ object RetrofitInstance {
             .build()
             .create(TransferApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun retrofitWithJwt(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): LoginProfileApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(LoginProfileApi::class.java)
+    }
 }
