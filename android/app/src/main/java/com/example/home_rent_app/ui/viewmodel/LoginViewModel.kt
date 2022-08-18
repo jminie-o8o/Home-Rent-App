@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
             loginRepository.getIsLogin().collect { isLogin ->
                 _isLogin.value = isLogin
                 logger("isLogin : $isLogin")
-                if(isLogin) {
+                if (isLogin) {
                     loginRepository.getToken().collect {
                         loginRepository.setAppSession(it)
                     }
@@ -65,6 +65,12 @@ class LoginViewModel @Inject constructor(
             )
             val token = loginRepository.getToken().last()
             loginRepository.setAppSession(token)
+        }
+    }
+
+    fun saveIsLogin() {
+        viewModelScope.launch {
+            loginRepository.saveIsLogin()
         }
     }
 }

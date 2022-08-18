@@ -56,10 +56,6 @@ class LoginRepositoryImpl @Inject constructor(
                 prefs[ACCESS_TOKEN] = token.first()
                 prefs[REFRESH_TOKEN] = token.last()
             }
-            // AccessToken, RefreshToken 이 제대로 들어온 여부를 확인하는 boolean 값
-            context.loginCheckDataStore.edit { prefs ->
-                prefs[LOGIN_CHECK] = true
-            }
         }
     }
 
@@ -78,6 +74,13 @@ class LoginRepositoryImpl @Inject constructor(
                     it.toString()
                 }
             }
+    }
+
+    override suspend fun saveIsLogin() {
+        // AccessToken, RefreshToken 이 제대로 들어온 여부를 확인하는 boolean 값
+        context.loginCheckDataStore.edit { prefs ->
+            prefs[LOGIN_CHECK] = true
+        }
     }
 
     override fun setAppSession(token: List<String>) {
