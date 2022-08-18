@@ -15,13 +15,29 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
+import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.viewmodel.LoginProfileViewModel
+import com.example.home_rent_app.ui.viewmodel.LoginViewModel
+import com.example.home_rent_app.util.FileController
+import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginProfileFragment : Fragment() {
 
     lateinit var binding: FragmentLoginProfileBinding
+
+    @Inject
+    lateinit var fileController: FileController
+    private val loginViewModel: LoginViewModel by viewModels()
+    private val loginProfileViewModel: LoginProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +58,8 @@ class LoginProfileFragment : Fragment() {
                 requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
             }
         }
+        checkNickName()
+        addAccount()
     }
 
     private fun selectGallery() {
@@ -59,6 +77,7 @@ class LoginProfileFragment : Fragment() {
             if (result.resultCode == RESULT_OK) {
                 val imageUri = result.data?.data
                 imageUri?.let {
+                    logger("URI: ${fileController.uriToMultiPart(it)}")
                     binding.ivLoginProfile.load(it)
                 }
             }
@@ -112,6 +131,28 @@ class LoginProfileFragment : Fragment() {
             requireContext(),
             permission
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun checkNickName() {
+        binding.btnNicknameCheck.setOnClickListener {
+            binding.etLoginProfileNickname.text?.toString()
+                ?.let { nickName -> loginProfileViewModel.checkNickName(nickName) }
+        }
+        collectStateFlow(loginProfileViewModel.nickNameCheck) { nickNameCheck ->
+            if (nickNameCheck) binding.etLoginProfileNickname.error = "이미 존재하는 닉네임입니다."
+            else {
+                binding.etLoginProfileNickname.error = null
+                Toast.makeText(requireContext(), "사용가능한 닉네임 입니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun addAccount() {
+        binding.btnLoginProfile.setOnClickListener {
+            loginViewModel.saveIsLogin()
+            val intent = Intent(requireContext(), HomeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {

@@ -1,9 +1,7 @@
 package com.example.home_rent_app.util
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Point
-import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.ImageView
 

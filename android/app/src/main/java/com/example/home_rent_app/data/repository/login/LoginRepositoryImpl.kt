@@ -8,7 +8,11 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.home_rent_app.data.api.LoginApi
 import com.example.home_rent_app.data.dto.toJWT
-import com.example.home_rent_app.data.model.*
+import com.example.home_rent_app.data.model.AccessToken
+import com.example.home_rent_app.data.model.JWT
+import com.example.home_rent_app.data.model.KakaoOauthRequest
+import com.example.home_rent_app.data.model.NaverOauthRequest
+import com.example.home_rent_app.data.model.RefreshToken
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.ACCESS_TOKEN
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.LOGIN_CHECK
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.REFRESH_TOKEN
@@ -52,10 +56,6 @@ class LoginRepositoryImpl @Inject constructor(
                 prefs[ACCESS_TOKEN] = token.first()
                 prefs[REFRESH_TOKEN] = token.last()
             }
-            // AccessToken, RefreshToken 이 제대로 들어온 여부를 확인하는 boolean 값
-            context.loginCheckDataStore.edit { prefs ->
-                prefs[LOGIN_CHECK] = true
-            }
         }
     }
 
@@ -74,6 +74,13 @@ class LoginRepositoryImpl @Inject constructor(
                     it.toString()
                 }
             }
+    }
+
+    override suspend fun saveIsLogin() {
+        // AccessToken, RefreshToken 이 제대로 들어온 여부를 확인하는 boolean 값
+        context.loginCheckDataStore.edit { prefs ->
+            prefs[LOGIN_CHECK] = true
+        }
     }
 
     override fun setAppSession(token: List<String>) {

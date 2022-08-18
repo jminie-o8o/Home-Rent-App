@@ -7,7 +7,9 @@ import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.repository.login.LoginRepository
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +29,7 @@ class LoginViewModel @Inject constructor(
             loginRepository.getIsLogin().collect { isLogin ->
                 _isLogin.value = isLogin
                 logger("isLogin : $isLogin")
-                if(isLogin) {
+                if (isLogin) {
                     loginRepository.getToken().collect {
                         loginRepository.setAppSession(it)
                     }
@@ -63,6 +65,12 @@ class LoginViewModel @Inject constructor(
             )
             val token = loginRepository.getToken().last()
             loginRepository.setAppSession(token)
+        }
+    }
+
+    fun saveIsLogin() {
+        viewModelScope.launch {
+            loginRepository.saveIsLogin()
         }
     }
 }
