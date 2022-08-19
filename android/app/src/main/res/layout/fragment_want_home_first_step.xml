@@ -50,18 +50,34 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ProgressBar
-            android:id="@+id/pb_want_home_first_step"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_step"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-6dp"
-            android:max="100"
-            android:progress="50"
-            android:progressTint="@color/main_color"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_first_step" />
+            app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_first_step">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_step_one"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:clickable="false"
+                android:text="@string/step_one"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_step_two"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:checked="false"
+                android:text="@string/step_two"/>
+
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/tv_date_range_want_home_first_step"
@@ -69,10 +85,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="기간"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pb_want_home_first_step" />
+            app:layout_constraintTop_toBottomOf="@+id/cg_step" />
 
         <TextView
             android:id="@+id/tv_go_in_date"

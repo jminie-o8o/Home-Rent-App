@@ -9,6 +9,7 @@ import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -48,8 +49,9 @@ class LoginViewModel @Inject constructor(
                     response.refreshToken.tokenCode
                 )
             )
-            val token = loginRepository.getToken().last()
-            loginRepository.setAppSession(token)
+            loginRepository.getToken().collect {
+                loginRepository.setAppSession(it)
+            }
         }
     }
 
@@ -63,8 +65,9 @@ class LoginViewModel @Inject constructor(
                     response.accessToken.tokenCode
                 )
             )
-            val token = loginRepository.getToken().last()
-            loginRepository.setAppSession(token)
+            loginRepository.getToken().collect {
+                loginRepository.setAppSession(it)
+            }
         }
     }
 
