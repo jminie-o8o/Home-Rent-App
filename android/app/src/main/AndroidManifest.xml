@@ -27,10 +27,10 @@
         android:theme="@style/Theme.HomeRentApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".WantHomeResultActivity"
+            android:name=".ui.wanthomeresult.WantHomeResultActivity"
             android:exported="false" />
         <activity
-            android:name=".FindRoomActivity"
+            android:name=".ui.findroom.FindRoomActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SplashScreenActivity"
