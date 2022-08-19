@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityTransferBinding
+import com.example.home_rent_app.ui.viewmodel.TransferViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
