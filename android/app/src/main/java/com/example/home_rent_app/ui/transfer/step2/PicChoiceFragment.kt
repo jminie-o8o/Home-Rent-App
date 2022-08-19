@@ -21,6 +21,7 @@ import androidx.core.util.component2
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentPicChoiceBinding
@@ -86,7 +87,6 @@ class PicChoiceFragment : Fragment(), PicControlListener {
 
         setUploadButton()
         setNextButton()
-        setPicCount()
         setAdapter()
         setPictureObserver()
         setCheckPictureMax()
@@ -130,6 +130,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
     private fun setPicCount() {
         binding.tvPicCount.text = getString(R.string.pic_count, viewModel.picture.value.size)
     }
+
     private fun setEnableNextButton() {
         binding.btnNext.apply {
             isEnabled = true
@@ -158,9 +159,10 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         repeatOnStarted {
             viewModel.picture.collect {
                 picAdapter.submitList(it)
-                if(it.size > 3) {
+                if(it.size >= 3) {
                     setEnableNextButton()
                 }
+                setPicCount()
             }
         }
     }
@@ -168,6 +170,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
     private fun setNextButton() {
         binding.btnNext.setOnClickListener {
             viewModel.getImageUrl()
+            findNavController().navigate(R.id.action_picChoiceFragment_to_addressSearchFragment)
         }
     }
 

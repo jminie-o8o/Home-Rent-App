@@ -21,6 +21,7 @@ import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
 import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.transfer.TransferActivity
 import com.example.home_rent_app.ui.viewmodel.LoginProfileViewModel
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.FileController
@@ -58,8 +59,11 @@ class LoginProfileFragment : Fragment() {
                 requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
             }
         }
-        checkNickName()
-        addAccount()
+
+        binding.btnLoginProfile.setOnClickListener {
+            val intent = Intent(binding.root.context, TransferActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun selectGallery() {
