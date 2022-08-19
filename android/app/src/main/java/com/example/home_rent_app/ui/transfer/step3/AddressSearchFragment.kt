@@ -12,7 +12,7 @@ import android.webkit.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.home_rent_app.databinding.FragmentAddressSearchBinding
-import com.example.home_rent_app.ui.transfer.TransferViewModel
+import com.example.home_rent_app.ui.viewmodel.TransferViewModel
 import com.example.home_rent_app.util.logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +39,6 @@ class AddressSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.etFindAddress.setOnClickListener {
             showKakaoAddressWebView()
-            logger("")
         }
     }
 
