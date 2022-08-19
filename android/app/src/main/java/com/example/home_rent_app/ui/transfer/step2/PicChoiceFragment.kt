@@ -24,7 +24,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentPicChoiceBinding
-import com.example.home_rent_app.ui.transfer.TransferViewModel
+import com.example.home_rent_app.ui.viewmodel.TransferViewModel
 import com.example.home_rent_app.util.PicControlListener
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger

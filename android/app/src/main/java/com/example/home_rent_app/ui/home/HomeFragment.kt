@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.home_rent_app.databinding.FragmentHomeBinding
 import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.findroom.FindRoomActivity
 import com.example.home_rent_app.ui.transfer.TransferActivity
 
 class HomeFragment : Fragment() {
@@ -38,6 +39,11 @@ class HomeFragment : Fragment() {
 
         binding.tempBtn.setOnClickListener {
             val intent = Intent(binding.root.context, TransferActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnRent.setOnClickListener {
+            val intent = Intent(binding.root.context, FindRoomActivity::class.java)
             startActivity(intent)
         }
     }

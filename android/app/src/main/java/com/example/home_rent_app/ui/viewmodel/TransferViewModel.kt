@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.transfer
+package com.example.home_rent_app.ui.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
