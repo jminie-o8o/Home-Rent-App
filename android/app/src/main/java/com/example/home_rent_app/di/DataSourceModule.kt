@@ -1,5 +1,7 @@
 package com.example.home_rent_app.di
 
+import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSource
+import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSourceImpl
 import com.example.home_rent_app.data.datasource.transfer.TransferDataSource
 import com.example.home_rent_app.data.datasource.transfer.TransferDataSourceImpl
 import dagger.Binds
@@ -14,8 +16,14 @@ abstract class DataSourceModule {
 
     @Singleton
     @Binds
-    abstract fun bindTransferRepository(
+    abstract fun bindTransferRDataSource(
         transferDataSourceImpl: TransferDataSourceImpl
     ) : TransferDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindRoomFindDataSource(
+        findRoomDataSourceImpl: FindRoomDataSourceImpl
+    ) : FindRoomDataSource
 
 }

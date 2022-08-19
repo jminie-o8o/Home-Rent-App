@@ -82,4 +82,17 @@ object RetrofitInstance {
             .build()
             .create(LoginProfileApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideFindRoomApi(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): FindRoomApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(FindRoomApi::class.java)
+    }
 }
