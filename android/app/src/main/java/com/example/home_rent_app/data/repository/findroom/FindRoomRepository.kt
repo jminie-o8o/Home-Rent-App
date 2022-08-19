@@ -1,5 +1,6 @@
 package com.example.home_rent_app.data.repository.findroom
 
+import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.RoomSearchResult
 import kotlinx.coroutines.flow.Flow
 
@@ -12,5 +13,7 @@ interface FindRoomRepository {
         sortedBy: String = "",
         searchAddress: String
     ): Flow<RoomSearchResult>
+
+    fun refreshAuthToken(): Flow<JWT>
 
 }

@@ -61,10 +61,12 @@ class LoginProfileFragment : Fragment() {
             }
         }
 
-        binding.btnLoginProfile.setOnClickListener {
-            val intent = Intent(binding.root.context, TransferActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.btnLoginProfile.setOnClickListener {
+//            val intent = Intent(binding.root.context, TransferActivity::class.java)
+//            startActivity(intent)
+//        }
+        checkNickName()
+        addAccount()
     }
 
     private fun selectGallery() {

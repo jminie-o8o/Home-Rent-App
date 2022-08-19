@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface FindRoomApi {
 
-    @GET("/houses?page=0&size=100&isCompleted=true&sortedBy=rentFee")
+    @GET("houses")
     suspend fun getSearchResult(
         @Query("page") page: Int,
         @Query("size") size: Int,

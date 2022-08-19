@@ -1,7 +1,9 @@
 package com.example.home_rent_app.data.repository.findroom
 
 import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSource
+import com.example.home_rent_app.data.dto.toJWT
 import com.example.home_rent_app.data.dto.toRoomSearchResult
+import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.RoomSearchResult
 import com.example.home_rent_app.util.logger
 import kotlinx.coroutines.flow.Flow
@@ -22,11 +24,14 @@ class FindRoomRepositoryImpl @Inject constructor(
         sortedBy: String,
         searchAddress: String
     ): Flow<RoomSearchResult> {
-        return dataSource.getSearchResult(page, size, isCompleted, sortedBy, searchAddress).
-        catch {
-            logger("네트워크 에러 ")
-        }.map {
+        return dataSource.getSearchResult(page, size, isCompleted, sortedBy, searchAddress)
+        .map {
             it.toRoomSearchResult()
         }
     }
+
+    override fun refreshAuthToken(): Flow<JWT> {
+        return dataSource.refreshAuthToken().map { it.toJWT() }
+    }
+
 }

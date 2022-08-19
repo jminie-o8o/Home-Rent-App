@@ -7,9 +7,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthInterceptor @Inject constructor(
+class RefreshInterceptor @Inject constructor(
     private val appSession: AppSession
-) : Interceptor {
+): Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val jwt = appSession.jwt
@@ -21,7 +21,10 @@ class AuthInterceptor @Inject constructor(
             requestBuilder.addHeader(
                 "access-token",
                 it.accessToken.tokenCode
-            ) // 추후 수정
+            ).addHeader(
+                "refresh-token",
+                it.refreshToken.tokenCode
+            )
         }
 
         return chain.proceed(requestBuilder.build())

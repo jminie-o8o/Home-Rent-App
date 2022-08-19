@@ -1,6 +1,7 @@
 package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.AuthInterceptor
+import com.example.home_rent_app.data.RefreshInterceptor
 import com.example.home_rent_app.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -31,6 +32,22 @@ object RetrofitInstance {
 
     @Provides
     @Singleton
+    @Named("refresh")
+    fun refreshOkHttpClient(
+        refreshInterceptor: RefreshInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }
+            )
+            .addInterceptor(refreshInterceptor)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     @Named("jwt")
     fun provideJwtOkHttpClient(
         authInterceptor: AuthInterceptor
@@ -55,6 +72,19 @@ object RetrofitInstance {
             .baseUrl(BASE_URL)
             .build()
             .create(LoginApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTokenRefreshApi(
+        @Named("refresh") okHttpClient: OkHttpClient
+    ): TokenRefreshApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(TokenRefreshApi::class.java)
     }
 
     @Provides

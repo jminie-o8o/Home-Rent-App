@@ -31,7 +31,7 @@ class LoginRepositoryImpl @Inject constructor(
     private val loginApi: LoginApi,
     private val appSession: AppSession,
     @ApplicationContext private val context: Context
-) : LoginRepository {
+) :   LoginRepository {
 
     override suspend fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest): JWT {
         return loginApi.getKakaoToken(kakaoOauthRequest).toJWT()
