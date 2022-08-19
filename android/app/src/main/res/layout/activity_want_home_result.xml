@@ -60,12 +60,12 @@
             app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_first_step">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/tb_issue_search_edit_text"
+                android:id="@+id/tb_want_home_result_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
 
                 <EditText
-                    android:id="@+id/et_search_issue"
+                    android:id="@+id/et_want_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
