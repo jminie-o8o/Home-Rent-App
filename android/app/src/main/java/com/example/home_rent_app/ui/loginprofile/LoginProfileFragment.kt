@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding

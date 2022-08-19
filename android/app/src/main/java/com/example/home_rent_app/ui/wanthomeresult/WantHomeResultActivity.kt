@@ -1,11 +1,12 @@
 package com.example.home_rent_app.ui.wanthomeresult
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
+import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
 import com.example.home_rent_app.util.collectStateFlow
@@ -22,6 +23,7 @@ class WantHomeResultActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_want_home_result)
         binding.lifecycleOwner = this
         handleSearchWord()
+        updateSearchWord()
     }
 
     private fun handleSearchWord() {
@@ -31,13 +33,8 @@ class WantHomeResultActivity : AppCompatActivity() {
     }
 
     private fun updateSearchWord() {
-        collectStateFlow(viewModel.searchWord) {
-
-        }
-        viewLifecycleOwner.repeatOnLifecycleExtension {
-            viewModel.searchWord.collect {
-                viewModel.getSearchIssue(it)
-            }
+        collectStateFlow(viewModel.searchWord) { keyword ->
+            viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.home_rent_app.ui.findroom
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.home_rent_app.databinding.ActivityFindRoomBinding
 
 class FindRoomActivity : AppCompatActivity() {

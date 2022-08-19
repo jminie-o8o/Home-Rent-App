@@ -14,8 +14,6 @@ import com.example.home_rent_app.databinding.FragmentHomeDescriptionBinding
 import com.example.home_rent_app.ui.viewmodel.TransferViewModel
 import com.example.home_rent_app.util.MoneyFormat
 import com.example.home_rent_app.util.RentType
-import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint

@@ -53,7 +53,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/abb_bar_issue_search_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +77,18 @@
                     android:drawableStart="@drawable/ic_baseline_search_26"
                     android:drawableTint="@color/gray02"
                     tools:targetApi="O" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="40dp" >
+
+                <CheckBox
+                    android:id="@+id/rb_accuracy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/main_color"
+                    android:text="거래가능만 보기" />
 
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>

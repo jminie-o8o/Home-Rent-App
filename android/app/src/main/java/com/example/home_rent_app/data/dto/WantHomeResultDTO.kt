@@ -1,7 +1,5 @@
 package com.example.home_rent_app.data.dto
 
-
-import com.example.home_rent_app.data.model.WantedArticle
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
