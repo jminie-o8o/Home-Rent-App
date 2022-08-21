@@ -35,4 +35,5 @@
     <string name="time_format">yyyy-MM-dd\'T\'HH:mm:ss</string>
     <string name="start_date_format">%s월 %s일 이후 - </string>
     <string name="end_date_format">%s월 %s일</string>
+    <string name="deposit_format">예산 월세 %s만원/%s만원</string>
 </resources>

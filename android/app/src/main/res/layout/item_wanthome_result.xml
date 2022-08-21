@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="138dp"
+        android:layout_height="148dp"
         android:background="@color/white">
 
         <TextView
@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{wantedArticle.title}"
@@ -75,6 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            deposit="@{String.valueOf(wantedArticle.depositBudget)}"
+            monthlyPay="@{String.valueOf(wantedArticle.rentBudget)}"
             app:layout_constraintStart_toStartOf="@+id/tv_wanted_home_result_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_start_date"
             tools:text="예산 월세 100/35" />
@@ -91,6 +94,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_start_date"
             tools:text="3시간 전" />
+
+        <View
+            android:id="@+id/view_want_home_result"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray01"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

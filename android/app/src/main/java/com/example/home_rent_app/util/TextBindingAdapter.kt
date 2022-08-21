@@ -36,3 +36,8 @@ fun endDateFormat(view: TextView, stringDate: String) {
 
     view.text = view.context.getString(R.string.end_date_format, month, day)
 }
+
+@BindingAdapter("deposit", "monthlyPay")
+fun depositFormat(view: TextView, deposit: String, monthlyPay: String) {
+    view.text = view.context.getString(R.string.deposit_format, deposit, monthlyPay)
+}
