@@ -76,6 +76,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/gray03"
+            formattingDate="@{wantedArticle.createdAt}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_result_date"
             tools:text="3시간 전" />
