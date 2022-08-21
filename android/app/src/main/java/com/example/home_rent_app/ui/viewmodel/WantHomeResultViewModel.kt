@@ -35,6 +35,7 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
         viewModelScope.launch {
             wantHomeResultRepository.getResult(wantHomeResultRequest).collect { response ->
                 _wantHomeResult.value = response
+                logger("테스트 $response")
             }
         }
     }

@@ -17,6 +17,7 @@ class WantHomeResultActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityWantHomeResultBinding
     private val viewModel: WantHomeResultViewModel by viewModels()
+    lateinit var adapter: WantHomeResultAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,9 @@ class WantHomeResultActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         handleSearchWord()
         updateSearchWord()
+        adapter = WantHomeResultAdapter()
+        binding.rvWanthomeResult.adapter = adapter
+        updateAdapter()
     }
 
     private fun handleSearchWord() {
@@ -35,6 +39,12 @@ class WantHomeResultActivity : AppCompatActivity() {
     private fun updateSearchWord() {
         collectStateFlow(viewModel.searchWord) { keyword ->
             viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
+        }
+    }
+
+    private fun updateAdapter() {
+        collectStateFlow(viewModel.wantHomeResult) {
+            adapter.submitList(it)
         }
     }
 }

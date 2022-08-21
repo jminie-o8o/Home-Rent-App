@@ -64,6 +64,8 @@ class LoginProfileFragment : Fragment() {
             val intent = Intent(binding.root.context, TransferActivity::class.java)
             startActivity(intent)
         }
+        checkNickName()
+        addAccount()
     }
 
     private fun selectGallery() {
