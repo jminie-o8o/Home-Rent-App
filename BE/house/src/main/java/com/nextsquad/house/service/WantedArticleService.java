@@ -1,5 +1,6 @@
 package com.nextsquad.house.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
@@ -10,6 +11,7 @@ import com.nextsquad.house.dto.wantedArticle.*;
 import com.nextsquad.house.exception.ArticleNotFoundException;
 import com.nextsquad.house.exception.BookmarkNotFoundException;
 import com.nextsquad.house.exception.UserNotFoundException;
+import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.repository.UserRepository;
 import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
 import com.nextsquad.house.repository.WantedArticleRepository;
@@ -19,7 +21,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +34,7 @@ public class WantedArticleService {
     private final WantedArticleRepository wantedArticleRepository;
     private final UserRepository userRepository;
     private final WantedArticleBookmarkRepository wantedArticleBookmarkRepository;
+    private final JwtProvider jwtProvider;
 
     public SavedWantedArticleResponse writeWantedArticle(WantedArticleRequest request) {
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new UserNotFoundException());
@@ -58,13 +63,26 @@ public class WantedArticleService {
         return WantedArticleResponse.from(article);
     }
     
-    public WantedArticleListResponse getWantedArticleList(SearchConditionDto searchCondition, Pageable pageable) {
+    public WantedArticleListResponse getWantedArticleList(SearchConditionDto searchCondition, Pageable pageable, String token) {
+
+        DecodedJWT decode = jwtProvider.decode(token);
+        Long id = decode.getClaim("id").asLong();
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+        List<WantedArticleBookmark> listByUser = wantedArticleBookmarkRepository.findListByUser(user);
+        Map<Long, Boolean> bookmarkHashMap = new HashMap<Long, Boolean>();
+        for (WantedArticleBookmark wantedArticleBookmark : listByUser) {
+            bookmarkHashMap.put(wantedArticleBookmark.getWantedArticle().getId(), true);
+        }
+
         List<WantedArticle> wantedArticles = wantedArticleRepository.findByKeyword(searchCondition, pageable);
         boolean hasNext = hasNext(pageable, wantedArticles);
         if (hasNext) {
             wantedArticles = wantedArticles.subList(0, wantedArticles.size()-1);
         }
-        List<WantedArticleElementResponse> elementResponseList = wantedArticles.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
+        List<WantedArticleElementResponse> elementResponseList = wantedArticles.stream()
+                .map(WantedArticleElementResponse::from)
+                .peek(element -> {element.setBookmarked(bookmarkHashMap.get(element.getId()) != null);})
+                .collect(Collectors.toList());
         return new WantedArticleListResponse(elementResponseList, hasNext);
     }
 

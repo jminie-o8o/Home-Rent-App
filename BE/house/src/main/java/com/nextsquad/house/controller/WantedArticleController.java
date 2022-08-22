@@ -37,8 +37,9 @@ public class WantedArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<WantedArticleListResponse> getWantedArticleList(@ModelAttribute SearchConditionDto searchConditionDto, Pageable pageable) {
-        return ResponseEntity.ok(wantedArticleService.getWantedArticleList(searchConditionDto, pageable));
+    public ResponseEntity<WantedArticleListResponse> getWantedArticleList(@ModelAttribute SearchConditionDto searchConditionDto, Pageable pageable,
+                                                                          @RequestHeader(value="access-token") String token) {
+        return ResponseEntity.ok(wantedArticleService.getWantedArticleList(searchConditionDto, pageable, token));
     }
 
     @DeleteMapping("/{id}")

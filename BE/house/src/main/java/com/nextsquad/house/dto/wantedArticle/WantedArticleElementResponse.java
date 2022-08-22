@@ -23,6 +23,7 @@ public class WantedArticleElementResponse {
     private int rentBudget;
     private int depositBudget;
     private LocalDateTime createdAt;
+    private boolean bookmarked;
 
     public static WantedArticleElementResponse from(WantedArticle article) {
         return WantedArticleElementResponse.builder()
@@ -51,5 +52,9 @@ public class WantedArticleElementResponse {
                 .depositBudget(article.getDepositBudget())
                 .createdAt(article.getCreatedAt())
                 .build();
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
     }
 }
