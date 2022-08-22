@@ -1,6 +1,7 @@
 package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.AuthInterceptor
+import com.example.home_rent_app.data.RefreshInterceptor
 import com.example.home_rent_app.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -27,6 +28,22 @@ object RetrofitInstance {
                     level = HttpLoggingInterceptor.Level.BODY
                 }
             ).build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("refresh")
+    fun refreshOkHttpClient(
+        refreshInterceptor: RefreshInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }
+            )
+            .addInterceptor(refreshInterceptor)
+            .build()
     }
 
     @Provides
@@ -59,6 +76,19 @@ object RetrofitInstance {
 
     @Provides
     @Singleton
+    fun provideTokenRefreshApi(
+        @Named("refresh") okHttpClient: OkHttpClient
+    ): TokenRefreshApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(TokenRefreshApi::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideMenuListApi(
         @Named("jwt") okHttpClient: OkHttpClient
     ): TransferApi {
@@ -81,5 +111,18 @@ object RetrofitInstance {
             .baseUrl(BASE_URL)
             .build()
             .create(LoginProfileApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFindRoomApi(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): FindRoomApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(FindRoomApi::class.java)
     }
 }
