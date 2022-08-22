@@ -61,7 +61,7 @@ class LoginProfileFragment : Fragment() {
         }
 
         binding.btnLoginProfile.setOnClickListener {
-            val intent = Intent(binding.root.context, TransferActivity::class.java)
+            val intent = Intent(binding.root.context, HomeActivity::class.java)
             startActivity(intent)
         }
         checkNickName()
