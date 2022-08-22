@@ -126,6 +126,8 @@ object RetrofitInstance {
             .create(WantHomeResultApi::class.java)
     }
 
+    @Provides
+    @Singleton
     fun provideFindRoomApi(
         @Named("jwt") okHttpClient: OkHttpClient
     ): FindRoomApi {
