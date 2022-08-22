@@ -7,11 +7,12 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserInfoDto {
+    private Long userId;
     private String displayName;
     private String profileImageUrl;
     private String gender;
 
     public static UserInfoDto from(User user) {
-        return new UserInfoDto(user.getDisplayName(), user.getProfileImageUrl(), user.getGender().name());
+        return new UserInfoDto(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), user.getGender().name());
     }
 }

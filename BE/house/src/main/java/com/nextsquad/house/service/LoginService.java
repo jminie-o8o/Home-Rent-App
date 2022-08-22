@@ -38,7 +38,7 @@ public class LoginService {
         JwtToken jwtToken = jwtProvider.createJwtToken(user);
         log.info("saving refresh token... key: {}, value: {}", user.getAccountId(), jwtToken.getRefreshToken().getTokenCode());
         redisService.save(user.getAccountId(), jwtToken.getRefreshToken().getTokenCode());
-        return JwtResponseDto.from(jwtToken);
+        return JwtResponseDto.from(user, jwtToken);
     }
 
     private User registerUser(UserInfo userInfo) {
@@ -62,7 +62,7 @@ public class LoginService {
                 .orElseThrow(() -> new UserNotFoundException());
         JwtToken newJwtToken = jwtProvider.createRefreshedToken(user, refreshToken);
 
-        return new JwtResponseDto(newJwtToken.getAccessToken(), newJwtToken.getRefreshToken());
+        return JwtResponseDto.from(user, newJwtToken);
 
     }
 
