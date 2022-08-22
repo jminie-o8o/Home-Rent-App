@@ -7,24 +7,23 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         tools:context=".ui.wanthomeresult.WantHomeResultActivity">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/abb_bar_want_home_first_step"
+            android:id="@+id/abb_bar_issue_search_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="180dp"
+            android:background="@color/white">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/tb_want_home_result"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <ImageButton
                     android:id="@+id/btn_back"
@@ -48,21 +47,11 @@
 
             </com.google.android.material.appbar.MaterialToolbar>
 
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/abb_bar_issue_search_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_first_step">
-
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/tb_want_home_result_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="80dp">
+                android:layout_height="80dp"
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <EditText
                     android:id="@+id/et_want_home"
@@ -70,18 +59,19 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:background="@drawable/edittext_rounded_corner"
-                    android:hint="OO구 또는 OO동으로 검색하세요"
+                    android:drawableStart="@drawable/ic_baseline_search_26"
                     android:drawablePadding="10dp"
+                    android:drawableTint="@color/gray02"
+                    android:hint="OO구 또는 OO동으로 검색하세요"
                     android:importantForAutofill="no"
                     android:inputType="text"
-                    android:drawableStart="@drawable/ic_baseline_search_26"
-                    android:drawableTint="@color/gray02"
                     tools:targetApi="O" />
 
             </com.google.android.material.appbar.MaterialToolbar>
+
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
-                android:layout_height="40dp" >
+                android:layout_height="wrap_content" >
 
                 <CheckBox
                     android:id="@+id/rb_accuracy"
@@ -96,12 +86,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_wanthome_result"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/abb_bar_issue_search_edit_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
