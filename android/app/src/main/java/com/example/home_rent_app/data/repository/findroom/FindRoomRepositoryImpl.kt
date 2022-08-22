@@ -20,11 +20,11 @@ class FindRoomRepositoryImpl @Inject constructor(
     override fun getSearchResult(
         page: Int,
         size: Int,
-        isCompleted : Boolean,
+        availableOnly : Boolean,
         sortedBy: String,
         searchAddress: String
     ): Flow<RoomSearchResult> {
-        return dataSource.getSearchResult(page, size, isCompleted, sortedBy, searchAddress)
+        return dataSource.getSearchResult(page, size, availableOnly, sortedBy, searchAddress)
         .map {
             it.toRoomSearchResult()
         }

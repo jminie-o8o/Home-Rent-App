@@ -98,6 +98,7 @@ dependencies {
 
     // Circle ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     // date4j
     implementation("com.darwinsys:hirondelle-date4j:1.5.1")
 
@@ -106,6 +107,13 @@ dependencies {
 
     // ViewPager2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    // Stream SDK
+    implementation "io.getstream:stream-chat-android-ui-components:5.8.0"
+
+    // ktx
+    implementation "androidx.activity:activity-ktx:1.5.1"
+
 }
 
 kapt {

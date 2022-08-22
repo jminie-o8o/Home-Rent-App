@@ -9,7 +9,7 @@ interface FindRoomDataSource {
     fun getSearchResult(
         page: Int,
         size: Int,
-        isCompleted : Boolean,
+        availableOnly : Boolean,
         sortedBy: String,
         searchAddress: String
     ): Flow<RoomSearchResultDTO>

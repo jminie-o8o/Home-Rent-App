@@ -6,10 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.model.Article
-import com.example.home_rent_app.data.model.RoomSearchResult
 import com.example.home_rent_app.databinding.ItemSearchResultBinding
 
-class TempAdapter: ListAdapter<Article, TempAdapter.TempViewHolder>(TempDiffUtil) {
+class HomeListAdapter: ListAdapter<Article, HomeListAdapter.TempViewHolder>(TempDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TempViewHolder {
         return TempViewHolder(ItemSearchResultBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -19,10 +18,15 @@ class TempAdapter: ListAdapter<Article, TempAdapter.TempViewHolder>(TempDiffUtil
         holder.bind(getItem(position))
     }
 
-    class TempViewHolder(private val binding:ItemSearchResultBinding): RecyclerView.ViewHolder(binding.root){
+    inner class TempViewHolder(private val binding:ItemSearchResultBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: Article) {
-
+            binding.item = item
+            val viewPagerAdapter = HomeThumbnailAdapter()
+            binding.vpThumbNailList.adapter = viewPagerAdapter
+            val list = listOf("https://ifh.cc/g/sSr5Rr.png", "https://ifh.cc/g/sSr5Rr.png", "https://ifh.cc/g/sSr5Rr.png")
+            viewPagerAdapter.submitList(list)
+            submitList(currentList)
         }
 
     }
