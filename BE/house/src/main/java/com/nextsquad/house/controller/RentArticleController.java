@@ -23,8 +23,9 @@ public class RentArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchConditionDto searchCondition, Pageable pageable) {
-        return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable));
+    public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchConditionDto searchCondition, Pageable pageable,
+                                                                   @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable, token));
     }
 
     @GetMapping("/{id}")

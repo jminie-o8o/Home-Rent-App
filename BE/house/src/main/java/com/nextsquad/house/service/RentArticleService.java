@@ -1,5 +1,6 @@
 package com.nextsquad.house.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
@@ -7,6 +8,7 @@ import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.exception.ArticleNotFoundException;
 import com.nextsquad.house.exception.BookmarkNotFoundException;
 import com.nextsquad.house.exception.UserNotFoundException;
+import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,6 +36,7 @@ public class RentArticleService {
     private final SecurityRepository securityRepository;
     private final SecurityInHomeRepository securityInHomeRepository;
     private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
+    private final JwtProvider jwtProvider;
 
     public RentArticleCreationResponse writeRentArticle(RentArticleRequest request){
         log.info("writing {}... ", request.getTitle());
@@ -88,7 +93,18 @@ public class RentArticleService {
         }
     }
 
-    public RentArticleListResponse getRentArticles(SearchConditionDto searchCondition, Pageable pageable) {
+    public RentArticleListResponse getRentArticles(SearchConditionDto searchCondition, Pageable pageable, String token) {
+
+        //유저로 찜리스트 조회
+        DecodedJWT decode = jwtProvider.decode(token);
+        Long id = decode.getClaim("id").asLong();
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+        List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
+        Map<Long, Boolean> bookmarkHashMap = new HashMap<Long, Boolean>();
+        for (RentArticleBookmark rentArticleBookmark : listByUser) {
+            bookmarkHashMap.put(rentArticleBookmark.getRentArticle().getId(), true);
+        }
+
         List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(searchCondition, pageable);
         boolean hasNext = hasNext(pageable, rentArticles);
         if (hasNext) {
@@ -96,6 +112,7 @@ public class RentArticleService {
         }
         List<RentArticleListElement> responseElements = rentArticles.stream()
                 .map(RentArticleListElement::from)
+                .peek(element -> {element.setBookmarked(bookmarkHashMap.get(element.getId()) != null);})
                 .collect(Collectors.toList());
 
         return new RentArticleListResponse(responseElements, hasNext);

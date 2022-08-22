@@ -15,4 +15,6 @@ public interface RentArticleBookmarkRepository extends JpaRepository<RentArticle
     Page<RentArticleBookmark> findByUser(User user, Pageable pageable);
 
     Optional<RentArticleBookmark> findByUserAndRentArticle(User user, RentArticle rentArticle);
+
+    List<RentArticleBookmark> findListByUser(User user);
 }
