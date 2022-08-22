@@ -58,7 +58,7 @@
             tools:text="부경대 정문 10분거리"
             app:layout_constraintWidth_percent="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <TextView
             android:id="@+id/tv_date"
@@ -79,6 +79,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_date"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="43dp"
+            priceLabel="@{item}"
             tools:text="월세 100/35"/>
 
         <CheckBox
@@ -93,9 +94,21 @@
             android:checked="false"
             app:layout_constraintTop_toBottomOf="@id/vp_thumb_nail_list"/>
 
+        <TextView
+            android:id="@+id/tv_recommend_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cb_recommend"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="48dp"
+            android:text="@{String.valueOf(item.bookmarkCount)}"
+            tools:text="14"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
             app:layout_constraintTop_toBottomOf="@id/tv_monthly"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

@@ -39,7 +39,7 @@ class FindRoomViewModel @Inject constructor(
            repository.getSearchResult(searchAddress = searchAddress.value)
                .catch { e ->
                    logger("${e.message}")
-                   if(e.message == "HTTP 404 ") {
+                   if(e.message == "HTTP 401 ") {
                        logger("e in ${e.message}")
                         repository.refreshAuthToken().collect {
                             loginRepository.saveToken(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))

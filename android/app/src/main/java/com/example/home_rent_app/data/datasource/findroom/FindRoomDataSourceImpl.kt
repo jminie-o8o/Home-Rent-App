@@ -21,11 +21,11 @@ class FindRoomDataSourceImpl @Inject constructor(
     override fun getSearchResult(
         page: Int,
         size: Int,
-        isCompleted : Boolean,
+        availableOnly : Boolean,
         sortedBy: String,
         searchAddress: String
     ) = flow {
-        emit(api.getSearchResult(page, size, isCompleted, sortedBy, searchAddress))
+        emit(api.getSearchResult(page, size, availableOnly, sortedBy, searchAddress))
     }.flowOn(Dispatchers.IO)
 
     override fun refreshAuthToken(): Flow<OAuthTokenResponse> = flow {

@@ -9,8 +9,8 @@ interface FindRoomRepository {
     fun getSearchResult(
         page: Int = 0,
         size: Int = 100,
-        isCompleted : Boolean = false,
-        sortedBy: String = "",
+        availableOnly : Boolean = false,
+        sortedBy: String = "rentFee",
         searchAddress: String
     ): Flow<RoomSearchResult>
 
