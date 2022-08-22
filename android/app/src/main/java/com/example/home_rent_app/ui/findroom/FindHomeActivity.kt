@@ -14,7 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
 @AndroidEntryPoint
-class FindRoomActivity : AppCompatActivity() {
+class FindHomeActivity : AppCompatActivity() {
 
     private val binding: ActivityFindRoomBinding by lazy {
         ActivityFindRoomBinding.inflate(layoutInflater)
@@ -22,7 +22,7 @@ class FindRoomActivity : AppCompatActivity() {
 
     private val viewModel: FindRoomViewModel by viewModels()
 
-    private val adapter: TempAdapter = TempAdapter()
+    private val adapter: HomeListAdapter = HomeListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

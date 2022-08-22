@@ -30,7 +30,7 @@
             android:name=".ui.wanthomeresult.WantHomeResultActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.findroom.FindRoomActivity"
+            android:name=".ui.findroom.FindHomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SplashScreenActivity"

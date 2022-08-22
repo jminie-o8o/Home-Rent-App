@@ -13,7 +13,7 @@
         android:id="@+id/clo_find_room_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.findroom.FindRoomActivity">
+        tools:context=".ui.findroom.FindHomeActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/alo_appbar_layout"
