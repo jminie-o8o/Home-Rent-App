@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content" >
 
                 <CheckBox
-                    android:id="@+id/rb_accuracy"
+                    android:id="@+id/cb_available"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/main_color"
