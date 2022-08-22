@@ -115,6 +115,19 @@ object RetrofitInstance {
 
     @Provides
     @Singleton
+    fun getWantHomeResultRetrofit(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): WantHomeResultApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(WantHomeResultApi::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideFindRoomApi(
         @Named("jwt") okHttpClient: OkHttpClient
     ): FindRoomApi {

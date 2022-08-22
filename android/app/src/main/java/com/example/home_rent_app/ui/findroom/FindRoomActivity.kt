@@ -1,7 +1,7 @@
 package com.example.home_rent_app.ui.findroom
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.home_rent_app.databinding.ActivityFindRoomBinding
@@ -12,7 +12,6 @@ import com.example.home_rent_app.util.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
 
 @AndroidEntryPoint
 class FindRoomActivity : AppCompatActivity() {

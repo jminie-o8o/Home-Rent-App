@@ -10,6 +10,7 @@ import com.example.home_rent_app.databinding.FragmentHomeBinding
 import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.ui.findroom.FindRoomActivity
 import com.example.home_rent_app.ui.transfer.TransferActivity
+import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultActivity
 
 class HomeFragment : Fragment() {
 
@@ -44,6 +45,11 @@ class HomeFragment : Fragment() {
 
         binding.btnRent.setOnClickListener {
             val intent = Intent(binding.root.context, FindRoomActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnWanted.setOnClickListener {
+            val intent = Intent(binding.root.context, WantHomeResultActivity::class.java)
             startActivity(intent)
         }
     }

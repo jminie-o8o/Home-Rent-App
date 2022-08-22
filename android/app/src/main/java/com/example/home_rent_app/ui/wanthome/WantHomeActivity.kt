@@ -10,7 +10,9 @@ import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityTakeHomeBinding
 import com.example.home_rent_app.ui.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WantHomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTakeHomeBinding
