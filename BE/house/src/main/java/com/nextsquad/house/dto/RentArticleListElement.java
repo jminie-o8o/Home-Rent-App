@@ -26,6 +26,7 @@ public class RentArticleListElement {
     private LocalDateTime createdAt;
     private boolean isCompleted;
     private boolean isDeleted;
+    private boolean bookmarked;
 
     public static RentArticleListElement from(RentArticle article) {
         return RentArticleListElement.builder()
@@ -62,4 +63,7 @@ public class RentArticleListElement {
                 .build();
     }
 
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
+    }
 }
