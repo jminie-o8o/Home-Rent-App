@@ -64,8 +64,13 @@ public class RentArticle {
     private List<HouseImage> houseImages = new ArrayList<>();
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<RentArticleBookmark> bookmarks = new ArrayList<>();
-    public HouseImage getMainImage() {
-        return houseImages.get(0);
+
+    public List<String> getHouseImageUrls() {
+        List<String> houseImages = new ArrayList<>();
+        for (HouseImage image : this.houseImages) {
+            houseImages.add(image.getImageUrl());
+        }
+        return houseImages;
     }
 
     public void toggleIsCompleted() {

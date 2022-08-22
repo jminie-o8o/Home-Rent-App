@@ -9,6 +9,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class RentArticleListElement {
     private Long id;
     private String title;
     private String address;
-    private String houseImage;
+    private List<String> houseImages;
     private ContractType contractType;
     private Integer deposit;
     private Integer rentFee;
@@ -30,11 +31,12 @@ public class RentArticleListElement {
     private boolean bookmarked;
 
     public static RentArticleListElement from(RentArticle article) {
+
         return RentArticleListElement.builder()
                 .id(article.getId())
                 .title(article.getTitle())
                 .address(article.getAddress())
-                .houseImage(article.getMainImage().getImageUrl())
+                .houseImages(article.getHouseImageUrls())
                 .contractType(article.getContractType())
                 .deposit(article.getDeposit())
                 .rentFee(article.getRentFee())
@@ -53,7 +55,7 @@ public class RentArticleListElement {
                 .id(rentArticle.getId())
                 .title(rentArticle.getTitle())
                 .address(rentArticle.getAddress())
-                .houseImage(rentArticle.getMainImage().getImageUrl())
+                .houseImages(rentArticle.getHouseImageUrls())
                 .contractType(rentArticle.getContractType())
                 .deposit(rentArticle.getDeposit())
                 .rentFee(rentArticle.getRentFee())
