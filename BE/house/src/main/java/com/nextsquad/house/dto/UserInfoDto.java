@@ -1,5 +1,6 @@
 package com.nextsquad.house.dto;
 
+import com.nextsquad.house.domain.user.Gender;
 import com.nextsquad.house.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,9 +11,9 @@ public class UserInfoDto {
     private Long userId;
     private String displayName;
     private String profileImageUrl;
-    private String gender;
+    private Gender gender;
 
     public static UserInfoDto from(User user) {
-        return new UserInfoDto(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), user.getGender().name());
+        return new UserInfoDto(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), user.getGender());
     }
 }

@@ -9,11 +9,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class JwtResponseDto {
-    private Long userId;
+    private UserInfoDto user;
     private Token accessToken;
     private Token refreshToken;
 
     public static JwtResponseDto from(User user, JwtToken jwtToken) {
-        return new JwtResponseDto(user.getId(), jwtToken.getAccessToken(), jwtToken.getRefreshToken());
+        return new JwtResponseDto(UserInfoDto.from(user), jwtToken.getAccessToken(), jwtToken.getRefreshToken());
     }
 }
