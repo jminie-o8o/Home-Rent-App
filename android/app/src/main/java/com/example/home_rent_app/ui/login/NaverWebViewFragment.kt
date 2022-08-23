@@ -19,6 +19,7 @@ import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.databinding.FragmentNaverWebViewBinding
+import com.example.home_rent_app.ui.LoginActivity
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,9 +58,12 @@ class NaverWebViewFragment : Fragment() {
     }
 
     private fun setupObserveAndMove(navController: NavController) {
-        collectStateFlow(viewModel.accessToken) { accessToken ->
-            if (!accessToken.isNullOrEmpty()) {
+        collectStateFlow(viewModel.gender) { gender ->
+            if (gender.isNullOrEmpty()) {
                 navController.navigate(R.id.action_naverWebViewFragment_to_loginProfileFragment)
+            } else {
+                val activity = activity as LoginActivity
+                activity.moveToHomeActivity()
             }
         }
     }

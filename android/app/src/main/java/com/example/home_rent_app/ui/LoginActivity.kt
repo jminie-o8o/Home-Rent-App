@@ -1,6 +1,7 @@
 package com.example.home_rent_app.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
@@ -26,5 +27,11 @@ class LoginActivity : AppCompatActivity() {
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         return true
+    }
+
+    fun moveToHomeActivity() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
