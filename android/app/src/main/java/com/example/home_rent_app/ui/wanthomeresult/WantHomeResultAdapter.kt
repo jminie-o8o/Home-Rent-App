@@ -6,9 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.dto.WantedArticle
+import com.example.home_rent_app.data.model.AddBookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
+import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
+import com.example.home_rent_app.util.setLikeClickEvent
+import kotlinx.coroutines.CoroutineScope
 
-class WantHomeResultAdapter :
+class WantHomeResultAdapter(private val viewModel: WantHomeResultViewModel, private val lifecycleScope: CoroutineScope) :
     ListAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WantHomeResultViewHolder {
@@ -21,10 +25,18 @@ class WantHomeResultAdapter :
         holder.bind(getItem(position))
     }
 
-    class WantHomeResultViewHolder(private val binding: ItemWanthomeResultBinding) :
+    inner class WantHomeResultViewHolder(private val binding: ItemWanthomeResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(wantedArticle: WantedArticle) {
             binding.wantedArticle = wantedArticle
+            binding.btnLike.setLikeClickEvent(lifecycleScope) {
+                binding.btnLike.isSelected = binding.btnLike.isSelected != true
+            }
+            addBookmark(binding.btnLike.isSelected, wantedArticle)
+        }
+
+        private fun addBookmark(isSelected: Boolean, wantedArticle: WantedArticle) {
+            if (isSelected) viewModel.addBookmark((AddBookmarkRequest(1, wantedArticle.id)))
         }
     }
 }

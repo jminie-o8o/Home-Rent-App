@@ -7,11 +7,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
 import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.setLikeClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +30,7 @@ class WantHomeResultActivity : AppCompatActivity() {
         handleSearchWord()
 //        updateSearchWord()
         setAvailable()
-        adapter = WantHomeResultAdapter()
+        adapter = WantHomeResultAdapter(viewModel, lifecycleScope)
         binding.rvWanthomeResult.adapter = adapter
         updateAdapter()
     }
@@ -55,16 +57,20 @@ class WantHomeResultActivity : AppCompatActivity() {
         collectStateFlow(viewModel.searchWord) { keyword ->
             viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
         }
-        binding.cbAvailable.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                collectStateFlow(viewModel.searchWord) { keyword ->
-                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
-                }
-            } else {
-                collectStateFlow(viewModel.searchWord) { keyword ->
-                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
-                }
-            }
-        }
+//        binding.cbAvailable.setOnCheckedChangeListener { _, isChecked ->
+//            if (isChecked) {
+//                collectStateFlow(viewModel.searchWord) { keyword ->
+//                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
+//                }
+//            } else {
+//                collectStateFlow(viewModel.searchWord) { keyword ->
+//                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
+//                }
+//            }
+//        }
+    }
+
+    private fun addBookmark() {
+
     }
 }
