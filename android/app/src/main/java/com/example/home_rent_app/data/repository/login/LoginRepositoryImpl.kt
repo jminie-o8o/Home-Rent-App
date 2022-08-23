@@ -4,21 +4,28 @@ import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.home_rent_app.data.api.LoginApi
 import com.example.home_rent_app.data.dto.toJWT
+import com.example.home_rent_app.data.dto.toUser
 import com.example.home_rent_app.data.model.AccessToken
 import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.model.RefreshToken
+import com.example.home_rent_app.data.model.User
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.ACCESS_TOKEN
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.LOGIN_CHECK
+import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.PROFILE_IMAGE
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.REFRESH_TOKEN
+import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.USER_ID
 import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.Constants.LOGIN_CHECK_DATASTORE
+import com.example.home_rent_app.util.Constants.PROFILE_IMAGE_DATASTORE
 import com.example.home_rent_app.util.Constants.TOKEN_DATASTORE
+import com.example.home_rent_app.util.Constants.USER_ID_DATASTORE
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -41,14 +48,26 @@ class LoginRepositoryImpl @Inject constructor(
         return loginApi.getNaverToken(naverOauthRequest).toJWT()
     }
 
+    override suspend fun getKakaoUser(kakaoOauthRequest: KakaoOauthRequest): User {
+        return loginApi.getKakaoToken(kakaoOauthRequest).toUser()
+    }
+
+    override suspend fun getNaverUser(naverOauthRequest: NaverOauthRequest): User {
+        return loginApi.getNaverToken(naverOauthRequest).toUser()
+    }
+
     private object PreferenceKeys {
         val ACCESS_TOKEN = stringPreferencesKey("access_token")
         val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
         val LOGIN_CHECK = booleanPreferencesKey("login_check")
+        val USER_ID = intPreferencesKey("user_id")
+        val PROFILE_IMAGE = stringPreferencesKey("profile_image")
     }
 
     private val Context.loginCheckDataStore by preferencesDataStore(LOGIN_CHECK_DATASTORE)
     private val Context.tokenDataStore by preferencesDataStore(TOKEN_DATASTORE)
+    private val Context.userIdDataStore by preferencesDataStore(USER_ID_DATASTORE)
+    private val Context.profileImageDataStore by preferencesDataStore(PROFILE_IMAGE_DATASTORE)
 
     override suspend fun saveToken(token: List<String>) {
         if (token.isNotEmpty()) {
@@ -89,6 +108,18 @@ class LoginRepositoryImpl @Inject constructor(
         logger("accessToken : $accessToken ")
         logger("refreshToken : $refreshToken ")
         appSession.jwt = JWT(accessToken, refreshToken)
+    }
+
+    override suspend fun saveUserID(userId: Int) {
+        context.userIdDataStore.edit { prefs ->
+            prefs[USER_ID] = userId
+        }
+    }
+
+    override suspend fun saveProfileImage(image: String) {
+        context.profileImageDataStore.edit { prefs ->
+            prefs[PROFILE_IMAGE] = image
+        }
     }
 
     override suspend fun getIsLogin(): Flow<Boolean> {
