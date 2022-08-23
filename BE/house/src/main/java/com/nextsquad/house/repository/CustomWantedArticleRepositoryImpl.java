@@ -58,7 +58,7 @@ public class CustomWantedArticleRepositoryImpl implements CustomWantedArticleRep
 
     private BooleanExpression checkAvailableOnly(Boolean availableOnly) {
         if (availableOnly != null && availableOnly) {
-            return rentArticle.isCompleted.eq(false);
+            return wantedArticle.isCompleted.eq(false);
         }
         return null;
     }
