@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class RentArticleListElement {
     private Long id;
     private String title;
+    private String address;
     private String houseImage;
     private ContractType contractType;
     private Integer deposit;
@@ -32,6 +33,7 @@ public class RentArticleListElement {
         return RentArticleListElement.builder()
                 .id(article.getId())
                 .title(article.getTitle())
+                .address(article.getAddress())
                 .houseImage(article.getMainImage().getImageUrl())
                 .contractType(article.getContractType())
                 .deposit(article.getDeposit())
@@ -50,6 +52,7 @@ public class RentArticleListElement {
         return RentArticleListElement.builder()
                 .id(rentArticle.getId())
                 .title(rentArticle.getTitle())
+                .address(rentArticle.getAddress())
                 .houseImage(rentArticle.getMainImage().getImageUrl())
                 .contractType(rentArticle.getContractType())
                 .deposit(rentArticle.getDeposit())
