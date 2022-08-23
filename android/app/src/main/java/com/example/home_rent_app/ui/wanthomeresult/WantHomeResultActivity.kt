@@ -30,7 +30,7 @@ class WantHomeResultActivity : AppCompatActivity() {
         handleSearchWord()
 //        updateSearchWord()
         setAvailable()
-        adapter = WantHomeResultAdapter(viewModel, lifecycleScope)
+        adapter = WantHomeResultAdapter(viewModel)
         binding.rvWanthomeResult.adapter = adapter
         updateAdapter()
     }
@@ -72,5 +72,10 @@ class WantHomeResultActivity : AppCompatActivity() {
 
     private fun addBookmark() {
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.rvWanthomeResult.adapter = null
     }
 }
