@@ -8,10 +8,24 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class OAuthTokenResponse(
+    @field:Json(name = "user")
+    val user: User,
     @field:Json(name = "accessToken")
     val accessToken: AccessTokenDTO?,
     @field:Json(name = "refreshToken")
     val refreshToken: RefreshTokenDTO?
+)
+
+@JsonClass(generateAdapter = true)
+data class User(
+    @field:Json(name = "userId")
+    val userId: Int,
+    @field:Json(name = "displayName")
+    val displayName: String,
+    @field:Json(name = "profileImageUrl")
+    val profileImageUrl: String,
+    @field:Json(name = "gender")
+    val gender: String
 )
 
 @JsonClass(generateAdapter = true)
