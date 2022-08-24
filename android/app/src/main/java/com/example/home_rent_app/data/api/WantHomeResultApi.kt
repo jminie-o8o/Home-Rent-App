@@ -24,3 +24,4 @@ interface WantHomeResultApi {
     ): WantHouseBookMarkResponseDTO
 
 }
+

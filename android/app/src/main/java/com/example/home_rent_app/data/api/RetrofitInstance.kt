@@ -1,6 +1,7 @@
 package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.AuthInterceptor
+import com.example.home_rent_app.data.RefreshInterceptor
 import com.example.home_rent_app.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -33,7 +34,7 @@ object RetrofitInstance {
     @Singleton
     @Named("refresh")
     fun refreshOkHttpClient(
-        authInterceptor: AuthInterceptor
+        refreshInterceptor: RefreshInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(
@@ -41,7 +42,7 @@ object RetrofitInstance {
                     level = HttpLoggingInterceptor.Level.BODY
                 }
             )
-            .addInterceptor(authInterceptor)
+            .addInterceptor(refreshInterceptor)
             .build()
     }
 
