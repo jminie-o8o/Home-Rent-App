@@ -29,8 +29,6 @@ interface LoginRepository {
 
     suspend fun saveDisplayName(displayName: String?)
 
-    suspend fun saveProfileImage(image: String?)
-
     suspend fun saveGender(gender: String?)
 
 //    suspend fun getUserInfo(): User
@@ -44,6 +42,8 @@ interface LoginRepository {
     fun getGender(): Flow<Preferences>
 
     suspend fun setUserSession(user: User)
+
+    suspend fun saveProfileImage(image: String?)
 
     fun connectUser(): Flow<ConnectionData>
 

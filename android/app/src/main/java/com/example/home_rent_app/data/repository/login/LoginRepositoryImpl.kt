@@ -9,7 +9,6 @@ import com.example.home_rent_app.data.model.User
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.log
 
 @Singleton
 class LoginRepositoryImpl @Inject constructor(
@@ -79,4 +78,5 @@ class LoginRepositoryImpl @Inject constructor(
 //            chatClient.disconnect(true).execute()
 //        }
 //    }
+
 }
