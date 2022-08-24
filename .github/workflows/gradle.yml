@@ -53,7 +53,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_HOST_DNS }}
           username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_SECRET_KEY }}
           envs: GITHUB_SHA
           script: |
             sudo docker ps -a -q --filter "name=house-rent-app" | grep -q . && docker stop house-rent-app && docker rm house-rent-app | true
