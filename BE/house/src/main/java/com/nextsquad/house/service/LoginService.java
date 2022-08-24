@@ -46,7 +46,6 @@ public class LoginService {
         return userRepository.save(user);
     }
 
-    //TODO: Refresh token 관련 로직 작성
     public JwtResponseDto refreshJwtToken(String accessToken, String refreshToken) {
         jwtProvider.verifyToken(accessToken);
         DecodedJWT decode = jwtProvider.decode(refreshToken);
