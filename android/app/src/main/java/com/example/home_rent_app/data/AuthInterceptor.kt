@@ -1,17 +1,16 @@
 package com.example.home_rent_app.data
 
-import androidx.lifecycle.viewModelScope
-import com.example.home_rent_app.data.api.TokenRefreshApi
-import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.repository.login.LoginRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.logger
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.Response
-import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,16 +40,6 @@ class AuthInterceptor @Inject constructor(
             logger("refresh token error : ${CoroutineException.checkThrowable(throwable).errorMessage}")
         }
         if (response.code == 401) {
-
-            jwt?.let {
-                requestBuilder.addHeader(
-                    "access-token",
-                    it.accessToken.tokenCode
-                ).addHeader(
-                    "refresh-token",
-                    it.refreshToken.tokenCode
-                )
-            }
 
             val refreshResponse = chain.proceed(requestBuilder.build())
 
