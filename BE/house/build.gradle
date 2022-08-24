@@ -80,3 +80,12 @@ configurations {
 compileQuerydsl {
 	options.annotationProcessorPath = configurations.querydsl
 }
+
+jar {
+	enabled = false
+}
+bootJar {
+	archivesBaseName = 'app'
+	archiveFileName = 'app.jar'
+	archiveVersion = "0.0.0"
+}
