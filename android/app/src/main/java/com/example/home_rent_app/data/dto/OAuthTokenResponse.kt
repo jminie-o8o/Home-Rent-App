@@ -5,6 +5,7 @@ import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.RefreshToken
 import com.example.home_rent_app.data.model.User
 import com.example.home_rent_app.util.Constants.GENDER_NEW
+import com.example.home_rent_app.util.logger
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -61,6 +62,7 @@ fun OAuthTokenResponse.toJWT(): JWT {
 }
 
 fun OAuthTokenResponse.toUser(): User {
+    logger("gender at toUser : ${user.gender}")
     return User(
         user.userId ?: -1,
         user.displayName.orEmpty(),

@@ -8,8 +8,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.home_rent_app.data.api.LoginApi
-import com.example.home_rent_app.data.dto.toJWT
-import com.example.home_rent_app.data.dto.toUser
+import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.model.AccessToken
 import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.KakaoOauthRequest
@@ -31,11 +30,9 @@ import com.example.home_rent_app.util.Constants.PROFILE_IMAGE_DATASTORE
 import com.example.home_rent_app.util.Constants.TOKEN_DATASTORE
 import com.example.home_rent_app.util.Constants.USER_ID_DATASTORE
 import com.example.home_rent_app.util.UserSession
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
@@ -47,21 +44,21 @@ class LoginRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) :   LoginRepository {
 
-    override suspend fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest): JWT {
-        return loginApi.getKakaoToken(kakaoOauthRequest).toJWT()
+    override suspend fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest): OAuthTokenResponse {
+        return loginApi.getKakaoToken(kakaoOauthRequest)
     }
 
-    override suspend fun getNaverToken(naverOauthRequest: NaverOauthRequest): JWT {
-        return loginApi.getNaverToken(naverOauthRequest).toJWT()
+    override suspend fun getNaverToken(naverOauthRequest: NaverOauthRequest): OAuthTokenResponse {
+        return loginApi.getNaverToken(naverOauthRequest)
     }
 
-    override suspend fun getKakaoUser(kakaoOauthRequest: KakaoOauthRequest): User {
-        return loginApi.getKakaoToken(kakaoOauthRequest).toUser()
-    }
-
-    override suspend fun getNaverUser(naverOauthRequest: NaverOauthRequest): User {
-        return loginApi.getNaverToken(naverOauthRequest).toUser()
-    }
+//    override suspend fun getKakaoUser(kakaoOauthRequest: KakaoOauthRequest): User {
+//        return loginApi.getKakaoToken(kakaoOauthRequest).toUser()
+//    }
+//
+//    override suspend fun getNaverUser(naverOauthRequest: NaverOauthRequest): User {
+//        return loginApi.getNaverToken(naverOauthRequest).toUser()
+//    }
 
     private object PreferenceKeys {
         val ACCESS_TOKEN = stringPreferencesKey("access_token")
