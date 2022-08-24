@@ -1,5 +1,7 @@
 package com.example.home_rent_app.di
 
+import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSource
+import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSourceImpl
 import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSource
 import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSourceImpl
 import com.example.home_rent_app.data.datasource.transfer.TransferDataSource
@@ -26,4 +28,11 @@ abstract class DataSourceModule {
         findRoomDataSourceImpl: FindRoomDataSourceImpl
     ) : FindRoomDataSource
 
+    @Singleton
+    @Binds
+    abstract fun bindDetailHomeDataSource(
+        detailHomeDataSourceImpl: DetailHomeDataSourceImpl
+    ) : DetailHomeDataSource
+
 }
+

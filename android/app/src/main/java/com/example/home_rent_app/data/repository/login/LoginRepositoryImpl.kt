@@ -1,6 +1,7 @@
 package com.example.home_rent_app.data.repository.login
 
 import android.content.Context
+import androidx.annotation.WorkerThread
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
@@ -21,6 +22,7 @@ import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.Prefe
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.PROFILE_IMAGE
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.REFRESH_TOKEN
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.USER_ID
+import com.example.home_rent_app.ui.HomeActivity.User.user
 import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.Constants.LOGIN_CHECK_DATASTORE
 import com.example.home_rent_app.util.Constants.PROFILE_IMAGE_DATASTORE
@@ -28,15 +30,23 @@ import com.example.home_rent_app.util.Constants.TOKEN_DATASTORE
 import com.example.home_rent_app.util.Constants.USER_ID_DATASTORE
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.call.enqueue
+import io.getstream.chat.android.client.models.Channel
+import io.getstream.chat.android.client.models.ConnectionData
+import io.getstream.chat.android.client.utils.onErrorSuspend
+import io.getstream.chat.android.client.utils.onSuccessSuspend
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class LoginRepositoryImpl @Inject constructor(
     private val loginApi: LoginApi,
     private val appSession: AppSession,
+    private val chatClient: ChatClient,
     @ApplicationContext private val context: Context
 ) :   LoginRepository {
 
@@ -127,5 +137,30 @@ class LoginRepositoryImpl @Inject constructor(
             .map { prefs ->
                 prefs[LOGIN_CHECK] ?: false
             }
+    }
+
+    override suspend fun connectUser() = flow {
+        // disconnect a user if already connected.
+
+        logger("connect!")
+        disconnectUser()
+        val token = chatClient.devToken(user.id)
+
+        val result = chatClient.connectUser(user, token).await()
+
+        result.onSuccessSuspend {
+            emit(result.data())
+        }
+        result.onErrorSuspend {
+            logger("Connect fail : ${it.message}")
+        }
+        logger("connectUser : ${chatClient.getCurrentUser()}")
+    }
+
+    fun disconnectUser() {
+        val currentUser = chatClient.getCurrentUser()
+        if (currentUser != null && user.id == currentUser.id) {
+            chatClient.disconnect(true).execute()
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.model.User
+import io.getstream.chat.android.client.models.ConnectionData
 import kotlinx.coroutines.flow.Flow
 
 interface LoginRepository {
@@ -30,4 +31,6 @@ interface LoginRepository {
     suspend fun saveUserID(userId: Int)
 
     suspend fun saveProfileImage(image: String)
+
+    suspend fun connectUser(): Flow<ConnectionData>
 }

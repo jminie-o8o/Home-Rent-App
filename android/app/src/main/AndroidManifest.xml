@@ -27,6 +27,12 @@
         android:theme="@style/Theme.HomeRentApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.detail.DetailRentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.chatting.MessageListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.wanthomeresult.WantHomeResultActivity"
             android:exported="false" />
         <activity
@@ -54,6 +60,17 @@
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.example.home_rent_app.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.example.home_rent_app.initializer.StreamChatInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
     </application>
 
 </manifest>
