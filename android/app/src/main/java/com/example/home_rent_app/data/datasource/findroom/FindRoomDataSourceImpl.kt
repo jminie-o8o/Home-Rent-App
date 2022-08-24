@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,7 +22,7 @@ class FindRoomDataSourceImpl @Inject constructor(
     override fun getSearchResult(
         page: Int,
         size: Int,
-        availableOnly : Boolean,
+        availableOnly: Boolean,
         sortedBy: String,
         searchAddress: String
     ) = flow {
@@ -31,6 +32,4 @@ class FindRoomDataSourceImpl @Inject constructor(
     override fun refreshAuthToken(): Flow<OAuthTokenResponse> = flow {
         emit(refreshApi.getAuthToken())
     }.flowOn(Dispatchers.IO)
-
-
 }
