@@ -42,4 +42,5 @@ interface LoginRepository {
     suspend fun setUserSession(user: User)
 
     suspend fun connectUser(): Flow<ConnectionData>
+
 }
