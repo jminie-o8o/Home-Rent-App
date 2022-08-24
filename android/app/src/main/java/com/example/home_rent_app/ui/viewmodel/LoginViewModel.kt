@@ -2,6 +2,8 @@ package com.example.home_rent_app.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.home_rent_app.data.dto.toJWT
+import com.example.home_rent_app.data.dto.toUser
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.repository.login.LoginRepository
@@ -40,8 +42,10 @@ class LoginViewModel @Inject constructor(
 
     fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest) {
         viewModelScope.launch {
+            val response = loginRepository.getKakaoToken(kakaoOauthRequest)
+            val jwt = response.toJWT()
+            val user = response.toUser()
             launch {
-                val jwt = loginRepository.getKakaoToken(kakaoOauthRequest)
                 loginRepository.saveToken(
                     listOf(
                         jwt.accessToken.tokenCode,
@@ -53,7 +57,6 @@ class LoginViewModel @Inject constructor(
                 }
             }
             launch {
-                val user = loginRepository.getKakaoUser(kakaoOauthRequest)
                 _gender.value = user.gender
                 loginRepository.saveUserID(user.userId)
                 loginRepository.saveDisplayName(user.displayName)
@@ -66,12 +69,14 @@ class LoginViewModel @Inject constructor(
 
     fun getNaverToken(naverOauthRequest: NaverOauthRequest) {
         viewModelScope.launch {
+            val response = loginRepository.getNaverToken(naverOauthRequest)
+            val jwt = response.toJWT()
+            val user = response.toUser()
             launch {
-                val jwt = loginRepository.getNaverToken(naverOauthRequest)
                 loginRepository.saveToken(
                     listOf(
                         jwt.accessToken.tokenCode,
-                        jwt.accessToken.tokenCode
+                        jwt.refreshToken.tokenCode
                     )
                 )
                 loginRepository.getToken().collect {
@@ -79,7 +84,6 @@ class LoginViewModel @Inject constructor(
                 }
             }
             launch {
-                val user = loginRepository.getNaverUser(naverOauthRequest)
                 _gender.value = user.gender
                 loginRepository.saveUserID(user.userId)
                 loginRepository.saveDisplayName(user.displayName)
