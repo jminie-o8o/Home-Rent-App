@@ -12,6 +12,7 @@ import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,6 +35,9 @@ class LoginViewModel @Inject constructor(
                 if (isLogin) {
                     loginRepository.getToken().collect {
                         loginRepository.setAppSession(it)
+                        loginRepository.connectUser().collect { data ->
+                            logger("loginRepository.connectUser() : ${data.user}")
+                        } // 채팅 로그인
                     }
                 }
             }

@@ -1,5 +1,7 @@
 package com.example.home_rent_app.di
 
+import com.example.home_rent_app.data.repository.detail.DetailRepository
+import com.example.home_rent_app.data.repository.detail.DetailRepositoryImpl
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepositoryImpl
 import com.example.home_rent_app.data.repository.transfer.TransferRepository
@@ -33,4 +35,12 @@ abstract class RepositoryModule {
     abstract fun bindRoomFindRepository(
         findRoomRepositoryImpl: FindRoomRepositoryImpl
     ) : FindRoomRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindDetailHomeRepository(
+        detailRepositoryImpl: DetailRepositoryImpl
+    ) : DetailRepository
+
 }
+

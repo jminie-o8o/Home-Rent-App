@@ -6,27 +6,32 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.model.Article
-import com.example.home_rent_app.databinding.ItemSearchResultBinding
+import com.example.home_rent_app.databinding.ItemHomeListBinding
 
-class HomeListAdapter: ListAdapter<Article, HomeListAdapter.TempViewHolder>(TempDiffUtil) {
+class HomeListAdapter(private val listener: (Int) -> Unit): ListAdapter<Article, HomeListAdapter.TempViewHolder>(TempDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TempViewHolder {
-        return TempViewHolder(ItemSearchResultBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return TempViewHolder(ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: TempViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class TempViewHolder(private val binding:ItemSearchResultBinding): RecyclerView.ViewHolder(binding.root){
+    inner class TempViewHolder(private val binding:ItemHomeListBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: Article) {
             binding.item = item
             val viewPagerAdapter = HomeThumbnailAdapter()
             binding.vpThumbNailList.adapter = viewPagerAdapter
-            val list = listOf("https://ifh.cc/g/sSr5Rr.png", "https://ifh.cc/g/sSr5Rr.png", "https://ifh.cc/g/sSr5Rr.png")
-            viewPagerAdapter.submitList(list)
-            submitList(currentList)
+//            viewPagerAdapter.submitList(item.houseImage)
+            setOnHomeClick(item)
+        }
+
+        private fun setOnHomeClick(item: Article) {
+            itemView.setOnClickListener {
+                listener(item.id)
+            }
         }
 
     }

@@ -1,10 +1,13 @@
 package com.example.home_rent_app.ui.findroom
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.home_rent_app.databinding.ActivityFindRoomBinding
+import com.example.home_rent_app.ui.chatting.MessageListActivity
+import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.viewmodel.FindRoomViewModel
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
@@ -22,7 +25,12 @@ class FindHomeActivity : AppCompatActivity() {
 
     private val viewModel: FindRoomViewModel by viewModels()
 
-    private val adapter: HomeListAdapter = HomeListAdapter()
+    private val adapter: HomeListAdapter = HomeListAdapter { homeId ->
+        // 상세화면 이동
+        val intent = Intent(this, DetailRentActivity::class.java)
+        intent.putExtra("homeId", homeId)
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +42,10 @@ class FindHomeActivity : AppCompatActivity() {
         binding.vm = viewModel
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     private fun search() {
         repeatOnStarted {
             viewModel.searchAddress.collect {
-                logger("${it}")
+                logger(it)
             }
         }
     }
