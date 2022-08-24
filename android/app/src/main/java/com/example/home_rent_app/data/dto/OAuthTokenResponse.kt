@@ -19,17 +19,7 @@ data class OAuthTokenResponse(
     val refreshToken: RefreshTokenDTO?
 )
 
-@JsonClass(generateAdapter = true)
-data class UserDTO(
-    @field:Json(name = "userId")
-    val userId: Int?,
-    @field:Json(name = "displayName")
-    val displayName: String?,
-    @field:Json(name = "profileImageUrl")
-    val profileImageUrl: String?,
-    @field:Json(name = "gender")
-    val gender: String?
-)
+
 
 @JsonClass(generateAdapter = true)
 data class AccessTokenDTO(
@@ -61,11 +51,3 @@ fun OAuthTokenResponse.toJWT(): JWT {
     return JWT(access.toAccessToken(), refresh.toRefreshToken())
 }
 
-fun OAuthTokenResponse.toUser(): User {
-    return User(
-        user.userId ?: -1,
-        user.displayName.orEmpty(),
-        user.profileImageUrl.orEmpty(),
-        user.gender ?: GENDER_NEW
-    )
-}

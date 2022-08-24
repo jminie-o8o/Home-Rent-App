@@ -1,0 +1,15 @@
+package com.example.home_rent_app.data.repository.refresh
+
+import com.example.home_rent_app.data.datasource.refresh.RefreshDataSource
+import com.example.home_rent_app.data.dto.toJWT
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class RefreshRepositoryImpl @Inject constructor(
+    private val dataSource: RefreshDataSource
+) : RefreshRepository {
+
+    override suspend fun refreshToken() = dataSource.refreshAuthToken().toJWT()
+
+}

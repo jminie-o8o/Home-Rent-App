@@ -42,4 +42,10 @@
     <string name="appbar_scrolling_view_behavior" translatable="false">
         com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior
     </string>
+    <string name="message_label">간단하게 시작해요!</string>
+    <string name="instance_description">양도자에게 메세지 바로 보내기</string>
+    <string name="sample_message_one">판매중인 상품에 관심이 있어요!</string>
+    <string name="sample_message_two">집을 둘러보고 싶어요!</string>
+    <string name="sample_one_wanted">집을 양도하고 싶어요!</string>
+    <string name="sample_two_wanted">안녕하세요!아직 집을 구하고 계신가요?</string>
 </resources>

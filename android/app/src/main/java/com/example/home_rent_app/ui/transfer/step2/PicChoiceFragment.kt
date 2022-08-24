@@ -110,9 +110,6 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         repeatOnStarted {
             viewModel.pictureUrl.collect {
                 when(it) {
-                    is UiState.Loading -> {
-                        logger("Loading")
-                    }
                     is UiState.Error -> {
                         logger("NetWork Error ${it.message}")
                     }
@@ -120,6 +117,9 @@ class PicChoiceFragment : Fragment(), PicControlListener {
                         // url 확인용 추후 삭제 예정
                         val images = it.data.images
                         images.forEach { logger("imageUrl : $it") }
+                    }
+                    else -> {
+                        logger("Loading")
                     }
                 }
 

@@ -5,20 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.home_rent_app.BuildConfig
+import androidx.fragment.app.viewModels
 import com.example.home_rent_app.databinding.FragmentChattingBinding
-import io.getstream.chat.android.client.ChatClient
-import io.getstream.chat.android.client.logger.ChatLogLevel
-import io.getstream.chat.android.offline.plugin.configuration.Config
-import io.getstream.chat.android.offline.plugin.factory.StreamOfflinePluginFactory
+import com.example.home_rent_app.util.MessageListActivityFactory
+import dagger.hilt.android.AndroidEntryPoint
+import io.getstream.chat.android.ui.channel.list.viewmodel.ChannelListViewModel
+import io.getstream.chat.android.ui.channel.list.viewmodel.bindView
+import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListViewModelFactory
 
+@AndroidEntryPoint
 class ChattingFragment : Fragment() {
 
     private val binding: FragmentChattingBinding by lazy {
         FragmentChattingBinding.inflate(layoutInflater)
     }
-
-    private lateinit var client: ChatClient
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,14 +31,19 @@ class ChattingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val offlinePluginFactory = StreamOfflinePluginFactory(
-            config = Config(),
-            appContext = requireContext().applicationContext
-        )
+        val viewModelFactory = ChannelListViewModelFactory()
 
-        client = ChatClient.Builder(BuildConfig.streamStreamSdkKey, requireContext().applicationContext)
-            .withPlugin(offlinePluginFactory)
-            .logLevel(ChatLogLevel.ALL)
-            .build()
+        val viewModel: ChannelListViewModel by viewModels { viewModelFactory }
+        viewModel.bindView(binding.channelListView, this)
+
+        setOnChannelClick()
+
     }
+
+    private fun setOnChannelClick() {
+        binding.channelListView.setChannelItemClickListener { channel ->
+            MessageListActivityFactory.create(requireContext(), channel)
+        }
+    }
+
 }

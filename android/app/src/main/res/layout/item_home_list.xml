@@ -33,6 +33,7 @@
             android:layout_marginStart="43dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            formattingTime="@{item.createdAt}"
             tools:text="4일전"/>
 
         <TextView
