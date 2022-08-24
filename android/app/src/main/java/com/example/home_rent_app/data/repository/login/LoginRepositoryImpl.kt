@@ -17,19 +17,25 @@ import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.model.RefreshToken
 import com.example.home_rent_app.data.model.User
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.ACCESS_TOKEN
+import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.DISPLAY_NAME
+import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.GENDER
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.LOGIN_CHECK
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.PROFILE_IMAGE
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.REFRESH_TOKEN
 import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl.PreferenceKeys.USER_ID
 import com.example.home_rent_app.util.AppSession
+import com.example.home_rent_app.util.Constants.DISPLAY_NAME_DATASTORE
+import com.example.home_rent_app.util.Constants.GENDER_DATASTORE
 import com.example.home_rent_app.util.Constants.LOGIN_CHECK_DATASTORE
 import com.example.home_rent_app.util.Constants.PROFILE_IMAGE_DATASTORE
 import com.example.home_rent_app.util.Constants.TOKEN_DATASTORE
 import com.example.home_rent_app.util.Constants.USER_ID_DATASTORE
+import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
@@ -37,6 +43,7 @@ import javax.inject.Inject
 class LoginRepositoryImpl @Inject constructor(
     private val loginApi: LoginApi,
     private val appSession: AppSession,
+    private val userSession: UserSession,
     @ApplicationContext private val context: Context
 ) :   LoginRepository {
 
@@ -61,13 +68,17 @@ class LoginRepositoryImpl @Inject constructor(
         val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
         val LOGIN_CHECK = booleanPreferencesKey("login_check")
         val USER_ID = intPreferencesKey("user_id")
+        val DISPLAY_NAME = stringPreferencesKey("display_name")
         val PROFILE_IMAGE = stringPreferencesKey("profile_image")
+        val GENDER = stringPreferencesKey("gender")
     }
 
     private val Context.loginCheckDataStore by preferencesDataStore(LOGIN_CHECK_DATASTORE)
     private val Context.tokenDataStore by preferencesDataStore(TOKEN_DATASTORE)
     private val Context.userIdDataStore by preferencesDataStore(USER_ID_DATASTORE)
+    private val Context.displayNameDataStore by preferencesDataStore(DISPLAY_NAME_DATASTORE)
     private val Context.profileImageDataStore by preferencesDataStore(PROFILE_IMAGE_DATASTORE)
+    private val Context.genderDataStore by preferencesDataStore(GENDER_DATASTORE)
 
     override suspend fun saveToken(token: List<String>) {
         if (token.isNotEmpty()) {
@@ -102,30 +113,69 @@ class LoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun setAppSession(token: List<String>) {
-        val accessToken = AccessToken(token[0])
-        val refreshToken = RefreshToken(token[1])
-        logger("accessToken : $accessToken ")
-        logger("refreshToken : $refreshToken ")
-        appSession.jwt = JWT(accessToken, refreshToken)
-    }
-
-    override suspend fun saveUserID(userId: Int) {
-        context.userIdDataStore.edit { prefs ->
-            prefs[USER_ID] = userId
-        }
-    }
-
-    override suspend fun saveProfileImage(image: String) {
-        context.profileImageDataStore.edit { prefs ->
-            prefs[PROFILE_IMAGE] = image
-        }
-    }
-
     override suspend fun getIsLogin(): Flow<Boolean> {
         return context.loginCheckDataStore.data
             .map { prefs ->
                 prefs[LOGIN_CHECK] ?: false
             }
+    }
+
+    override fun setAppSession(token: List<String>) {
+        val accessToken = AccessToken(token[0])
+        val refreshToken = RefreshToken(token[1])
+        appSession.jwt = JWT(accessToken, refreshToken)
+    }
+
+    override suspend fun saveUserID(userId: Int?) {
+        if (userId != null) {
+            context.userIdDataStore.edit { prefs ->
+                prefs[USER_ID] = userId
+            }
+        }
+    }
+
+    override suspend fun saveDisplayName(displayName: String?) {
+        if (!displayName.isNullOrEmpty()) {
+            context.displayNameDataStore.edit { prefs ->
+                prefs[DISPLAY_NAME] = displayName
+            }
+        }
+    }
+
+    override suspend fun saveProfileImage(image: String?) {
+        if (!image.isNullOrEmpty()) {
+            context.profileImageDataStore.edit { prefs ->
+                prefs[PROFILE_IMAGE] = image
+            }
+        }
+    }
+
+    override suspend fun saveGender(gender: String?) {
+        if (!gender.isNullOrEmpty()) {
+            context.genderDataStore.edit { prefs ->
+                prefs[GENDER] = gender
+            }
+        }
+    }
+
+    override suspend fun getUserInfo(): User {
+        val user = User(null, null, null, null)
+        context.userIdDataStore.data.collect { prefs ->
+            user.userId = prefs[USER_ID]
+        }
+        context.displayNameDataStore.data.collect { prefs ->
+            user.displayName = prefs[DISPLAY_NAME]
+        }
+        context.profileImageDataStore.data.collect { prefs ->
+            user.profileImageUrl = prefs[PROFILE_IMAGE]
+        }
+        context.genderDataStore.data.collect { prefs ->
+            user.gender = prefs[GENDER]
+        }
+        return user
+    }
+
+    override suspend fun setUserSession(user: User) {
+        userSession.user = user
     }
 }

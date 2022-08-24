@@ -27,7 +27,15 @@ interface LoginRepository {
 
     fun setAppSession(token: List<String>)
 
-    suspend fun saveUserID(userId: Int)
+    suspend fun saveUserID(userId: Int?)
 
-    suspend fun saveProfileImage(image: String)
+    suspend fun saveDisplayName(displayName: String?)
+
+    suspend fun saveProfileImage(image: String?)
+
+    suspend fun saveGender(gender: String?)
+
+    suspend fun getUserInfo(): User
+
+    suspend fun setUserSession(user: User)
 }

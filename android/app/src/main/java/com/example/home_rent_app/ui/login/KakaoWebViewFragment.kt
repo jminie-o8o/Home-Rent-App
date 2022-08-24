@@ -23,6 +23,7 @@ import com.example.home_rent_app.databinding.FragmentKakaoWebViewBinding
 import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.ui.LoginActivity
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
+import com.example.home_rent_app.util.Constants
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,9 +62,9 @@ class KakaoWebViewFragment : Fragment() {
 
     private fun setupObserveAndMove(navController: NavController) {
         collectStateFlow(viewModel.gender) { gender ->
-            if (gender.isNullOrEmpty()) {
+            if (gender == Constants.GENDER_NEW) {
                 navController.navigate(R.id.action_kakaoWebViewFragment_to_loginProfileFragment)
-            } else {
+            } else if (gender != Constants.GENDER_DEFAULT) {
                 val activity = activity as LoginActivity
                 activity.moveToHomeActivity()
             }
