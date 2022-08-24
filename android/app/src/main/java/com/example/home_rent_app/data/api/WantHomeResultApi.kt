@@ -22,4 +22,6 @@ interface WantHomeResultApi {
     suspend fun addBookmark(
         @Body addBookmarkRequest: AddBookmarkRequest
     ): WantHouseBookMarkResponseDTO
+
 }
+

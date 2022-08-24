@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/declare"
+        android:title="신고하기"
+        android:contentDescription="신고하기"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/out"
+        android:title="나가기"
+        android:contentDescription="나가기"
+        app:showAsAction="never" />
+</menu>
