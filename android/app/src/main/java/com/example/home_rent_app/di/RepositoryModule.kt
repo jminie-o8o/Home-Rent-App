@@ -4,6 +4,8 @@ import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.detail.DetailRepositoryImpl
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepositoryImpl
+import com.example.home_rent_app.data.repository.refresh.RefreshRepository
+import com.example.home_rent_app.data.repository.refresh.RefreshRepositoryImpl
 import com.example.home_rent_app.data.repository.transfer.TransferRepository
 import com.example.home_rent_app.data.repository.transfer.TransferRepositoryImpl
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
@@ -41,6 +43,13 @@ abstract class RepositoryModule {
     abstract fun bindDetailHomeRepository(
         detailRepositoryImpl: DetailRepositoryImpl
     ) : DetailRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindRefreshRepository(
+        refreshRepositoryImpl: RefreshRepositoryImpl
+    ) : RefreshRepository
+
 
 }
 

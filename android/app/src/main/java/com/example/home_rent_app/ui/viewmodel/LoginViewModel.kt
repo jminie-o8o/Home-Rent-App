@@ -35,9 +35,10 @@ class LoginViewModel @Inject constructor(
                 if (isLogin) {
                     loginRepository.getToken().collect {
                         loginRepository.setAppSession(it)
+
                         loginRepository.connectUser().collect { data ->
-                            logger("loginRepository.connectUser() : ${data.user}")
-                        } // 채팅 로그인
+                            logger("connectUser : ${data.user}") // 채팅 로그인
+                        }
                     }
                 }
             }

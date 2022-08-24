@@ -1,6 +1,7 @@
 package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.dto.DetailHomeDTO
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 

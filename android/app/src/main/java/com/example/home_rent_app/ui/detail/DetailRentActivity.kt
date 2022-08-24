@@ -1,18 +1,16 @@
 package com.example.home_rent_app.ui.detail
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.home_rent_app.databinding.ActivityDetailRentBinding
-import com.example.home_rent_app.ui.chatting.MessageListActivity
+import com.example.home_rent_app.ui.chatting.RentMessageListActivity
 import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class DetailRentActivity : AppCompatActivity() {
@@ -45,6 +43,7 @@ class DetailRentActivity : AppCompatActivity() {
                     is UiState.Loading -> {
                         logger("Loading...")
                     }
+                    else -> logger("Loading...")
                 }
             }
         }
@@ -52,7 +51,7 @@ class DetailRentActivity : AppCompatActivity() {
         binding.btnTemp.setOnClickListener {
             repeatOnStarted {
                 viewModel.joinNewChannel().collect {
-                    startActivity(MessageListActivity.newIntent(binding.root.context, it))
+                    startActivity(RentMessageListActivity.newIntent(binding.root.context, it))
                 }
             }
         }

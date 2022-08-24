@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.home_rent_app">
+    package="com.example.home_rent_app" >
 
     <uses-sdk tools:overrideLibrary="androidx.draganddrop:draganddrop:1.0.0" />
 
@@ -25,12 +25,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeRentApp"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".WantedMessageListActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.detail.DetailRentActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.chatting.MessageListActivity"
+            android:name=".ui.chatting.RentMessageListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.wanthomeresult.WantHomeResultActivity"
@@ -41,7 +44,7 @@
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/Theme.Splash">
+            android:theme="@style/Theme.Splash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,12 +68,11 @@
             android:name="androidx.startup.InitializationProvider"
             android:authorities="com.example.home_rent_app.androidx-startup"
             android:exported="false"
-            tools:node="merge">
+            tools:node="merge" >
             <meta-data
                 android:name="com.example.home_rent_app.initializer.StreamChatInitializer"
                 android:value="androidx.startup" />
         </provider>
-
     </application>
 
 </manifest>
