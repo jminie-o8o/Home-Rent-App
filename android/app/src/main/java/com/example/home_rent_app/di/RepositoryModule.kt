@@ -6,6 +6,8 @@ import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepositoryImpl
 import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepositoryImpl
+import com.example.home_rent_app.data.repository.token.TokenRepository
+import com.example.home_rent_app.data.repository.token.TokenRepositoryImpl
 import com.example.home_rent_app.data.repository.transfer.TransferRepository
 import com.example.home_rent_app.data.repository.transfer.TransferRepositoryImpl
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
@@ -50,6 +52,11 @@ abstract class RepositoryModule {
         refreshRepositoryImpl: RefreshRepositoryImpl
     ) : RefreshRepository
 
+    @Singleton
+    @Binds
+    abstract fun bindTokenRepository(
+        tokenRepositoryImpl: TokenRepositoryImpl
+    ) : TokenRepository
 
 }
 

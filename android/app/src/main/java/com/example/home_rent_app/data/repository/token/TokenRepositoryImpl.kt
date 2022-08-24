@@ -9,7 +9,9 @@ import com.example.home_rent_app.data.model.RefreshToken
 import kotlinx.coroutines.flow.Flow
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TokenRepositoryImpl @Inject constructor(
     private val dataSource: TokenDataSource
 ) : TokenRepository {
