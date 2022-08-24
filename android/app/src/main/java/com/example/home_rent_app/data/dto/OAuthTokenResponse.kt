@@ -62,7 +62,6 @@ fun OAuthTokenResponse.toJWT(): JWT {
 }
 
 fun OAuthTokenResponse.toUser(): User {
-    logger("gender at toUser : ${user.gender}")
     return User(
         user.userId ?: -1,
         user.displayName.orEmpty(),

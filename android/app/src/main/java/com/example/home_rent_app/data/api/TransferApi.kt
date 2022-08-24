@@ -8,7 +8,7 @@ import retrofit2.http.Part
 
 interface TransferApi {
     @Multipart
-    @POST("/images")
+    @POST("images")
     suspend fun getImageUrl(
         @Part images: List<MultipartBody.Part>
     ): ImageUrlDTO

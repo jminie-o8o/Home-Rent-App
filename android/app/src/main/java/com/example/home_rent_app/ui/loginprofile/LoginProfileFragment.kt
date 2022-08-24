@@ -18,9 +18,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
 import com.example.home_rent_app.R
+import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
 import com.example.home_rent_app.ui.HomeActivity
-import com.example.home_rent_app.ui.transfer.TransferActivity
 import com.example.home_rent_app.ui.viewmodel.LoginProfileViewModel
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.FileController
@@ -84,6 +84,7 @@ class LoginProfileFragment : Fragment() {
                 val imageUri = result.data?.data
                 imageUri?.let {
                     logger("URI: ${fileController.uriToMultiPart(it)}")
+                    loginProfileViewModel.getProfileImage(fileController.uriToMultiPart(it))
                     binding.ivLoginProfile.load(it)
                 }
             }
@@ -153,9 +154,19 @@ class LoginProfileFragment : Fragment() {
         }
     }
 
+    private fun setUserProfile() {
+        collectStateFlow(loginProfileViewModel.imageUrl) { imageUrl ->
+            val displayName = binding.etLoginProfileNickname.text?.toString()
+            val gender = if (binding.rbMale.isSelected) "MALE"
+            else "FEMALE"
+            loginProfileViewModel.setUserProfile(UserProfileRequest(displayName, imageUrl, gender))
+        }
+    }
+
     private fun addAccount() {
         binding.btnLoginProfile.setOnClickListener {
             loginViewModel.saveIsLogin()
+            setUserProfile()
             val intent = Intent(requireContext(), HomeActivity::class.java)
             startActivity(intent)
         }

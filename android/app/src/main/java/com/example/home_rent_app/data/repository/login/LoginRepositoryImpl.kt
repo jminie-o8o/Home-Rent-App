@@ -30,6 +30,7 @@ import com.example.home_rent_app.util.Constants.PROFILE_IMAGE_DATASTORE
 import com.example.home_rent_app.util.Constants.TOKEN_DATASTORE
 import com.example.home_rent_app.util.Constants.USER_ID_DATASTORE
 import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
