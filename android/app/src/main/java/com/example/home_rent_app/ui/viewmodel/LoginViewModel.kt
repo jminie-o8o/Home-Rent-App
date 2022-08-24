@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.repository.login.LoginRepository
+import com.example.home_rent_app.util.Constants.GENDER_DEFAULT
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,13 +18,10 @@ class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository
 ) : ViewModel() {
 
-    private val _accessToken = MutableStateFlow<String?>(null)
-    val accessToken: StateFlow<String?> get() = _accessToken
-
     private val _isLogin = MutableStateFlow(false)
     val isLogin: StateFlow<Boolean> get() = _isLogin
 
-    private val _gender = MutableStateFlow<String?>(null)
+    private val _gender = MutableStateFlow<String?>(GENDER_DEFAULT)
     val gender: StateFlow<String?> get() = _gender
 
     init {
@@ -44,7 +42,6 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             launch {
                 val jwt = loginRepository.getKakaoToken(kakaoOauthRequest)
-                _accessToken.value = jwt.accessToken.tokenCode
                 loginRepository.saveToken(
                     listOf(
                         jwt.accessToken.tokenCode,
@@ -59,7 +56,10 @@ class LoginViewModel @Inject constructor(
                 val user = loginRepository.getKakaoUser(kakaoOauthRequest)
                 _gender.value = user.gender
                 loginRepository.saveUserID(user.userId)
+                loginRepository.saveDisplayName(user.displayName)
                 loginRepository.saveProfileImage(user.profileImageUrl)
+                loginRepository.saveGender(user.gender)
+                loginRepository.setUserSession(loginRepository.getUserInfo())
             }
         }
     }
@@ -68,7 +68,6 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             launch {
                 val jwt = loginRepository.getNaverToken(naverOauthRequest)
-                _accessToken.value = jwt.accessToken.tokenCode
                 loginRepository.saveToken(
                     listOf(
                         jwt.accessToken.tokenCode,
@@ -83,7 +82,10 @@ class LoginViewModel @Inject constructor(
                 val user = loginRepository.getNaverUser(naverOauthRequest)
                 _gender.value = user.gender
                 loginRepository.saveUserID(user.userId)
+                loginRepository.saveDisplayName(user.displayName)
                 loginRepository.saveProfileImage(user.profileImageUrl)
+                loginRepository.saveGender(user.gender)
+                loginRepository.setUserSession(loginRepository.getUserInfo())
             }
         }
     }
