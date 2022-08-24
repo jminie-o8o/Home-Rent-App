@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static com.nextsquad.house.domain.house.QRentArticle.rentArticle;
 import static com.nextsquad.house.domain.house.QWantedArticle.wantedArticle;
 
 @Slf4j
