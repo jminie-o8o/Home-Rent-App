@@ -41,7 +41,6 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v5.6
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/home-rent-app
-          tags: v1, latest
           registry: docker.io
           dockerfile: ./BE/house/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
