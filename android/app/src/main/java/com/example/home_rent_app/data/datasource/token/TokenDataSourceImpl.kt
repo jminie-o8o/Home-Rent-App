@@ -3,7 +3,9 @@ package com.example.home_rent_app.data.datasource.token
 import com.example.home_rent_app.data.datastore.DataStore
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TokenDataSourceImpl @Inject constructor(
     private val dataStore: DataStore
 ) : TokenDataSource {
