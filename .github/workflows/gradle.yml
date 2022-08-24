@@ -34,7 +34,7 @@ jobs:
         run: chmod +x gradlew
         working-directory: ${{ env.working-directory }}
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew bootjar
         working-directory: ${{ env.working-directory }}
 
       # 도커 빌드(도커 이미지 생성)
