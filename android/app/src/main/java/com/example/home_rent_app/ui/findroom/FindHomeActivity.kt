@@ -6,15 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.home_rent_app.databinding.ActivityFindRoomBinding
-import com.example.home_rent_app.ui.chatting.MessageListActivity
 import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.viewmodel.FindRoomViewModel
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 
 @AndroidEntryPoint
 class FindHomeActivity : AppCompatActivity() {
@@ -63,6 +60,7 @@ class FindHomeActivity : AppCompatActivity() {
                     is UiState.Loading -> {
                         logger("search result loading....")
                     }
+                    else -> logger("Loading...")
                 }
             }
         }

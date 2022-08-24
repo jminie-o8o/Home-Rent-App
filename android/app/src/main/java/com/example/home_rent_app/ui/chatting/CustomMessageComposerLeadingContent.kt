@@ -13,8 +13,6 @@ import io.getstream.chat.android.ui.message.composer.content.MessageComposerCont
 @OptIn(ExperimentalStreamChatApi::class)
 class CustomMessageComposerLeadingContent : FrameLayout, MessageComposerContent {
 
-    private lateinit var binding: MessageCompserLeadingContentBinding
-
     var cameraButtonClickListener: () -> Unit = {}
 
     constructor(context: Context) : this(context, null)
@@ -26,18 +24,17 @@ class CustomMessageComposerLeadingContent : FrameLayout, MessageComposerContent 
         attrs,
         defStyleAttr
     ) {
-        binding = MessageCompserLeadingContentBinding.inflate(LayoutInflater.from(context), this, true)
+        val binding = MessageCompserLeadingContentBinding.inflate(LayoutInflater.from(context), this, true)
         binding.camera.setOnClickListener { cameraButtonClickListener() }
     }
 
     @ExperimentalStreamChatApi
     override fun attachContext(messageComposerContext: MessageComposerContext) {
-        // Access the style if necessary
-        val style = messageComposerContext.style
+        messageComposerContext.style
     }
 
     @ExperimentalStreamChatApi
     override fun renderState(state: MessageComposerState) {
-        // Render the state of the component
+
     }
 }

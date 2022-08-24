@@ -192,10 +192,8 @@ class LoginRepositoryImpl @Inject constructor(
         userSession.user = user
     }
 
-    override suspend fun connectUser() = flow {
+    override fun connectUser() = flow {
         // disconnect a user if already connected.
-
-        logger("connect!")
         disconnectUser()
         val token = chatClient.devToken(user.id)
 
@@ -207,10 +205,9 @@ class LoginRepositoryImpl @Inject constructor(
         result.onErrorSuspend {
             logger("Connect fail : ${it.message}")
         }
-        logger("connectUser : ${chatClient.getCurrentUser()}")
     }
 
-    fun disconnectUser() {
+    private fun disconnectUser() {
         val currentUser = chatClient.getCurrentUser()
         if (currentUser != null && user.id == currentUser.id) {
             chatClient.disconnect(true).execute()

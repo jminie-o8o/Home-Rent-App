@@ -63,20 +63,10 @@ data class DetailHomeDTO(
     @Json(name = "title")
     val title: String?,
     @Json(name = "user")
-    val user: User?
+    val user: UserDTO?
 )
 
-@JsonClass(generateAdapter = true)
-data class User(
-    @Json(name = "userId")
-    val userId: Int? = 0,
-    @Json(name = "displayName")
-    val displayName: String?,
-    @Json(name = "gender")
-    val gender: String?,
-    @Json(name = "profileImageUrl")
-    val profileImageUrl: String?
-)
+
 
 fun DetailHomeDTO.toDetailHomeData(): DetailHomeData {
     return DetailHomeData(
@@ -111,10 +101,3 @@ fun DetailHomeDTO.toDetailHomeData(): DetailHomeData {
     )
 }
 
-fun User.toUserData() =
-    UserData(
-//        requireNotNull(userId),
-        displayName = requireNotNull(displayName),
-        gender = requireNotNull(gender),
-        profileImageUrl = requireNotNull(profileImageUrl)
-    )

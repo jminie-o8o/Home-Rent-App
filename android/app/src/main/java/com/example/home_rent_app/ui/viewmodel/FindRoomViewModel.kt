@@ -5,12 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.model.RoomSearchResult
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
 import com.example.home_rent_app.data.repository.login.LoginRepository
+import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
@@ -37,14 +39,18 @@ class FindRoomViewModel @Inject constructor(
     private fun getSearchResult() {
        viewModelScope.launch {
            repository.getSearchResult(searchAddress = searchAddress.value)
-               .catch { e ->
-                   logger("${e.message}")
-                   if(e.message == "HTTP 401 ") {
-                       logger("e in ${e.message}")
-                        repository.refreshAuthToken().collect {
-                            loginRepository.saveToken(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
-                            loginRepository.setAppSession(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
-                        }
+               .catch { exception ->
+                   val coroutineException = CoroutineException.checkThrowable(exception)
+                   if(coroutineException.flag) {
+                       coroutineException.throwable as HttpException
+                       logger("status code is ${coroutineException.throwable.code()}")
+                       if(coroutineException.throwable.code() == 401) {
+                           repository.refreshAuthToken().collect {
+                               loginRepository.saveToken(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
+                               loginRepository.setAppSession(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
+                           }
+                           repository.getSearchResult(searchAddress = searchAddress.value)
+                       }
                    } else {
                        _result.value = UiState.Error("네트워크 에러")
                    }
