@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.model.RoomSearchResult
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
 import com.example.home_rent_app.data.repository.login.LoginRepository
+import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FindRoomViewModel @Inject constructor(
     private val repository: FindRoomRepository,
-    private val loginRepository: LoginRepository
+    private val tokenRepository: TokenRepository
 ): ViewModel() {
 
     val searchAddress = MutableStateFlow("")
@@ -46,8 +47,8 @@ class FindRoomViewModel @Inject constructor(
                        logger("status code is ${coroutineException.throwable.code()}")
                        if(coroutineException.throwable.code() == 401) {
                            repository.refreshAuthToken().collect {
-                               loginRepository.saveToken(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
-                               loginRepository.setAppSession(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
+                               tokenRepository.saveToken(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
+                               tokenRepository.setAppSession(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
                            }
                            repository.getSearchResult(searchAddress = searchAddress.value)
                        }

@@ -2,6 +2,7 @@ package com.example.home_rent_app.data
 
 import com.example.home_rent_app.data.repository.login.LoginRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepository
+import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.logger
@@ -17,7 +18,7 @@ import javax.inject.Singleton
 @Singleton
 class AuthInterceptor @Inject constructor(
     private val appSession: AppSession,
-    private val loginRepository: LoginRepository,
+    private val tokenRepository: TokenRepository,
     private val refreshRepository: RefreshRepository
 ) : Interceptor {
 
@@ -46,8 +47,8 @@ class AuthInterceptor @Inject constructor(
             CoroutineScope(Job() + ceh).launch {
                 val token = refreshRepository.refreshToken()
                 val list = listOf(token.accessToken.tokenCode, token.refreshToken.tokenCode)
-                loginRepository.saveToken(list)
-                loginRepository.setAppSession(list)
+                tokenRepository.saveToken(list)
+                tokenRepository.setAppSession(list)
             }
             return refreshResponse
         }
