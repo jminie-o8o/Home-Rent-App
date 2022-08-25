@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://issuetracker-db.cjcsvpk28pnj.ap-northeast-2.rds.amazonaws.com:3306/house
+    url: jdbc:mysql://10.11.10.221:3306/house
     username: ${MY_DATABASE_USERNAME}
     password: ${MY_DATABASE_PASSWORD}
   config:
