@@ -54,7 +54,7 @@
             android:id="@+id/cg_step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_first_step">
@@ -84,7 +84,7 @@
             style="@style/TextSubtitle1.18.bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:text="기간"
             app:layout_constraintStart_toStartOf="parent"
@@ -249,17 +249,30 @@
             app:layout_constraintEnd_toEndOf="@+id/til_monthly_rent"
             app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_go_back"
+            android:layout_width="164dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/custom_button_background"
+            android:text="이전으로"
+            android:textColor="@color/gray03"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <Button
             android:id="@+id/btn_go_second_step"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_margin="15dp"
+            android:layout_width="164dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/custom_button_background"
             android:text="다음으로"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
