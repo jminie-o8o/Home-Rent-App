@@ -101,42 +101,66 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_date_range_want_home_first_step" />
 
         <View
-            android:layout_width="30dp"
+            android:layout_width="8dp"
             android:layout_height="2dp"
-            app:layout_constraintStart_toEndOf="@+id/btn_go_in"
-            app:layout_constraintTop_toTopOf="@+id/btn_go_in"
+            app:layout_constraintStart_toEndOf="@+id/til_go_in"
+            app:layout_constraintTop_toTopOf="@+id/til_go_in"
             android:background="@color/gray02"
             android:layout_marginTop="24dp"
-            android:layout_marginStart="34dp" />
+            android:layout_marginStart="6dp" />
 
         <TextView
             android:id="@+id/tv_go_out_date"
             style="@style/TextSubtitle1.14.bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
+            android:layout_marginStart="107dp"
             android:layout_marginTop="16dp"
             android:text="퇴거 희망일"
             app:layout_constraintStart_toEndOf="@+id/tv_go_in_date"
             app:layout_constraintTop_toBottomOf="@+id/tv_date_range_want_home_first_step" />
 
-        <Button
-            android:id="@+id/btn_go_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="날짜 선택"
-            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_go_in"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="156dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginTop="4dp"
+            app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="@+id/tv_go_in_date"
-            android:layout_marginTop="10dp" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date">
 
-        <Button
-            android:id="@+id/btn_go_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="날짜 선택"
-            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_go_in"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_go_out"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="156dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginTop="4dp"
+            app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="@+id/tv_go_out_date"
-            android:layout_marginTop="10dp" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_go_out"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_budget"
@@ -146,7 +170,7 @@
             android:layout_marginTop="70dp"
             android:text="예산"
             app:layout_constraintStart_toStartOf="@+id/tv_date_range_want_home_first_step"
-            app:layout_constraintTop_toBottomOf="@+id/btn_go_in" />
+            app:layout_constraintTop_toBottomOf="@+id/til_go_in" />
 
         <TextView
             android:id="@+id/tv_deposit"

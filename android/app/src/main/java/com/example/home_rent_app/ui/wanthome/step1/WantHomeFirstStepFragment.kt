@@ -69,7 +69,7 @@ class WantHomeFirstStepFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showDatePicker() {
-        binding.btnGoIn.setOnClickListener {
+        binding.etGoIn.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker()
                 .setCalendarConstraints(limitRange().build())
                 .setTitleText("입주 희망일")
@@ -78,10 +78,10 @@ class WantHomeFirstStepFragment : Fragment() {
             datePicker.addOnPositiveButtonClickListener {
                 val date =
                     SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
-                binding.btnGoIn.text = date
+                binding.etGoIn.setText(date)
             }
         }
-        binding.btnGoOut.setOnClickListener {
+        binding.etGoOut.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker()
                 .setCalendarConstraints(limitRange().build())
                 .setTitleText("퇴거 희망일")
@@ -90,7 +90,7 @@ class WantHomeFirstStepFragment : Fragment() {
             datePicker.addOnPositiveButtonClickListener {
                 val date =
                     SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
-                binding.btnGoOut.text = date
+                binding.etGoOut.setText(date)
             }
         }
     }
