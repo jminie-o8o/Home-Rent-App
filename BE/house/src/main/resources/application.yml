@@ -1,11 +1,11 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.11.10.221:3306/house
+    url: jdbc:mysql://issuetracker-db.cjcsvpk28pnj.ap-northeast-2.rds.amazonaws.com:3306/house
     username: ${MY_DATABASE_USERNAME}
     password: ${MY_DATABASE_PASSWORD}
   config:
-    import: classpath:oauth.yml
+    import: classpath:oauth.yml, classpath:s3.yml
   redis:
     host: 127.0.0.1
     port: 6379
@@ -34,14 +34,3 @@ logging:
     org.hibernate.SQL: debug
     com.amazonaws.util.EC2MetadataUtils: error
 
-cloud:
-  aws:
-    region:
-      static: ap-northeast-2
-    s3:
-      bucket: house-image-bucket
-    stack:
-      auto: false
-    credentials:
-      access-key: ${S3_ACCESS_KEY}
-      secret-key: ${S3_SECRET_KEY}
