@@ -58,6 +58,7 @@ public class JwtProvider {
 
     public DecodedJWT verifyToken(String token){
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyString))
+                .acceptExpiresAt(50000)
                 .withIssuer("codesquad-team-5")
                 .build();
         return verifier.verify(token);

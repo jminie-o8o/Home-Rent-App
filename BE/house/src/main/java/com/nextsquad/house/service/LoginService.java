@@ -47,7 +47,6 @@ public class LoginService {
     }
 
     public JwtResponseDto refreshJwtToken(String accessToken, String refreshToken) {
-        jwtProvider.verifyToken(accessToken);
         DecodedJWT decode = jwtProvider.decode(refreshToken);
         String accountId = decode.getClaim("accountId").asString();
 
