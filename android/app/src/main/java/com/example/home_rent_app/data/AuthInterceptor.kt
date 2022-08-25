@@ -1,15 +1,12 @@
 package com.example.home_rent_app.data
 
-import com.example.home_rent_app.data.repository.login.LoginRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.logger
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import io.getstream.chat.android.client.utils.toResult
+import kotlinx.coroutines.*
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
@@ -23,6 +20,7 @@ class AuthInterceptor @Inject constructor(
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
+
         val jwt = appSession.jwt
 
         val requestBuilder = chain.request()
@@ -40,17 +38,25 @@ class AuthInterceptor @Inject constructor(
         val ceh = CoroutineExceptionHandler { _, throwable ->
             logger("refresh token error : ${CoroutineException.checkThrowable(throwable).errorMessage}")
         }
+
         if (response.code == 401) {
-
-            val refreshResponse = chain.proceed(requestBuilder.build())
-
-            CoroutineScope(Job() + ceh).launch {
-                val token = refreshRepository.refreshToken()
-                val list = listOf(token.accessToken.tokenCode, token.refreshToken.tokenCode)
-                tokenRepository.saveToken(list)
-                tokenRepository.setAppSession(list)
+            val refreshBuilder = chain.request()
+                .newBuilder()
+            runBlocking {
+                CoroutineScope(Job() + ceh).launch {
+                    val list = withContext(Dispatchers.IO) {
+                        val token = refreshRepository.refreshToken()
+                        listOf(token.accessToken.tokenCode, token.refreshToken.tokenCode)
+                    }
+                    tokenRepository.saveToken(list)
+                    tokenRepository.setAppSession(list)
+                    refreshBuilder.addHeader(
+                        "access-token",
+                        list[0]
+                    ) // 추후 수정
+                }.join()
             }
-            return refreshResponse
+            return chain.proceed(refreshBuilder.build())
         }
         return response
     }

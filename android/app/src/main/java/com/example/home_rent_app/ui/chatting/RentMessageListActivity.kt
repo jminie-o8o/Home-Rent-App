@@ -13,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.home_rent_app.databinding.ActivityMessageListRentBinding
 import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
+import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.repeatOnStarted
 import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.getstream.chat.android.client.models.Channel
@@ -25,6 +27,7 @@ import io.getstream.chat.android.ui.message.composer.viewmodel.bindView
 import io.getstream.chat.android.ui.message.list.viewmodel.bindView
 import io.getstream.chat.android.ui.message.list.viewmodel.factory.MessageListViewModelFactory
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 @OptIn(ExperimentalStreamChatApi::class)
 @AndroidEntryPoint
@@ -34,15 +37,11 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
         ActivityMessageListRentBinding.inflate(layoutInflater)
     }
 
-    private val cid: String = checkNotNull(intent.getStringExtra(CID_KEY)) {
-        "MessageListActivity를 시작하기 위해서는 채널 아이디 (cid) 정보가 필요합니다."
-    }
+    private lateinit var cid: String
 
-    private val factory: MessageListViewModelFactory by lazy {
-        MessageListViewModelFactory(cid)
-    }
+    private lateinit var factory: MessageListViewModelFactory
 
-    private val homeId = intent?.getIntExtra("homeId", -1)
+    private var homeId: Int? = null
 
     private val messageListViewModel: MessageListViewModel by viewModels { factory }
     private val messageComposerViewModel: MessageComposerViewModel by viewModels { factory }
@@ -52,9 +51,13 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        cid = checkNotNull(intent.getStringExtra(CID_KEY)) {
+            "MessageListActivity를 시작하기 위해서는 채널 아이디 (cid) 정보가 필요합니다."
+        }
+        homeId = intent?.getIntExtra("homeId", -1)
 
-//        val factory = MessageListViewModelFactory(cid)
-//        val messageListViewModel: MessageListViewModel by viewModels { factory }
+        factory = MessageListViewModelFactory(cid)
+//        val listViewModel: MessageListViewModel by viewModels { factory }
 //        val messageComposerViewModel: MessageComposerViewModel by viewModels { factory }
 
         // Step 2 - 채팅방 컴포넌트에 뷰모델 연결
@@ -99,17 +102,16 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
             messageComposerViewModel.performMessageAction(Edit(message))
         }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                messageListViewModel.channelState.collect {
-                    it?.messages?.collect { list ->
-                        if(list.isNotEmpty()) {
-                            binding.cloInstanceMessage.visibility = View.GONE
-                        }
+        repeatOnStarted {
+            messageListViewModel.channelState.collect {
+                it?.messages?.collect { list ->
+                    if(list.isNotEmpty()) {
+                        binding.cloInstanceMessage.visibility = View.GONE
                     }
                 }
             }
         }
+
         binding.messageComposerView.setLeadingContent(CustomMessageComposerLeadingContent(this))
 
         binding.messageComposerView.setLeadingContent(
@@ -140,11 +142,13 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
         // MessageListActivity의 인텐트 생성 및 채팅방의 cid 정보 전달
         private const val CID_KEY = "key:cid"
 
-        fun newIntent(context: Context, channel: Channel): Intent =
-            Intent(context, RentMessageListActivity::class.java)
+        fun newIntent(context: Context, channel: Channel): Intent {
+            logger("newIntent ${channel.id}")
+            return  Intent(context, RentMessageListActivity::class.java)
                 .putExtra(CID_KEY, channel.cid)
                 .putExtra("homeType", channel.extraData["homeType"].toString())
                 .putExtra("homeId", channel.extraData["homeId"].toString())
+        }
 
     }
 }

@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.transfer.step4.RentHomeDescriptionFragment">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/alo_appbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="10dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/ab_top_appbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:titleCentered="true"
+                    app:navigationIcon="@drawable/ic_close"
+                    app:title="내 방 양도하기"/>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <TextView
+                android:id="@+id/tv_detail_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/alo_appbar_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="16dp"
+                android:text="상세정보 입력" />
+
+            <TextView
+                android:id="@+id/tv_detail_content"
+                android:layout_width="228dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp"
+                android:text="자세히 입력해주실수록 양도자를 찾는 시간이 줄어들어요"/>
+
+            <TextView
+                android:id="@+id/tv_detail_title_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="28dp"
+                android:text="상세 설명"/>
+
+            <TextView
+                android:id="@+id/tv_text_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="28dp"
+                tools:text="0/500"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_detail_contents"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_title_label"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintWidth_percent="0.93"
+                app:hintEnabled="false"
+                style="@style/editTextStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_detail_contents"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="이 매물의 특징이 있다면 알려주세요."
+                    android:gravity="top"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_option_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/til_detail_contents"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="옵션"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_home_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_option_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_conditioner"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:text="에어컨"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_washer"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:checked="false"
+                    app:textStartPadding="40dp"
+                    android:textSize="15sp"
+                    android:text="세탁기"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_bed"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:checked="false"
+                    app:textStartPadding="40dp"
+                    android:textSize="15sp"
+                    android:text="침대"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_refrigerator"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:checked="false"
+                    app:textStartPadding="40dp"
+                    android:textSize="15sp"
+                    android:text="냉장고"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_tv"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:checked="false"
+                    app:textStartPadding="40dp"
+                    android:textSize="15sp"
+                    android:text="TV"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_closet"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:checked="false"
+                    app:textStartPadding="40dp"
+                    android:textSize="15sp"
+                    android:text="옷장"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/tv_detail_info_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cg_home_option"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:text="상세 정보"/>
+
+            <TextView
+                android:id="@+id/tv_elevator_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_info_label"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:text="엘레베이터"/>
+
+            <RadioGroup
+                android:id="@+id/rg_elevator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_info_label"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <RadioButton
+                    android:id="@+id/rb_elevator_have"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="있음"/>
+
+                <RadioButton
+                    android:id="@+id/rb_elevator_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="없음"/>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_parking_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/rg_elevator"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:text="주차"/>
+
+            <RadioGroup
+                android:id="@+id/rg_parking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/rg_elevator"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <RadioButton
+                    android:id="@+id/rb_parking_have"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가능"/>
+
+                <RadioButton
+                    android:id="@+id/rb_parking_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="불가"/>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_balcony_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/rg_parking"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:text="베란다/발코니"/>
+
+            <RadioGroup
+                android:id="@+id/rg_balcony"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/rg_parking"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <RadioButton
+                    android:id="@+id/rb_balcony_have"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="있음"/>
+
+                <RadioButton
+                    android:id="@+id/rb_balcony_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="없음"/>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_floor_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rg_balcony"
+                android:layout_marginStart="16dp"
+                android:text="층수"/>
+
+            <TextView
+                android:id="@+id/tv_total_floor_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_floor_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:text="전체층"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_total_floor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.42"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_floor_label"
+                style="@style/editTextStyle"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                app:hintEnabled="false">
+
+                <com.example.home_rent_app.ui.custom.PriceEditText
+                    android:id="@+id/et_total_floor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="0"
+                    app:labelText="전체층"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_home_floor_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_floor_label"
+                app:layout_constraintStart_toEndOf="@id/tv_total_floor_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:text="해당층"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_home_floor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.42"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_floor_label"
+                style="@style/editTextStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="10dp"
+                app:hintEnabled="false">
+
+                <com.example.home_rent_app.ui.custom.PriceEditText
+                    android:id="@+id/et_home_floor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="0"
+                    app:labelText="해당층"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_security_label"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/til_total_floor"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="안전 시설"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_security"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_security_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_cctv"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:text="CCTV"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_entrance"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:checked="false"
+                    app:textStartPadding="40dp"
+                    android:textSize="15sp"
+                    android:text="공동현관"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_video"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.HomeRent.Chip.Choice"
+                    android:checked="false"
+                    app:textStartPadding="40dp"
+                    android:textSize="15sp"
+                    android:text="비디오 폰"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cg_security"
+                app:layout_constraintWidth_percent="0.42"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:layout_marginTop="60dp"
+                android:text="@string/back_label"/>
+
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cg_security"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="60dp"
+                app:layout_constraintWidth_percent="0.42"
+                android:text="등록하기"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                app:layout_constraintTop_toBottomOf="@id/btn_add"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -28,7 +28,7 @@ class DetailRentActivity : AppCompatActivity() {
         val id = intent?.getIntExtra("homeId", -1)
 
         if (id != null) {
-            viewModel.getDetailHomeData(id)
+            viewModel.getDetailHomeData(1)
         }
 
         repeatOnStarted {

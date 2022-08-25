@@ -125,18 +125,31 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.42"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:layout_marginTop="60dp"
+            android:text="@string/back_label"/>
 
         <Button
-            android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_margin="15dp"
-            android:background="@drawable/custom_button_background"
-            android:text="등록하기"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintWidth_percent="0.42"
+            android:text="등록하기"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

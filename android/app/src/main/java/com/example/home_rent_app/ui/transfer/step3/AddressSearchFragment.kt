@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.webkit.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentAddressSearchBinding
 import com.example.home_rent_app.ui.viewmodel.TransferViewModel
 import com.example.home_rent_app.util.logger
@@ -40,6 +42,10 @@ class AddressSearchFragment : Fragment() {
         binding.etFindAddress.setOnClickListener {
             showKakaoAddressWebView()
         }
+
+        binding.btnNext.setOnClickListener {
+            findNavController().navigate(R.id.action_addressSearchFragment_to_rentHomeDescriptionFragment)
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -57,6 +63,7 @@ class AddressSearchFragment : Fragment() {
             webChromeClient = chromeClient
             loadUrl("http://54.180.8.0:8080/daum.html")
         }
+
     }
 
     private val client: WebViewClient = object : WebViewClient() {
