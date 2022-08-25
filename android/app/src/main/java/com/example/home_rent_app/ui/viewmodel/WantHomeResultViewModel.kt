@@ -3,7 +3,7 @@ package com.example.home_rent_app.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.dto.WantedArticle
-import com.example.home_rent_app.data.model.AddBookmarkRequest
+import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +28,9 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
     private val _addBookmarkStatusCode = MutableSharedFlow<Int>()
     val addBookmarkStatusCode: SharedFlow<Int> get() = _addBookmarkStatusCode
 
+    private val _deleteBookmarkStatusCode = MutableSharedFlow<Int>()
+    val deleteBookmarkStatusCode: SharedFlow<Int> get() = _deleteBookmarkStatusCode
+
     fun handleSearchWork(searchWord: String) {
         viewModelScope.launch {
             _searchWord.emit(searchWord)
@@ -42,9 +45,15 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
         }
     }
 
-    fun addBookmark(addBookmarkRequest: AddBookmarkRequest) {
+    fun addBookmark(bookmarkRequest: BookmarkRequest) {
         viewModelScope.launch {
-            _addBookmarkStatusCode.emit(wantHomeResultRepository.addBookmark(addBookmarkRequest).code)
+            _addBookmarkStatusCode.emit(wantHomeResultRepository.addBookmark(bookmarkRequest).code)
+        }
+    }
+
+    fun deleteBookmark(bookmarkRequest: BookmarkRequest) {
+        viewModelScope.launch {
+            _deleteBookmarkStatusCode.emit(wantHomeResultRepository.deleteBookmark(bookmarkRequest).code)
         }
     }
 }

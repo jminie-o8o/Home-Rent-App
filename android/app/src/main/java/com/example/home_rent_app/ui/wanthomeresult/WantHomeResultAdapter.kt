@@ -6,15 +6,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.dto.WantedArticle
-import com.example.home_rent_app.data.model.AddBookmarkRequest
+import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
-import com.example.home_rent_app.util.setLikeClickEvent
+import com.example.home_rent_app.util.UserSession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import javax.inject.Inject
 
-class WantHomeResultAdapter(private val viewModel: WantHomeResultViewModel) :
+class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeResultViewModel, private val userSession: UserSession) :
     ListAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
 
     val scope = CoroutineScope(Dispatchers.Main)
@@ -33,14 +34,24 @@ class WantHomeResultAdapter(private val viewModel: WantHomeResultViewModel) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(wantedArticle: WantedArticle) {
             binding.wantedArticle = wantedArticle
-            binding.btnLike.setLikeClickEvent(scope) {
-                binding.btnLike.isSelected = binding.btnLike.isSelected != true
+            binding.btnLike.setOnCheckedChangeListener { _, isChecked ->
+                when (isChecked) {
+                    true -> {
+                        addBookmark(wantedArticle)
+                    }
+                    false -> {
+                        deleteBookmark(wantedArticle)
+                    }
+                }
             }
-            addBookmark(binding.btnLike.isSelected, wantedArticle)
         }
 
-        private fun addBookmark(isSelected: Boolean, wantedArticle: WantedArticle) {
-            if (isSelected) viewModel.addBookmark((AddBookmarkRequest(1, wantedArticle.id)))
+        private fun addBookmark(wantedArticle: WantedArticle) {
+            viewModel.addBookmark((BookmarkRequest(userSession.userId ?: 0, wantedArticle.id)))
+        }
+
+        private fun deleteBookmark(wantedArticle: WantedArticle) {
+            viewModel.deleteBookmark((BookmarkRequest(userSession.userId ?: 0, wantedArticle.id)))
         }
     }
 

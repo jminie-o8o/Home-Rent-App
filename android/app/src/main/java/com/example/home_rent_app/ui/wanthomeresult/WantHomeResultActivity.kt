@@ -1,6 +1,7 @@
 package com.example.home_rent_app.ui.wanthomeresult
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -9,8 +10,10 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
+import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class WantHomeResultActivity : AppCompatActivity() {
@@ -18,17 +21,19 @@ class WantHomeResultActivity : AppCompatActivity() {
     lateinit var binding: ActivityWantHomeResultBinding
     private val viewModel: WantHomeResultViewModel by viewModels()
     lateinit var adapter: WantHomeResultAdapter
+    @Inject lateinit var userSession: UserSession
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_want_home_result)
         binding.lifecycleOwner = this
         handleSearchWord()
-//        updateSearchWord()
         setAvailable()
-        adapter = WantHomeResultAdapter(viewModel)
+        adapter = WantHomeResultAdapter(viewModel, userSession)
         binding.rvWanthomeResult.adapter = adapter
         updateAdapter()
+        addBookMarkToast()
+        deleteBookMarkToast()
     }
 
     private fun handleSearchWord() {
@@ -50,24 +55,30 @@ class WantHomeResultActivity : AppCompatActivity() {
     }
 
     private fun setAvailable() {
-        collectStateFlow(viewModel.searchWord) { keyword ->
-            viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
+        setDefaultResult()
+        binding.cbAvailable.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                collectStateFlow(viewModel.searchWord) { keyword ->
+                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, true))
+                }
+            } else {
+                collectStateFlow(viewModel.searchWord) { keyword ->
+                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
+                }
+            }
         }
-//        binding.cbAvailable.setOnCheckedChangeListener { _, isChecked ->
-//            if (isChecked) {
-//                collectStateFlow(viewModel.searchWord) { keyword ->
-//                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
-//                }
-//            } else {
-//                collectStateFlow(viewModel.searchWord) { keyword ->
-//                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
-//                }
-//            }
-//        }
     }
 
-    private fun addBookmark() {
+    private fun addBookMarkToast() {
+        collectStateFlow(viewModel.addBookmarkStatusCode) { code ->
+            if (code == 200) Toast.makeText(this, "관심목록에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
+    private fun deleteBookMarkToast() {
+        collectStateFlow(viewModel.deleteBookmarkStatusCode) { code ->
+            if (code == 200) Toast.makeText(this, "관심목록에서 제거되었습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroy() {
