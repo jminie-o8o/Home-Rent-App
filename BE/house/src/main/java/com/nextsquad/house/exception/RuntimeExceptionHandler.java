@@ -1,6 +1,7 @@
 package com.nextsquad.house.exception;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.nextsquad.house.dto.GeneralResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +39,10 @@ public class RuntimeExceptionHandler {
     @ExceptionHandler(value = JWTDecodeException.class)
     public ResponseEntity<GeneralResponseDto> handleJWTDecodeException(JWTDecodeException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GeneralResponseDto(401, e.getMessage()));
+    }
+
+    @ExceptionHandler(value = TokenExpiredException.class)
+    public ResponseEntity<GeneralResponseDto> handleTokenExpiredException(TokenExpiredException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GeneralResponseDto(401, "JWT 토큰이 만료되었습니다."));
     }
 }
