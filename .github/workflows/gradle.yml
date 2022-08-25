@@ -60,5 +60,4 @@ jobs:
             sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/house-rent-app:1.0
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/house-rent-app:1.0
             sudo docker run -d -p 80:8080 --name house-rent-app ${{ secrets.DOCKER_USERNAME }}/house-rent-app:1.0
-            # sudo docker run -d -p 80:8080 --name house-rent-app -e MY_DATABASE_USERNAME=${{ secrets.MY_DATABASE_USERNAME }} -e MY_DATABASE_PASSWORD=${{ secrets.MY_DATABASE_PASSWORD }} -e S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }} -e S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }} -e NAVER_USER_URL=${{ secrets.NAVER_USER_URL }} -e NAVER_STATE=${{ secrets.NAVER_STATE }} - e NAVER_SECRET_KEY=${{ secrets.NAVER_SECRET_KEY }} -e NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }} - e NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} -e NAVER_AUTH_URL=${{ secrets.NAVER_AUTH_URL }} -e KAKAO_USER_URL=${{ secrets.KAKAO_USER_URL }} -e KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }} -e KAKAO_AUTH_URL=${{ secrets.KAKAO_AUTH_URL }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} ${{ secrets.DOCKER_USERNAME }}/house-rent-app: /1.0
             sudo docker rmi -f $(docker images -f "dangling=true" -q) || true
