@@ -6,16 +6,13 @@ import com.example.home_rent_app.data.dto.toNickNameCheck
 import com.example.home_rent_app.data.model.ImageUrl
 import com.example.home_rent_app.data.model.NickNameCheck
 import com.example.home_rent_app.data.model.UserProfileRequest
-import com.example.home_rent_app.util.UserSession
-import com.example.home_rent_app.util.logger
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class LoginProfileRepositoryImpl @Inject constructor(
-    private val api: LoginProfileApi,
-    private val userSession: UserSession
+    private val api: LoginProfileApi
 ) : LoginProfileRepository {
 
     override suspend fun checkNickName(nickName: String): NickNameCheck {
@@ -28,9 +25,7 @@ class LoginProfileRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setUserProfile(userProfileRequest: UserProfileRequest) {
-        logger("UserProfile : ${userSession.user?.userId}")
-        logger("UserProfile : $userProfileRequest")
-        api.setUserProfile(userSession.user?.userId, userProfileRequest)
+    override suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
+        api.setUserProfile(userId, userProfileRequest)
     }
 }

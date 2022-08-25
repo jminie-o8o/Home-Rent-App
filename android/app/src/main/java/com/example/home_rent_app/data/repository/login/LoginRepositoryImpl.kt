@@ -4,7 +4,7 @@ import com.example.home_rent_app.data.datasource.login.LoginDataSource
 import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
-import com.example.home_rent_app.data.model.User
+import com.example.home_rent_app.util.logger
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,8 +39,8 @@ class LoginRepositoryImpl @Inject constructor(
         return loginDataSource.getIsLogin()
     }
 
-    override suspend fun saveUserID(userId: Int?) {
-        loginDataSource.saveUserID(userId)
+    override suspend fun saveUserIDAtDataStore(userId: Int?) {
+        loginDataSource.saveUserIDAtDataStore(userId)
     }
 
     override suspend fun saveDisplayName(displayName: String?) {
@@ -63,11 +63,11 @@ class LoginRepositoryImpl @Inject constructor(
 
     override fun getGender() = loginDataSource.getGender()
 
-//    override suspend fun getUserInfo() = loginDataSource.getUserInfo()
-
-    override suspend fun setUserSession(user: User) {
-        loginDataSource.setUserSession(user)
+    override suspend fun setUserIdAtUserSession(userId: Int) {
+        loginDataSource.setUserIdAtUserSession(userId)
     }
+
+//    override suspend fun getUserInfo() = loginDataSource.getUserInfo()
 
     override fun connectUser() = loginDataSource.connectUser()
 

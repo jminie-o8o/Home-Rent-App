@@ -7,18 +7,17 @@ import com.example.home_rent_app.data.model.DetailHomeData
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.login.LoginRepository
 import com.example.home_rent_app.ui.HomeActivity.User.user
-import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.getstream.chat.android.client.ChatClient
-import io.getstream.chat.android.client.models.User
 import io.getstream.chat.android.client.utils.onErrorSuspend
 import io.getstream.chat.android.client.utils.onSuccessSuspend
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel

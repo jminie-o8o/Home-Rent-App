@@ -2,9 +2,9 @@ package com.example.home_rent_app.ui.findroom
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.example.home_rent_app.databinding.ActivityFindRoomBinding
 import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.viewmodel.FindRoomViewModel

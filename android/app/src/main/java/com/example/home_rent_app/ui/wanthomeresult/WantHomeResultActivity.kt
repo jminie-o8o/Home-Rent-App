@@ -1,19 +1,15 @@
 package com.example.home_rent_app.ui.wanthomeresult
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
 import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.setLikeClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -2,7 +2,6 @@ package com.example.home_rent_app.ui.login
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +19,6 @@ import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.databinding.FragmentKakaoWebViewBinding
-import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.ui.LoginActivity
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.Constants

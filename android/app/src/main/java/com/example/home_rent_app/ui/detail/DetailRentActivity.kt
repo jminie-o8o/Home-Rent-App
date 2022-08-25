@@ -1,9 +1,9 @@
 package com.example.home_rent_app.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.example.home_rent_app.databinding.ActivityDetailRentBinding
 import com.example.home_rent_app.ui.chatting.RentMessageListActivity
 import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel

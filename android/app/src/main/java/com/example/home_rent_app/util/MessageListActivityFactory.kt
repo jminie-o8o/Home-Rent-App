@@ -1,8 +1,6 @@
 package com.example.home_rent_app.util
 
-import android.app.Activity
 import android.content.Context
-import com.example.home_rent_app.ui.chatting.MessageListActivity
 import com.example.home_rent_app.ui.chatting.RentMessageListActivity
 import com.example.home_rent_app.ui.chatting.WantedMessageListActivity
 import io.getstream.chat.android.client.models.Channel

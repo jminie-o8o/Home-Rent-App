@@ -12,5 +12,5 @@ interface LoginProfileRepository {
 
     fun getImageUrl(body : List<MultipartBody.Part>): Flow<ImageUrl>
 
-    suspend fun setUserProfile(userProfileRequest: UserProfileRequest)
+    suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest)
 }

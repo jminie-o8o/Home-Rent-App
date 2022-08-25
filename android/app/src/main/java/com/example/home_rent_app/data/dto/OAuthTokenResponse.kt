@@ -3,9 +3,6 @@ package com.example.home_rent_app.data.dto
 import com.example.home_rent_app.data.model.AccessToken
 import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.RefreshToken
-import com.example.home_rent_app.data.model.User
-import com.example.home_rent_app.util.Constants.GENDER_NEW
-import com.example.home_rent_app.util.logger
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

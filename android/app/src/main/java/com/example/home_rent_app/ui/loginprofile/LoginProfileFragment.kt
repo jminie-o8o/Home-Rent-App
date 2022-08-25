@@ -21,9 +21,9 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
 import com.example.home_rent_app.ui.HomeActivity
-import com.example.home_rent_app.ui.viewmodel.LoginProfileViewModel
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.FileController
+import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +38,8 @@ class LoginProfileFragment : Fragment() {
     @Inject
     lateinit var fileController: FileController
     private val loginViewModel: LoginViewModel by viewModels()
-    private val loginProfileViewModel: LoginProfileViewModel by viewModels()
+    @Inject
+    lateinit var userSession: UserSession
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,7 +85,7 @@ class LoginProfileFragment : Fragment() {
                 val imageUri = result.data?.data
                 imageUri?.let {
                     logger("URI: ${fileController.uriToMultiPart(it)}")
-                    loginProfileViewModel.getProfileImage(fileController.uriToMultiPart(it))
+                    this.loginViewModel.getProfileImage(fileController.uriToMultiPart(it))
                     binding.ivLoginProfile.load(it)
                 }
             }
@@ -143,9 +144,9 @@ class LoginProfileFragment : Fragment() {
     private fun checkNickName() {
         binding.btnNicknameCheck.setOnClickListener {
             binding.etLoginProfileNickname.text?.toString()
-                ?.let { nickName -> loginProfileViewModel.checkNickName(nickName) }
+                ?.let { nickName -> this.loginViewModel.checkNickName(nickName) }
         }
-        collectStateFlow(loginProfileViewModel.nickNameCheck) { nickNameCheck ->
+        collectStateFlow(this.loginViewModel.nickNameCheck) { nickNameCheck ->
             if (nickNameCheck) binding.etLoginProfileNickname.error = "이미 존재하는 닉네임입니다."
             else {
                 binding.etLoginProfileNickname.error = null
@@ -155,12 +156,19 @@ class LoginProfileFragment : Fragment() {
     }
 
     private fun setUserProfile() {
-        collectStateFlow(loginProfileViewModel.imageUrl) { imageUrl ->
-            val displayName = binding.etLoginProfileNickname.text?.toString()
-            val gender = if (binding.rbMale.isSelected) "MALE"
-            else "FEMALE"
-            loginProfileViewModel.setUserProfile(UserProfileRequest(displayName, imageUrl, gender))
+        var imageUrl = ""
+        val displayName = binding.etLoginProfileNickname.text?.toString() ?: ""
+        val gender = if (binding.rbMale.isChecked) "MALE"
+        else "FEMALE"
+        collectStateFlow(loginViewModel.imageUrl) {
+            imageUrl = it
         }
+        // User 정보를 서버에 보내기
+        loginViewModel.setUserProfile(userSession.userId ?: 0, UserProfileRequest(displayName, imageUrl, gender))
+        // User 정보를 DataStore 에 저장
+/*        loginViewModel.saveUserDisplayAtDataStore(displayName)
+        loginViewModel.saveUserProfileImageAtDataStore(imageUrl)
+        loginViewModel.saveUserGenderAtDataStore(gender)*/
     }
 
     private fun addAccount() {

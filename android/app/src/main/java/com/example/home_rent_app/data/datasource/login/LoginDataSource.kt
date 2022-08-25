@@ -4,7 +4,6 @@ import androidx.datastore.preferences.core.Preferences
 import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
-import com.example.home_rent_app.data.model.User
 import io.getstream.chat.android.client.models.ConnectionData
 import kotlinx.coroutines.flow.Flow
 
@@ -24,7 +23,7 @@ interface LoginDataSource {
 
     suspend fun getIsLogin(): Flow<Boolean>
 
-    suspend fun saveUserID(userId: Int?)
+    suspend fun saveUserIDAtDataStore(userId: Int?)
 
     suspend fun saveDisplayName(displayName: String?)
 
@@ -42,7 +41,7 @@ interface LoginDataSource {
 
     fun getGender(): Flow<Preferences>
 
-    suspend fun setUserSession(user: User)
+    suspend fun setUserIdAtUserSession(userId: Int)
 
     fun connectUser(): Flow<ConnectionData>
 }
