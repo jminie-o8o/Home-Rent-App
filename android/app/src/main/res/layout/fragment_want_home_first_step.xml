@@ -186,10 +186,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="156dp"
             android:layout_height="56dp"
+            android:layout_marginTop="4dp"
+            app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="@+id/tv_deposit"
             app:layout_constraintTop_toBottomOf="@+id/tv_deposit">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.home_rent_app.ui.custom.PriceEditText
                 android:id="@+id/et_deposit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -197,18 +199,6 @@
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tv_budget_unit"
-            style="@style/TextSubtitle1.18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="만원"
-            app:layout_constraintEnd_toEndOf="@+id/til_deposit"
-            app:layout_constraintTop_toBottomOf="@+id/tv_deposit" />
 
         <TextView
             android:id="@+id/tv_monthly_rent"
@@ -225,10 +215,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="156dp"
             android:layout_height="56dp"
+            android:layout_marginTop="4dp"
+            app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="@+id/tv_monthly_rent"
             app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.home_rent_app.ui.custom.PriceEditText
                 android:id="@+id/et_login_monthly_rent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -236,18 +228,6 @@
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tv_monthly_rent_unit"
-            style="@style/TextSubtitle1.18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="만원"
-            app:layout_constraintEnd_toEndOf="@+id/til_monthly_rent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_go_back"
