@@ -66,16 +66,16 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:clickable="false"
-                android:text="@string/step_one"/>
+                android:text="@string/step_one" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_step_two"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="false"
                 android:checked="false"
-                android:text="@string/step_two"/>
+                android:clickable="false"
+                android:text="@string/step_two" />
 
         </com.google.android.material.chip.ChipGroup>
 
@@ -103,11 +103,11 @@
         <View
             android:layout_width="8dp"
             android:layout_height="2dp"
-            app:layout_constraintStart_toEndOf="@+id/til_go_in"
-            app:layout_constraintTop_toTopOf="@+id/til_go_in"
-            android:background="@color/gray02"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="24dp"
-            android:layout_marginStart="6dp" />
+            android:background="@color/gray02"
+            app:layout_constraintStart_toEndOf="@+id/til_go_in"
+            app:layout_constraintTop_toTopOf="@+id/til_go_in" />
 
         <TextView
             android:id="@+id/tv_go_out_date"
@@ -125,7 +125,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="156dp"
             android:layout_height="52dp"
-            android:layout_marginEnd="70dp"
             android:layout_marginTop="4dp"
             app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="@+id/tv_go_in_date"
@@ -146,8 +145,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="156dp"
             android:layout_height="52dp"
-            android:layout_marginEnd="70dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="70dp"
             app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="@+id/tv_go_out_date"
             app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date">
@@ -178,17 +177,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="보증금"
+            android:text="보증금(최대)"
             app:layout_constraintStart_toStartOf="@+id/tv_date_range_want_home_first_step"
             app:layout_constraintTop_toBottomOf="@+id/tv_budget" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_deposit"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="70dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="156dp"
+            android:layout_height="56dp"
             app:layout_constraintStart_toStartOf="@+id/tv_deposit"
             app:layout_constraintTop_toBottomOf="@+id/tv_deposit">
 
@@ -196,59 +193,61 @@
                 android:id="@+id/et_deposit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="0"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_budget_unit"
-            style="@style/TextSubtitle1.18.bold"
+            style="@style/TextSubtitle1.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/til_deposit"
-            app:layout_constraintTop_toBottomOf="@+id/tv_deposit"
-            android:text="만원"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="10dp" />
+            android:layout_marginEnd="16dp"
+            android:text="만원"
+            app:layout_constraintEnd_toEndOf="@+id/til_deposit"
+            app:layout_constraintTop_toBottomOf="@+id/tv_deposit" />
 
         <TextView
             android:id="@+id/tv_monthly_rent"
             style="@style/TextSubtitle1.14.bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="월세"
-            app:layout_constraintStart_toStartOf="@+id/tv_date_range_want_home_first_step"
-            app:layout_constraintTop_toBottomOf="@+id/til_deposit" />
+            android:layout_marginStart="101dp"
+            android:text="월세(최대)"
+            app:layout_constraintStart_toEndOf="@+id/tv_deposit"
+            app:layout_constraintTop_toTopOf="@+id/tv_deposit" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_monthly_rent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="70dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tv_deposit"
+            android:layout_width="156dp"
+            android:layout_height="56dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_monthly_rent"
             app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_login_monthly_rent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="0"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_monthly_rent_unit"
-            style="@style/TextSubtitle1.18.bold"
+            style="@style/TextSubtitle1.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/til_monthly_rent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent"
-            android:text="만원"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="10dp" />
+            android:layout_marginEnd="16dp"
+            android:text="만원"
+            app:layout_constraintEnd_toEndOf="@+id/til_monthly_rent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent" />
 
         <Button
             android:id="@+id/btn_go_second_step"
