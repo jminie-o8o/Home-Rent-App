@@ -45,4 +45,9 @@ public class RuntimeExceptionHandler {
     public ResponseEntity<GeneralResponseDto> handleTokenExpiredException(TokenExpiredException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GeneralResponseDto(401, "JWT 토큰이 만료되었습니다."));
     }
+
+    @ExceptionHandler(value = DuplicateBookmarkException.class)
+    public ResponseEntity<GeneralResponseDto> handleDuplicateBookmarkException(DuplicateBookmarkException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GeneralResponseDto(400, e.getMessage()));
+    }
 }

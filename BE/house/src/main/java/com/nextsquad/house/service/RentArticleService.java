@@ -7,6 +7,7 @@ import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.exception.ArticleNotFoundException;
 import com.nextsquad.house.exception.BookmarkNotFoundException;
+import com.nextsquad.house.exception.DuplicateBookmarkException;
 import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.repository.*;
@@ -149,6 +150,11 @@ public class RentArticleService {
     public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto) {
         User user = userRepository.findById(bookmarkRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException());
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new ArticleNotFoundException());
+
+        if (rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle).isPresent()) {
+            throw new DuplicateBookmarkException();
+        }
+
         if (rentArticle.isDeleted()) {
             throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
         }
