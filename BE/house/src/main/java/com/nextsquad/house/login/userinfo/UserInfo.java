@@ -15,13 +15,14 @@ public class UserInfo {
 
     protected String profileImageUrl;
     private OauthClientType oauthClientType;
+    private static final String DEFAULT_PROFILE_IMAGE = "https://house-image-bucket.s3.ap-northeast-2.amazonaws.com/default_profile.png";
 
     public UserInfo(String accountId, String displayName, String profileImageUrl, OauthClientType oauthClientType) {
         String identifier = String.valueOf(new Random().nextInt(9999));
 
         this.accountId = accountId;
         this.displayName = displayName + identifier;
-        this.profileImageUrl = profileImageUrl;
+        this.profileImageUrl = profileImageUrl != null ? profileImageUrl : DEFAULT_PROFILE_IMAGE;
         this.oauthClientType = oauthClientType;
     }
 
