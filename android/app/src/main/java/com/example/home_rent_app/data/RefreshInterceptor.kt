@@ -1,10 +1,12 @@
 package com.example.home_rent_app.data
 
 import com.example.home_rent_app.util.AppSession
+import com.example.home_rent_app.util.logger
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.log
 
 @Singleton
 class RefreshInterceptor @Inject constructor(
@@ -17,7 +19,10 @@ class RefreshInterceptor @Inject constructor(
         val requestBuilder = chain.request()
             .newBuilder()
 
+        logger("refresh interceptor ${jwt.toString()}")
+
         jwt?.let {
+            logger("Token(${it.accessToken.tokenCode}, ${it.refreshToken.tokenCode}")
             requestBuilder.addHeader(
                 "access-token",
                 it.accessToken.tokenCode

@@ -12,6 +12,7 @@ import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.model.User
 import com.example.home_rent_app.data.repository.login.LoginRepository
+import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.util.Constants.GENDER_DEFAULT
 import com.example.home_rent_app.util.logger

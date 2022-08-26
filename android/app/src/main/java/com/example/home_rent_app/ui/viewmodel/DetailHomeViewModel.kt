@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.model.DetailHomeData
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.login.LoginRepository
+import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.ui.HomeActivity.User.user
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
@@ -24,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailHomeViewModel @Inject constructor(
     private val detailRepository: DetailRepository,
-    private val loginRepository: LoginRepository,
+    private val repo: RefreshRepository,
     private val chatClient: ChatClient
 ) : ViewModel() {
 
@@ -33,6 +34,12 @@ class DetailHomeViewModel @Inject constructor(
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
 
+    }
+
+    init {
+        viewModelScope.launch {
+            repo.refreshToken()
+        }
     }
 
     fun getDetailHomeData(id: Int) {
@@ -44,16 +51,17 @@ class DetailHomeViewModel @Inject constructor(
     @WorkerThread
     fun joinNewChannel() = flow {
 //        val id = requireNotNull(detailHomeData.value._data?.user?.userId)
-        val homeId = requireNotNull(detailHomeData.value._data?.id)
-        val profileImage = requireNotNull(detailHomeData.value._data?.user?.profileImageUrl)
+        val homeId = detailHomeData.value._data?.id ?: 0
+        val profileImage = detailHomeData.value._data?.user?.profileImageUrl ?: ""
         val result = chatClient.createChannel(
             channelType = "messaging",
             channelId = homeId.toString(),
-            memberIds = listOf(user.id, "ese111"),
+            memberIds = listOf(user.id, "3"),
             extraData = mapOf("homeType" to "rent", "homeId" to "$homeId", "image" to profileImage) // userId 필드 생기면 수정하기
         ).await()
 
         result.onSuccessSuspend {
+            logger("성공 ${it.id}")
             emit(it)
         }
         result.onErrorSuspend {

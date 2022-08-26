@@ -203,8 +203,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.HomeRent.Chip.Choice"
                     android:checked="true"
-                    app:textStartPadding="40dp"
-                    app:textEndPadding="40dp"
+                    android:textAlignment="center"
                     android:textSize="15sp"
                     android:text="@string/monthly_label"/>
 
@@ -214,7 +213,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.HomeRent.Chip.Choice"
                     android:checked="false"
-                    app:textStartPadding="40dp"
+                    android:textAlignment="center"
                     android:textSize="15sp"
                     android:text="@string/jeonse_label"/>
 
@@ -255,6 +254,7 @@
                 app:layout_constraintWidth_percent="0.45"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
+                app:hintEnabled="false"
                 style="@style/editTextStyle">
 
                 <com.example.home_rent_app.ui.custom.PriceEditText
@@ -266,6 +266,7 @@
                     android:inputType="number"
                     android:hint="@string/zero"
                     android:maxLength="13"
+                    app:labelText="만원"
                     android:text="@={vm.deposit}"/>
 
             </com.google.android.material.textfield.TextInputLayout>

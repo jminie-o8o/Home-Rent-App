@@ -10,7 +10,14 @@ import com.example.home_rent_app.R
 
 class PriceEditText(context: Context, attr: AttributeSet): AppCompatEditText(context, attr) {
 
-    val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private lateinit var label: String
+    init {
+        val typedArr = context.obtainStyledAttributes(attr, R.styleable.PriceEditText)
+        // format을 구분하여 속성값 참조
+        label = typedArr.getString(R.styleable.PriceEditText_labelText).orEmpty()
+        typedArr.recycle()
+    }
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.BLACK
         textSize = 40f
     }
@@ -21,6 +28,6 @@ class PriceEditText(context: Context, attr: AttributeSet): AppCompatEditText(con
         val width = (measuredWidth / 10 * 8).toFloat()
         val height = (measuredHeight / 1.7).toFloat()
 
-        canvas?.drawText(context.getString(R.string.price_measure),width, height, paint)
+        canvas?.drawText(label,width, height, paint)
     }
 }

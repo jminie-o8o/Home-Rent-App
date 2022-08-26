@@ -38,5 +38,17 @@
         <action
             android:id="@+id/action_addressSearchFragment_to_homeDescriptionFragment"
             app:destination="@id/homeDescriptionFragment" />
+        <action
+            android:id="@+id/action_addressSearchFragment_to_rentHomeDescriptionFragment"
+            app:destination="@id/rentHomeDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rentHomeDescriptionFragment"
+        android:name="com.example.home_rent_app.ui.transfer.step4.RentHomeDescriptionFragment"
+        android:label="fragment_rent_home_description"
+        tools:layout="@layout/fragment_rent_home_description" >
+        <action
+            android:id="@+id/action_rentHomeDescriptionFragment_to_addressSearchFragment"
+            app:destination="@id/addressSearchFragment" />
     </fragment>
 </navigation>
