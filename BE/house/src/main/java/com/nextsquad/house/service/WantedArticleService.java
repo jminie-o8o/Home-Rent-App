@@ -10,6 +10,7 @@ import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.dto.wantedArticle.*;
 import com.nextsquad.house.exception.ArticleNotFoundException;
 import com.nextsquad.house.exception.BookmarkNotFoundException;
+import com.nextsquad.house.exception.DuplicateBookmarkException;
 import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.repository.UserRepository;
@@ -112,6 +113,17 @@ public class WantedArticleService {
                 .orElseThrow(() -> new ArticleNotFoundException());
         User user = userRepository.findById(bookmarkRequestDto.getUserId())
                 .orElseThrow(() -> new UserNotFoundException());
+
+        if (wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, wantedArticle).isPresent()) {
+            throw new DuplicateBookmarkException();
+        }
+
+        if (wantedArticle.isDeleted()) {
+            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
+        }
+        if (wantedArticle.isCompleted()) {
+            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
+        }
 
         wantedArticleBookmarkRepository.save(new WantedArticleBookmark(user, wantedArticle));
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
