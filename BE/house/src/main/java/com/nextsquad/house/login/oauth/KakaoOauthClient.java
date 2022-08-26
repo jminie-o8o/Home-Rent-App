@@ -59,10 +59,5 @@ public class KakaoOauthClient extends OauthClient {
     protected String parseToken(String rawToken) {
         return String.format("Bearer %s", rawToken);
     }
-
-    protected UserInfo convertToUserInfoFrom(String rawInfo) {
-        Map<String, String> infoMap = new Gson().fromJson(rawInfo, Map.class);
-        return new UserInfo(infoMap.get("email"), infoMap.get("nickname"), null, OauthClientType.KAKAO);
-    }
 }
 
