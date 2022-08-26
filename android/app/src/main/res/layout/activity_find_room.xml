@@ -42,6 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:startIconDrawable="@android:drawable/ic_menu_search"
             app:layout_constraintWidth_percent="0.9"
+            app:hintEnabled="false"
             style="@style/searchLayout">
 
             <com.google.android.material.textfield.TextInputEditText

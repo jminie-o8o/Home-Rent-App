@@ -58,6 +58,7 @@ object RetrofitInstance {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(logger)
+            .authenticator(authInterceptor)
             .build()
     }
 
