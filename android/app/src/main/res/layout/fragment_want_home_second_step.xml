@@ -389,7 +389,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/til_detail_second_step"  />
 
                 <Button
-                    android:id="@+id/btn_go_second_step"
+                    android:id="@+id/btn_register"
                     android:layout_width="164dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="30dp"

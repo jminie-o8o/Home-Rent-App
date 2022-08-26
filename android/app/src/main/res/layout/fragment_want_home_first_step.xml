@@ -195,6 +195,7 @@
                 android:id="@+id/et_deposit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:labelText="만원"
                 android:hint="0"
                 android:inputType="number" />
 
@@ -221,9 +222,10 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent">
 
             <com.example.home_rent_app.ui.custom.PriceEditText
-                android:id="@+id/et_login_monthly_rent"
+                android:id="@+id/et_monthly_rent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:labelText="만원"
                 android:hint="0"
                 android:inputType="number" />
 

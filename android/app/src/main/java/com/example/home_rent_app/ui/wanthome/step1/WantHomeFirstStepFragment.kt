@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeFirstStepBinding
+import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.RangeValidator
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -23,9 +26,11 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.Locale
 
+@AndroidEntryPoint
 class WantHomeFirstStepFragment : Fragment() {
 
     lateinit var binding: FragmentWantHomeFirstStepBinding
+    private val viewModel: WantHomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +55,10 @@ class WantHomeFirstStepFragment : Fragment() {
         goBack()
         showDatePicker()
         goSecondStep(navigationController)
+        binding.btnGoSecondStep.setOnClickListener {
+            setRangeAtViewModel()
+            setDepositAtViewModel()
+        }
     }
 
     private fun goSecondStep(navController: NavController) {
@@ -125,5 +134,19 @@ class WantHomeFirstStepFragment : Fragment() {
         constraintsBuilderRange.setValidator(RangeValidator(minDate, maxDate))
 
         return constraintsBuilderRange
+    }
+
+    private fun setRangeAtViewModel() {
+        val goIn = binding.etGoIn.text?.toString() ?: ""
+        val goOut = binding.etGoOut.text?.toString() ?: ""
+        val list = listOf(goIn, goOut)
+        viewModel.setRange(list)
+    }
+
+    private fun setDepositAtViewModel() {
+        val deposit = binding.etDeposit.text?.toString()?.toInt() ?: 0
+        val monthlyRent = binding.etMonthlyRent.text?.toString()?.toInt() ?: 0
+        val list = listOf(deposit, monthlyRent)
+        viewModel.setDeposit(list)
     }
 }
