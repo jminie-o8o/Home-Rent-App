@@ -28,7 +28,7 @@ class AuthInterceptor @Inject constructor(
         jwt?.let {
             requestBuilder.addHeader(
                 "access-token",
-                ""
+                it.accessToken.tokenCode
             ) // 추후 수정
         }
 

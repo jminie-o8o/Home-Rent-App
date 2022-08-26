@@ -2,6 +2,7 @@ package com.example.home_rent_app.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.home_rent_app.databinding.ActivityDetailRentBinding
@@ -24,6 +25,11 @@ class DetailRentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val window = window
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         val id = intent?.getIntExtra("homeId", -1)
 
@@ -48,12 +54,5 @@ class DetailRentActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnTemp.setOnClickListener {
-            repeatOnStarted {
-                viewModel.joinNewChannel().collect {
-                    startActivity(RentMessageListActivity.newIntent(binding.root.context, it))
-                }
-            }
-        }
     }
 }

@@ -45,7 +45,7 @@
                 android:textSize="18sp"
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"
-                android:text="상세정보 입력" />
+                android:text="@string/detail_description_label" />
 
             <TextView
                 android:id="@+id/tv_detail_content"
@@ -56,7 +56,7 @@
                 android:layout_marginStart="16dp"
                 android:textSize="16sp"
                 android:layout_marginTop="5dp"
-                android:text="자세히 입력해주실수록 양도자를 찾는 시간이 줄어들어요"/>
+                android:text="@string/detail_info_description"/>
 
             <TextView
                 android:id="@+id/tv_detail_title_label"
@@ -68,7 +68,7 @@
                 android:textColor="@color/black"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="28dp"
-                android:text="상세 설명"/>
+                android:text="@string/detail_description_contents_label"/>
 
             <TextView
                 android:id="@+id/tv_text_"
@@ -97,7 +97,7 @@
                     android:id="@+id/tiet_detail_contents"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="이 매물의 특징이 있다면 알려주세요."
+                    android:hint="@string/detail_info_hint"
                     android:gravity="top"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -112,7 +112,7 @@
                 android:layout_marginTop="48dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="옵션"/>
+                android:text="@string/option_label"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/cg_home_option"
@@ -130,7 +130,7 @@
                     style="@style/Widget.HomeRent.Chip.Choice"
                     android:textAlignment="center"
                     android:textSize="15sp"
-                    android:text="에어컨"/>
+                    android:text="@string/conditioner"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_washer"
@@ -140,7 +140,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="세탁기"/>
+                    android:text="@string/washer"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_bed"
@@ -150,7 +150,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="침대"/>
+                    android:text="@string/bed"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_refrigerator"
@@ -160,7 +160,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="냉장고"/>
+                    android:text="@string/refrigerator"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_tv"
@@ -170,7 +170,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="TV"/>
+                    android:text="@string/TV"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_closet"
@@ -180,7 +180,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="옷장"/>
+                    android:text="@string/closet"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -195,7 +195,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:text="상세 정보"/>
+                android:text="@string/detail_info_label"/>
 
             <TextView
                 android:id="@+id/tv_elevator_label"
@@ -206,7 +206,7 @@
                 android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textColor="@color/black"
-                android:text="엘레베이터"/>
+                android:text="@string/elevator"/>
 
             <RadioGroup
                 android:id="@+id/rg_elevator"
@@ -221,13 +221,13 @@
                     android:id="@+id/rb_elevator_have"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="있음"/>
+                    android:text="@string/have"/>
 
                 <RadioButton
                     android:id="@+id/rb_elevator_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="없음"/>
+                    android:text="@string/nothing"/>
             </RadioGroup>
 
             <TextView
@@ -239,7 +239,7 @@
                 android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textColor="@color/black"
-                android:text="주차"/>
+                android:text="@string/parking"/>
 
             <RadioGroup
                 android:id="@+id/rg_parking"
@@ -254,13 +254,13 @@
                     android:id="@+id/rb_parking_have"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="가능"/>
+                    android:text="@string/possible"/>
 
                 <RadioButton
                     android:id="@+id/rb_parking_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="불가"/>
+                    android:text="@string/impossible"/>
             </RadioGroup>
 
             <TextView
@@ -272,7 +272,7 @@
                 android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textColor="@color/black"
-                android:text="베란다/발코니"/>
+                android:text="@string/balcony"/>
 
             <RadioGroup
                 android:id="@+id/rg_balcony"
@@ -287,13 +287,13 @@
                     android:id="@+id/rb_balcony_have"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="있음"/>
+                    android:text="@string/have"/>
 
                 <RadioButton
                     android:id="@+id/rb_balcony_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="없음"/>
+                    android:text="@string/nothing"/>
             </RadioGroup>
 
             <TextView
@@ -305,7 +305,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rg_balcony"
                 android:layout_marginStart="16dp"
-                android:text="층수"/>
+                android:text="@string/floor"/>
 
             <TextView
                 android:id="@+id/tv_total_floor_label"
@@ -316,7 +316,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
-                android:text="전체층"/>
+                android:text="@string/total_floor"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_total_floor"
@@ -334,7 +334,8 @@
                     android:id="@+id/et_total_floor"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="0"
+                    android:hint="@string/zero"
+                    app:position="12"
                     app:labelText="전체층"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -349,7 +350,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
-                android:text="해당층"/>
+                android:text="@string/current_floor"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_home_floor"
@@ -367,7 +368,8 @@
                     android:id="@+id/et_home_floor"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="0"
+                    android:hint="@string/zero"
+                    app:position="12"
                     app:labelText="해당층"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -382,7 +384,7 @@
                 android:layout_marginTop="48dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="안전 시설"/>
+                android:text="@string/security"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/cg_security"
@@ -400,7 +402,7 @@
                     style="@style/Widget.HomeRent.Chip.Choice"
                     android:textAlignment="center"
                     android:textSize="15sp"
-                    android:text="CCTV"/>
+                    android:text="@string/cctv"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_entrance"
@@ -410,7 +412,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="공동현관"/>
+                    android:text="@string/entrance"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_video"
@@ -420,7 +422,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="비디오 폰"/>
+                    android:text="@string/video_phone"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -446,7 +448,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="60dp"
                 app:layout_constraintWidth_percent="0.42"
-                android:text="등록하기"/>
+                android:text="@string/add_account"/>
 
             <View
                 android:layout_width="match_parent"
