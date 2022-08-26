@@ -10,6 +10,8 @@ import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.data.repository.token.TokenRepositoryImpl
 import com.example.home_rent_app.data.repository.transfer.TransferRepository
 import com.example.home_rent_app.data.repository.transfer.TransferRepositoryImpl
+import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
+import com.example.home_rent_app.data.repository.wanthome.WantHomeRepositoryImpl
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepositoryImpl
 import dagger.Binds
@@ -57,6 +59,12 @@ abstract class RepositoryModule {
     abstract fun bindTokenRepository(
         tokenRepositoryImpl: TokenRepositoryImpl
     ) : TokenRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindWantHomeRepository(
+        wantHomeRepositoryImpl: WantHomeRepositoryImpl
+    ) : WantHomeRepository
 
 }
 

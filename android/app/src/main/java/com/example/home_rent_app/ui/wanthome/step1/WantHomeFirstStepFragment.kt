@@ -55,14 +55,12 @@ class WantHomeFirstStepFragment : Fragment() {
         goBack()
         showDatePicker()
         goSecondStep(navigationController)
-        binding.btnGoSecondStep.setOnClickListener {
-            setRangeAtViewModel()
-            setDepositAtViewModel()
-        }
     }
 
     private fun goSecondStep(navController: NavController) {
         binding.btnGoSecondStep.setOnClickListener {
+            setRangeAtViewModel()
+            setDepositAtViewModel()
             navController.navigate(
                 R.id.action_wantHomeFirstStepFragment_to_wantHomeSecondStepFragment
             )

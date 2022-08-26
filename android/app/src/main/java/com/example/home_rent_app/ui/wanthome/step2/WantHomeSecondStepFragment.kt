@@ -1,10 +1,13 @@
 package com.example.home_rent_app.ui.wanthome.step2
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,14 +18,18 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class WantHomeSecondStepFragment : Fragment() {
 
     lateinit var binding: FragmentWantHomeSecondStepBinding
     private val viewModel: WantHomeViewModel by activityViewModels()
+    @Inject lateinit var userSession: UserSession
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,8 +53,11 @@ class WantHomeSecondStepFragment : Fragment() {
         val navigationController = findNavController()
         goHomeActivity()
         register(navigationController)
-        collectStateFlow(viewModel.location) {
-            Log.d("지역", it.name)
+        setDetailLocation()
+        setTitle()
+        setDetailContents()
+        binding.btnRegister.setOnClickListener {
+            viewModel.addWantHome(userSession.userId ?: 0)
         }
     }
 
@@ -63,5 +73,44 @@ class WantHomeSecondStepFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             navController.navigate(R.id.action_wantHomeSecondStepFragment_to_wantHomeDetailFragment)
         }
+    }
+
+    private fun setDetailLocation() {
+        binding.etDetailAddressSecondStep.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                val detailAddress = binding.etDetailAddressSecondStep.text?.toString() ?: ""
+                viewModel.setDetailAddress(detailAddress)
+            }
+        })
+    }
+
+    private fun setTitle() {
+        binding.etTitleSecondStep.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                val title = binding.etTitleSecondStep.text?.toString() ?: ""
+                viewModel.setTitle(title)
+            }
+        })
+    }
+
+    private fun setDetailContents() {
+        binding.etDetailSecondStep.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                val detailContents = binding.etDetailSecondStep.text?.toString() ?: ""
+                viewModel.setDetailContents(detailContents)
+            }
+        })
     }
 }

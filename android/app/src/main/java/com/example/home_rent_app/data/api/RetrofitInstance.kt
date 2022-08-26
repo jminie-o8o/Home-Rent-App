@@ -152,4 +152,17 @@ object RetrofitInstance {
             .build()
             .create(DetailHomeApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun addWantHomeApi(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): AddWantHomeApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(AddWantHomeApi::class.java)
+    }
 }
