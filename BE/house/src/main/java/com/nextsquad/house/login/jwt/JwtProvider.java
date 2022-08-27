@@ -9,6 +9,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.crypto.JwtSignatureValidator;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
@@ -58,7 +59,6 @@ public class JwtProvider {
 
     public DecodedJWT verifyToken(String token){
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyString))
-                .acceptExpiresAt(50000)
                 .withIssuer("codesquad-team-5")
                 .build();
         return verifier.verify(token);
