@@ -1,14 +1,14 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.11.10.221:3306/house
+    url: ${MY_DATABASE_URL}
     username: ${MY_DATABASE_USERNAME}
     password: ${MY_DATABASE_PASSWORD}
   config:
     import: classpath:oauth.yml, classpath:s3.yml
   redis:
-    host: 127.0.0.1
-    port: 6379
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
 
   servlet:
     multipart:
