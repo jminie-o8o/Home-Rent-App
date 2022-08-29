@@ -19,10 +19,7 @@ class RefreshInterceptor @Inject constructor(
         val requestBuilder = chain.request()
             .newBuilder()
 
-        logger("refresh interceptor ${jwt.toString()}")
-
         jwt?.let {
-            logger("Token(${it.accessToken.tokenCode}, ${it.refreshToken.tokenCode}")
             requestBuilder.addHeader(
                 "access-token",
                 it.accessToken.tokenCode

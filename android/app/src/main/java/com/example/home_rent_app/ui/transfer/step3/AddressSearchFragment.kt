@@ -39,6 +39,9 @@ class AddressSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.vm = viewModel
+
         binding.etFindAddress.setOnClickListener {
             showKakaoAddressWebView()
         }

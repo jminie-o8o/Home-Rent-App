@@ -26,8 +26,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeRentApp"
         android:usesCleartextTraffic="true" >
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="q1b82nn7cj" />
         <activity
-            android:name=".WantedMessageListActivity"
+            android:name=".ui.chatting.WantedMessageListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.detail.DetailRentActivity"

@@ -62,6 +62,8 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
     private val _pictureUrl = MutableStateFlow<UiState<ImageUrl>>(UiState.Loading)
     val pictureUrl = _pictureUrl.asStateFlow()
 
+    val address = MutableStateFlow("")
+
     private var id = 0
 
     fun setHomeDescriptionState() {

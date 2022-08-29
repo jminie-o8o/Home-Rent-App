@@ -4,6 +4,8 @@ import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.detail.DetailRepositoryImpl
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepositoryImpl
+import com.example.home_rent_app.data.repository.map.MapRepository
+import com.example.home_rent_app.data.repository.map.MapRepositoryImpl
 import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepositoryImpl
 import com.example.home_rent_app.data.repository.token.TokenRepository
@@ -57,6 +59,12 @@ abstract class RepositoryModule {
     abstract fun bindTokenRepository(
         tokenRepositoryImpl: TokenRepositoryImpl
     ) : TokenRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindMapRepository(
+        mapRepositoryImpl: MapRepositoryImpl
+    ) : MapRepository
 
 }
 

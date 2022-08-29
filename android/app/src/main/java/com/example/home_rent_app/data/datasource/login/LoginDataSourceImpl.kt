@@ -93,7 +93,7 @@ class LoginDataSourceImpl @Inject constructor(
     override fun connectUser() = flow {
         // disconnect a user if already connected.
         disconnectUser()
-        val token = chatClient.devToken(HomeActivity.user.id)
+        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSJ9.ibSL8_561JIGQxkRvz3IBZiDQ24iE5YHoOkzyN2Bg9g"
 
         val result = chatClient.connectUser(HomeActivity.user, token).await()
 
