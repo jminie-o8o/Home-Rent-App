@@ -10,4 +10,5 @@ object Constants {
     const val GENDER_DATASTORE = "gender_datastore"
     const val GENDER_NEW = "new"
     const val GENDER_DEFAULT = "default"
+    const val MAP_URL = "https://naveropenapi.apigw.ntruss.com/"
 }

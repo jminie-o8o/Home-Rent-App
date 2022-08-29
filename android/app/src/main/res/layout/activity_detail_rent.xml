@@ -321,6 +321,16 @@
                 android:background="@drawable/shape_address_copy"
                 android:text="주소복사"/>
 
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:name="com.naver.maps.map.MapFragment"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_info_copy"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp" />
+
             <TextView
                 android:id="@+id/tv_detail_description_label"
                 style="@style/TextSubtitle1.16.bold"
@@ -330,7 +340,7 @@
                 android:layout_marginTop="16dp"
                 android:text="상세설명"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_address_info" />
+                app:layout_constraintTop_toBottomOf="@id/map" />
 
             <TextView
                 android:id="@+id/tv_detail_description"
