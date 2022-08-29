@@ -179,6 +179,8 @@ object RetrofitInstance {
             .create(AddWantHomeApi::class.java)
     }
 
+    @Provides
+    @Singleton
     fun provideMapApi(
         @Named("map") okHttpClient: OkHttpClient
     ): MapApi {
