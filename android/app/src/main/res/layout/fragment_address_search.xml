@@ -6,6 +6,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.example.home_rent_app.ui.viewmodel.TransferViewModel" />
+
     </data>
 
 
@@ -87,6 +91,7 @@
                 android:layout_height="match_parent"
                 android:cursorVisible="false"
                 android:focusable="false"
+                android:text="@={vm.address}"
                 android:hint="주소 검색" />
 
         </com.google.android.material.textfield.TextInputLayout>

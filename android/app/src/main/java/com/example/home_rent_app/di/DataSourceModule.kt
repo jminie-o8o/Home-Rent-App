@@ -6,6 +6,8 @@ import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSource
 import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSourceImpl
 import com.example.home_rent_app.data.datasource.login.LoginDataSource
 import com.example.home_rent_app.data.datasource.login.LoginDataSourceImpl
+import com.example.home_rent_app.data.datasource.map.MapDataSource
+import com.example.home_rent_app.data.datasource.map.MapDataSourceImpl
 import com.example.home_rent_app.data.datasource.refresh.RefreshDataSource
 import com.example.home_rent_app.data.datasource.refresh.RefreshDataSourceImpl
 import com.example.home_rent_app.data.datasource.token.TokenDataSource
@@ -57,6 +59,12 @@ abstract class DataSourceModule {
     abstract fun bindLoginDataSource(
         loginDataSourceImpl: LoginDataSourceImpl
     ): LoginDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindMapDataSource(
+        mapDataSourceImpl: MapDataSourceImpl
+    ): MapDataSource
 
 }
 

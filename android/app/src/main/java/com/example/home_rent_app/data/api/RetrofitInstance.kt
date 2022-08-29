@@ -3,6 +3,7 @@ package com.example.home_rent_app.data.api
 import com.example.home_rent_app.data.AuthInterceptor
 import com.example.home_rent_app.data.RefreshInterceptor
 import com.example.home_rent_app.util.Constants.BASE_URL
+import com.example.home_rent_app.util.Constants.MAP_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,6 +61,18 @@ object RetrofitInstance {
             .addInterceptor(logger)
             .authenticator(authInterceptor)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("map")
+    fun provideMapOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }
+            ).build()
     }
 
     @Provides
@@ -164,5 +177,16 @@ object RetrofitInstance {
             .baseUrl(BASE_URL)
             .build()
             .create(AddWantHomeApi::class.java)
+    }
+
+    fun provideMapApi(
+        @Named("map") okHttpClient: OkHttpClient
+    ): MapApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(MAP_URL)
+            .build()
+            .create(MapApi::class.java)
     }
 }

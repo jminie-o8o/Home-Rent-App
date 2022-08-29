@@ -11,10 +11,12 @@ import com.example.home_rent_app.R
 class PriceEditText(context: Context, attr: AttributeSet): AppCompatEditText(context, attr) {
 
     private lateinit var label: String
+    private var position = 10
     init {
         val typedArr = context.obtainStyledAttributes(attr, R.styleable.PriceEditText)
         // format을 구분하여 속성값 참조
         label = typedArr.getString(R.styleable.PriceEditText_labelText).orEmpty()
+        position = typedArr.getInt(R.styleable.PriceEditText_position, 10)
         typedArr.recycle()
     }
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -24,10 +26,10 @@ class PriceEditText(context: Context, attr: AttributeSet): AppCompatEditText(con
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
-        val width = (measuredWidth / 10 * 8).toFloat()
+        // 작으면 왼쪽 크면 오른쪽
+        val width = (measuredWidth / position * 8).toFloat()
         val height = (measuredHeight / 1.7).toFloat()
 
-        canvas?.drawText(label,width, height, paint)
+        canvas?.drawText(label, width, height, paint)
     }
 }

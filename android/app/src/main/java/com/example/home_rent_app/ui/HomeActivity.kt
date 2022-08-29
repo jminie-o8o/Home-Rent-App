@@ -43,8 +43,8 @@ class HomeActivity : AppCompatActivity() {
     companion object User {
 
         val user = User(
-            id = "3",
-            name = "stark",
+            id = "1",
+            name = "rest",
             image = "https://ifh.cc/g/cKhWxt.jpg"
         )
     }
