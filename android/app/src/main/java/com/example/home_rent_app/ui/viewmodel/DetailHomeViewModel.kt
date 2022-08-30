@@ -15,10 +15,10 @@ import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.utils.onErrorSuspend
 import io.getstream.chat.android.client.utils.onSuccessSuspend
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

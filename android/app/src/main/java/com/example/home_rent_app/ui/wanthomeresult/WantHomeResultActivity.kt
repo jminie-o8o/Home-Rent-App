@@ -10,7 +10,6 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
-import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectLatestStateFlow

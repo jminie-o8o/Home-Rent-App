@@ -4,25 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.UserSession
-import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

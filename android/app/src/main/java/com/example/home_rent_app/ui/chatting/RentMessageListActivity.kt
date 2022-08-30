@@ -8,9 +8,6 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.example.home_rent_app.databinding.ActivityMessageListRentBinding
 import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
 import com.example.home_rent_app.util.logger
@@ -26,8 +23,6 @@ import io.getstream.chat.android.ui.message.composer.viewmodel.MessageComposerVi
 import io.getstream.chat.android.ui.message.composer.viewmodel.bindView
 import io.getstream.chat.android.ui.message.list.viewmodel.bindView
 import io.getstream.chat.android.ui.message.list.viewmodel.factory.MessageListViewModelFactory
-import kotlinx.coroutines.launch
-import kotlin.math.log
 
 @OptIn(ExperimentalStreamChatApi::class)
 @AndroidEntryPoint

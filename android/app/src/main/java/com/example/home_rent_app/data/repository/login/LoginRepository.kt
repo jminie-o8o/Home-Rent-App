@@ -13,10 +13,6 @@ interface LoginRepository {
 
     suspend fun getNaverToken(naverOauthRequest: NaverOauthRequest): OAuthTokenResponse
 
-//    suspend fun getKakaoUser(kakaoOauthRequest: KakaoOauthRequest): User
-//
-//    suspend fun getNaverUser(naverOauthRequest: NaverOauthRequest): User
-
     // DataStore
 
     suspend fun saveIsLogin()

@@ -11,7 +11,6 @@ import com.example.home_rent_app.databinding.ActivityHomeBinding
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.UserSession
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import io.getstream.chat.android.client.models.User
 import javax.inject.Inject

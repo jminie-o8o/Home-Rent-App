@@ -1,19 +1,16 @@
 package com.example.home_rent_app.ui.wanthome.detail
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.collectLatestStateFlow
-import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.setLikeClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

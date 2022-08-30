@@ -2,22 +2,14 @@ package com.example.home_rent_app.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import com.example.home_rent_app.data.dto.WantHomeDetailResponseDTO
-import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.AddWantHomeRequest
-import com.example.home_rent_app.data.model.BookmarkRequest
-import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
-import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

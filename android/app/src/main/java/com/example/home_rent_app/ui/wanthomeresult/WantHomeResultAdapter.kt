@@ -10,14 +10,11 @@ import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
-import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
-import com.example.home_rent_app.util.logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class WantHomeResultAdapter @Inject constructor(
