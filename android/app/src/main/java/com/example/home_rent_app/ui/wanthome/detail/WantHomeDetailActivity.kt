@@ -39,4 +39,8 @@ class WantHomeDetailActivity : AppCompatActivity() {
             binding.btnLike.isSelected = binding.btnLike.isSelected != true
         }
     }
+
+    private fun getWantHomeDetail(itemId: Int) {
+
+    }
 }

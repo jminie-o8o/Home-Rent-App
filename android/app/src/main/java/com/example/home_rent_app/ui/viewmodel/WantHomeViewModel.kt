@@ -3,6 +3,7 @@ package com.example.home_rent_app.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import com.example.home_rent_app.data.dto.WantHomeDetailResponseDTO
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.AddWantHomeRequest
 import com.example.home_rent_app.data.model.BookmarkRequest
@@ -63,6 +64,9 @@ class WantHomeViewModel @Inject constructor(
 
     private val _selectedItemId = MutableStateFlow(0)
     val selectedItemId: StateFlow<Int> get() = _selectedItemId
+
+    private val _wantHomeDetail = MutableStateFlow<WantHomeDetailResponseDTO?>(null)
+    val wantHomeDetail: StateFlow<WantHomeDetailResponseDTO?> get() = _wantHomeDetail
 
     fun addWantHome(userId: Int) {
         viewModelScope.launch {
@@ -131,5 +135,11 @@ class WantHomeViewModel @Inject constructor(
 
     fun putItemIdAtAdapter(id: Int) {
         _selectedItemId.value = id
+    }
+
+    fun getWantHomeDetail(itemId: Int) {
+        viewModelScope.launch {
+            _wantHomeDetail.value = wantHomeRepository.getWantHome(itemId)
+        }
     }
 }
