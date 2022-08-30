@@ -189,6 +189,8 @@ public class RentArticleService {
         saveSecurityInHome(request.getSecurityFacilities(), rentArticle);
         saveHouseImage(rentArticle, request.getHouseImages());
 
+        rentArticle.modifyArticle(request);
+
         return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
     }
 
