@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui.wanthome.step2
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,6 +19,7 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
@@ -50,15 +52,11 @@ class WantHomeSecondStepFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navigationController = findNavController()
         goHomeActivity()
-        register(navigationController)
+        register()
         setDetailLocation()
         setTitle()
         setDetailContents()
-        binding.btnRegister.setOnClickListener {
-            viewModel.addWantHome(userSession.userId ?: 0)
-        }
     }
 
 
@@ -69,9 +67,11 @@ class WantHomeSecondStepFragment : Fragment() {
         }
     }
 
-    private fun register(navController: NavController) {
+    private fun register() {
         binding.btnRegister.setOnClickListener {
-            navController.navigate(R.id.action_wantHomeSecondStepFragment_to_wantHomeDetailFragment)
+            viewModel.addWantHome(userSession.userId ?: 0)
+            val intent = Intent(requireContext(), WantHomeDetailActivity::class.java)
+            startActivity(intent)
         }
     }
 

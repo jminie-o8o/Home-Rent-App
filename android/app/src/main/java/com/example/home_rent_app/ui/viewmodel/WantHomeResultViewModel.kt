@@ -32,6 +32,9 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
     private val _deleteBookmarkStatusCode = MutableSharedFlow<Int>()
     val deleteBookmarkStatusCode: SharedFlow<Int> get() = _deleteBookmarkStatusCode
 
+    private val _selectedId = MutableStateFlow(0)
+    val selectedId: StateFlow<Int> get() = _selectedId
+
     fun handleSearchWork(searchWord: String) {
         viewModelScope.launch {
             _searchWord.emit(searchWord)
@@ -56,5 +59,9 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
         viewModelScope.launch {
             _deleteBookmarkStatusCode.emit(wantHomeResultRepository.deleteBookmark(bookmarkRequest).code)
         }
+    }
+
+    fun putItemId(id: Int) {
+        _selectedId.value = id
     }
 }

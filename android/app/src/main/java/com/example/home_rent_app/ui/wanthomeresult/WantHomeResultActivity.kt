@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
-import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
+import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class WantHomeResultActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityWantHomeResultBinding
-    private val viewModel: WantHomeResultViewModel by viewModels()
+    private val viewModel: WantHomeViewModel by viewModels()
     lateinit var adapter: WantHomeResultAdapter
     @Inject
     lateinit var userSession: UserSession
@@ -58,7 +58,7 @@ class WantHomeResultActivity : AppCompatActivity() {
                     keyword,
                     binding.cbAvailable.isChecked
                 )
-            ) // true 일때 오류 뱉음
+            )
         }
     }
 

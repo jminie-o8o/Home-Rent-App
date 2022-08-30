@@ -1,22 +1,19 @@
 package com.example.home_rent_app.ui.wanthomeresult
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
-import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
+import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.util.UserSession
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import javax.inject.Inject
 
-class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeResultViewModel, private val userSession: UserSession) :
+class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeViewModel, private val userSession: UserSession) :
     PagingDataAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
 
 
@@ -42,6 +39,12 @@ class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeR
                     false -> {
                         deleteBookmark(wantedArticle)
                     }
+                }
+            }
+            itemView.setOnClickListener {
+                viewModel.putItemIdAtAdapter(wantedArticle.id)
+                Intent(it.context, WantHomeResultActivity::class.java).run {
+                    it.context.startActivity(this)
                 }
             }
         }
