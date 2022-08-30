@@ -4,10 +4,8 @@ import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.SearchConditionDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -18,23 +16,20 @@ import org.springframework.data.domain.PageRequest;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class RentArticleRepositoryTest {
     @Autowired
     private RentArticleRepository rentArticleRepository;
 
-    private UserRepository mockedUserRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    private User user;
 
     @TestConfiguration
     static class TestConfig {
@@ -44,13 +39,6 @@ class RentArticleRepositoryTest {
         public JPAQueryFactory jpaQueryFactory(){
             return new JPAQueryFactory(em);
         }
-    }
-
-    @BeforeEach
-    public void setUserRepository() {
-        User user = new User();
-        mockedUserRepository = Mockito.mock(UserRepository.class);
-        Mockito.when(mockedUserRepository.findById(1L)).thenReturn(Optional.of(user));
     }
 
     @Test
@@ -76,18 +64,14 @@ class RentArticleRepositoryTest {
     @Test
     @DisplayName("findByUser()를 호출하면 해당 유저의 게시글을 반환해야 한다")
     void findByUserTest() {
+        User user = new User();
+        userRepository.save(user);
+
         List<RentArticle> articles = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            RentArticle article = new RentArticle();
-            try {
-                Class articleClass = Class.forName("com.nextsquad.house.domain.house.RentArticle");
-                Field userField = articleClass.getDeclaredField("user");
-                userField.setAccessible(true);
-                userField.set(article, user);
-                assertThat(article.getUser()).isEqualTo(user);
-            } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
-                fail(e.getMessage());
-            }
+            RentArticle article = RentArticle.builder()
+                    .user(user)
+                    .build();
             articles.add(article);
         }
         rentArticleRepository.saveAll(articles);
@@ -121,15 +105,9 @@ class RentArticleRepositoryTest {
     public void sortedByRentFeeTest() {
         List<RentArticle> articles = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            RentArticle article = new RentArticle();
-            try {
-                Class articleClass = Class.forName("com.nextsquad.house.domain.house.RentArticle");
-                Field rentFeeField = articleClass.getDeclaredField("rentFee");
-                rentFeeField.setAccessible(true);
-                rentFeeField.set(article, 1000000 - (i * 1000));
-            } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
-                fail(e.getMessage());
-            }
+            RentArticle article = RentArticle.builder()
+                    .rentFee(1000000 - (i * 1000))
+                    .build();
             articles.add(article);
         }
         rentArticleRepository.saveAll(articles);
@@ -151,15 +129,9 @@ class RentArticleRepositoryTest {
     public void sortedByDepositTest() {
         List<RentArticle> articles = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            RentArticle article = new RentArticle();
-            try {
-                Class articleClass = Class.forName("com.nextsquad.house.domain.house.RentArticle");
-                Field depositField = articleClass.getDeclaredField("deposit");
-                depositField.setAccessible(true);
-                depositField.set(article, 1000000 - (i * 1000));
-            } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
-                fail(e.getMessage());
-            }
+            RentArticle article = RentArticle.builder()
+                    .deposit(1000000 - (i * 1000))
+                    .build();
             articles.add(article);
         }
         rentArticleRepository.saveAll(articles);
@@ -181,15 +153,9 @@ class RentArticleRepositoryTest {
     public void filteredByAvailableOnlyTest() {
         List<RentArticle> articles = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            RentArticle article = new RentArticle();
-            try {
-                Class articleClass = Class.forName("com.nextsquad.house.domain.house.RentArticle");
-                Field isCompletedField = articleClass.getDeclaredField("isCompleted");
-                isCompletedField.setAccessible(true);
-                isCompletedField.set(article, i > 5);
-            } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
-                fail(e.getMessage());
-            }
+            RentArticle article = RentArticle.builder()
+                    .isCompleted(i > 5)
+                    .build();
             articles.add(article);
         }
         rentArticleRepository.saveAll(articles);
