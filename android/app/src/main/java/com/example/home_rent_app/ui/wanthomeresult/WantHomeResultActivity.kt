@@ -11,6 +11,7 @@ import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
 import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -43,14 +44,14 @@ class WantHomeResultActivity : AppCompatActivity() {
     }
 
     private fun updateAdapter() {
-        collectStateFlow(viewModel.wantHomeResult) {
-            adapter.submitList(it)
+        collectLatestStateFlow(viewModel.wantHomeResult) {
+            adapter.submitData(it)
         }
     }
 
     private fun setDefaultResult() {
         collectStateFlow(viewModel.searchWord) { keyword ->
-            viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false)) // true 일때 오류 뱉음
+            viewModel.getWantHomeResult(WantHomeResultRequest(keyword, false)) // true 일때 오류 뱉음
         }
     }
 
@@ -59,11 +60,11 @@ class WantHomeResultActivity : AppCompatActivity() {
         binding.cbAvailable.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 collectStateFlow(viewModel.searchWord) { keyword ->
-                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, true))
+                    viewModel.getWantHomeResult(WantHomeResultRequest(keyword, true))
                 }
             } else {
                 collectStateFlow(viewModel.searchWord) { keyword ->
-                    viewModel.getWantHomeResult(WantHomeResultRequest(0, 5, keyword, false))
+                    viewModel.getWantHomeResult(WantHomeResultRequest(keyword, false))
                 }
             }
         }

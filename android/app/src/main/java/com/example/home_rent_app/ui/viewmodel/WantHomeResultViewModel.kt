@@ -2,6 +2,7 @@ package com.example.home_rent_app.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.WantHomeResultRequest
@@ -22,8 +23,8 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
     private val _searchWord = MutableSharedFlow<String>()
     val searchWord = _searchWord.debounce { 400 }
 
-    private val _wantHomeResult = MutableStateFlow<List<WantedArticle>>(emptyList())
-    val wantHomeResult: StateFlow<List<WantedArticle>> get() = _wantHomeResult
+    private val _wantHomeResult = MutableStateFlow<PagingData<WantedArticle>>(PagingData.empty())
+    val wantHomeResult: StateFlow<PagingData<WantedArticle>> get() = _wantHomeResult
 
     private val _addBookmarkStatusCode = MutableSharedFlow<Int>()
     val addBookmarkStatusCode: SharedFlow<Int> get() = _addBookmarkStatusCode

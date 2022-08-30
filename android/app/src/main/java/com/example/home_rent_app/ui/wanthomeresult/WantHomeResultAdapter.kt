@@ -2,6 +2,7 @@ package com.example.home_rent_app.ui.wanthomeresult
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ import kotlinx.coroutines.cancel
 import javax.inject.Inject
 
 class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeResultViewModel, private val userSession: UserSession) :
-    ListAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
+    PagingDataAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
 
     val scope = CoroutineScope(Dispatchers.Main)
 
@@ -27,7 +28,7 @@ class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeR
     }
 
     override fun onBindViewHolder(holder: WantHomeResultViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { holder.bind(it) }
     }
 
     inner class WantHomeResultViewHolder(private val binding: ItemWanthomeResultBinding) :
