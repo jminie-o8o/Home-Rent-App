@@ -11,19 +11,29 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.util.ItemIdSession
+import com.example.home_rent_app.util.collectLatestStateFlow
+import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.setLikeClickEvent
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WantHomeDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWantHomeDetailBinding
     private val viewModel: WantHomeViewModel by viewModels()
+    @Inject
+    lateinit var idSession: ItemIdSession
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_want_home_detail)
         binding.lifecycleOwner = this
+        binding.vm = viewModel
         goHomeActivity()
         clickLikeButton()
+        getWantHomeDetail()
     }
 
     private fun goHomeActivity() {
@@ -40,7 +50,7 @@ class WantHomeDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getWantHomeDetail(itemId: Int) {
-
+    private fun getWantHomeDetail() {
+        idSession.itemId?.let { viewModel.getWantHomeDetail(it) }
     }
 }

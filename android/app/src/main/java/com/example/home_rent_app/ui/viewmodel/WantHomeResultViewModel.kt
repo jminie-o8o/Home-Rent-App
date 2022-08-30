@@ -3,6 +3,7 @@ package com.example.home_rent_app.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.WantHomeResultRequest
@@ -43,9 +44,11 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
 
     fun getWantHomeResult(wantHomeResultRequest: WantHomeResultRequest) {
         viewModelScope.launch {
-            wantHomeResultRepository.getResult(wantHomeResultRequest).collect { response ->
-                _wantHomeResult.value = response
-            }
+            wantHomeResultRepository.getResult(wantHomeResultRequest)
+                .cachedIn(viewModelScope)
+                .collect { response ->
+                    _wantHomeResult.value = response
+                }
         }
     }
 

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.example.home_rent_app.ui.viewmodel.WantHomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +49,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/default_profile_image"
+            imageUrl="@{vm.wantHomeDetail.user.profileImageUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/abb_bar_want_home_detail" />
 
@@ -58,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
+            android:text="@{vm.wantHomeDetail.user.displayName}"
             app:layout_constraintStart_toEndOf="@+id/iv_want_home_detail_profile"
             app:layout_constraintTop_toTopOf="@+id/iv_want_home_detail_profile"
             tools:text="빵떡" />
@@ -69,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
+            gender="@{vm.wantHomeDetail.user.gender}"
             app:layout_constraintStart_toEndOf="@+id/tv_want_home_detail_nickname"
             app:layout_constraintTop_toTopOf="@+id/iv_want_home_detail_profile"
             tools:text="여" />
@@ -91,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:text="@{vm.wantHomeDetail.title}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_want_home_detail"
             tools:text="부경대 정문 원룸 (200/35)" />
@@ -100,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="36dp"
+            formattingTime="@{vm.wantHomeDetail.createdAt}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_want_home_detail_title"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="7/22" />
@@ -129,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
+            depositSimple="@{String.valueOf(vm.wantHomeDetail.depositBudget)}"
             app:layout_constraintStart_toEndOf="@+id/tv_budget_title"
             app:layout_constraintTop_toTopOf="@+id/tv_budget_title"
             tools:text="보증금 200" />
@@ -139,6 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            monthlyPaySimple="@{String.valueOf(vm.wantHomeDetail.rentBudget)}"
             app:layout_constraintStart_toEndOf="@+id/tv_budget_deposit"
             app:layout_constraintTop_toTopOf="@+id/tv_budget_title"
             tools:text="월세 30" />
@@ -158,6 +166,7 @@
             style="@style/TextSubtitle1.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{vm.wantHomeDetail.moveInDate}"
             app:layout_constraintStart_toStartOf="@+id/tv_budget_deposit"
             app:layout_constraintTop_toTopOf="@+id/tv_go_in_date_title"
             tools:text="2022/07/23" />
@@ -177,6 +186,7 @@
             style="@style/TextSubtitle1.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{vm.wantHomeDetail.moveOutDate}"
             app:layout_constraintStart_toStartOf="@+id/tv_budget_deposit"
             app:layout_constraintTop_toTopOf="@+id/tv_go_out_date_title"
             tools:text="2022/08/31" />
@@ -196,6 +206,7 @@
             style="@style/TextSubtitle1.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{vm.wantHomeDetail.address}"
             app:layout_constraintStart_toStartOf="@+id/tv_budget_deposit"
             app:layout_constraintTop_toTopOf="@+id/tv_location_title"
             tools:text="대연동" />
@@ -216,6 +227,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:text="@{vm.wantHomeDetail.content}"
             app:layout_constraintStart_toStartOf="@+id/tv_detail_explain_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_explain_title"
             tools:text="풀옵션 방이었으면 좋겠어요!\n날짜는 조율 가능합니다.\n많이 연락주세요!" />

@@ -10,6 +10,7 @@ import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
+import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WantHomeViewModel @Inject constructor(
     private val wantHomeRepository: WantHomeRepository,
-    private val wantHomeResultRepository: WantHomeResultRepository
+    private val idSession: ItemIdSession
 ) : ViewModel() {
 
     // 양방향 데이터 바인딩 이용
@@ -50,27 +51,12 @@ class WantHomeViewModel @Inject constructor(
     private val _detailContents = MutableStateFlow("")
     val detailContents: StateFlow<String> get() = _detailContents
 
-    private val _searchWord = MutableSharedFlow<String>()
-    val searchWord = _searchWord.debounce { 400 }
-
-    private val _wantHomeResult = MutableStateFlow<PagingData<WantedArticle>>(PagingData.empty())
-    val wantHomeResult: StateFlow<PagingData<WantedArticle>> get() = _wantHomeResult
-
-    private val _addBookmarkStatusCode = MutableSharedFlow<Int>()
-    val addBookmarkStatusCode: SharedFlow<Int> get() = _addBookmarkStatusCode
-
-    private val _deleteBookmarkStatusCode = MutableSharedFlow<Int>()
-    val deleteBookmarkStatusCode: SharedFlow<Int> get() = _deleteBookmarkStatusCode
-
-    private val _selectedItemId = MutableStateFlow(0)
-    val selectedItemId: StateFlow<Int> get() = _selectedItemId
-
     private val _wantHomeDetail = MutableStateFlow<WantHomeDetailResponseDTO?>(null)
     val wantHomeDetail: StateFlow<WantHomeDetailResponseDTO?> get() = _wantHomeDetail
 
     fun addWantHome(userId: Int) {
         viewModelScope.launch {
-            _selectedItemId.value = wantHomeRepository.addWantHome(
+            idSession.itemId = wantHomeRepository.addWantHome(
                 AddWantHomeRequest(
                     userId = userId,
                     address = location.value.locationName + " " + detailAddress.value,
@@ -105,36 +91,6 @@ class WantHomeViewModel @Inject constructor(
 
     fun setDetailContents(detailContents: String) {
         _detailContents.value = detailContents
-    }
-
-    fun handleSearchWork(searchWord: String) {
-        viewModelScope.launch {
-            _searchWord.emit(searchWord)
-        }
-    }
-
-    fun getWantHomeResult(wantHomeResultRequest: WantHomeResultRequest) {
-        viewModelScope.launch {
-            wantHomeResultRepository.getResult(wantHomeResultRequest).collect { response ->
-                _wantHomeResult.value = response
-            }
-        }
-    }
-
-    fun addBookmark(bookmarkRequest: BookmarkRequest) {
-        viewModelScope.launch {
-            _addBookmarkStatusCode.emit(wantHomeResultRepository.addBookmark(bookmarkRequest).code)
-        }
-    }
-
-    fun deleteBookmark(bookmarkRequest: BookmarkRequest) {
-        viewModelScope.launch {
-            _deleteBookmarkStatusCode.emit(wantHomeResultRepository.deleteBookmark(bookmarkRequest).code)
-        }
-    }
-
-    fun putItemIdAtAdapter(id: Int) {
-        _selectedItemId.value = id
     }
 
     fun getWantHomeDetail(itemId: Int) {

@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
+import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
+import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
@@ -20,10 +22,12 @@ import javax.inject.Inject
 class WantHomeResultActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityWantHomeResultBinding
-    private val viewModel: WantHomeViewModel by viewModels()
+    private val viewModel: WantHomeResultViewModel by viewModels()
     lateinit var adapter: WantHomeResultAdapter
     @Inject
     lateinit var userSession: UserSession
+    @Inject
+    lateinit var idSession: ItemIdSession
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +36,7 @@ class WantHomeResultActivity : AppCompatActivity() {
         handleSearchWord()
         setDefaultResult()
         setAvailable()
-        adapter = WantHomeResultAdapter(viewModel, userSession)
+        adapter = WantHomeResultAdapter(viewModel, userSession, idSession)
         binding.rvWanthomeResult.adapter = adapter
         updateAdapter()
         addBookMarkToast()

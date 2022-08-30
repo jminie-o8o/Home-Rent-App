@@ -27,7 +27,7 @@
         android:theme="@style/Theme.HomeRentApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".WantHomeDetailActivity"
+            android:name=".ui.wanthome.detail.WantHomeDetailActivity"
             android:exported="false" />
 
         <meta-data

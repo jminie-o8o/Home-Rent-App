@@ -78,4 +78,6 @@
     <string name="available_from">입주가능일</string>
     <string name="contract_expires">계약만료일</string>
     <string name="go_chat">채팅하기</string>
+    <string name="deposit_simple">보증금 %s</string>
+    <string name="monthly_simple">월세 %s</string>
 </resources>

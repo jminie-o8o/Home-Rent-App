@@ -9,13 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
+import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
+import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.util.logger
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeViewModel, private val userSession: UserSession) :
-    PagingDataAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
+class WantHomeResultAdapter @Inject constructor(
+    private val viewModel: WantHomeResultViewModel,
+    private val userSession: UserSession,
+    private val itemIdSession: ItemIdSession
+) : PagingDataAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
 
+    val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WantHomeResultViewHolder {
         val binding =
@@ -42,8 +53,8 @@ class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeV
                 }
             }
             itemView.setOnClickListener {
-                viewModel.putItemIdAtAdapter(wantedArticle.id)
-                Intent(it.context, WantHomeResultActivity::class.java).run {
+                itemIdSession.itemId = wantedArticle.id
+                Intent(it.context, WantHomeDetailActivity::class.java).run {
                     it.context.startActivity(this)
                 }
             }

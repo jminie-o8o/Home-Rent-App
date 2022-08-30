@@ -8,9 +8,9 @@ import java.text.SimpleDateFormat
 
 @SuppressLint("SimpleDateFormat")
 @BindingAdapter("formattingTime")
-fun timeFormat(view: TextView, stringTime: String) {
+fun timeFormat(view: TextView, stringTime: String?) {
     val format = SimpleDateFormat(view.context.getString(R.string.time_format))
-    val time = format.parse(stringTime)
+    val time = stringTime?.let { format.parse(it) }
     val result = time?.let { calculateTime(time) } ?: ""
     view.text = result
 }
@@ -40,4 +40,20 @@ fun endDateFormat(view: TextView, stringDate: String) {
 @BindingAdapter("deposit", "monthlyPay")
 fun depositFormat(view: TextView, deposit: String, monthlyPay: String) {
     view.text = view.context.getString(R.string.deposit_format, deposit, monthlyPay)
+}
+
+@BindingAdapter("gender")
+fun genderFormat(view: TextView, gender: String?) {
+    if (gender == "MALE") view.text = "남"
+    else view.text = "여"
+}
+
+@BindingAdapter("depositSimple")
+fun depositSimpleFormat(view: TextView, deposit: String?) {
+    view.text = view.context.getString(R.string.deposit_simple, deposit)
+}
+
+@BindingAdapter("monthlyPaySimple")
+fun monthlySimpleFormat(view: TextView, monthlyPay: String?) {
+    view.text = view.context.getString(R.string.monthly_simple, monthlyPay)
 }
