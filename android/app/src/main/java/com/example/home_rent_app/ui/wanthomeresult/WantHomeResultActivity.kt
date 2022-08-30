@@ -22,13 +22,15 @@ class WantHomeResultActivity : AppCompatActivity() {
     lateinit var binding: ActivityWantHomeResultBinding
     private val viewModel: WantHomeResultViewModel by viewModels()
     lateinit var adapter: WantHomeResultAdapter
-    @Inject lateinit var userSession: UserSession
+    @Inject
+    lateinit var userSession: UserSession
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_want_home_result)
         binding.lifecycleOwner = this
         handleSearchWord()
+        setDefaultResult()
         setAvailable()
         adapter = WantHomeResultAdapter(viewModel, userSession)
         binding.rvWanthomeResult.adapter = adapter
@@ -51,21 +53,31 @@ class WantHomeResultActivity : AppCompatActivity() {
 
     private fun setDefaultResult() {
         collectStateFlow(viewModel.searchWord) { keyword ->
-            viewModel.getWantHomeResult(WantHomeResultRequest(keyword, false)) // true 일때 오류 뱉음
+            viewModel.getWantHomeResult(
+                WantHomeResultRequest(
+                    keyword,
+                    binding.cbAvailable.isChecked
+                )
+            ) // true 일때 오류 뱉음
         }
     }
 
     private fun setAvailable() {
-        setDefaultResult()
         binding.cbAvailable.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                collectStateFlow(viewModel.searchWord) { keyword ->
-                    viewModel.getWantHomeResult(WantHomeResultRequest(keyword, true))
-                }
+                viewModel.getWantHomeResult(
+                    WantHomeResultRequest(
+                        binding.etWantHome.text.toString(),
+                        true
+                    )
+                )
             } else {
-                collectStateFlow(viewModel.searchWord) { keyword ->
-                    viewModel.getWantHomeResult(WantHomeResultRequest(keyword, false))
-                }
+                viewModel.getWantHomeResult(
+                    WantHomeResultRequest(
+                        binding.etWantHome.text.toString(),
+                        false
+                    )
+                )
             }
         }
     }
@@ -80,10 +92,5 @@ class WantHomeResultActivity : AppCompatActivity() {
         collectStateFlow(viewModel.deleteBookmarkStatusCode) { code ->
             if (code == 200) Toast.makeText(this, "관심목록에서 제거되었습니다.", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.rvWanthomeResult.adapter = null
     }
 }

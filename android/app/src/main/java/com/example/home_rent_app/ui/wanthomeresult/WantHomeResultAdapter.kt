@@ -19,7 +19,6 @@ import javax.inject.Inject
 class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeResultViewModel, private val userSession: UserSession) :
     PagingDataAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
 
-    val scope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WantHomeResultViewHolder {
         val binding =
@@ -54,11 +53,6 @@ class WantHomeResultAdapter @Inject constructor(private val viewModel: WantHomeR
         private fun deleteBookmark(wantedArticle: WantedArticle) {
             viewModel.deleteBookmark((BookmarkRequest(userSession.userId ?: 0, wantedArticle.id)))
         }
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        scope.cancel()
     }
 }
 

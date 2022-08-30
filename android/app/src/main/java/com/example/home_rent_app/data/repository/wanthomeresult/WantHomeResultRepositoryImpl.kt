@@ -20,7 +20,7 @@ class WantHomeResultRepositoryImpl @Inject constructor(private val api: WantHome
     override suspend fun getResult(wantHomeResultRequest: WantHomeResultRequest): Flow<PagingData<WantedArticle>> {
         return Pager(
             config = PagingConfig(pageSize = 5, enablePlaceholders = false),
-            pagingSourceFactory = { WantHomePagingSource(api = api, wantHomeResultRequest) }
+            pagingSourceFactory = { WantHomePagingSource(api, wantHomeResultRequest) }
         ).flow
     }
 
