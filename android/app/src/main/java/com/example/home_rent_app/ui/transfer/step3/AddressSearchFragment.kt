@@ -10,24 +10,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentAddressSearchBinding
 import com.example.home_rent_app.ui.viewmodel.TransferViewModel
 import com.example.home_rent_app.util.logger
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class AddressSearchFragment : Fragment() {
 
     private val binding: FragmentAddressSearchBinding by lazy {
         FragmentAddressSearchBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: TransferViewModel by viewModels()
+    private val viewModel: TransferViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

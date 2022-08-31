@@ -12,13 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-<<<<<<< HEAD
 <!--        <item name="android:windowTranslucentStatus">true</item>-->
 <!--        <item name="android:windowTranslucentNavigation">true</item>-->
-=======
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
->>>>>>> d258b8b34783b7d5523eba8f49db3f81bb6097bc
+
     </style>
 
     <style name="editTextStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

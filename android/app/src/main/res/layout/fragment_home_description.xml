@@ -111,13 +111,15 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup_category"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:chipSpacingHorizontal="10dp"
                 app:singleSelection="true"
                 app:selectionRequired="true"
                 android:layout_marginTop="15dp"
                 roomTypeFilter="@={vm.roomType}"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_category_label">
 
                 <com.google.android.material.chip.Chip
@@ -194,6 +196,7 @@
                 app:singleSelection="true"
                 app:selectionRequired="true"
                 android:layout_marginTop="15dp"
+                android:layout_marginStart="16dp"
                 rentTypeFilter="@={vm.rentType}"
                 app:layout_constraintTop_toBottomOf="@id/tv_rent_format_label">
 
@@ -257,7 +260,7 @@
                 app:hintEnabled="false"
                 style="@style/editTextStyle">
 
-                <com.example.home_rent_app.ui.custom.PriceEditText
+                <com.example.home_rent_app.ui.custom.LabelEditText
                     android:id="@+id/pet_deposit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -266,7 +269,7 @@
                     android:inputType="number"
                     android:hint="@string/zero"
                     android:maxLength="13"
-                    app:labelText="만원"
+                    app:labelText="@string/price_unit"
                     android:text="@={vm.deposit}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -293,15 +296,17 @@
                 app:layout_constraintWidth_percent="0.45"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
+                app:hintEnabled="false"
                 style="@style/editTextStyle">
 
-                <com.example.home_rent_app.ui.custom.PriceEditText
+                <com.example.home_rent_app.ui.custom.LabelEditText
                     android:id="@+id/pet_monthly"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
                     android:inputType="number"
+                    app:labelText="@string/price_unit"
                     android:hint="@string/zero"
                     android:maxLength="13"
                     android:text="@={vm.monthly}" />
@@ -313,7 +318,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/otf_monthly"
+                app:layout_constraintTop_toBottomOf="@id/otf_deposit"
                 android:textColor="@color/black"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
@@ -328,9 +333,10 @@
                 app:layout_constraintWidth_percent="0.45"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
+                app:hintEnabled="false"
                 style="@style/editTextStyle">
 
-                <com.example.home_rent_app.ui.custom.PriceEditText
+                <com.example.home_rent_app.ui.custom.LabelEditText
                     android:id="@+id/pet_maintenance"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -338,6 +344,7 @@
                     android:paddingBottom="0dp"
                     android:inputType="number"
                     android:maxLength="13"
+                    app:labelText="@string/price_unit"
                     android:hint="@string/zero"
                     android:text="@={vm.maintenance}"/>
 
@@ -351,7 +358,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintWidth_percent="0.95"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="4dp"
                 android:hint="@string/maintenance_hint"
                 style="@style/editTextStyle">
 
@@ -469,7 +476,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintWidth_percent="0.35"
-                android:clickable="false"
+                android:enabled="false"
                 android:backgroundTint="@color/gray"
                 android:text="@string/next"/>
 

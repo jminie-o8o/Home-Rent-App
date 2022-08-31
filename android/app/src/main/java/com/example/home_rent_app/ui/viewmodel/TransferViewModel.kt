@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.model.ImageUrl
 import com.example.home_rent_app.data.model.RoomPicture
 import com.example.home_rent_app.data.repository.transfer.TransferRepository
-import com.example.home_rent_app.util.FileController
-import com.example.home_rent_app.util.RentType
-import com.example.home_rent_app.util.RoomType
-import com.example.home_rent_app.util.UiState
+import com.example.home_rent_app.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -51,6 +48,7 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
+
     val isCorrectDate = _isCorrectDate.asSharedFlow()
 
     private val _picture = MutableStateFlow<List<RoomPicture>>(emptyList())
@@ -96,7 +94,9 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
         val list = mutableListOf<RoomPicture>()
         list.addAll(_picture.value)
         list.removeAt(index)
-        list[0].isMain = true
+        if(list.isNotEmpty()) {
+            list[0].isMain = true
+        }
         _picture.value = list
         _overPictures.value = false
     }
@@ -174,9 +174,13 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
     fun getImageUrl() {
         val list = mutableListOf<MultipartBody.Part>()
         _picture.value.forEach { roomPic ->
+            logger("URI: ${roomPic.uri}")
             list.add(fileController.uriToMultiPart(roomPic.uri))
         }
         viewModelScope.launch {
+            list.forEach {
+                logger("image : $it")
+            }
             transferRepository.getImageUrl(list).catch {  e ->
                 _pictureUrl.value = UiState.Error(e.stackTraceToString())
             }.collect {

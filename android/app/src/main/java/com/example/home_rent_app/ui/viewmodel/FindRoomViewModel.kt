@@ -41,21 +41,7 @@ class FindRoomViewModel @Inject constructor(
        viewModelScope.launch {
            repository.getSearchResult(searchAddress = searchAddress.value)
                .catch { exception ->
-                   val coroutineException = CoroutineException.checkThrowable(exception)
-                   if(coroutineException.flag) {
-                       coroutineException.throwable as HttpException
-                       logger("status code is ${coroutineException.throwable.code()}")
-//                       if(coroutineException.throwable.code() == 401) {
-//                           repository.refreshAuthToken().collect {
-//                               tokenRepository.saveToken(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
-//                               tokenRepository.setAppSession(listOf(it.accessToken.tokenCode, it.refreshToken.tokenCode))
-//                           }
-//                           repository.getSearchResult(searchAddress = searchAddress.value)
-//                       }
-                   } else {
-                       _result.value = UiState.Error("네트워크 에러")
-                   }
-                   logger("end")
+                   _result.value = UiState.Error("네트워크 에러")
            }.collect {
                _result.value = UiState.Success(it)
            }
