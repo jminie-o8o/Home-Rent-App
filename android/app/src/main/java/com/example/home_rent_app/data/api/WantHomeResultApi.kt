@@ -1,7 +1,7 @@
 package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.dto.WantHomeResultDTO
-import com.example.home_rent_app.data.dto.WantHouseBookMarkResponseDTO
+import com.example.home_rent_app.data.dto.AddOrDeleteBookMarkResponseDTO
 import com.example.home_rent_app.data.model.BookmarkRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -22,12 +22,12 @@ interface WantHomeResultApi {
     @POST("houses/wanted/bookmarks")
     suspend fun addBookmark(
         @Body bookmarkRequest: BookmarkRequest
-    ): WantHouseBookMarkResponseDTO
+    ): AddOrDeleteBookMarkResponseDTO
 
     @HTTP(method = "DELETE", path = "houses/wanted/bookmarks", hasBody = true)
     suspend fun deleteBookmark(
         @Body bookmarkRequest: BookmarkRequest
-    ): WantHouseBookMarkResponseDTO
+    ): AddOrDeleteBookMarkResponseDTO
 
 }
 

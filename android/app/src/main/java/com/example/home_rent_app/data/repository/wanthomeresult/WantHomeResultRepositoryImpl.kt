@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.home_rent_app.data.api.WantHomeResultApi
-import com.example.home_rent_app.data.dto.WantHouseBookMarkResponseDTO
+import com.example.home_rent_app.data.dto.AddOrDeleteBookMarkResponseDTO
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.WantHomeResultRequest
@@ -21,11 +21,11 @@ class WantHomeResultRepositoryImpl @Inject constructor(private val api: WantHome
         ).flow
     }
 
-    override suspend fun addBookmark(bookmarkRequest: BookmarkRequest): WantHouseBookMarkResponseDTO {
+    override suspend fun addBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO {
         return api.addBookmark(bookmarkRequest)
     }
 
-    override suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): WantHouseBookMarkResponseDTO {
+    override suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO {
         return api.deleteBookmark(bookmarkRequest)
     }
 }

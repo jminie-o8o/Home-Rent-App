@@ -27,7 +27,7 @@ class BookmarkWantHomeAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: BookmarkWantHomeViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+        holder.bind(getItem(position))
     }
 
     inner class BookmarkWantHomeViewHolder(private val binding: ItemWanthomeBookmarkBinding) :
@@ -47,7 +47,7 @@ class BookmarkWantHomeAdapter @Inject constructor(
         }
 
         private fun deleteBookmark(wantedArticleBookmark: WantedArticleBookmark) {
-            viewModel.deleteBookmark(BookmarkRequest(userSession.userId ?: 0, wantedArticleBookmark.id))
+            viewModel.deleteWantHomeBookmark(BookmarkRequest(userSession.userId ?: 0, wantedArticleBookmark.id))
         }
     }
 }

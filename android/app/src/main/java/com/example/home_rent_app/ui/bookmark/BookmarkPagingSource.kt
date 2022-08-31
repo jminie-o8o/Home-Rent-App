@@ -21,7 +21,7 @@ class BookmarkPagingSource(
         val start = params.key ?: STARTING_PAGE_INDEX
 
         return try {
-            val response = api.getResult(
+            val response = api.getWantBookmarkResult(
                 userId = userSession.userId ?: 0,
                 start,
                 PAGE_SIZE

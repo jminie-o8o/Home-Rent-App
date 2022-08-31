@@ -1,7 +1,7 @@
 package com.example.home_rent_app.data.repository.wanthomeresult
 
 import androidx.paging.PagingData
-import com.example.home_rent_app.data.dto.WantHouseBookMarkResponseDTO
+import com.example.home_rent_app.data.dto.AddOrDeleteBookMarkResponseDTO
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.WantHomeResultRequest
@@ -11,7 +11,7 @@ interface WantHomeResultRepository {
 
     suspend fun getResult(wantHomeResultRequest: WantHomeResultRequest): Flow<PagingData<WantedArticle>>
 
-    suspend fun addBookmark(bookmarkRequest: BookmarkRequest): WantHouseBookMarkResponseDTO
+    suspend fun addBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO
 
-    suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): WantHouseBookMarkResponseDTO
+    suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO
 }
