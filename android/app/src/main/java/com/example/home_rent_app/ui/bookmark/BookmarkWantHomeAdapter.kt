@@ -1,14 +1,15 @@
 package com.example.home_rent_app.ui.bookmark
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.dto.WantedArticleBookmark
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeBookmarkBinding
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import javax.inject.Inject
@@ -36,6 +37,12 @@ class BookmarkWantHomeAdapter @Inject constructor(
             binding.btnLike.isChecked = true
             binding.btnLike.setOnCheckedChangeListener { _, isChecked ->
                 if (!isChecked) deleteBookmark(wantedArticleBookmark)
+            }
+            itemView.setOnClickListener {
+                itemIdSession.itemId = wantedArticleBookmark.id
+                Intent(it.context, WantHomeDetailActivity::class.java).run {
+                    it.context.startActivity(this)
+                }
             }
         }
 
