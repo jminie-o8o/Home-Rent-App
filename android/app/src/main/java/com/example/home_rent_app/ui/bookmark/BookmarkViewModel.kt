@@ -2,20 +2,16 @@ package com.example.home_rent_app.ui.bookmark
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.example.home_rent_app.data.dto.WantedArticleBookmark
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.deleteBookmarkAtView
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +20,10 @@ class BookmarkViewModel @Inject constructor(
     private val bookmarkRepository: BookmarkRepository,
     private val userSession: UserSession
 ) : ViewModel() {
+
+    private var page = 0
+
+    private var hasNext = false
 
     private val _wantHomeBookmarkResult =
         MutableStateFlow<MutableList<WantedArticleBookmark>>(mutableListOf())
@@ -38,12 +38,14 @@ class BookmarkViewModel @Inject constructor(
 
     fun getWantHomeResult(userId: Int) {
         viewModelScope.launch {
-            _wantHomeBookmarkResult.value = bookmarkRepository.getWantBookmark(userId)
-//                .cachedIn(viewModelScope)
-//                .collect { response ->
-//                    _wantHomeBookmarkResult.value = response
-//                    logger("bookmark $response")
-//                }
+            if (hasNext) {
+                return@launch
+            }
+            val list = mutableListOf<WantedArticleBookmark>()
+            list.addAll(_wantHomeBookmarkResult.value)
+            list.addAll(bookmarkRepository.getWantBookmark(userId, page))
+            _wantHomeBookmarkResult.value = list
+            page += 1
         }
     }
 

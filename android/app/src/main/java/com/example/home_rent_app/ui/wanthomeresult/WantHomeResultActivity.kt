@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.paging.map
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding

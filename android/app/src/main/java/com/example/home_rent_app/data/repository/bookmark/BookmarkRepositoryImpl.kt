@@ -17,8 +17,8 @@ class BookmarkRepositoryImpl @Inject constructor(
     private val userSession: UserSession
 ) : BookmarkRepository {
 
-    override suspend fun getWantBookmark(userId: Int): MutableList<WantedArticleBookmark> {
-        return api.getResult(userId).wantedArticles.toMutableList()
+    override suspend fun getWantBookmark(userId: Int, page: Int): MutableList<WantedArticleBookmark> {
+        return api.getResult(userId, page).wantedArticles.toMutableList()
     }
 
     override suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): WantHouseBookMarkResponseDTO {

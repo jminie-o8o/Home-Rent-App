@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentBookmarkWantHomeBinding
 import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultAdapter
@@ -40,15 +42,11 @@ class BookmarkWantHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getBookmark()
+        setRecyclerViewScrollListener()
         adapter = BookmarkWantHomeAdapter(viewModel, userSession, idSession)
         binding.rvBookmarkWantHome.adapter = adapter
         updateAdapter()
         deleteBookMarkToast()
-    }
-
-    private fun getBookmark() {
-        userSession.userId?.let { viewModel.getWantHomeResult(it) }
     }
 
     private fun updateAdapter() {
@@ -61,5 +59,24 @@ class BookmarkWantHomeFragment : Fragment() {
         collectStateFlow(viewModel.deleteBookmarkStatusCode) { code ->
             if (code == 200) Toast.makeText(requireContext(), "관심목록에서 제거되었습니다.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setRecyclerViewScrollListener() {
+        binding.rvBookmarkWantHome.addOnScrollListener( object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition =
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+
+                val itemTotalCount = recyclerView.adapter!!.itemCount - 1 // RecyclerView Item의 개수
+                // 스크롤이 끝에 도달했는지 확인
+                if (lastVisibleItemPosition == itemTotalCount) {
+                    // 다음 페이지 불러오기
+                    userSession.userId?.let { viewModel.getWantHomeResult(it) }
+                }
+            }
+        })
     }
 }
