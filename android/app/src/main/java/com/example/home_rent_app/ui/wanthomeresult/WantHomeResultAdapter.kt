@@ -23,8 +23,6 @@ class WantHomeResultAdapter @Inject constructor(
     private val itemIdSession: ItemIdSession
 ) : PagingDataAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
 
-    val scope = CoroutineScope(Dispatchers.IO)
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WantHomeResultViewHolder {
         val binding =
             ItemWanthomeResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -39,6 +37,7 @@ class WantHomeResultAdapter @Inject constructor(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(wantedArticle: WantedArticle) {
             binding.wantedArticle = wantedArticle
+            checkBookmark(wantedArticle)
             binding.btnLike.setOnCheckedChangeListener { _, isChecked ->
                 when (isChecked) {
                     true -> {
@@ -63,6 +62,10 @@ class WantHomeResultAdapter @Inject constructor(
 
         private fun deleteBookmark(wantedArticle: WantedArticle) {
             viewModel.deleteBookmark((BookmarkRequest(userSession.userId ?: 0, wantedArticle.id)))
+        }
+
+        private fun checkBookmark(wantedArticle: WantedArticle) {
+            if (wantedArticle.bookmarked) binding.btnLike.isChecked = true
         }
     }
 }

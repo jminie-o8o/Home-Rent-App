@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.PagingData
+import androidx.paging.filter
+import androidx.paging.map
+import com.example.home_rent_app.data.dto.WantedArticleBookmark
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -54,4 +59,13 @@ fun View.setLikeClickEvent(
         .throttleFirst(windowDuration)
         .onEach { onClick.invoke() }
         .launchIn(uiScope)
+}
+
+fun MutableStateFlow<MutableList<WantedArticleBookmark>>.deleteBookmarkAtView(id: Int) {
+    val tempList = this.value.filter { WantedArticleBookmark ->
+        WantedArticleBookmark.id != id
+    }.map {
+        it.copy()
+    }
+    this.value = tempList.toMutableList()
 }

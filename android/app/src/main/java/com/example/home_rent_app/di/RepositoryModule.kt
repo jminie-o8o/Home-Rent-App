@@ -1,5 +1,7 @@
 package com.example.home_rent_app.di
 
+import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
+import com.example.home_rent_app.data.repository.bookmark.BookmarkRepositoryImpl
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.detail.DetailRepositoryImpl
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
@@ -73,5 +75,11 @@ abstract class RepositoryModule {
     abstract fun bindMapRepository(
         mapRepositoryImpl: MapRepositoryImpl
     ) : MapRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindWantHomeBookmarkRepository(
+        bookmarkRepositoryImpl: BookmarkRepositoryImpl
+    ): BookmarkRepository
 }
 

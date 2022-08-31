@@ -1,20 +1,23 @@
 package com.example.home_rent_app.data.dto
 
+
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class WantHomeResultDTO(
+data class WantBookmarkResponseDTO(
     @field:Json(name = "hasNext")
     val hasNext: Boolean,
     @field:Json(name = "wantedArticles")
-    val wantedArticles: List<WantedArticle>
+    val wantedArticles: List<WantedArticleBookmark>
 )
 
 @JsonClass(generateAdapter = true)
-data class WantedArticle(
+data class WantedArticleBookmark(
     @field:Json(name = "address")
     val address: String,
+    @field:Json(name = "bookmarked")
+    val bookmarked: Boolean,
     @field:Json(name = "content")
     val content: String,
     @field:Json(name = "createdAt")
@@ -30,7 +33,5 @@ data class WantedArticle(
     @field:Json(name = "rentBudget")
     val rentBudget: Int,
     @field:Json(name = "title")
-    val title: String,
-    @field:Json(name = "bookmarked")
-    val bookmarked: Boolean
+    val title: String
 )
