@@ -41,16 +41,6 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-//    fun setBlackBackground() {
-//        binding.blank.visibility = View.VISIBLE
-//        binding.navigation.setBackgroundColor(getColor(R.color.lightBlack_200))
-//    }
-//
-//    fun setCancelBlackBackground() {
-//        binding.blank.visibility = View.GONE
-//        binding.navigation.setBackgroundColor(getColor(com.google.android.material.R.color.mtrl_btn_transparent_bg_color))
-//    }
-
     companion object User {
 
         val user = User(
@@ -58,5 +48,10 @@ class HomeActivity : AppCompatActivity() {
             name = "rest",
             image = "https://ifh.cc/g/cKhWxt.jpg"
         )
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
     }
 }
