@@ -204,4 +204,17 @@ object RetrofitInstance {
             .build()
             .create(BookmarkApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun deleteItem(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): ProfileApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(ProfileApi::class.java)
+    }
 }

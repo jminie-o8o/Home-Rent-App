@@ -41,6 +41,7 @@ class WantHomeResultActivity : AppCompatActivity() {
         updateAdapter()
         addBookMarkToast()
         deleteBookMarkToast()
+        goBack()
     }
 
     private fun handleSearchWord() {
@@ -95,6 +96,12 @@ class WantHomeResultActivity : AppCompatActivity() {
     private fun deleteBookMarkToast() {
         collectStateFlow(viewModel.deleteBookmarkStatusCode) { code ->
             if (code == 200) Toast.makeText(this, "관심목록에서 제거되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun goBack() {
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
         }
     }
 }

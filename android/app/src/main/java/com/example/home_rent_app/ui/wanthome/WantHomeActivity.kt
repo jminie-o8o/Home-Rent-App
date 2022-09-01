@@ -7,11 +7,13 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeBinding
 import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,5 +44,11 @@ class WantHomeActivity : AppCompatActivity() {
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         return true
+    }
+
+    fun clickRegister() {
+        val intent = Intent(this, WantHomeDetailActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

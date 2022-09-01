@@ -25,8 +25,6 @@ class BookmarkViewModel @Inject constructor(
 
     private var page = 0
 
-    private var hasNext = false
-
     private val _wantHomeBookmarkResult =
         MutableStateFlow<MutableList<WantedArticleBookmark>>(mutableListOf())
     val wantHomeBookmarkResult: StateFlow<MutableList<WantedArticleBookmark>> = _wantHomeBookmarkResult
@@ -45,12 +43,13 @@ class BookmarkViewModel @Inject constructor(
 
     fun getWantHomeResult(userId: Int) {
         viewModelScope.launch {
-            if (hasNext) {
+            val response = bookmarkRepository.getWantBookmark(userId, page)
+            if (response.hasNext) {
                 return@launch
             }
             val list = mutableListOf<WantedArticleBookmark>()
             list.addAll(_wantHomeBookmarkResult.value)
-            list.addAll(bookmarkRepository.getWantBookmark(userId, page))
+            list.addAll(response.wantedArticles)
             _wantHomeBookmarkResult.value = list
             page += 1
         }
@@ -65,12 +64,13 @@ class BookmarkViewModel @Inject constructor(
 
     fun getGiveHomeResult(userId: Int) {
         viewModelScope.launch {
-            if (hasNext) {
+            val response = bookmarkRepository.getGiveBookmark(userId, page)
+            if (response.hasNext) {
                 return@launch
             }
             val list = mutableListOf<RentArticleBookmark>()
             list.addAll(_giveHomeBookmarkResult.value)
-            list.addAll(bookmarkRepository.getGiveBookmark(userId, page))
+            list.addAll(response.rentArticles)
             _giveHomeBookmarkResult.value = list
             page += 1
         }

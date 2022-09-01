@@ -34,6 +34,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/btn_login_profile_modify"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginEnd="-5dp"
+            android:background="@drawable/ic_baseline_add_circle_24"
+            app:layout_constraintEnd_toEndOf="@+id/iv_login_profile"
+            app:layout_constraintTop_toTopOf="@+id/iv_login_profile"/>
+
         <TextView
             android:id="@+id/tv_login_profile_write_nickname"
             style="@style/TextSubtitle1.18.bold"

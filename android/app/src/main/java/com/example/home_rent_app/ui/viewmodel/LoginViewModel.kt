@@ -12,6 +12,7 @@ import com.example.home_rent_app.data.repository.login.LoginRepository
 import com.example.home_rent_app.data.repository.loginProfile.LoginProfileRepository
 import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.util.Constants.GENDER_DEFAULT
+import com.example.home_rent_app.util.LoginCheck
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -38,23 +39,27 @@ class LoginViewModel @Inject constructor(
     private val _imageUrl: MutableStateFlow<String> = MutableStateFlow("")
     val imageUrl: StateFlow<String> get() = _imageUrl
 
-    private val _isLogin = MutableStateFlow(false)
-    val isLogin: StateFlow<Boolean> get() = _isLogin
+    private val _isLogin = MutableSharedFlow<Boolean>()
+    val isLogin: SharedFlow<Boolean> get() = _isLogin
 
     private val _gender = MutableStateFlow<String>(GENDER_DEFAULT)
     val gender: StateFlow<String?> get() = _gender
 
+    var check = false
+
     init {
-        viewModelScope.launch {
-            loginRepository.getIsLogin().collect { isLogin ->
-                _isLogin.value = isLogin
-                if (isLogin) { // 자동로그인이 되어있는 경우
-                    setAppSession()
-                    connectUser() // 채팅 관련
-                    setUserSession(setUserId())
-                }
-            }
-        }
+//        viewModelScope.launch {
+//            loginRepository.getIsLogin().collect { isLogin ->
+//                if (isLogin) { // 자동로그인이 되어있는 경우
+//                    _isLogin.emit(true)
+//                    setAppSession()
+//                    connectUser() // 채팅 관련
+//                    setUserSession(setUserId())
+//                    return@collect
+//                }
+//                _isLogin.emit(false)
+//            }
+//        }
     }
 
     // UserSession 에 UserId 저장
@@ -104,8 +109,9 @@ class LoginViewModel @Inject constructor(
             }
             launch {
                 // 유저 id는 서버에서 내려오므로 여기에서 DataStore 에 저장
-                _gender.value = user.gender.orEmpty()
-                val userId = user.userId ?: 0
+                logger("test viewmodel gender : ${user.gender}")
+                _gender.value = user.gender
+                val userId = user.userId
                 loginRepository.saveUserIDAtDataStore(userId)
                 setUserSession(setUserId())
             }
@@ -166,6 +172,21 @@ class LoginViewModel @Inject constructor(
     fun saveIsLogin() {
         viewModelScope.launch {
             loginRepository.saveIsLogin()
+        }
+    }
+
+    fun checkLogin() {
+        viewModelScope.launch {
+            loginRepository.getIsLogin().collect { isLogin ->
+                if (isLogin) { // 자동로그인이 되어있는 경우
+                    _isLogin.emit(true)
+                    setAppSession()
+                    connectUser() // 채팅 관련
+                    setUserSession(setUserId())
+                    return@collect
+                }
+                _isLogin.emit(false)
+            }
         }
     }
 }

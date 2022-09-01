@@ -21,6 +21,7 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
 import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.LoginActivity
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.FileController
 import com.example.home_rent_app.util.UserSession
@@ -53,17 +54,12 @@ class LoginProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ivLoginProfile.setOnClickListener {
+        binding.btnLoginProfileModify.setOnClickListener {
             if (isAllPermissionGranted()) {
                 selectGallery()
             } else {
                 requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
             }
-        }
-
-        binding.btnLoginProfile.setOnClickListener {
-            val intent = Intent(binding.root.context, HomeActivity::class.java)
-            startActivity(intent)
         }
         checkNickName()
         addAccount()
@@ -165,18 +161,14 @@ class LoginProfileFragment : Fragment() {
         }
         // User 정보를 서버에 보내기
         loginViewModel.setUserProfile(userSession.userId ?: 0, UserProfileRequest(displayName, imageUrl, gender))
-        // User 정보를 DataStore 에 저장
-/*        loginViewModel.saveUserDisplayAtDataStore(displayName)
-        loginViewModel.saveUserProfileImageAtDataStore(imageUrl)
-        loginViewModel.saveUserGenderAtDataStore(gender)*/
     }
 
     private fun addAccount() {
         binding.btnLoginProfile.setOnClickListener {
             loginViewModel.saveIsLogin()
             setUserProfile()
-            val intent = Intent(requireContext(), HomeActivity::class.java)
-            startActivity(intent)
+            val activity = activity as LoginActivity
+            activity.moveToHomeActivity()
         }
     }
 
