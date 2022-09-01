@@ -61,7 +61,7 @@ class KakaoWebViewFragment : Fragment() {
 
     private fun setupObserveAndMove(navController: NavController) {
         collectStateFlow(viewModel.gender) { gender ->
-            logger("gender $gender")
+            logger("test gender $gender")
             if (gender == Constants.GENDER_NEW) {
                 navController.navigate(R.id.action_kakaoWebViewFragment_to_loginProfileFragment)
             } else if (gender != Constants.GENDER_DEFAULT) {
@@ -81,6 +81,7 @@ class KakaoWebViewFragment : Fragment() {
                 url.host == KAKAO_OAUTH_REDIRECTION_HOST &&
                 code != null
             ) {
+                logger("test code ${code}")
                 viewModel.getKakaoToken(KakaoOauthRequest(code.toString()))
             }
         }

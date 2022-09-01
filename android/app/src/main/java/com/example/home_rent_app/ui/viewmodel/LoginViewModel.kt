@@ -104,8 +104,9 @@ class LoginViewModel @Inject constructor(
             }
             launch {
                 // 유저 id는 서버에서 내려오므로 여기에서 DataStore 에 저장
-                _gender.value = user.gender.orEmpty()
-                val userId = user.userId ?: 0
+                logger("test viewmodel gender : ${user.gender}")
+                _gender.value = user.gender
+                val userId = user.userId
                 loginRepository.saveUserIDAtDataStore(userId)
                 setUserSession(setUserId())
             }

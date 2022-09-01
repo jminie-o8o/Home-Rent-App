@@ -11,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.home_rent_app.R
 import com.example.home_rent_app.ui.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
@@ -32,6 +33,7 @@ class SplashScreenActivity : AppCompatActivity() {
             content.viewTreeObserver.addOnPreDrawListener(
                 object : ViewTreeObserver.OnPreDrawListener {
                     override fun onPreDraw(): Boolean {
+                        logger("isLogin : $isLogin")
                         return if (isLogin) {
                             val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
                             startActivity(intent)
