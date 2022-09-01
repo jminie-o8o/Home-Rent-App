@@ -23,9 +23,9 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
 
     val title = MutableStateFlow("")
 
-    val roomType = MutableStateFlow(RoomType.ONE_ROOM)
+    val houseType = MutableStateFlow(HouseType.ONE_ROOM)
 
-    val rentType = MutableStateFlow(RentType.MONTHLY)
+    val contractType = MutableStateFlow(RentType.MONTHLY)
 
     val deposit = MutableStateFlow("")
 
@@ -35,13 +35,12 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
 
     val maintenanceDescription = MutableStateFlow("")
 
-    val startDate = MutableStateFlow("")
+    val availableFrom = MutableStateFlow("")
 
-    val endDate = MutableStateFlow("")
+    val expiredAt = MutableStateFlow("")
 
     private val _homeDescriptionState = MutableStateFlow(false)
     val homeDescriptionState = _homeDescriptionState.asStateFlow()
-
 
     private val _isCorrectDate = MutableSharedFlow<Boolean>(
         replay = 0,
@@ -57,15 +56,33 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
     private val _overPictures = MutableStateFlow(false)
     val overPictures = _overPictures.asStateFlow()
 
-    private val _pictureUrl = MutableStateFlow<UiState<ImageUrl>>(UiState.Loading)
-    val pictureUrl = _pictureUrl.asStateFlow()
+    private val _houseImages = MutableStateFlow<UiState<ImageUrl>>(UiState.Loading)
+    val houseImages = _houseImages.asStateFlow()
 
     val address = MutableStateFlow("")
+
+    val addressDetail = MutableStateFlow("")
+
+    val facilities = MutableStateFlow<List<String>>(emptyList())
+
+    val securityFaclities = MutableStateFlow<List<String>>(emptyList())
+
+    val content = MutableStateFlow("")
+
+    val maxFloor = MutableStateFlow("")
+
+    val thisFloor = MutableStateFlow("")
+
+    val hasParkingLot = MutableStateFlow(false)
+
+    val hasBalcony = MutableStateFlow(false)
+
+    val hasElevator = MutableStateFlow(false)
 
     private var id = 0
 
     fun setHomeDescriptionState() {
-        when (rentType.value) {
+        when (contractType.value) {
             RentType.JEONSE -> setJeonseHomeDescriptionState()
             RentType.MONTHLY -> setMonthlyHomeDescriptionState()
         }
@@ -106,8 +123,8 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
             deposit.value != "" &&
             maintenance.value != "" &&
             maintenanceDescription.value != "" &&
-            startDate.value != "" &&
-            endDate.value != ""
+            availableFrom.value != "" &&
+            expiredAt.value != ""
         ) {
             _homeDescriptionState.value = true
         }
@@ -119,8 +136,8 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
             monthly.value != "" &&
             maintenance.value != "" &&
             maintenanceDescription.value != "" &&
-            startDate.value != "" &&
-            endDate.value != ""
+            availableFrom.value != "" &&
+            expiredAt.value != ""
         ) {
             _homeDescriptionState.value = true
         }
@@ -164,12 +181,12 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
 
     suspend fun checkCorrectDate() {
 
-        if (startDate.value != "" && endDate.value != "") {
+        if (availableFrom.value != "" && expiredAt.value != "") {
             _isCorrectDate.emit(compareToDate() < 0)
         }
     }
 
-    private fun compareToDate() = startDate.value.compareTo(endDate.value)
+    private fun compareToDate() = availableFrom.value.compareTo(expiredAt.value)
 
     fun getImageUrl() {
         val list = mutableListOf<MultipartBody.Part>()
@@ -182,9 +199,9 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
                 logger("image : $it")
             }
             transferRepository.getImageUrl(list).catch {  e ->
-                _pictureUrl.value = UiState.Error(e.stackTraceToString())
+                _houseImages.value = UiState.Error(e.stackTraceToString())
             }.collect {
-                _pictureUrl.value = UiState.Success(it)
+                _houseImages.value = UiState.Success(it)
             }
         }
     }

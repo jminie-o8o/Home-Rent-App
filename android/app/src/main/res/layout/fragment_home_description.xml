@@ -117,7 +117,7 @@
                 app:singleSelection="true"
                 app:selectionRequired="true"
                 android:layout_marginTop="15dp"
-                roomTypeFilter="@={vm.roomType}"
+                roomTypeFilter="@={vm.houseType}"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_category_label">
@@ -197,7 +197,7 @@
                 app:selectionRequired="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="16dp"
-                rentTypeFilter="@={vm.rentType}"
+                rentTypeFilter="@={vm.contractType}"
                 app:layout_constraintTop_toBottomOf="@id/tv_rent_format_label">
 
                 <com.google.android.material.chip.Chip
@@ -410,7 +410,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
-                    android:text="@={vm.startDate}"
+                    android:text="@={vm.availableFrom}"
                     android:focusableInTouchMode="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -443,7 +443,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
-                    android:text="@={vm.endDate}"
+                    android:text="@={vm.expiredAt}"
                     android:focusableInTouchMode="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>

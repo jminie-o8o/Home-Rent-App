@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.model.Article
 import com.example.home_rent_app.databinding.ItemHomeListBinding
 
-class HomeListAdapter(private val listener: (Int) -> Unit): ListAdapter<Article, HomeListAdapter.TempViewHolder>(TempDiffUtil) {
+class HomeListAdapter(
+    private val goToDetail: (Int) -> Unit,
+    private val bookMark: (Int) -> Unit
+    ): ListAdapter<Article, HomeListAdapter.TempViewHolder>(TempDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TempViewHolder {
         return TempViewHolder(ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -30,7 +33,11 @@ class HomeListAdapter(private val listener: (Int) -> Unit): ListAdapter<Article,
 
         private fun setOnHomeClick(item: Article) {
             itemView.setOnClickListener {
-                listener(item.id)
+                goToDetail(item.id)
+            }
+
+            binding.cbRecommend.setOnClickListener {
+                bookMark(item.id)
             }
         }
 
