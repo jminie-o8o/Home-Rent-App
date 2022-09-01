@@ -39,7 +39,6 @@
         <item name="windowSplashScreenBackground">@color/main_color</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
         <item name="postSplashScreenTheme">@style/Theme.HomeRentApp</item>
-        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
 </resources>

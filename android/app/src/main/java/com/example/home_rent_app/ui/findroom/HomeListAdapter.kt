@@ -16,6 +16,7 @@ class HomeListAdapter(
     private val deleteBookmark: (Int) -> Unit
     ): ListAdapter<Article, HomeListAdapter.HomeListViewHolder>(TempDiffUtil) {
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeListViewHolder {
         return HomeListViewHolder(ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -50,6 +51,7 @@ class HomeListAdapter(
                     deleteBookmark(item.id)
                 }
                 item.bookmarked = !item.bookmarked
+
             }
         }
 

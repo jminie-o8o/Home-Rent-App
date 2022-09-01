@@ -23,7 +23,6 @@ import javax.inject.Inject
 @HiltViewModel
 class FindRoomViewModel @Inject constructor(
     private val repository: FindRoomRepository,
-    private val wantHomeResultRepository: WantHomeResultRepository,
     private val userSession: UserSession
 ): ViewModel() {
 
