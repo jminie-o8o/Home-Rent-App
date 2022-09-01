@@ -30,5 +30,7 @@ data class WantedArticle(
     @field:Json(name = "rentBudget")
     val rentBudget: Int,
     @field:Json(name = "title")
-    val title: String
+    val title: String,
+    @field:Json(name = "bookmarked")
+    val bookmarked: Boolean
 )

@@ -168,6 +168,19 @@ object RetrofitInstance {
 
     @Provides
     @Singleton
+    fun addWantHomeApi(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): AddWantHomeApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(AddWantHomeApi::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideMapApi(
         @Named("map") okHttpClient: OkHttpClient
     ): MapApi {
@@ -179,4 +192,16 @@ object RetrofitInstance {
             .create(MapApi::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun getWantHomeBookmark(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): BookmarkApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(BookmarkApi::class.java)
+    }
 }

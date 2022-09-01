@@ -120,6 +120,12 @@ dependencies {
     // map
     implementation 'com.naver.maps:map-sdk:3.15.0'
 
+    // paging
+    implementation "androidx.paging:paging-runtime:3.1.1"
+
+    // coil
+    implementation "io.coil-kt:coil:2.2.0"
+
 }
 
 kapt {

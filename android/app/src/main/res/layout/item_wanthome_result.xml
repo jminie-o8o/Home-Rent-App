@@ -26,14 +26,17 @@
             android:text="@{wantedArticle.title}"
             tools:text="부산광역시 남구, 강서구" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <CheckBox
             android:id="@+id/btn_like"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:button="@android:color/transparent"
             android:background="@drawable/heart_selector"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/tv_wanted_home_result_contents"

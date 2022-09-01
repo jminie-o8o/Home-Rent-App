@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeFirstStepBinding
+import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.RangeValidator
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -23,9 +26,11 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.Locale
 
+@AndroidEntryPoint
 class WantHomeFirstStepFragment : Fragment() {
 
     lateinit var binding: FragmentWantHomeFirstStepBinding
+    private val viewModel: WantHomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +59,8 @@ class WantHomeFirstStepFragment : Fragment() {
 
     private fun goSecondStep(navController: NavController) {
         binding.btnGoSecondStep.setOnClickListener {
+            setRangeAtViewModel()
+            setDepositAtViewModel()
             navController.navigate(
                 R.id.action_wantHomeFirstStepFragment_to_wantHomeSecondStepFragment
             )
@@ -69,7 +76,7 @@ class WantHomeFirstStepFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showDatePicker() {
-        binding.btnGoIn.setOnClickListener {
+        binding.etGoIn.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker()
                 .setCalendarConstraints(limitRange().build())
                 .setTitleText("입주 희망일")
@@ -78,10 +85,10 @@ class WantHomeFirstStepFragment : Fragment() {
             datePicker.addOnPositiveButtonClickListener {
                 val date =
                     SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
-                binding.btnGoIn.text = date
+                binding.etGoIn.setText(date)
             }
         }
-        binding.btnGoOut.setOnClickListener {
+        binding.etGoOut.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker()
                 .setCalendarConstraints(limitRange().build())
                 .setTitleText("퇴거 희망일")
@@ -90,7 +97,7 @@ class WantHomeFirstStepFragment : Fragment() {
             datePicker.addOnPositiveButtonClickListener {
                 val date =
                     SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
-                binding.btnGoOut.text = date
+                binding.etGoOut.setText(date)
             }
         }
     }
@@ -125,5 +132,19 @@ class WantHomeFirstStepFragment : Fragment() {
         constraintsBuilderRange.setValidator(RangeValidator(minDate, maxDate))
 
         return constraintsBuilderRange
+    }
+
+    private fun setRangeAtViewModel() {
+        val goIn = binding.etGoIn.text?.toString() ?: ""
+        val goOut = binding.etGoOut.text?.toString() ?: ""
+        val list = listOf(goIn, goOut)
+        viewModel.setRange(list)
+    }
+
+    private fun setDepositAtViewModel() {
+        val deposit = binding.etDeposit.text?.toString()?.toInt() ?: 0
+        val monthlyRent = binding.etMonthlyRent.text?.toString()?.toInt() ?: 0
+        val list = listOf(deposit, monthlyRent)
+        viewModel.setDeposit(list)
     }
 }

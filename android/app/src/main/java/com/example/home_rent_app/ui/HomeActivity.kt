@@ -9,13 +9,20 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityHomeBinding
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.util.AppSession
+import com.example.home_rent_app.util.UserSession
 import dagger.hilt.android.AndroidEntryPoint
 import io.getstream.chat.android.client.models.User
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+    @Inject
+    lateinit var userSession: UserSession
+    @Inject
+    lateinit var appSession: AppSession
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         binding.navigation.setupWithNavController(navHostFragment.navController)
-
     }
 
     fun goWantHomeActivity() {

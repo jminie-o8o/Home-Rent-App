@@ -6,15 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeDetailBinding
+import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.setLikeClickEvent
 
 class WantHomeDetailFragment : Fragment() {
 
     lateinit var binding: FragmentWantHomeDetailBinding
+    private val viewModel: WantHomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

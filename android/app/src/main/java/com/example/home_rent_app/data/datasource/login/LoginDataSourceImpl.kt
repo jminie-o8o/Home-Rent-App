@@ -5,7 +5,6 @@ import com.example.home_rent_app.data.datastore.DataStore
 import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
-import com.example.home_rent_app.data.model.User
 import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.logger
@@ -50,7 +49,7 @@ class LoginDataSourceImpl @Inject constructor(
         return dataStore.getIsLogin()
     }
 
-    override suspend fun saveUserID(userId: Int?) {
+    override suspend fun saveUserIDAtDataStore(userId: Int?) {
         userId?.let {
             dataStore.saveUserID(it)
         }
@@ -86,8 +85,9 @@ class LoginDataSourceImpl @Inject constructor(
 //        return dataStore.getUserInfo()
 //    }
 
-    override suspend fun setUserSession(user: User) {
-        userSession.user = user
+    override suspend fun setUserIdAtUserSession(userId: Int) {
+        logger("LoginFragment ID DataSource: ${userId}")
+        userSession.userId = userId
     }
 
     override fun connectUser() = flow {

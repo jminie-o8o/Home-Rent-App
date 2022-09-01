@@ -1,12 +1,15 @@
 package com.example.home_rent_app.data.datastore
 
 import android.content.Context
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.home_rent_app.data.model.AccessToken
 import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.RefreshToken
-import com.example.home_rent_app.data.model.User
 import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.Constants
 import dagger.hilt.android.qualifiers.ApplicationContext

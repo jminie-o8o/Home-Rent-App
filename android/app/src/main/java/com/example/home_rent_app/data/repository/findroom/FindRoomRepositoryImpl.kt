@@ -5,9 +5,7 @@ import com.example.home_rent_app.data.dto.toJWT
 import com.example.home_rent_app.data.dto.toRoomSearchResult
 import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.RoomSearchResult
-import com.example.home_rent_app.util.logger
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton

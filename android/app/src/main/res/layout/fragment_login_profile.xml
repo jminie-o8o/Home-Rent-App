@@ -107,14 +107,14 @@
             app:layout_constraintTop_toBottomOf="@id/tv_choose_sex">
 
             <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_accuracy"
+                android:id="@+id/rb_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/main_color"
                 android:text="남성" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_latest"
+                android:id="@+id/rb_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
