@@ -5,13 +5,13 @@
 
     <data>
         <variable
-            name="bookmarkWantedBookmark"
-            type="com.example.home_rent_app.data.dto.WantedArticleBookmark" />
+            name="wantArticleProfile"
+            type="com.example.home_rent_app.data.dto.WantArticleProfile" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="148dp">
 
         <TextView
             android:id="@+id/tv_wanted_home_result_title"
@@ -22,7 +22,7 @@
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{bookmarkWantedBookmark.title}"
+            android:text="@{wantArticleProfile.title}"
             tools:text="부산광역시 남구, 강서구" />
 
         <ImageButton
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:maxLines="2"
-            android:text="@{bookmarkWantedBookmark.content}"
+            android:text="@{wantArticleProfile.content}"
             android:textColor="@color/gray03"
             app:layout_constraintStart_toStartOf="@+id/tv_wanted_home_result_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_result_title"
@@ -54,7 +54,7 @@
             style="@style/TextSubtitle1.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            formattingStartDate="@{bookmarkWantedBookmark.moveInDate}"
+            formattingStartDate="@{wantArticleProfile.moveInDate}"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@+id/tv_wanted_home_result_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_result_contents"
@@ -65,7 +65,7 @@
             style="@style/TextSubtitle1.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            formattingEndDate="@{bookmarkWantedBookmark.moveOutDate}"
+            formattingEndDate="@{wantArticleProfile.moveOutDate}"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toEndOf="@+id/tv_wanted_home_start_date"
             app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_result_contents"
@@ -77,8 +77,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            deposit="@{String.valueOf(bookmarkWantedBookmark.depositBudget)}"
-            monthlyPay="@{String.valueOf(bookmarkWantedBookmark.rentBudget)}"
+            deposit="@{String.valueOf(wantArticleProfile.depositBudget)}"
+            monthlyPay="@{String.valueOf(wantArticleProfile.rentBudget)}"
             app:layout_constraintStart_toStartOf="@+id/tv_wanted_home_result_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_start_date"
             tools:text="예산 월세 100/35" />

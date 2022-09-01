@@ -10,41 +10,41 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
-import com.example.home_rent_app.data.dto.RentArticleProfile
-import com.example.home_rent_app.databinding.ItemGivehomeProfileBinding
-import com.example.home_rent_app.ui.detail.DetailRentActivity
+import com.example.home_rent_app.data.dto.WantArticleProfile
+import com.example.home_rent_app.databinding.ItemWanthomeProfileBinding
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.ItemIdSession
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class ProfileGiveHomeAdapter @Inject constructor(
+class ProfileWantHomeAdapter @Inject constructor(
     private val viewModel: ProfileViewModel,
     private val itemIdSession: ItemIdSession,
     @ApplicationContext private val context: Context
-) : ListAdapter<RentArticleProfile, ProfileGiveHomeAdapter.ProfileGiveHomeViewHolder>(ProfileGiveAdapterDiffCallBack) {
+) : ListAdapter<WantArticleProfile, ProfileWantHomeAdapter.ProfileWantHomeViewHolder>(ProfileWantAdapterDiffCallBack) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileGiveHomeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileWantHomeViewHolder {
         val binding =
-            ItemGivehomeProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProfileGiveHomeViewHolder(binding)
+            ItemWanthomeProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ProfileWantHomeViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ProfileGiveHomeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProfileWantHomeViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class ProfileGiveHomeViewHolder(private val binding: ItemGivehomeProfileBinding) :
+    inner class ProfileWantHomeViewHolder(private val binding: ItemWanthomeProfileBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(rentArticleProfile : RentArticleProfile) {
-            binding.rentArticleProfile = rentArticleProfile
+        fun bind(wantArticleProfile: WantArticleProfile) {
+            binding.wantArticleProfile = wantArticleProfile
             itemView.setOnClickListener {
-                itemIdSession.itemId = rentArticleProfile.id
-                Intent(it.context, DetailRentActivity::class.java).run {
+                itemIdSession.itemId = wantArticleProfile.id
+                Intent(it.context, WantHomeDetailActivity::class.java).run {
                     it.context.startActivity(this)
                 }
             }
             binding.btnMoreAction.setOnClickListener {
-                showPopup(it, rentArticleProfile.id)
+                showPopup(it, wantArticleProfile.id)
             }
         }
 
@@ -66,17 +66,17 @@ class ProfileGiveHomeAdapter @Inject constructor(
         }
 
         private fun delete(id: Int) {
-            viewModel.deleteGiveItem(id)
+            viewModel.deleteWantItem(id)
         }
     }
 }
 
-object ProfileGiveAdapterDiffCallBack : DiffUtil.ItemCallback<RentArticleProfile>() {
-    override fun areItemsTheSame(oldItem: RentArticleProfile, newItem: RentArticleProfile): Boolean {
+object ProfileWantAdapterDiffCallBack : DiffUtil.ItemCallback<WantArticleProfile>() {
+    override fun areItemsTheSame(oldItem: WantArticleProfile, newItem: WantArticleProfile): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: RentArticleProfile, newItem: RentArticleProfile): Boolean {
+    override fun areContentsTheSame(oldItem: WantArticleProfile, newItem: WantArticleProfile): Boolean {
         return oldItem == newItem
     }
 }
