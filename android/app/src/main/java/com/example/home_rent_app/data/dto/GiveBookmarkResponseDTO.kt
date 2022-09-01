@@ -32,8 +32,8 @@ data class RentArticleBookmark(
     val deleted: Boolean,
     @field:Json(name = "deposit")
     val deposit: Int,
-    @field:Json(name = "houseImage")
-    val houseImage: String,
+    @field:Json(name = "houseImages")
+    val houseImages: List<String>,
     @field:Json(name = "id")
     val id: Int,
     @field:Json(name = "rentFee")

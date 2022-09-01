@@ -80,7 +80,7 @@ class HomeDescriptionFragment : Fragment() {
     // 전월세 구분
     private fun setRentTypeObserver() {
         repeatOnStarted {
-            viewModel.rentType.collect {
+            viewModel.contractType.collect {
                 when (it) {
                     RentType.MONTHLY -> {
                         setMonthlyVisible()
@@ -165,8 +165,7 @@ class HomeDescriptionFragment : Fragment() {
                         binding.root.context,
                         "올바른 날짜를 입력해주세요.",
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                     binding.tietStartDate.setText("")
                     binding.tietEndDate.setText("")
                 }
@@ -223,7 +222,7 @@ class HomeDescriptionFragment : Fragment() {
     // 입주 일 입력
     private fun setStartDateObserver() {
         repeatOnStarted {
-            viewModel.startDate.collect {
+            viewModel.availableFrom.collect {
                 viewModel.setHomeDescriptionState()
             }
         }
@@ -232,7 +231,7 @@ class HomeDescriptionFragment : Fragment() {
     // 계약 만료일 입력
     private fun setEndDateObserver() {
         repeatOnStarted {
-            viewModel.endDate.collect {
+            viewModel.expiredAt.collect {
                 viewModel.setHomeDescriptionState()
             }
         }

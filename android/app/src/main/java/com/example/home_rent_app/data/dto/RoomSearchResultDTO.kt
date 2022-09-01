@@ -32,14 +32,18 @@ data class RentArticle(
     val deleted: Boolean?,
     @field:Json(name = "deposit")
     val deposit: Int?,
-    @field:Json(name = "houseImage")
-    val houseImage: String = "",
+    @field:Json(name = "houseImages")
+    val houseImages: List<String?> = emptyList(),
     @field:Json(name = "id")
     val id: Int?,
     @field:Json(name = "rentFee")
     val rentFee: Int?,
     @field:Json(name = "title")
-    val title: String = ""
+    val title: String = "",
+    @field:Json(name = "address")
+    val address: String = "",
+    @field:Json(name = "bookmarked")
+    val bookmarked: Boolean? = false
 )
 
 fun RoomSearchResultDTO.toRoomSearchResult(): RoomSearchResult {
@@ -60,9 +64,10 @@ fun RentArticle.toArticle(): Article {
         createdAt = requireNotNull(createdAt),
         deleted = requireNotNull(deleted),
         deposit = requireNotNull(deposit),
-        houseImage = houseImage,
+        houseImages = houseImages.filterNotNull(),
         id = requireNotNull(id),
         rentFee = requireNotNull(rentFee),
-        title = title
+        title = title,
+        bookmarked = requireNotNull(bookmarked)
     )
 }

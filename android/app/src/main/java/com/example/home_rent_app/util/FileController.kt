@@ -24,7 +24,7 @@ class FileController @Inject constructor(@ApplicationContext private val context
         c?.moveToFirst()
         val result = c?.getString(index).orEmpty()
         c?.close()
-
+        logger("result ; $result")
         val file = File(result)
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
 

@@ -1,7 +1,9 @@
 package com.example.home_rent_app.ui
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
@@ -38,6 +40,16 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this, WantHomeActivity::class.java)
         startActivity(intent)
     }
+
+//    fun setBlackBackground() {
+//        binding.blank.visibility = View.VISIBLE
+//        binding.navigation.setBackgroundColor(getColor(R.color.lightBlack_200))
+//    }
+//
+//    fun setCancelBlackBackground() {
+//        binding.blank.visibility = View.GONE
+//        binding.navigation.setBackgroundColor(getColor(com.google.android.material.R.color.mtrl_btn_transparent_bg_color))
+//    }
 
     companion object User {
 

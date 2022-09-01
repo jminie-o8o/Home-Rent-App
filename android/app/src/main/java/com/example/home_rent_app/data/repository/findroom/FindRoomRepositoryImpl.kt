@@ -1,8 +1,10 @@
 package com.example.home_rent_app.data.repository.findroom
 
 import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSource
+import com.example.home_rent_app.data.dto.AddOrDeleteBookMarkResponseDTO
 import com.example.home_rent_app.data.dto.toJWT
 import com.example.home_rent_app.data.dto.toRoomSearchResult
+import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.RoomSearchResult
 import kotlinx.coroutines.flow.Flow
@@ -28,8 +30,7 @@ class FindRoomRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun refreshAuthToken(): Flow<JWT> {
-        return dataSource.refreshAuthToken().map { it.toJWT() }
-    }
+    override suspend fun addBookmark(bookmarkRequest: BookmarkRequest) = dataSource.addBookmark(bookmarkRequest)
 
+    override suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest) = dataSource.deleteBookmark(bookmarkRequest)
 }

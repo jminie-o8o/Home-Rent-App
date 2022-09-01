@@ -59,6 +59,7 @@
             tools:text="부경대 정문 10분거리"
             app:layout_constraintWidth_percent="0.5"
             app:layout_constraintStart_toStartOf="parent"
+            android:text="@{item.title}"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <TextView
@@ -92,18 +93,18 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/heart_selector"
             android:button="@android:color/transparent"
-            android:checked="false"
+            android:checked="@{item.bookmarked}"
             app:layout_constraintTop_toBottomOf="@id/vp_thumb_nail_list"/>
 
-        <TextView
-            android:id="@+id/tv_recommend_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/cb_recommend"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="48dp"
-            android:text="@{String.valueOf(item.bookmarkCount)}"
-            tools:text="14"/>
+<!--        <TextView-->
+<!--            android:id="@+id/tv_recommend_count"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/cb_recommend"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:layout_marginEnd="48dp"-->
+<!--            android:text="@{String.valueOf(item.bookmarkCount)}"-->
+<!--            tools:text="14"/>-->
 
         <View
             android:layout_width="match_parent"

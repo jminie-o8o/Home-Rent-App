@@ -32,5 +32,12 @@
             app:menu="@menu/bottom_navigation_menu"
             app:labelVisibilityMode="labeled"/>
 
+        <View
+            android:id="@+id/blank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/lightBlack"
+            android:visibility="gone"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
