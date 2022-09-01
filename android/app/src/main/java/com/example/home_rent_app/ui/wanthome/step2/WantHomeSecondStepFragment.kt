@@ -68,8 +68,8 @@ class WantHomeSecondStepFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             lifecycleScope.launch {
                 idSession.itemId = viewModel.addWantHome(userSession.userId ?: 0)
-                val intent = Intent(requireContext(), WantHomeDetailActivity::class.java)
-                startActivity(intent)
+                val activity = activity as WantHomeActivity
+                activity.clickRegister()
             }
         }
     }
