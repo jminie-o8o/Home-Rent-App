@@ -165,8 +165,7 @@ class HomeDescriptionFragment : Fragment() {
                         binding.root.context,
                         "올바른 날짜를 입력해주세요.",
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                     binding.tietStartDate.setText("")
                     binding.tietEndDate.setText("")
                 }

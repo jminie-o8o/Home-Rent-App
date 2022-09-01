@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.home_rent_app.R
 
-class PriceEditText(context: Context, attr: AttributeSet): AppCompatEditText(context, attr) {
+class LabelEditText(context: Context, attr: AttributeSet): AppCompatEditText(context, attr) {
 
     private lateinit var label: String
     private var position = 10

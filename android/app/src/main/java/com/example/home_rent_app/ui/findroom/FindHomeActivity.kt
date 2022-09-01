@@ -57,9 +57,6 @@ class FindHomeActivity : AppCompatActivity() {
                     is UiState.Error -> {
                         Toast.makeText(binding.root.context, "데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                     }
-                    is UiState.Loading -> {
-                        logger("search result loading....")
-                    }
                     else -> logger("Loading...")
                 }
             }

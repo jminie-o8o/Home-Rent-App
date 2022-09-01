@@ -96,6 +96,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
 
     private fun setAdapter() {
         picAdapter = PicAdapter(requireActivity().contentResolver, this) { itemView, position ->
+            logger("drop top : $position ${itemView.hashCode()}")
             drop(itemView, position)
         }
 
@@ -205,7 +206,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
                 .setHighlightColor(ContextCompat.getColor(binding.root.context, R.color.lightGray))
                 .build()
         ) { _, payload ->
-
+            logger("drop : $targetPosition")
             val item = payload.clip.getItemAt(0)
             val (_, remaining) = payload.partition { it == item }
 
@@ -217,6 +218,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
     private fun handleImageDrop(item: ClipData.Item, targetPosition: Int) {
         val beforePosition = item.text.toString().toInt()
         viewModel.replacePic(beforePosition, targetPosition)
+        logger("$beforePosition, $targetPosition")
 
         if(beforePosition == 0 || targetPosition == 0) {
             picAdapter.notifyItemChanged(beforePosition)
