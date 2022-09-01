@@ -8,6 +8,8 @@ import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
 import com.example.home_rent_app.data.repository.findroom.FindRoomRepositoryImpl
 import com.example.home_rent_app.data.repository.map.MapRepository
 import com.example.home_rent_app.data.repository.map.MapRepositoryImpl
+import com.example.home_rent_app.data.repository.profile.ProfileRepository
+import com.example.home_rent_app.data.repository.profile.ProfileRepositoryImpl
 import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepositoryImpl
 import com.example.home_rent_app.data.repository.token.TokenRepository
@@ -81,5 +83,11 @@ abstract class RepositoryModule {
     abstract fun bindWantHomeBookmarkRepository(
         bookmarkRepositoryImpl: BookmarkRepositoryImpl
     ): BookmarkRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindWantHomeProfileRepository(
+        profileRepositoryImpl: ProfileRepositoryImpl
+    ): ProfileRepository
 }
 
