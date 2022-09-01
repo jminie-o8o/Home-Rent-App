@@ -7,7 +7,9 @@ import com.example.home_rent_app.data.model.AddWantHomeRequest
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.Location
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -46,9 +48,9 @@ class WantHomeViewModel @Inject constructor(
     private val _wantHomeDetail = MutableStateFlow<WantHomeDetailResponseDTO?>(null)
     val wantHomeDetail: StateFlow<WantHomeDetailResponseDTO?> get() = _wantHomeDetail
 
-    fun addWantHome(userId: Int) {
-        viewModelScope.launch {
-            idSession.itemId = wantHomeRepository.addWantHome(
+    suspend fun addWantHome(userId: Int): Int {
+        val response = viewModelScope.async {
+            val response = wantHomeRepository.addWantHome(
                 AddWantHomeRequest(
                     userId = userId,
                     address = location.value.locationName + " " + detailAddress.value,
@@ -59,8 +61,10 @@ class WantHomeViewModel @Inject constructor(
                     rentBudget = monthlyRent.value,
                     depositBudget = deposit.value
                 )
-            ).id
+            )
+            response.id
         }
+        return response.await()
     }
 
     fun setRange(rangeList: List<String>) {
@@ -88,6 +92,7 @@ class WantHomeViewModel @Inject constructor(
     fun getWantHomeDetail(itemId: Int) {
         viewModelScope.launch {
             _wantHomeDetail.value = wantHomeRepository.getWantHome(itemId)
+            logger("테스트 : ${wantHomeRepository.getWantHome(itemId)}")
         }
     }
 }

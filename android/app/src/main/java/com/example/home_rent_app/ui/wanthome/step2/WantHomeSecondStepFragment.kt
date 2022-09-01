@@ -10,13 +10,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
+import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,6 +28,7 @@ class WantHomeSecondStepFragment : Fragment() {
     lateinit var binding: FragmentWantHomeSecondStepBinding
     private val viewModel: WantHomeViewModel by activityViewModels()
     @Inject lateinit var userSession: UserSession
+    @Inject lateinit var idSession: ItemIdSession
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,9 +66,11 @@ class WantHomeSecondStepFragment : Fragment() {
 
     private fun register() {
         binding.btnRegister.setOnClickListener {
-            viewModel.addWantHome(userSession.userId ?: 0)
-            val intent = Intent(requireContext(), WantHomeDetailActivity::class.java)
-            startActivity(intent)
+            lifecycleScope.launch {
+                idSession.itemId = viewModel.addWantHome(userSession.userId ?: 0)
+                val intent = Intent(requireContext(), WantHomeDetailActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.ItemIdSession
+import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.setLikeClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -48,6 +49,7 @@ class WantHomeDetailActivity : AppCompatActivity() {
     }
 
     private fun getWantHomeDetail() {
+        logger("테스트 : idSession ${idSession.itemId}")
         idSession.itemId?.let { viewModel.getWantHomeDetail(it) }
     }
 }
