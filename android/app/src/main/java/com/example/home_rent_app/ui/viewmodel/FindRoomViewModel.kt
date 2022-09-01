@@ -25,7 +25,6 @@ import javax.inject.Inject
 @HiltViewModel
 class FindRoomViewModel @Inject constructor(
     private val repository: FindRoomRepository,
-    private val tokenRepository: TokenRepository
 ): ViewModel() {
 
     val searchAddress = MutableStateFlow("")

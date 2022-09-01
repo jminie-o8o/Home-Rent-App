@@ -7,24 +7,24 @@ import com.example.home_rent_app.R
 import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter("roomTypeFilter")
-fun ChipGroup.bindRoomTypeFilter(roomType: RoomType?) =
+fun ChipGroup.bindRoomTypeFilter(roomType: HouseType?) =
     roomType?.let { filter ->
         when (filter) {
-            RoomType.ONE_ROOM -> check(R.id.chip_one_room)
-            RoomType.TWO_ROOM -> check(R.id.chip_two_room)
-            RoomType.EFFICIENCY -> check(R.id.chip_efficiency)
-            RoomType.SHARE_HOUSE -> check(R.id.chip_share_room)
-            RoomType.THREE_ROOM -> check(R.id.chip_three_room)
+            HouseType.ONE_ROOM -> check(R.id.chip_one_room)
+            HouseType.TWO_ROOM -> check(R.id.chip_two_room)
+            HouseType.EFFICIENCY -> check(R.id.chip_efficiency)
+            HouseType.SHARE_HOUSE -> check(R.id.chip_share_room)
+            HouseType.THREE_ROOM -> check(R.id.chip_three_room)
         }
     }
 
 @InverseBindingAdapter(attribute = "roomTypeFilter")
-fun ChipGroup.convertToRoomTypeFilter(): RoomType = when (checkedChipId) {
-    R.id.chip_one_room -> RoomType.ONE_ROOM
-    R.id.chip_two_room -> RoomType.TWO_ROOM
-    R.id.chip_efficiency -> RoomType.EFFICIENCY
-    R.id.chip_share_room -> RoomType.SHARE_HOUSE
-    else -> RoomType.THREE_ROOM
+fun ChipGroup.convertToRoomTypeFilter(): HouseType = when (checkedChipId) {
+    R.id.chip_one_room -> HouseType.ONE_ROOM
+    R.id.chip_two_room -> HouseType.TWO_ROOM
+    R.id.chip_efficiency -> HouseType.EFFICIENCY
+    R.id.chip_share_room -> HouseType.SHARE_HOUSE
+    else -> HouseType.THREE_ROOM
 }
 
 @BindingAdapter("roomTypeFilterAttrChanged")
@@ -48,4 +48,31 @@ fun ChipGroup.convertToRentTypeFilter(): RentType = when (checkedChipId) {
 
 @BindingAdapter("rentTypeFilterAttrChanged")
 fun ChipGroup.setRentTypeListeners(attrChange: InverseBindingListener?) =
+    setOnCheckedStateChangeListener { _, _ -> attrChange?.onChange() }
+
+@BindingAdapter("facilitiesFilter")
+fun ChipGroup.bindFacilitiesFilter(options: Options?) =
+    options?.let { filter ->
+        when (filter) {
+            Options.REFRIGERATOR -> check(R.id.chip_refrigerator)
+            Options.CONDITIONER -> check(R.id.chip_conditioner)
+            Options.WASHER -> check(R.id.chip_washer)
+            Options.TV -> check(R.id.chip_tv)
+            Options.BED -> check(R.id.chip_bed)
+            Options.CLOSET -> check(R.id.chip_closet)
+        }
+    }
+
+@InverseBindingAdapter(attribute = "facilitiesFilter")
+fun ChipGroup.convertToFacilitiesFilter(): Options = when (checkedChipId) {
+    R.id.chip_refrigerator -> Options.REFRIGERATOR
+    R.id.chip_conditioner -> Options.CONDITIONER
+    R.id.chip_washer -> Options.WASHER
+    R.id.chip_tv -> Options.TV
+    R.id.chip_bed -> Options.BED
+    else -> Options.CLOSET
+}
+
+@BindingAdapter("facilitiesFilterAttrChanged")
+fun ChipGroup.setFacilitiesListeners(attrChange: InverseBindingListener?) =
     setOnCheckedStateChangeListener { _, _ -> attrChange?.onChange() }

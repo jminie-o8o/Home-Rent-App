@@ -109,7 +109,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
 
     private fun setPictureUrlObserver() {
         repeatOnStarted {
-            viewModel.pictureUrl.collect {
+            viewModel.houseImages.collect {
                 when(it) {
                     is UiState.Error -> {
                         logger("NetWork Error ${it.message}")
