@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
+import com.example.home_rent_app.databinding.FragmentBookmarkGiveHomeBinding
 import com.example.home_rent_app.databinding.FragmentBookmarkWantHomeBinding
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
@@ -21,7 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BookmarkGiveHomeFragment : Fragment() {
 
-    lateinit var binding: FragmentBookmarkWantHomeBinding
+    lateinit var binding: FragmentBookmarkGiveHomeBinding
     lateinit var adapter: BookmarkGiveHomeAdapter
     private val viewModel: BookmarkViewModel by viewModels()
     @Inject
@@ -43,7 +44,7 @@ class BookmarkGiveHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewScrollListener()
         adapter = BookmarkGiveHomeAdapter(viewModel, userSession, idSession)
-        binding.rvBookmarkWantHome.adapter = adapter
+        binding.rvBookmarkGiveHome.adapter = adapter
         updateAdapter()
         deleteBookMarkToast()
     }
@@ -61,7 +62,7 @@ class BookmarkGiveHomeFragment : Fragment() {
     }
 
     private fun setRecyclerViewScrollListener() {
-        binding.rvBookmarkWantHome.addOnScrollListener( object : RecyclerView.OnScrollListener() {
+        binding.rvBookmarkGiveHome.addOnScrollListener( object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
