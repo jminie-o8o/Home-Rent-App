@@ -19,7 +19,7 @@ interface BookmarkApi {
         @Query("size") size: Int = 5
     ): WantBookmarkResponseDTO
 
-    @GET("users/{userId}/bookmarks/wanted")
+    @GET("users/{userId}/bookmarks/rent")
     suspend fun getGiveBookmarkResult(
         @Path("userId") userId: Int,
         @Query("page") page: Int,
