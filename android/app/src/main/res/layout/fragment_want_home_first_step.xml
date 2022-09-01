@@ -191,7 +191,7 @@
             app:layout_constraintStart_toStartOf="@+id/tv_deposit"
             app:layout_constraintTop_toBottomOf="@+id/tv_deposit">
 
-            <com.example.home_rent_app.ui.custom.PriceEditText
+            <com.example.home_rent_app.ui.custom.LabelEditText
                 android:id="@+id/et_deposit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -221,7 +221,7 @@
             app:layout_constraintStart_toStartOf="@+id/tv_monthly_rent"
             app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent">
 
-            <com.example.home_rent_app.ui.custom.PriceEditText
+            <com.example.home_rent_app.ui.custom.LabelEditText
                 android:id="@+id/et_monthly_rent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

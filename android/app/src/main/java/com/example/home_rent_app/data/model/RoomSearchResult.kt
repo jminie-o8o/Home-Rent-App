@@ -14,8 +14,9 @@ data class Article(
     val createdAt: String,
     val deleted: Boolean,
     val deposit: Int,
-    val houseImage: String,
+    val houseImages: List<String>,
     val id: Int,
     val rentFee: Int,
-    val title: String
+    val title: String,
+    var bookmarked: Boolean
 )
