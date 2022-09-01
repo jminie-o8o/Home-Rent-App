@@ -19,9 +19,7 @@ import com.example.home_rent_app.databinding.ItemRoomPicBinding
 import com.example.home_rent_app.util.PicControlListener
 import com.example.home_rent_app.util.ShadowBuilder
 import com.example.home_rent_app.util.getBitmap
-
-private const val MAIN = 0
-private const val OTHER = 1
+import com.example.home_rent_app.util.logger
 
 class PicAdapter(
     private val contentResolver: ContentResolver,
@@ -51,12 +49,14 @@ class PicAdapter(
             setMainLabel(roomPicture)
             setRemoveClick()
             drag()
-            drop(itemView, adapterPosition)
+            drop(itemView, bindingAdapterPosition)
+            logger("bind : $bindingAdapterPosition")
+            // bind 후에 포지션이 변하지 않음
         }
 
         private fun setRemoveClick() {
             binding.ivBtnRemove.setOnClickListener {
-                listener.removePic(adapterPosition)
+                listener.removePic(bindingAdapterPosition)
             }
         }
 
@@ -70,11 +70,10 @@ class PicAdapter(
 
         private fun drag() {
             binding.ivMainImage.setOnLongClickListener { view ->
-//                val dragDate = ClipData.newUri(contentResolver, "image", uri)
-                val item = ClipData.Item(adapterPosition.toString())
-                val data = ClipData(adapterPosition.toString(), arrayOf(MIMETYPE_TEXT_PLAIN), item)
+                val item = ClipData.Item(bindingAdapterPosition.toString())
+                val data = ClipData(bindingAdapterPosition.toString(), arrayOf(MIMETYPE_TEXT_PLAIN), item)
                 val shadow = ShadowBuilder(view)
-//                DRAG_FLAG_GLOBAL.or(DRAG_FLAG_GLOBAL_URI_READ)
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     view.startDragAndDrop(
                         data,  // The data to be dragged
@@ -86,43 +85,11 @@ class PicAdapter(
                     Toast.makeText(binding.root.context, "버전이 낮아서 지원하지 않습니다.", Toast.LENGTH_SHORT)
                         .show()
                 }
-
                 true
             }
 
         }
 
-//        private fun drop() {
-//            DropHelper.configureView(
-//                binding.root as Activity,
-//                itemView,
-//                arrayOf(
-//                    MIMETYPE_TEXT_PLAIN,
-//                    "image/*",
-//                    "application/x-arc-uri-list" // Support external items on Chrome OS Android 9
-//                ),
-//                DropHelper.Options.Builder()
-//                    .setHighlightColor(getColor(binding.root.context, R.color.lightGray))
-//                    .build()
-//            ) { _, payload ->
-//
-//                val item = payload.clip.getItemAt(0)
-//                val (_, remaining) = payload.partition { it == item }
-//
-//                handleImageDrop(item)
-//                remaining
-//            }
-//        }
-//
-//        private fun handleImageDrop(item: ClipData.Item) {
-//            val beforePosition = item.text.toString().toInt()
-//            listener.changePic(beforePosition, adapterPosition)
-//
-//            if(beforePosition == 0 || adapterPosition == 0) {
-//                notifyItemChanged(beforePosition)
-//                notifyItemChanged(adapterPosition)
-//            }
-//        }
     }
 
     private object PicDiffUtil : DiffUtil.ItemCallback<RoomPicture>() {

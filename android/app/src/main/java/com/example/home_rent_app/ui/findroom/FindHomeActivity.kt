@@ -22,12 +22,22 @@ class FindHomeActivity : AppCompatActivity() {
 
     private val viewModel: FindRoomViewModel by viewModels()
 
-    private val adapter: HomeListAdapter = HomeListAdapter { homeId ->
+    private val geToDetail: (Int) -> Unit = {
         // 상세화면 이동
         val intent = Intent(this, DetailRentActivity::class.java)
-        intent.putExtra("homeId", homeId)
+        intent.putExtra("homeId", it)
         startActivity(intent)
     }
+
+    private val addBookmark: (Int) -> Unit = {
+        viewModel.addBookmark(it)
+    }
+
+    private val deleteBookmark: (Int) -> Unit = {
+        viewModel.deleteBookmark(it)
+    }
+
+    private val adapter: HomeListAdapter = HomeListAdapter(geToDetail, addBookmark, deleteBookmark)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +45,7 @@ class FindHomeActivity : AppCompatActivity() {
         setClickNavigationButton()
         setSearchResult()
         search()
+        setBookmarkEventObserve()
         binding.rvSearchResult.adapter = adapter
         binding.vm = viewModel
     }
@@ -57,9 +68,6 @@ class FindHomeActivity : AppCompatActivity() {
                     is UiState.Error -> {
                         Toast.makeText(binding.root.context, "데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                     }
-                    is UiState.Loading -> {
-                        logger("search result loading....")
-                    }
                     else -> logger("Loading...")
                 }
             }
@@ -69,6 +77,14 @@ class FindHomeActivity : AppCompatActivity() {
     private fun setClickNavigationButton() {
         binding.abTopAppbar.setNavigationOnClickListener {
             finish()
+        }
+    }
+
+    private fun setBookmarkEventObserve() {
+        repeatOnStarted {
+            viewModel.bookmarkEvent.collect {
+                Toast.makeText(binding.root.context, "관심목록에 ${it}되었습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

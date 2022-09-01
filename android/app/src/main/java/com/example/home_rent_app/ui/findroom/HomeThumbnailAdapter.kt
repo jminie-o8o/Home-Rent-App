@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.transform.RoundedCornersTransformation
+import com.bumptech.glide.Glide
+import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ItemThumbnailBinding
+import com.example.home_rent_app.util.logger
 
 class HomeThumbnailAdapter: ListAdapter<String, HomeThumbnailAdapter.HomeThumbnailViewHolder>(HomeThumbnailDiffUtil) {
 
@@ -20,10 +24,15 @@ class HomeThumbnailAdapter: ListAdapter<String, HomeThumbnailAdapter.HomeThumbna
         holder.bind(getItem(position))
     }
 
-    class HomeThumbnailViewHolder(private val binding: ItemThumbnailBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class HomeThumbnailViewHolder(private val binding: ItemThumbnailBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(imageUrl: String) {
-            binding.ivThumbnail.load(imageUrl)
+            logger("imageUrl : $imageUrl")
+            binding.ivThumbnail.load(imageUrl) {
+                crossfade(true)
+                transformations(RoundedCornersTransformation())
+                error(R.drawable.ic_close)
+            }
         }
     }
 

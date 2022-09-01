@@ -12,49 +12,115 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
-        <Button
-            android:id="@+id/temp_button"
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/alo_appbar_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="양수글"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <Button
-            android:id="@+id/btn_rent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/temp_btn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="방찾기"/>
-
-        <Button
-            android:id="@+id/btn_wanted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/btn_rent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="양수인 찾기" />
-
-        <Button
-            android:id="@+id/temp_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="양도글"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/temp_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="10dp"
             app:layout_constraintTop_toTopOf="parent"
+            app:elevation="0dp">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/ab_top_appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleCentered="true"
+                app:logo="@drawable/ic_appbar_logo"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_find_home_image"
+            app:layout_constraintTop_toTopOf="@id/btn_find_home"
+            app:layout_constraintStart_toStartOf="@id/btn_find_home"
+            app:layout_constraintBottom_toBottomOf="@id/btn_find_home" />
+
+
+        <ImageView
+            android:id="@+id/btn_find_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/home_btn_shape"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_find_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="채팅"/>
+            app:layout_constraintTop_toBottomOf="@id/alo_appbar_layout"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_find_wanted_image"
+            app:layout_constraintTop_toTopOf="@id/btn_wnated_home"
+            app:layout_constraintStart_toStartOf="@id/btn_wnated_home"
+            app:layout_constraintBottom_toBottomOf="@id/btn_wnated_home" />
+
+
+        <ImageView
+            android:id="@+id/btn_wnated_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/home_btn_shape"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_find_wanted"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_find_home"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:id="@+id/tv_btn_rent"
+            android:layout_width="163dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_btn_wanted"
+            android:layout_marginEnd="16dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:paddingStart="40dp"
+            android:paddingEnd="30dp"
+            android:visibility="gone"
+            android:background="@drawable/add_btn_shape"
+            android:backgroundTint="@color/lightGray"
+            android:textColor="@color/black"
+            android:layout_marginBottom="15dp"
+            tools:text="내 방 양도하기"/>
+
+        <TextView
+            android:id="@+id/tv_btn_wanted"
+            android:layout_width="163dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fab_home_menu"
+            android:layout_marginEnd="16dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:paddingStart="40dp"
+            android:paddingEnd="48dp"
+            android:background="@drawable/add_btn_shape"
+            android:visibility="gone"
+            android:backgroundTint="@color/lightGray"
+            android:textColor="@color/black"
+            tools:text="방 양도 받기"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_home_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_plus"
+            app:rippleColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
