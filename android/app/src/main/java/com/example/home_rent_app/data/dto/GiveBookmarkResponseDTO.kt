@@ -6,38 +6,38 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class GiveBookmarkResponseDTO(
-    @Json(name = "hasNext")
+    @field:Json(name = "hasNext")
     val hasNext: Boolean,
-    @Json(name = "rentArticles")
+    @field:Json(name = "rentArticles")
     val rentArticles: List<RentArticleBookmark>
 )
 
 @JsonClass(generateAdapter = true)
 data class RentArticleBookmark(
-    @Json(name = "availableFrom")
+    @field:Json(name = "availableFrom")
     val availableFrom: String,
-    @Json(name = "bookmarkCount")
+    @field:Json(name = "bookmarkCount")
     val bookmarkCount: Int,
-    @Json(name = "bookmarked")
+    @field:Json(name = "bookmarked")
     val bookmarked: Boolean,
-    @Json(name = "completed")
+    @field:Json(name = "completed")
     val completed: Boolean,
-    @Json(name = "contractExpiresAt")
+    @field:Json(name = "contractExpiresAt")
     val contractExpiresAt: String,
-    @Json(name = "contractType")
+    @field:Json(name = "contractType")
     val contractType: String,
-    @Json(name = "createdAt")
+    @field:Json(name = "createdAt")
     val createdAt: String,
-    @Json(name = "deleted")
+    @field:Json(name = "deleted")
     val deleted: Boolean,
-    @Json(name = "deposit")
+    @field:Json(name = "deposit")
     val deposit: Int,
-    @Json(name = "houseImage")
+    @field:Json(name = "houseImage")
     val houseImage: String,
-    @Json(name = "id")
+    @field:Json(name = "id")
     val id: Int,
-    @Json(name = "rentFee")
+    @field:Json(name = "rentFee")
     val rentFee: Int,
-    @Json(name = "title")
+    @field:Json(name = "title")
     val title: String
 )
