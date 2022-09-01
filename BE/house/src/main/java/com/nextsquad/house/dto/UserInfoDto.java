@@ -11,9 +11,9 @@ public class UserInfoDto {
     private Long userId;
     private String displayName;
     private String profileImageUrl;
-    private Gender gender;
+    private String gender;
 
     public static UserInfoDto from(User user) {
-        return new UserInfoDto(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), user.getGender());
+        return new UserInfoDto(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), String.valueOf(user.getGender()));
     }
 }

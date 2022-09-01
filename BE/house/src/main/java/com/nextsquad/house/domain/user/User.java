@@ -46,7 +46,7 @@ public class User {
     public void modifyInfo(UserInfoDto userInfoDto){
         this.displayName = userInfoDto.getDisplayName();
         this.profileImageUrl = userInfoDto.getProfileImageUrl();
-        this.gender = gender;
+        this.gender = Gender.valueOf(userInfoDto.getGender());
     }
 }
 
