@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface WantedArticleRepository extends JpaRepository<WantedArticle, Long>, CustomWantedArticleRepository {
-    @Query("select a from WantedArticle a where a.isCompleted = false and a.isDeleted = false")
-    Page<WantedArticle> findByAvailable(Pageable pageable);
 
     @Query("select a from WantedArticle a where a.isDeleted = false and a.user = :user")
     Page<WantedArticle> findByUser(@Param("user") User user, Pageable pageable);
