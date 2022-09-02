@@ -15,11 +15,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.databinding.FragmentProfileBinding
 import com.example.home_rent_app.databinding.FragmentProfileModifyBinding
+import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.ui.LoginActivity
 import com.example.home_rent_app.ui.loginprofile.LoginProfileFragment
 import com.example.home_rent_app.util.FileController
@@ -50,6 +53,7 @@ class ProfileModifyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val navController = findNavController()
         binding.btnLoginProfileModify.setOnClickListener {
             if (isAllPermissionGranted()) {
                 selectGallery()
@@ -59,6 +63,7 @@ class ProfileModifyFragment : Fragment() {
         }
         checkNickname()
         addAccount()
+        goBack(navController)
     }
 
     private fun selectGallery() {
@@ -167,6 +172,14 @@ class ProfileModifyFragment : Fragment() {
             setUserProfile()
             val activity = activity as LoginActivity
             activity.moveToHomeActivity()
+        }
+    }
+
+    private fun goBack(navController: NavController) {
+        binding.btnGoToBack.setOnClickListener {
+            navController.navigate(
+                R.id.action_profileModifyFragment_to_profileFragment
+            )
         }
     }
 

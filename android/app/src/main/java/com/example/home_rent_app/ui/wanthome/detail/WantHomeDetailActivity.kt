@@ -10,6 +10,7 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.setLikeClickEvent
@@ -36,9 +37,7 @@ class WantHomeDetailActivity : AppCompatActivity() {
 
     private fun goHomeActivity() {
         binding.btnGoToHome.setOnClickListener {
-            val intent = Intent(this, WantHomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressed()
         }
     }
 
