@@ -11,6 +11,7 @@ import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.data.repository.login.LoginRepository
 import com.example.home_rent_app.data.repository.loginProfile.LoginProfileRepository
 import com.example.home_rent_app.data.repository.token.TokenRepository
+import com.example.home_rent_app.util.Constants
 import com.example.home_rent_app.util.Constants.GENDER_DEFAULT
 import com.example.home_rent_app.util.LoginCheck
 import com.example.home_rent_app.util.logger
@@ -48,18 +49,7 @@ class LoginViewModel @Inject constructor(
     var check = false
 
     init {
-//        viewModelScope.launch {
-//            loginRepository.getIsLogin().collect { isLogin ->
-//                if (isLogin) { // 자동로그인이 되어있는 경우
-//                    _isLogin.emit(true)
-//                    setAppSession()
-//                    connectUser() // 채팅 관련
-//                    setUserSession(setUserId())
-//                    return@collect
-//                }
-//                _isLogin.emit(false)
-//            }
-//        }
+        checkLogin()
     }
 
     // UserSession 에 UserId 저장
@@ -112,6 +102,7 @@ class LoginViewModel @Inject constructor(
                 logger("test viewmodel gender : ${user.gender}")
                 _gender.value = user.gender
                 val userId = user.userId
+                if (user.gender != Constants.GENDER_NEW) saveIsLogin()
                 loginRepository.saveUserIDAtDataStore(userId)
                 setUserSession(setUserId())
             }
@@ -136,9 +127,10 @@ class LoginViewModel @Inject constructor(
             }
             launch {
                 // 유저 id는 서버에서 내려오므로 여기에서 DataStore 에 저장
-                _gender.value = user.gender.orEmpty()
-                val userId = user.userId ?: 0
+                _gender.value = user.gender
+                val userId = user.userId
                 loginRepository.saveUserIDAtDataStore(userId)
+                if (user.gender != Constants.GENDER_NEW) saveIsLogin()
                 setUserSession(setUserId())
             }
         }

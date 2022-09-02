@@ -24,5 +24,14 @@
         android:id="@+id/profileFragment"
         android:name="com.example.home_rent_app.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_profileModifyFragment"
+            app:destination="@id/profileModifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileModifyFragment"
+        android:name="com.example.home_rent_app.ui.profile.ProfileModifyFragment"
+        android:label="ProfileModifyFragment"
+        tools:layout="@layout/fragment_profile_modify"/>
 </navigation>

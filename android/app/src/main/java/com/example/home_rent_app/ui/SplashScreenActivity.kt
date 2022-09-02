@@ -27,15 +27,11 @@ class SplashScreenActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        logger("스플래시 시작")
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        logger("스플래시 중간")
         setContentView(R.layout.activity_splash_screen)
         val content: View = findViewById(android.R.id.content)
         checkIsLogin(content)
-        viewModel.checkLogin()
-        logger("스플래시")
     }
 
     private fun checkIsLogin(content: View) {
