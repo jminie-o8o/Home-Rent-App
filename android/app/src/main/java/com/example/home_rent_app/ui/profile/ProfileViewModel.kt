@@ -5,15 +5,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.dto.GetUserInfoDTO
 import com.example.home_rent_app.data.dto.RentArticleProfile
 import com.example.home_rent_app.data.dto.WantArticleProfile
+import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
+import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -47,20 +52,32 @@ class ProfileViewModel @Inject constructor(
     private val _userData = MutableStateFlow<GetUserInfoDTO?>(null)
     val userData: StateFlow<GetUserInfoDTO?>  = _userData
 
+    private val _error = MutableSharedFlow<CEHModel>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val error = _error.asSharedFlow()
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        viewModelScope.launch {
+            _error.emit(CoroutineException.checkThrowable(throwable))
+        }
+    }
+
     init {
         userSession.userId?.let { getUserInfo(it) }
         logger("유저 userSession : ${userSession.userId}")
     }
 
-    fun getUserInfo(userId: Int) {
-        viewModelScope.launch {
+    private fun getUserInfo(userId: Int) {
+        viewModelScope.launch(exceptionHandler) {
             _userData.value = profileRepository.getUserInfo(userId)
             logger("유저 Data ${profileRepository.getUserInfo(userId)}")
         }
     }
 
     fun getGiveHomeProfile(userId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val response = profileRepository.getGiveHomeProfileResult(userId, page)
             if (response.hasNext) {
                 return@launch
@@ -74,7 +91,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun getWantHomeProfile(userId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val response = profileRepository.getWantHomeProfileResult(userId, page)
             if (response.hasNext) {
                 return@launch
@@ -88,14 +105,14 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun deleteGiveItem(id: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val response = profileRepository.delete(id)
             if (response.statusCode == 200) _message.emit(response.message)
         }
     }
 
     fun deleteWantItem(id: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val response = profileRepository.deleteWantHome(id)
             if (response.statusCode == 200) _message.emit(response.message)
         }
@@ -103,14 +120,14 @@ class ProfileViewModel @Inject constructor(
 
     // 닉네임 중복 검사
     fun checkNickName(nickName: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             _nickNameCheck.emit(profileRepository.checkNickName(nickName).isDuplicated)
         }
     }
 
     // 유저 이미지를 MultipartBody 로 보내서 Url 로 받기
     fun getProfileImage(body: MultipartBody.Part) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val bodyList = mutableListOf<MultipartBody.Part>().apply { this.add(body) }
             profileRepository.getImageUrl(bodyList).collect {
                 _imageUrl.value = it.images.first()
@@ -120,14 +137,14 @@ class ProfileViewModel @Inject constructor(
 
     // 유저 정보를 서버에 보내기
     fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             profileRepository.setUserProfile(userId, userProfileRequest)
             _message.emit("성공적으로 프로필이 수정되었습니다.")
         }
     }
 
     fun logout() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             profileRepository.clearDataStore()
             _message.emit(profileRepository.logout().message)
         }
