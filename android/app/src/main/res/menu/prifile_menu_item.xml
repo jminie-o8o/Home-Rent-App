@@ -3,8 +3,4 @@
     <item
         android:id="@+id/menu_delete"
         android:title="글 삭제하기" />
-
-    <item
-        android:id="@+id/menu_modify"
-        android:title="글 수정하기" />
 </menu>
