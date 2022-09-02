@@ -43,5 +43,5 @@ interface LoginDataSource {
 
     suspend fun setUserIdAtUserSession(userId: Int)
 
-    fun connectUser(): Flow<ConnectionData>
+    fun connectUser(name: String, image: String): Flow<ConnectionData>
 }

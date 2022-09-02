@@ -91,6 +91,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         setPictureObserver()
         setCheckPictureMax()
         setPictureUrlObserver()
+        setBackButton()
 
     }
 
@@ -172,6 +173,14 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         binding.btnNext.setOnClickListener {
             viewModel.getImageUrl()
             findNavController().navigate(R.id.action_picChoiceFragment_to_addressSearchFragment)
+            viewModel.setNextPage()
+        }
+    }
+
+    private fun setBackButton() {
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            viewModel.setBackPage()
         }
     }
 

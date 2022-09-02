@@ -57,6 +57,6 @@ class LoginRepositoryImpl @Inject constructor(
         loginDataSource.setUserIdAtUserSession(userId)
     }
 
-    override fun connectUser() = loginDataSource.connectUser()
+    override fun connectUser(name: String, image: String) = loginDataSource.connectUser(name, image)
 
 }

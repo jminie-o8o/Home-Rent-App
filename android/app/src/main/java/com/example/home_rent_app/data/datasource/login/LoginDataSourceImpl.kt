@@ -9,6 +9,7 @@ import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.logger
 import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.models.User
 import io.getstream.chat.android.client.utils.onErrorSuspend
 import io.getstream.chat.android.client.utils.onSuccessSuspend
 import kotlinx.coroutines.flow.Flow
@@ -86,16 +87,20 @@ class LoginDataSourceImpl @Inject constructor(
 //    }
 
     override suspend fun setUserIdAtUserSession(userId: Int) {
-        logger("LoginFragment ID DataSource: ${userId}")
+        logger("LoginFragment ID DataSource: $userId")
         userSession.userId = userId
     }
 
-    override fun connectUser() = flow {
+    override fun connectUser(name: String, image: String) = flow {
         // disconnect a user if already connected.
         disconnectUser()
-        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSJ9.ibSL8_561JIGQxkRvz3IBZiDQ24iE5YHoOkzyN2Bg9g"
-
-        val result = chatClient.connectUser(HomeActivity.user, token).await()
+        val token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsImV4cCI6MTY2MjEzOTI4OX0.-ibyL7ZuoxyAg18FQUKOjEb90Mjb0t_Gl_wMs-4K2DA"
+        val user = User(
+            id = userSession.userId.toString(),
+            name = name,
+            image = image
+        )
+        val result = chatClient.connectUser(user, token).await()
 
         result.onSuccessSuspend {
             emit(result.data())
@@ -107,7 +112,7 @@ class LoginDataSourceImpl @Inject constructor(
 
     private fun disconnectUser() {
         val currentUser = chatClient.getCurrentUser()
-        if (currentUser != null && HomeActivity.user.id == currentUser.id) {
+        if (currentUser != null && userSession.userId.toString() == currentUser.id) {
             chatClient.disconnect(true).execute()
         }
     }
