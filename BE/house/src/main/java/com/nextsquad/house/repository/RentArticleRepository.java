@@ -14,5 +14,6 @@ public interface RentArticleRepository extends JpaRepository<RentArticle, Long>,
     @Query("select r from RentArticle r where r.isDeleted = false and r.isCompleted = false")
     Page<RentArticle> findAllAvailable(Pageable pageable);
 
+    @Query("select r from RentArticle r where r.user = user and r.isDeleted = false")
     Page<RentArticle> findByUser(User user, Pageable pageable);
 }
