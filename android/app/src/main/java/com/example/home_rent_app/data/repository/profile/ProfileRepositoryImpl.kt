@@ -1,9 +1,12 @@
 package com.example.home_rent_app.data.repository.profile
 
+import com.example.home_rent_app.data.api.LogoutApi
 import com.example.home_rent_app.data.api.ProfileApi
+import com.example.home_rent_app.data.datastore.DataStore
 import com.example.home_rent_app.data.dto.DeleteGiveHomeResponseDTO
 import com.example.home_rent_app.data.dto.DeleteWantHomeResponseDTO
 import com.example.home_rent_app.data.dto.GiveHomeProfileDTO
+import com.example.home_rent_app.data.dto.LogoutResponseDTO
 import com.example.home_rent_app.data.dto.WantHomeProfileDTO
 import com.example.home_rent_app.data.dto.toImageUrl
 import com.example.home_rent_app.data.dto.toNickNameCheck
@@ -16,7 +19,9 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
-    private val api: ProfileApi
+    private val api: ProfileApi,
+    private val logoutApi: LogoutApi,
+    private val dataStore: DataStore
 ) : ProfileRepository {
 
     override suspend fun getGiveHomeProfileResult(userId: Int, page: Int): GiveHomeProfileDTO {
@@ -47,5 +52,13 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
         api.setUserProfile(userId, userProfileRequest)
+    }
+
+    override suspend fun logout(): LogoutResponseDTO {
+        return logoutApi.logout()
+    }
+
+    override suspend fun clearDataStore() {
+        dataStore.clearDataStore()
     }
 }

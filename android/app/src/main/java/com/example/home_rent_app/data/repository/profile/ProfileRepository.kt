@@ -3,6 +3,7 @@ package com.example.home_rent_app.data.repository.profile
 import com.example.home_rent_app.data.dto.DeleteGiveHomeResponseDTO
 import com.example.home_rent_app.data.dto.DeleteWantHomeResponseDTO
 import com.example.home_rent_app.data.dto.GiveHomeProfileDTO
+import com.example.home_rent_app.data.dto.LogoutResponseDTO
 import com.example.home_rent_app.data.dto.WantHomeProfileDTO
 import com.example.home_rent_app.data.model.ImageUrl
 import com.example.home_rent_app.data.model.NickNameCheck
@@ -25,4 +26,8 @@ interface ProfileRepository {
     fun getImageUrl(body : List<MultipartBody.Part>): Flow<ImageUrl>
 
     suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest)
+
+    suspend fun logout(): LogoutResponseDTO
+
+    suspend fun clearDataStore()
 }

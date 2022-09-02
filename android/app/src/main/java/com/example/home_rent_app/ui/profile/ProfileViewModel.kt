@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -42,10 +43,10 @@ class ProfileViewModel @Inject constructor(
     private val _imageUrl: MutableStateFlow<String> = MutableStateFlow("")
     val imageUrl: StateFlow<String> get() = _imageUrl
 
-    init {
-        getGiveHomeProfile(userSession.userId ?: 0)
-        getWantHomeProfile(userSession.userId ?: 0)
-    }
+//    init {
+//        getGiveHomeProfile(userSession.userId ?: 0)
+//        getWantHomeProfile(userSession.userId ?: 0)
+//    }
 
     fun getGiveHomeProfile(userId: Int) {
         viewModelScope.launch {
@@ -111,6 +112,13 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             profileRepository.setUserProfile(userId, userProfileRequest)
             _message.emit("프로필이 수정되었습니다.")
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            profileRepository.clearDataStore()
+            _message.emit(profileRepository.logout().message)
         }
     }
 }
