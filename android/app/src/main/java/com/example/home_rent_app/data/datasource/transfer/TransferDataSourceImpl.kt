@@ -1,6 +1,8 @@
 package com.example.home_rent_app.data.datasource.transfer
 
 import com.example.home_rent_app.data.api.TransferApi
+import com.example.home_rent_app.data.dto.AddRentHomeRequest
+import com.example.home_rent_app.data.dto.AddWantHomeResponseDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -13,4 +15,5 @@ class TransferDataSourceImpl @Inject constructor(private val api: TransferApi) :
         emit(api.getImageUrl(list))
     }.flowOn(Dispatchers.IO)
 
+    override suspend fun addRentHome(request: AddRentHomeRequest) = api.addRentHome(request)
 }

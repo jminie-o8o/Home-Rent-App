@@ -30,7 +30,7 @@ class HomeThumbnailAdapter: ListAdapter<String, HomeThumbnailAdapter.HomeThumbna
             logger("imageUrl : $imageUrl")
             binding.ivThumbnail.load(imageUrl) {
                 crossfade(true)
-                transformations(RoundedCornersTransformation())
+                transformations(RoundedCornersTransformation(30f, 30f, 30f, 30f))
                 error(R.drawable.ic_close)
             }
         }

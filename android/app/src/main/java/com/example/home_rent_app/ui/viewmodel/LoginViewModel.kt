@@ -45,6 +45,8 @@ class LoginViewModel @Inject constructor(
     private val _imageUrl: MutableStateFlow<String> = MutableStateFlow("")
     val imageUrl: StateFlow<String> get() = _imageUrl
 
+    private var name = ""
+
     private val _isLogin = MutableSharedFlow<Boolean>()
     val isLogin: SharedFlow<Boolean> get() = _isLogin
 
@@ -84,9 +86,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun connectUser() {
-        viewModelScope.launch(exceptionHandler) {
-            loginRepository.connectUser().collect { data ->
+    private fun connectUser(name: String, image: String) {
+        viewModelScope.launch {
+            loginRepository.connectUser(name, image).collect { data ->
+                logger("connect : ${data.connectionId}")
             }
         }
     }
@@ -155,7 +158,8 @@ class LoginViewModel @Inject constructor(
 
     // 닉네임 중복 검사
     fun checkNickName(nickName: String) {
-        viewModelScope.launch(exceptionHandler) {
+        viewModelScope.launch {
+            name = nickName
             _nickNameCheck.emit(loginProfileRepository.checkNickName(nickName).isDuplicated)
         }
     }
@@ -188,13 +192,11 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch(exceptionHandler) {
             loginRepository.getIsLogin().collect { isLogin ->
                 if (isLogin) { // 자동로그인이 되어있는 경우
-                    _isLogin.emit(true)
                     setAppSession()
-                    connectUser() // 채팅 관련
+                    connectUser(name, imageUrl.value) // 채팅 관련
                     setUserSession(setUserId())
-                    return@collect
                 }
-                _isLogin.emit(false)
+                _isLogin.emit(isLogin)
             }
         }
     }

@@ -57,6 +57,12 @@ class AddressSearchFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.action_addressSearchFragment_to_rentHomeDescriptionFragment)
+            viewModel.setNextPage()
+        }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            viewModel.setBackPage()
         }
     }
 

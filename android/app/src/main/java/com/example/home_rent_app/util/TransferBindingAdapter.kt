@@ -49,30 +49,3 @@ fun ChipGroup.convertToRentTypeFilter(): RentType = when (checkedChipId) {
 @BindingAdapter("rentTypeFilterAttrChanged")
 fun ChipGroup.setRentTypeListeners(attrChange: InverseBindingListener?) =
     setOnCheckedStateChangeListener { _, _ -> attrChange?.onChange() }
-
-@BindingAdapter("facilitiesFilter")
-fun ChipGroup.bindFacilitiesFilter(options: Options?) =
-    options?.let { filter ->
-        when (filter) {
-            Options.REFRIGERATOR -> check(R.id.chip_refrigerator)
-            Options.CONDITIONER -> check(R.id.chip_conditioner)
-            Options.WASHER -> check(R.id.chip_washer)
-            Options.TV -> check(R.id.chip_tv)
-            Options.BED -> check(R.id.chip_bed)
-            Options.CLOSET -> check(R.id.chip_closet)
-        }
-    }
-
-@InverseBindingAdapter(attribute = "facilitiesFilter")
-fun ChipGroup.convertToFacilitiesFilter(): Options = when (checkedChipId) {
-    R.id.chip_refrigerator -> Options.REFRIGERATOR
-    R.id.chip_conditioner -> Options.CONDITIONER
-    R.id.chip_washer -> Options.WASHER
-    R.id.chip_tv -> Options.TV
-    R.id.chip_bed -> Options.BED
-    else -> Options.CLOSET
-}
-
-@BindingAdapter("facilitiesFilterAttrChanged")
-fun ChipGroup.setFacilitiesListeners(attrChange: InverseBindingListener?) =
-    setOnCheckedStateChangeListener { _, _ -> attrChange?.onChange() }

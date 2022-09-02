@@ -51,15 +51,6 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    companion object User {
-
-        val user = User(
-            id = "1",
-            name = "rest",
-            image = "https://ifh.cc/g/cKhWxt.jpg"
-        )
-    }
-
     fun goLoginActivityWithLogout() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)

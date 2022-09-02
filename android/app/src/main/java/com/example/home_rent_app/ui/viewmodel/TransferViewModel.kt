@@ -3,6 +3,7 @@ package com.example.home_rent_app.ui.viewmodel
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.home_rent_app.data.dto.AddRentHomeRequest
 import com.example.home_rent_app.data.model.ImageUrl
 import com.example.home_rent_app.data.model.RoomPicture
 import com.example.home_rent_app.data.repository.transfer.TransferRepository
@@ -19,7 +20,13 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
-class TransferViewModel @Inject constructor(private val transferRepository: TransferRepository, private val fileController: FileController) : ViewModel() {
+class TransferViewModel @Inject constructor(
+    private val transferRepository: TransferRepository,
+    private val fileController: FileController
+) : ViewModel() {
+
+    private val _page = MutableStateFlow(0)
+    val page = _page.asStateFlow()
 
     val title = MutableStateFlow("")
 
@@ -61,11 +68,11 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
 
     val address = MutableStateFlow("")
 
-    val addressDetail = MutableStateFlow("")
+    private val addressDetail = MutableStateFlow("")
 
-    val facilities = MutableStateFlow<List<String>>(emptyList())
+    private val facilities = MutableStateFlow<List<String>>(emptyList())
 
-    val securityFaclities = MutableStateFlow<List<String>>(emptyList())
+    private val securityFaclities = MutableStateFlow<List<String>>(emptyList())
 
     val content = MutableStateFlow("")
 
@@ -73,13 +80,55 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
 
     val thisFloor = MutableStateFlow("")
 
-    val hasParkingLot = MutableStateFlow(false)
+    private val hasParkingLot = MutableStateFlow(false)
 
-    val hasBalcony = MutableStateFlow(false)
+    private val hasBalcony = MutableStateFlow(false)
 
-    val hasElevator = MutableStateFlow(false)
+    private val hasElevator = MutableStateFlow(false)
+
+    private val _rentDetailPageState = MutableStateFlow(false)
+    val rentDetailPageState = _rentDetailPageState.asStateFlow()
 
     private var id = 0
+
+    private val _homeId = MutableStateFlow(0)
+    val homeId = _homeId.asStateFlow()
+
+    fun addAccountRent() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                transferRepository.addRentHome(
+                    AddRentHomeRequest(
+                        houseImages = houseImages.value._data?.images.orEmpty(),
+                        title = title.value,
+                        contractType = contractType.value.value,
+                        rentFee = monthly.value.toInt(),
+                        deposit = deposit.value.toInt(),
+                        availableFrom = availableFrom.value,
+                        expiredAt = expiredAt.value,
+                        maintenanceFeeDescription = maintenanceDescription.value,
+                        maintenanceFee = maintenance.value.toInt(),
+                        latitude = 523.12132,
+                        longitude = 10.232,
+                        address = address.value,
+                        addressDetail = addressDetail.value,
+                        addressDescription = "22-1",
+                        facilities = facilities.value,
+                        securityFaclities = securityFaclities.value,
+                        content = content.value,
+                        houseType = houseType.value.value,
+                        maxFloor = maxFloor.value.toInt(),
+                        thisFloor = thisFloor.value.toInt(),
+                        hasParkingLot = hasParkingLot.value,
+                        hasBalcony = hasBalcony.value,
+                        hasElevator = hasElevator.value
+                    )
+                )
+            }.onFailure {
+                logger("${it.message}")
+            }
+        }
+    }
 
     fun setHomeDescriptionState() {
         when (contractType.value) {
@@ -111,7 +160,7 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
         val list = mutableListOf<RoomPicture>()
         list.addAll(_picture.value)
         list.removeAt(index)
-        if(list.isNotEmpty()) {
+        if (list.isNotEmpty()) {
             list[0].isMain = true
         }
         _picture.value = list
@@ -196,13 +245,57 @@ class TransferViewModel @Inject constructor(private val transferRepository: Tran
         }
         viewModelScope.launch {
             list.forEach {
-                logger("image : $it")
+                logger("image : ${it.headers}, ${it.body}")
             }
-            transferRepository.getImageUrl(list).catch {  e ->
+            transferRepository.getImageUrl(list).catch { e ->
                 _houseImages.value = UiState.Error(e.stackTraceToString())
             }.collect {
                 _houseImages.value = UiState.Success(it)
             }
         }
     }
+
+    fun setDetailPageState() {
+        if (content.value != "" &&
+            facilities.value.isEmpty() &&
+            thisFloor.value != "" &&
+            maxFloor.value != "" &&
+            securityFaclities.value.isEmpty()
+        ) {
+            _rentDetailPageState.value = true
+        }
+    }
+
+    fun setFacilitiesList(checkFacilities: List<String>) {
+        val list = mutableListOf<String>()
+        list.addAll(checkFacilities)
+        facilities.value = list
+    }
+
+    fun setSecurity(checkList: List<String>) {
+        val list = mutableListOf<String>()
+        list.addAll(checkList)
+        securityFaclities.value = list
+    }
+
+    fun setHasElevator(check: Boolean) {
+        hasElevator.value = check
+    }
+
+    fun setHasParking(check: Boolean) {
+        hasParkingLot.value = check
+    }
+
+    fun setHasBalcony(check: Boolean) {
+        hasBalcony.value = check
+    }
+
+    fun setNextPage() {
+        _page.value += 1
+    }
+
+    fun setBackPage() {
+        _page.value -= 1
+    }
+
 }

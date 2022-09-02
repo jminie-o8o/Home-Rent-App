@@ -39,6 +39,6 @@ interface LoginRepository {
 
     suspend fun saveProfileImage(image: String?)
 
-    fun connectUser(): Flow<ConnectionData>
+    fun connectUser(name: String, image: String): Flow<ConnectionData>
 
 }

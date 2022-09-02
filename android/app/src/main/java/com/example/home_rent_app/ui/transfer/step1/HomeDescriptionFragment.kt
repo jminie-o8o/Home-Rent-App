@@ -260,6 +260,7 @@ class HomeDescriptionFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             // 다음 화면 이동 구현
             findNavController().navigate(R.id.action_homeDescriptionFragment_to_picChoiceFragment)
+            viewModel.setNextPage()
         }
     }
 

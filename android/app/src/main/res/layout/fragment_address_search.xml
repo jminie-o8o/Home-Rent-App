@@ -154,7 +154,7 @@
             android:layout_marginTop="60dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintWidth_percent="0.42"
-            android:text="등록하기"/>
+            android:text="@string/next"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
