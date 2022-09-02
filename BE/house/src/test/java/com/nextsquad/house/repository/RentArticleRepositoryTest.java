@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class RentArticleRepositoryTest {
     @Autowired
     private RentArticleRepository rentArticleRepository;
@@ -71,33 +73,36 @@ class RentArticleRepositoryTest {
         for (int i = 0; i < 10; i++) {
             RentArticle article = RentArticle.builder()
                     .user(user)
+                    .isDeleted(i < 5)
                     .build();
             articles.add(article);
         }
         rentArticleRepository.saveAll(articles);
 
-        PageRequest pageable = PageRequest.of(0, 5);
+        PageRequest pageable = PageRequest.of(0, 10);
         Page<RentArticle> pages = rentArticleRepository.findByUser(user, pageable);
 
         List<RentArticle> collect = pages.get().collect(Collectors.toList());
 
-        for (int i = 0; i < 5; i++) {
-            assertThat(collect.get(i)).isEqualTo(articles.get(i));
-            assertThat(collect.get(i).getUser()).isEqualTo(user);
-        }
+        assertThat(collect.size()).isEqualTo(5);
 
-        assertThat(pages.hasNext()).isTrue();
-        pageable = pageable.next();
-        pages = rentArticleRepository.findByUser(user, pageable);
-
-        collect = pages.get().collect(Collectors.toList());
 
         for (int i = 0; i < 5; i++) {
-            assertThat(collect.get(i)).isEqualTo(articles.get(i + 5));
-            assertThat(collect.get(i).getUser()).isEqualTo(user);
+            assertThat(collect.get(i).isDeleted()).isFalse();
         }
-
-        assertThat(pages.hasNext()).isFalse();
+//
+//        assertThat(pages.hasNext()).isTrue();
+//        pageable = pageable.next();
+//        pages = rentArticleRepository.findByUser(user, pageable);
+//
+//        collect = pages.get().collect(Collectors.toList());
+//
+//        for (int i = 0; i < 5; i++) {
+//            assertThat(collect.get(i)).isEqualTo(articles.get(i + 5));
+//            assertThat(collect.get(i).getUser()).isEqualTo(user);
+//        }
+//
+//        assertThat(pages.hasNext()).isFalse();
     }
 
     @Test
