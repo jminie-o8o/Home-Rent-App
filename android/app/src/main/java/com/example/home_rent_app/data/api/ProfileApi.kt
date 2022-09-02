@@ -2,6 +2,7 @@ package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.dto.DeleteGiveHomeResponseDTO
 import com.example.home_rent_app.data.dto.DeleteWantHomeResponseDTO
+import com.example.home_rent_app.data.dto.GetUserInfoDTO
 import com.example.home_rent_app.data.dto.GiveHomeProfileDTO
 import com.example.home_rent_app.data.dto.ImageUrlDTO
 import com.example.home_rent_app.data.dto.LogoutResponseDTO
@@ -20,6 +21,11 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ProfileApi {
+
+    @GET("users/{userId}")
+    suspend fun getUserInfo(
+        @Path("userId") userId: Int
+    ): GetUserInfoDTO
 
     @GET("users/{userId}/articles/rent")
     suspend fun getGiveHomeProfileResult(

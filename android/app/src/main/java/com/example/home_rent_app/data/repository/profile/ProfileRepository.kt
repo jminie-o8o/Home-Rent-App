@@ -2,6 +2,7 @@ package com.example.home_rent_app.data.repository.profile
 
 import com.example.home_rent_app.data.dto.DeleteGiveHomeResponseDTO
 import com.example.home_rent_app.data.dto.DeleteWantHomeResponseDTO
+import com.example.home_rent_app.data.dto.GetUserInfoDTO
 import com.example.home_rent_app.data.dto.GiveHomeProfileDTO
 import com.example.home_rent_app.data.dto.LogoutResponseDTO
 import com.example.home_rent_app.data.dto.WantHomeProfileDTO
@@ -12,6 +13,8 @@ import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 
 interface ProfileRepository {
+
+    suspend fun getUserInfo(userId: Int): GetUserInfoDTO
 
     suspend fun getGiveHomeProfileResult(userId: Int, page: Int): GiveHomeProfileDTO
 

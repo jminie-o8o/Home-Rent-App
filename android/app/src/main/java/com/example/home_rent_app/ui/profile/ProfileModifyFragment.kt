@@ -62,7 +62,7 @@ class ProfileModifyFragment : Fragment() {
             }
         }
         checkNickname()
-        addAccount()
+        addAccount(navController)
         goBack(navController)
     }
 
@@ -167,11 +167,12 @@ class ProfileModifyFragment : Fragment() {
         profileViewModel.setUserProfile(userSession.userId ?: 0, UserProfileRequest(displayName, imageUrl, gender))
     }
 
-    private fun addAccount() {
+    private fun addAccount(navController: NavController) {
         binding.btnLoginProfile.setOnClickListener {
             setUserProfile()
-            val activity = activity as LoginActivity
-            activity.moveToHomeActivity()
+            navController.navigate(
+                R.id.action_profileModifyFragment_to_profileFragment
+            )
         }
     }
 

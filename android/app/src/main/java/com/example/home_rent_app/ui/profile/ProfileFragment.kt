@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui.profile
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +14,19 @@ import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentProfileBinding
 import com.example.home_rent_app.ui.HomeActivity
-import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.util.collectLatestStateFlow
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     lateinit var binding: FragmentProfileBinding
     private val profileViewModel: ProfileViewModel by viewModels()
+    @Inject
+    lateinit var userSession: UserSession
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +49,8 @@ class ProfileFragment : Fragment() {
             }
         }.attach()
         goToModifyProfile(navigationController)
-        observeMessage()
+        observeMessage(requireActivity().applicationContext)
+        userSession.userId?.let { profileViewModel.getUserInfo(it) }
     }
 
     private fun goToModifyProfile(navController: NavController) {
@@ -55,9 +61,9 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun observeMessage() {
-        collectStateFlow(profileViewModel.message) { message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    private fun observeMessage(context: Context) {
+        collectLatestStateFlow(profileViewModel.message) {
+            Toast.makeText(context, "성공적으로 프로필이 변경되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -5,6 +5,7 @@ import com.example.home_rent_app.data.api.ProfileApi
 import com.example.home_rent_app.data.datastore.DataStore
 import com.example.home_rent_app.data.dto.DeleteGiveHomeResponseDTO
 import com.example.home_rent_app.data.dto.DeleteWantHomeResponseDTO
+import com.example.home_rent_app.data.dto.GetUserInfoDTO
 import com.example.home_rent_app.data.dto.GiveHomeProfileDTO
 import com.example.home_rent_app.data.dto.LogoutResponseDTO
 import com.example.home_rent_app.data.dto.WantHomeProfileDTO
@@ -23,6 +24,10 @@ class ProfileRepositoryImpl @Inject constructor(
     private val logoutApi: LogoutApi,
     private val dataStore: DataStore
 ) : ProfileRepository {
+
+    override suspend fun getUserInfo(userId: Int): GetUserInfoDTO {
+        return api.getUserInfo(userId)
+    }
 
     override suspend fun getGiveHomeProfileResult(userId: Int, page: Int): GiveHomeProfileDTO {
         return api.getGiveHomeProfileResult(userId, page)

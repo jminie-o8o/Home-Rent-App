@@ -20,8 +20,7 @@ import javax.inject.Singleton
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository,
-    private val userSession: UserSession
+    private val profileRepository: ProfileRepository
 ) : ViewModel() {
 
     private var page = 0
@@ -43,10 +42,11 @@ class ProfileViewModel @Inject constructor(
     private val _imageUrl: MutableStateFlow<String> = MutableStateFlow("")
     val imageUrl: StateFlow<String> get() = _imageUrl
 
-//    init {
-//        getGiveHomeProfile(userSession.userId ?: 0)
-//        getWantHomeProfile(userSession.userId ?: 0)
-//    }
+    fun getUserInfo(userId: Int) {
+        viewModelScope.launch {
+            profileRepository.getUserInfo(userId)
+        }
+    }
 
     fun getGiveHomeProfile(userId: Int) {
         viewModelScope.launch {
@@ -111,7 +111,7 @@ class ProfileViewModel @Inject constructor(
     fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
         viewModelScope.launch {
             profileRepository.setUserProfile(userId, userProfileRequest)
-            _message.emit("프로필이 수정되었습니다.")
+            _message.emit("성공적으로 프로필이 수정되었습니다.")
         }
     }
 
