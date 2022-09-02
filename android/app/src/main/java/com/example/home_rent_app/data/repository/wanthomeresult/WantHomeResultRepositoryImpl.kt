@@ -9,7 +9,9 @@ import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.ui.wanthomeresult.WantHomePagingSource
+import com.example.home_rent_app.util.logger
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import javax.inject.Inject
 
 class WantHomeResultRepositoryImpl @Inject constructor(private val api: WantHomeResultApi) :

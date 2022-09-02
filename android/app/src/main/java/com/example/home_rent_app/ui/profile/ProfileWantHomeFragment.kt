@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentProfileWantHomeBinding
+import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
@@ -26,7 +28,7 @@ class ProfileWantHomeFragment : Fragment() {
     lateinit var userSession: UserSession
     @Inject
     lateinit var idSession: ItemIdSession
-    private val viewModel: ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +45,8 @@ class ProfileWantHomeFragment : Fragment() {
         adapter = ProfileWantHomeAdapter(viewModel, idSession, requireContext())
         binding.rvProfileWantHome.adapter = adapter
         updateAdapter()
+        viewModel.getWantHomeProfile(userSession.userId ?: 0)
+        logout()
     }
 
     private fun updateAdapter() {
@@ -68,5 +72,13 @@ class ProfileWantHomeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun logout() {
+        binding.tvProfileWantHomeLogout.setOnClickListener {
+            viewModel.logout()
+            val activity = activity as HomeActivity
+            activity.goLoginActivityWithLogout()
+        }
     }
 }

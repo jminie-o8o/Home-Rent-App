@@ -1,19 +1,25 @@
 package com.example.home_rent_app.ui.profile
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentProfileGiveHomeBinding
+import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,7 +32,7 @@ class ProfileGiveHomeFragment : Fragment() {
     lateinit var userSession: UserSession
     @Inject
     lateinit var idSession: ItemIdSession
-    private val viewModel: ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +49,9 @@ class ProfileGiveHomeFragment : Fragment() {
         adapter = ProfileGiveHomeAdapter(viewModel, idSession, requireContext())
         binding.rvProfileGiveHome.adapter = adapter
         updateAdapter()
+        viewModel.getGiveHomeProfile(userSession.userId ?: 0)
+        logout()
+        observeMessage(requireActivity().applicationContext)
     }
 
     private fun updateAdapter() {
@@ -68,5 +77,19 @@ class ProfileGiveHomeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun logout() {
+        binding.tvProfileGiveHomeLogout.setOnClickListener {
+            viewModel.logout()
+            val activity = activity as HomeActivity
+            activity.goLoginActivityWithLogout()
+        }
+    }
+
+    private fun observeMessage(context: Context) {
+        collectLatestStateFlow(viewModel.logoutMessage) {
+            Toast.makeText(context, "성공적으로 로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 }
