@@ -33,6 +33,7 @@ class RentHomeDescriptionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.vm = viewModel
 
         setAddButtonListener()
         setBackButtonListener()
@@ -161,6 +162,7 @@ class RentHomeDescriptionFragment : Fragment() {
     private fun setThisFloorObserve() {
         repeatOnStarted {
             viewModel.thisFloor.collect {
+                logger("thisFloor : $it")
                 viewModel.setDetailPageState()
             }
         }
@@ -169,6 +171,7 @@ class RentHomeDescriptionFragment : Fragment() {
     private fun setMaxFloorObserve() {
         repeatOnStarted {
             viewModel.maxFloor.collect {
+                logger("maxFloor : $it")
                 viewModel.setDetailPageState()
             }
         }

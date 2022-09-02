@@ -35,6 +35,7 @@ class FileController @Inject constructor(@ApplicationContext private val context
     fun uriToMulti(imageUri: Uri): MultipartBody.Part {
 
         val uri = imageUri.path.orEmpty()
+        logger("uri : $uri")
         val fileName = uri.split("/").last()
         val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val tempFile = File(storageDir, fileName)
@@ -49,7 +50,9 @@ class FileController @Inject constructor(@ApplicationContext private val context
         }
 
         outputStream.flush()
-        val file = File(tempFile.absolutePath)
+        val path = tempFile.absolutePath
+        val file = File(path)
+        logger("path : ${path} fileName:  ${fileName} file.name : ${file.name}")
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("images", file.name, requestFile)
     }

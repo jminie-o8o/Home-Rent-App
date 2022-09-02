@@ -7,8 +7,8 @@ import com.example.home_rent_app.data.model.DetailHomeData
 import com.example.home_rent_app.data.model.MapResponse
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.map.MapRepository
-import com.example.home_rent_app.ui.HomeActivity.User.user
 import com.example.home_rent_app.util.UiState
+import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.getstream.chat.android.client.ChatClient
@@ -26,7 +26,8 @@ import javax.inject.Inject
 class DetailHomeViewModel @Inject constructor(
     private val detailRepository: DetailRepository,
     private val mapRepository: MapRepository,
-    private val chatClient: ChatClient
+    private val chatClient: ChatClient,
+    private val userSession: UserSession
 ) : ViewModel() {
 
     private val _detailHomeData = MutableStateFlow<UiState<DetailHomeData>>(UiState.Loading)
@@ -64,7 +65,7 @@ class DetailHomeViewModel @Inject constructor(
         val result = chatClient.createChannel(
             channelType = "messaging",
             channelId = homeId.toString(),
-            memberIds = listOf(user.id, "3"),
+            memberIds = listOf(userSession.userId.toString(), "3"),
             extraData = mapOf("homeType" to "rent", "homeId" to "$homeId", "image" to profileImage) // userId 필드 생기면 수정하기
         ).await()
 

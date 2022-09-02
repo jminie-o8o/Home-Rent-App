@@ -15,6 +15,8 @@ data class DetailHomeDTO(
     val addressDetail: String = "",
     @Json(name = "availableFrom")
     val availableFrom: String?,
+    @Json(name = "bookmarkCount")
+    val bookmarkCount: Int = 0,
     @Json(name = "completed")
     val completed: Boolean?,
     @Json(name = "content")
@@ -73,6 +75,7 @@ fun DetailHomeDTO.toDetailHomeData(): DetailHomeData {
         addressDescription = addressDescription,
         addressDetail = addressDetail,
         availableFrom = requireNotNull(availableFrom),
+        bookmarkCount = bookmarkCount,
         completed = requireNotNull(completed),
         content = content,
         contractExpiresAt = requireNotNull(contractExpiresAt),

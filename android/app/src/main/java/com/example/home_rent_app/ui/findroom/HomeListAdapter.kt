@@ -34,8 +34,8 @@ class HomeListAdapter(
             binding.item = item
             val viewPagerAdapter = HomeThumbnailAdapter()
             binding.vpThumbNailList.adapter = viewPagerAdapter
-//            item.houseImages
-            viewPagerAdapter.submitList(listOf("${R.drawable.default_profile_image}", "${R.drawable.ic_arrow_back}"))
+
+            viewPagerAdapter.submitList(item.houseImages)
             setOnHomeClick(item)
         }
 

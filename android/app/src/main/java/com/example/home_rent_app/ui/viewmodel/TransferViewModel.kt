@@ -68,7 +68,7 @@ class TransferViewModel @Inject constructor(
 
     val address = MutableStateFlow("")
 
-    val addressDetail = MutableStateFlow("")
+    private val addressDetail = MutableStateFlow("")
 
     private val facilities = MutableStateFlow<List<String>>(emptyList())
 
@@ -96,33 +96,37 @@ class TransferViewModel @Inject constructor(
 
     fun addAccountRent() {
         viewModelScope.launch {
-            transferRepository.addRentHome(
-                AddRentHomeRequest(
-                    houseImages = houseImages.value._data?.images.orEmpty(),
-                    title = title.value,
-                    contractType = contractType.value.value,
-                    rentFee = monthly.value.toInt(),
-                    deposit = deposit.value.toInt(),
-                    availableFrom = availableFrom.value,
-                    expiredAt = expiredAt.value,
-                    maintenanceFeeDescription = maintenanceDescription.value,
-                    maintenanceFee = maintenance.value.toInt(),
-                    latitude = 523.12132,
-                    longitude = 10.232,
-                    address = address.value,
-                    addressDetail = addressDetail.value,
-                    addressDescription = "22-1",
-                    facilities = facilities.value,
-                    securityFaclities = securityFaclities.value,
-                    content = content.value,
-                    houseType = houseType.value.value,
-                    maxFloor = maxFloor.value.toInt(),
-                    thisFloor = thisFloor.value.toInt(),
-                    hasParkingLot = hasParkingLot.value,
-                    hasBalcony = hasBalcony.value,
-                    hasElevator = hasElevator.value
+            kotlin.runCatching {
+                transferRepository.addRentHome(
+                    AddRentHomeRequest(
+                        houseImages = houseImages.value._data?.images.orEmpty(),
+                        title = title.value,
+                        contractType = contractType.value.value,
+                        rentFee = monthly.value.toInt(),
+                        deposit = deposit.value.toInt(),
+                        availableFrom = availableFrom.value,
+                        expiredAt = expiredAt.value,
+                        maintenanceFeeDescription = maintenanceDescription.value,
+                        maintenanceFee = maintenance.value.toInt(),
+                        latitude = 523.12132,
+                        longitude = 10.232,
+                        address = address.value,
+                        addressDetail = addressDetail.value,
+                        addressDescription = "22-1",
+                        facilities = facilities.value,
+                        securityFaclities = securityFaclities.value,
+                        content = content.value,
+                        houseType = houseType.value.value,
+                        maxFloor = maxFloor.value.toInt(),
+                        thisFloor = thisFloor.value.toInt(),
+                        hasParkingLot = hasParkingLot.value,
+                        hasBalcony = hasBalcony.value,
+                        hasElevator = hasElevator.value
+                    )
                 )
-            )
+            }.onFailure {
+                logger("${it.message}")
+            }
         }
     }
 
@@ -241,7 +245,7 @@ class TransferViewModel @Inject constructor(
         }
         viewModelScope.launch {
             list.forEach {
-                logger("image : $it")
+                logger("image : ${it.headers}, ${it.body}")
             }
             transferRepository.getImageUrl(list).catch { e ->
                 _houseImages.value = UiState.Error(e.stackTraceToString())

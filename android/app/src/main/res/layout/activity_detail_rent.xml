@@ -36,7 +36,7 @@
                 android:background="@drawable/appbar_heart_selector"
                 android:button="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_navigation_back"
@@ -58,6 +58,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cb_favorite_top"
+                android:text="@{@string/page_count(item)}"
                 tools:text="1/6" />
 
             <ImageView
@@ -69,6 +70,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/vp_home_pic"
                 tools:background="@drawable/ic_baseline_account_circle_24"
+                imageUrl="@{item.user.profileImageUrl}"
                 tools:backgroundTint="@color/gray" />
 
             <TextView
@@ -82,6 +84,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/iv_profile"
                 app:layout_constraintTop_toBottomOf="@id/vp_home_pic"
+                android:text="@{item.user.displayName}"
                 tools:text="빵떡" />
 
             <TextView
@@ -92,35 +95,38 @@
                 android:layout_marginTop="24dp"
                 app:layout_constraintStart_toEndOf="@id/tv_name"
                 app:layout_constraintTop_toBottomOf="@id/vp_home_pic"
+                gender="@{item.user.gender}"
                 tools:text="・여" />
 
-            <TextView
-                android:id="@+id/tv_chat_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toStartOf="@id/tv_interest_count"
-                app:layout_constraintTop_toBottomOf="@id/vp_home_pic"
-                tools:text="채팅 4" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_chat_count"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                app:layout_constraintEnd_toStartOf="@id/tv_interest_count"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/vp_home_pic"-->
+<!--                tools:text="채팅 4" />-->
 
             <TextView
                 android:id="@+id/tv_interest_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toStartOf="@id/tv_view_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintTop_toBottomOf="@id/vp_home_pic"
+                android:text="@{@string/bookmark_count_in_detail(item.bookmarkCount)}"
                 tools:text="・관심 4" />
 
-            <TextView
-                android:id="@+id/tv_view_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/vp_home_pic"
-                tools:text="・조회수 4" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_view_count"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/vp_home_pic"-->
+<!--                tools:text="・조회수 4" />-->
 
             <View
                 android:id="@+id/line_first"
@@ -142,6 +148,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_first"
+                android:text="@{item.title}"
                 tools:text="부경대 정문 원룸" />
 
             <TextView
@@ -153,6 +160,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
+                android:text="@{item.addressDescription}"
                 tools:text="부경대 정문 5분" />
 
             <TextView
@@ -164,6 +172,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
+                createDate="@{item.createdAt}"
                 tools:text="7/28 등록" />
 
             <View
@@ -197,6 +206,8 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tv_monthly_label"
                 app:layout_constraintTop_toBottomOf="@id/line_second"
+                deposit="@{item.deposit}"
+                rentFee="@{item.rentFee}"
                 tools:text="100만원/35만원" />
 
             <TextView
@@ -219,6 +230,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tv_available_from_label"
                 app:layout_constraintTop_toBottomOf="@id/tv_monthly_label"
+                date="@{item.availableFrom}"
                 tools:text="2022/08/01" />
 
             <TextView
@@ -241,6 +253,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tv_contract_expires_label"
                 app:layout_constraintTop_toBottomOf="@id/tv_available_from_label"
+                date="@{item.contractExpiresAt}"
                 tools:text="2023/08/01" />
 
             <TextView
@@ -263,6 +276,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tv_maintenance_label"
                 app:layout_constraintTop_toBottomOf="@id/tv_contract_expires_label"
+                maintenanceFee="@{item.maintenanceFee}"
                 tools:text="50,000원" />
 
             <TextView
@@ -274,6 +288,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tv_maintenance_label"
                 app:layout_constraintTop_toBottomOf="@id/tv_maintenance"
+                android:text="@{item.maintenanceFeeDescription}"
                 tools:text="전기, 인터넷 포함" />
 
             <View
@@ -296,7 +311,7 @@
                 app:layout_constraintTop_toBottomOf="@id/line_third"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="위치정보"/>
+                android:text="@string/position_label"/>
 
             <TextView
                 android:id="@+id/tv_address_info"
@@ -307,6 +322,7 @@
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="8dp"
                 style="@style/TextSubtitle1.14"
+                android:text="@{item.address}"
                 tools:text="부산광역시 남구 대연동"/>
 
             <TextView
@@ -355,6 +371,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_description_label"
                 app:layout_constraintWidth_percent="0.9"
+                android:text="@{item.content}"
                 tools:text="★ 특징 ★\n
 ✔ 도보 3분 떡전교사거리,동대문노인복지관 버스 정류장 가깝습니다. \n
 ✔ 도보로 10분이면 회기역 1호선 도착합니다. \n
@@ -395,6 +412,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
                 android:textSize="14sp"
+                android:text="@{item.houseType}"
                 tools:text="원룸"/>
 
             <TextView
@@ -417,6 +435,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
                 android:textSize="14sp"
+                android:text="@{@string/floor_format(item.thisFloor, item.maxFloor)}"
                 tools:text="2층/4층"/>
 
             <TextView
@@ -439,6 +458,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
                 android:textSize="14sp"
+                possibleOrImpossible="@{item.hasParkingLot}"
                 tools:text="@string/possible"/>
 
             <TextView
@@ -461,6 +481,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
                 android:textSize="14sp"
+                hasOrNo="@{item.hasBalcony}"
                 tools:text="@string/nothing"/>
 
             <TextView
@@ -483,6 +504,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
                 android:textSize="14sp"
+                hasOrNo="@{item.hasElevator}"
                 tools:text="@string/have"/>
 
             <TextView

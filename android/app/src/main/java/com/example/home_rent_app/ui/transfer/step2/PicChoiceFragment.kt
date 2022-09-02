@@ -5,6 +5,8 @@ import android.app.Activity.RESULT_OK
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.Intent
+import android.content.Intent.ACTION_GET_CONTENT
+import android.content.Intent.ACTION_PICK
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
@@ -186,7 +188,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
 
     private fun setUploadButton() {
         binding.cvUploadPic.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+            val intent = Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
                 type = "image/*"
             }
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)

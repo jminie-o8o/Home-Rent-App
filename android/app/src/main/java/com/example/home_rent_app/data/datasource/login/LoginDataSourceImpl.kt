@@ -96,7 +96,7 @@ class LoginDataSourceImpl @Inject constructor(
         disconnectUser()
         val token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsImV4cCI6MTY2MjEzOTI4OX0.-ibyL7ZuoxyAg18FQUKOjEb90Mjb0t_Gl_wMs-4K2DA"
         val user = User(
-            id = userSession.userId.toString(),
+            id = "1",
             name = name,
             image = image
         )

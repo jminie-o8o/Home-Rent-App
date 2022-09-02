@@ -325,6 +325,7 @@
                     android:layout_height="match_parent"
                     android:hint="@string/zero"
                     app:position="12"
+                    android:inputType="number"
                     android:text="@={vm.maxFloor}"
                     app:labelText="전체층"/>
 
@@ -360,6 +361,7 @@
                     android:layout_height="match_parent"
                     android:hint="@string/zero"
                     app:position="12"
+                    android:inputType="number"
                     android:text="@={vm.thisFloor}"
                     app:labelText="해당층"/>
 

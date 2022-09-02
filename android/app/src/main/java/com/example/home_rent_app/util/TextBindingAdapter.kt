@@ -57,3 +57,21 @@ fun depositSimpleFormat(view: TextView, deposit: String?) {
 fun monthlySimpleFormat(view: TextView, monthlyPay: String?) {
     view.text = view.context.getString(R.string.monthly_simple, monthlyPay)
 }
+
+@BindingAdapter("hasOrNo")
+fun setHas(textView: TextView, has: Boolean) {
+    if (has) {
+        textView.text = "있음"
+    } else {
+        textView.text = "없음"
+    }
+}
+
+@BindingAdapter("possibleOrImpossible")
+fun setHasParking(textView: TextView, has: Boolean) {
+    if (has) {
+        textView.text = "가능"
+    } else {
+        textView.text = "불가"
+    }
+}

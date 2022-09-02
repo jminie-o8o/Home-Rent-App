@@ -5,6 +5,7 @@ data class DetailHomeData(
     val addressDescription: String,
     val addressDetail: String,
     val availableFrom: String,
+    val bookmarkCount: Int,
     val completed: Boolean,
     val content: String,
     val contractExpiresAt: String,
