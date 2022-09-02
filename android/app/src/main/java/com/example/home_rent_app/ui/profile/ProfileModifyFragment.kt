@@ -29,6 +29,7 @@ import com.example.home_rent_app.util.FileController
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -54,6 +55,7 @@ class ProfileModifyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideBottomNavigation(true)
         binding.btnLoginProfileModify.setOnClickListener {
             if (isAllPermissionGranted()) {
                 selectGallery()
@@ -68,6 +70,11 @@ class ProfileModifyFragment : Fragment() {
         goBack()
         binding.btnLoginProfile.isEnabled = false
         enableButton()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hideBottomNavigation(false)
     }
 
     private fun selectGallery() {
@@ -205,6 +212,12 @@ class ProfileModifyFragment : Fragment() {
         collectStateFlow(this.profileViewModel.nickNameCheck) { nickNameCheck ->
             binding.btnLoginProfile.isEnabled = !nickNameCheck
         }
+    }
+
+    private fun hideBottomNavigation(boolean: Boolean) {
+        val bottomNavigationView = (activity as HomeActivity).findViewById<BottomNavigationView>(R.id.navigation)
+        if (boolean) bottomNavigationView.visibility = View.GONE
+        else bottomNavigationView.visibility = View.VISIBLE
     }
 
     companion object {
