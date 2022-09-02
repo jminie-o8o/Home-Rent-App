@@ -48,7 +48,6 @@ class WantHomeDetailActivity : AppCompatActivity() {
     }
 
     private fun getWantHomeDetail() {
-        logger("테스트 : idSession ${idSession.itemId}")
         idSession.itemId?.let { viewModel.getWantHomeDetail(it) }
     }
 }

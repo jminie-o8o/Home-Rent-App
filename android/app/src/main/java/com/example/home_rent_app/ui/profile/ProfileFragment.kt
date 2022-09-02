@@ -16,6 +16,7 @@ import com.example.home_rent_app.databinding.FragmentProfileBinding
 import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectLatestStateFlow
+import com.example.home_rent_app.util.logger
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -35,6 +36,7 @@ class ProfileFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = profileViewModel
         return binding.root
     }
 
@@ -50,7 +52,6 @@ class ProfileFragment : Fragment() {
         }.attach()
         goToModifyProfile(navigationController)
         observeMessage(requireActivity().applicationContext)
-        userSession.userId?.let { profileViewModel.getUserInfo(it) }
     }
 
     private fun goToModifyProfile(navController: NavController) {

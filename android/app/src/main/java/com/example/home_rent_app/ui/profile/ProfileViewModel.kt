@@ -2,6 +2,7 @@ package com.example.home_rent_app.ui.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.home_rent_app.data.dto.GetUserInfoDTO
 import com.example.home_rent_app.data.dto.RentArticleProfile
 import com.example.home_rent_app.data.dto.WantArticleProfile
 import com.example.home_rent_app.data.model.UserProfileRequest
@@ -20,7 +21,8 @@ import javax.inject.Singleton
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    private val userSession: UserSession
 ) : ViewModel() {
 
     private var page = 0
@@ -42,9 +44,18 @@ class ProfileViewModel @Inject constructor(
     private val _imageUrl: MutableStateFlow<String> = MutableStateFlow("")
     val imageUrl: StateFlow<String> get() = _imageUrl
 
+    private val _userData = MutableStateFlow<GetUserInfoDTO?>(null)
+    val userData: StateFlow<GetUserInfoDTO?>  = _userData
+
+    init {
+        userSession.userId?.let { getUserInfo(it) }
+        logger("유저 userSession : ${userSession.userId}")
+    }
+
     fun getUserInfo(userId: Int) {
         viewModelScope.launch {
-            profileRepository.getUserInfo(userId)
+            _userData.value = profileRepository.getUserInfo(userId)
+            logger("유저 Data ${profileRepository.getUserInfo(userId)}")
         }
     }
 

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="userInfo"
-            type="com.example.home_rent_app.data.dto.GetUserInfoDTO" />
+            name="vm"
+            type="com.example.home_rent_app.ui.profile.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,6 +47,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginTop="24dp"
+            imageUrl="@{vm.userData.profileImageUrl}"
             android:layout_marginStart="16dp"
             app:layout_constraintTop_toBottomOf="@+id/abb_bar_profile_tab"
             app:layout_constraintStart_toStartOf="parent" />
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             style="@style/TextSubtitle1.16"
             android:layout_marginStart="16dp"
-            android:text="@{userInfo.displayName}"
+            android:text="@{vm.userData.displayName}"
             app:layout_constraintTop_toTopOf="@+id/iv_profile_main"
             app:layout_constraintStart_toEndOf="@+id/iv_profile_main"
             tools:text="스타크" />
@@ -67,6 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            gender="@{vm.userData.gender}"
             app:layout_constraintTop_toTopOf="@+id/iv_profile_main"
             app:layout_constraintStart_toEndOf="@+id/tv_profile_tab_nickname"
             tools:text="남" />
