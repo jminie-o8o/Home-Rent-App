@@ -1,6 +1,5 @@
 package com.example.home_rent_app.ui.wanthome.step2
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,7 +14,6 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
-import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +27,9 @@ class WantHomeSecondStepFragment : Fragment() {
     private val viewModel: WantHomeViewModel by activityViewModels()
     @Inject lateinit var userSession: UserSession
     @Inject lateinit var idSession: ItemIdSession
+    private var detailAddressFlag = false
+    private var titleFlag = false
+    private var contentsFlag = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,11 +50,15 @@ class WantHomeSecondStepFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnRegister.isEnabled = false
         goHomeActivity()
         register()
         setDetailLocation()
         setTitle()
         setDetailContents()
+        binding.etDetailAddressSecondStep.addTextChangedListener(detailAddressListener)
+        binding.etTitleSecondStep.addTextChangedListener(titleListener)
+        binding.etDetailSecondStep.addTextChangedListener(contentsListener)
     }
 
 
@@ -111,5 +116,57 @@ class WantHomeSecondStepFragment : Fragment() {
                 viewModel.setDetailContents(detailContents)
             }
         })
+    }
+
+    private val detailAddressListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s != null) {
+                detailAddressFlag = when {
+                    s.isNotEmpty() -> true
+                    else -> false
+                }
+                flagCheck()
+            }
+        }
+    }
+
+    private val titleListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s != null) {
+                titleFlag = when {
+                    s.isNotEmpty() -> true
+                    else -> false
+                }
+                flagCheck()
+            }
+        }
+    }
+
+    private val contentsListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s != null) {
+                contentsFlag = when {
+                    s.isNotEmpty() -> true
+                    else -> false
+                }
+                flagCheck()
+            }
+        }
+    }
+
+    private fun flagCheck() {
+        binding.btnRegister.isEnabled =  detailAddressFlag && titleFlag && contentsFlag
     }
 }
