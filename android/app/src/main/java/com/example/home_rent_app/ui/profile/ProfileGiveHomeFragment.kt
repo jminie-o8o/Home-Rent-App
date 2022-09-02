@@ -88,7 +88,7 @@ class ProfileGiveHomeFragment : Fragment() {
     }
 
     private fun observeMessage(context: Context) {
-        collectLatestStateFlow(viewModel.message) {
+        collectLatestStateFlow(viewModel.logoutMessage) {
             Toast.makeText(context, "성공적으로 로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }

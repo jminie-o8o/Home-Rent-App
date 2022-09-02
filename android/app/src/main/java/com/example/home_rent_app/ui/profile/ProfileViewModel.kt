@@ -10,6 +10,8 @@ import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.util.deleteGiveProfileAtView
+import com.example.home_rent_app.util.deleteWantProfileAtView
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -40,8 +42,14 @@ class ProfileViewModel @Inject constructor(
         MutableStateFlow<MutableList<WantArticleProfile>>(mutableListOf())
     val wantHomeProfileResult: StateFlow<MutableList<WantArticleProfile>> = _wantHomeProfileResult
 
-    private val _message = MutableSharedFlow<String>()
-    val message: SharedFlow<String> get() = _message
+    private val _deleteMessage = MutableSharedFlow<String>()
+    val deleteMessage: SharedFlow<String> get() = _deleteMessage
+
+    private val _logoutMessage = MutableSharedFlow<String>()
+    val logoutMessage: SharedFlow<String> get() = _logoutMessage
+
+    private val _profileModifyMessage = MutableSharedFlow<String>()
+    val profileModifyMessage: SharedFlow<String> get() = _profileModifyMessage
 
     private val _nickNameCheck: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val nickNameCheck: SharedFlow<Boolean> get() = _nickNameCheck
@@ -65,14 +73,16 @@ class ProfileViewModel @Inject constructor(
     }
 
     init {
-        userSession.userId?.let { getUserInfo(it) }
-        logger("유저 userSession : ${userSession.userId}")
+        getUserInfo(userSession.userId ?: 0)
+        getGiveHomeProfile(userSession.userId ?: 0)
+        getWantHomeProfile(userSession.userId ?: 0)
     }
 
-    private fun getUserInfo(userId: Int) {
+    fun getUserInfo(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            _userData.value = profileRepository.getUserInfo(userId)
-            logger("유저 Data ${profileRepository.getUserInfo(userId)}")
+            val response = profileRepository.getUserInfo(userId)
+            _userData.value = response
+            _imageUrl.value = response.profileImageUrl
         }
     }
 
@@ -107,14 +117,16 @@ class ProfileViewModel @Inject constructor(
     fun deleteGiveItem(id: Int) {
         viewModelScope.launch(exceptionHandler) {
             val response = profileRepository.delete(id)
-            if (response.statusCode == 200) _message.emit(response.message)
+            if (response.statusCode == 200) _deleteMessage.emit(response.message)
+            _giveHomeProfileResult.deleteGiveProfileAtView(id)
         }
     }
 
     fun deleteWantItem(id: Int) {
         viewModelScope.launch(exceptionHandler) {
             val response = profileRepository.deleteWantHome(id)
-            if (response.statusCode == 200) _message.emit(response.message)
+            if (response.statusCode == 200) _deleteMessage.emit(response.message)
+            _wantHomeProfileResult.deleteWantProfileAtView(id)
         }
     }
 
@@ -139,14 +151,14 @@ class ProfileViewModel @Inject constructor(
     fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
         viewModelScope.launch(exceptionHandler) {
             profileRepository.setUserProfile(userId, userProfileRequest)
-            _message.emit("성공적으로 프로필이 수정되었습니다.")
+            _deleteMessage.emit("성공적으로 프로필이 수정되었습니다.")
         }
     }
 
     fun logout() {
         viewModelScope.launch(exceptionHandler) {
             profileRepository.clearDataStore()
-            _message.emit(profileRepository.logout().message)
+            _logoutMessage.emit(profileRepository.logout().message)
         }
     }
 }
