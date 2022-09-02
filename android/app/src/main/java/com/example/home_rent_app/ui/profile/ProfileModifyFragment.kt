@@ -66,6 +66,8 @@ class ProfileModifyFragment : Fragment() {
         checkNickname()
         addAccount()
         goBack()
+        binding.btnLoginProfile.isEnabled = false
+        enableButton()
     }
 
     private fun selectGallery() {
@@ -196,6 +198,12 @@ class ProfileModifyFragment : Fragment() {
                 "MALE" -> binding.rbMale.isChecked = true
                 "FEMALE" -> binding.rbFemale.isChecked = true
             }
+        }
+    }
+
+    private fun enableButton() {
+        collectStateFlow(this.profileViewModel.nickNameCheck) { nickNameCheck ->
+            binding.btnLoginProfile.isEnabled = !nickNameCheck
         }
     }
 
