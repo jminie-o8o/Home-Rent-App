@@ -48,12 +48,12 @@ class ProfileModifyFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_modify, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = profileViewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navController = findNavController()
         binding.btnLoginProfileModify.setOnClickListener {
             if (isAllPermissionGranted()) {
                 selectGallery()
@@ -61,9 +61,11 @@ class ProfileModifyFragment : Fragment() {
                 requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
             }
         }
+        setNickname()
+        setGender()
         checkNickname()
-        addAccount(navController)
-        goBack(navController)
+        addAccount()
+        goBack()
     }
 
     private fun selectGallery() {
@@ -167,20 +169,33 @@ class ProfileModifyFragment : Fragment() {
         profileViewModel.setUserProfile(userSession.userId ?: 0, UserProfileRequest(displayName, imageUrl, gender))
     }
 
-    private fun addAccount(navController: NavController) {
+    private fun addAccount() {
         binding.btnLoginProfile.setOnClickListener {
             setUserProfile()
-            navController.navigate(
-                R.id.action_profileModifyFragment_to_profileFragment
-            )
+            val activity = activity as HomeActivity
+            activity.goBack()
         }
     }
 
-    private fun goBack(navController: NavController) {
+    private fun goBack() {
         binding.btnGoToBack.setOnClickListener {
-            navController.navigate(
-                R.id.action_profileModifyFragment_to_profileFragment
-            )
+            val activity = activity as HomeActivity
+            activity.goBack()
+        }
+    }
+
+    private fun setNickname() {
+        collectStateFlow(profileViewModel.userData) {
+            binding.etLoginProfileNickname.setText(it?.displayName)
+        }
+    }
+
+    private fun setGender() {
+        collectStateFlow(profileViewModel.userData) {
+            when (it?.gender) {
+                "MALE" -> binding.rbMale.isChecked = true
+                "FEMALE" -> binding.rbFemale.isChecked = true
+            }
         }
     }
 

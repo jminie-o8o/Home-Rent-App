@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.example.home_rent_app.ui.profile.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,6 +60,7 @@
             android:layout_marginTop="140dp"
             android:background="@android:color/transparent"
             android:src="@drawable/default_profile_image"
+            imageUrl="@{vm.userData.profileImageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

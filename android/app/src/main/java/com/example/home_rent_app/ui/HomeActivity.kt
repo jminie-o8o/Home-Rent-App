@@ -60,14 +60,13 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-    }
-
     fun goLoginActivityWithLogout() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    fun goBack() {
+        onBackPressed()
     }
 }

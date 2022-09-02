@@ -27,17 +27,15 @@
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_profileModifyFragment"
-            app:destination="@id/profileModifyFragment" />
+            app:destination="@id/profileModifyFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/profileModifyFragment"
         android:name="com.example.home_rent_app.ui.profile.ProfileModifyFragment"
         android:label="ProfileModifyFragment"
-        tools:layout="@layout/fragment_profile_modify">
-        <action
-            android:id="@+id/action_profileModifyFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="false" />
-    </fragment>
+        tools:layout="@layout/fragment_profile_modify"/>
 </navigation>
