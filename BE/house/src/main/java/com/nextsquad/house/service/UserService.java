@@ -40,11 +40,15 @@ public class UserService {
 
     public GeneralResponseDto modifyUserInfo(Long id, UserInfoDto userInfoDto){
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
-        if (userRepository.existsUserByDisplayName(userInfoDto.getDisplayName())) {
+        if (checkDuplicated(userInfoDto, user)) {
             throw new IllegalArgumentException("중복된 닉네임 입니다.");
         }
         user.modifyInfo(userInfoDto);
         return new GeneralResponseDto(200, "정보가 수정되었습니다");
+    }
+
+    private boolean checkDuplicated(UserInfoDto userInfoDto, User user) {
+        return !user.getDisplayName().equals(userInfoDto.getDisplayName()) && userRepository.existsUserByDisplayName(userInfoDto.getDisplayName());
     }
 
     public RentArticleListResponse getRentBookmark(long userId, Pageable pageable) {
