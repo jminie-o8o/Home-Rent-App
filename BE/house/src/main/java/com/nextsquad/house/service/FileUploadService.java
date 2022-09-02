@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +36,7 @@ public class FileUploadService {
         objectMetadata.setContentType(multipartFile.getContentType());
         objectMetadata.setContentLength(multipartFile.getSize());
 
-        String key = String.valueOf(UUID.randomUUID());
+        String key = String.valueOf(UUID.randomUUID()) + ".jpg";
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
             s3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
