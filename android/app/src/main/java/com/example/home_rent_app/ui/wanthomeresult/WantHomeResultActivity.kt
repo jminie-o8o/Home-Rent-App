@@ -44,7 +44,6 @@ class WantHomeResultActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         handleSearchWord()
         setDefaultResult()
-        setAvailable()
         adapter = WantHomeResultAdapter(viewModel, userSession, idSession)
         handlePagingError(adapter)
         binding.rvWanthomeResult.adapter = adapter
@@ -88,29 +87,9 @@ class WantHomeResultActivity : AppCompatActivity() {
             viewModel.getWantHomeResult(
                 WantHomeResultRequest(
                     keyword,
-                    binding.cbAvailable.isChecked
+                    true
                 )
             )
-        }
-    }
-
-    private fun setAvailable() {
-        binding.cbAvailable.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getWantHomeResult(
-                    WantHomeResultRequest(
-                        binding.etWantHome.text.toString(),
-                        true
-                    )
-                )
-            } else {
-                viewModel.getWantHomeResult(
-                    WantHomeResultRequest(
-                        binding.etWantHome.text.toString(),
-                        false
-                    )
-                )
-            }
         }
     }
 

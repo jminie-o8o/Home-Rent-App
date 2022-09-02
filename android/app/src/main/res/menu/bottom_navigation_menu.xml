@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/homeFragment"
         android:title="@string/home_label"
-        android:icon="@drawable/ic_favorite"
+        android:icon="@drawable/ic_baseline_home_24"
         app:showAsAction="withText"/>
     <item android:id="@+id/chattingFragment"
         android:title="@string/chatting_label"
-        android:icon="@drawable/ic_chatting"
+        android:icon="@drawable/ic_baseline_chat_24"
         app:showAsAction="withText"/>
     <item android:id="@+id/favoriteFragment"
         android:title="@string/bookmark_label"
-        android:icon="@drawable/ic_interest"
+        android:icon="@drawable/ic_favorite"
         app:showAsAction="withText"/>
     <item android:id="@+id/profileFragment"
         android:title="@string/profile_label"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_baseline_person_outline_24"
         app:showAsAction="withText"/>
 </menu>
