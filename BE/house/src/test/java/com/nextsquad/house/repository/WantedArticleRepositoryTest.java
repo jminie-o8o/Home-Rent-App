@@ -52,7 +52,7 @@ class WantedArticleRepositoryTest {
     }
 
     @Test
-    @DisplayName("유저가 10개의 글을 작성했을 때 글 목록 조회시 10개의 글이 조회된다")
+    @DisplayName("유저가 10개의 글을 작성했을 때 글 목록 조회시 삭제되지 않은 10개의 글이 조회된다")
     void findByUser() {
         //given wantedArticle 저장
 
@@ -64,12 +64,15 @@ class WantedArticleRepositoryTest {
                     .build();
             wantedArticleRepository.save(wantedArticle);
         }
+        WantedArticle wantedArticle = wantedArticleRepository.findById(writer.getId()).orElseThrow();
+        wantedArticle.markAsDeleted();
+        wantedArticleRepository.save(wantedArticle);
 
         //when
         Page<WantedArticle> byUser = wantedArticleRepository.findByUser(writer, pageable);
 
         //then 목록 확인
-        assertThat(byUser.getTotalElements()).isEqualTo(10);
+        assertThat(byUser.getTotalElements()).isEqualTo(9);
     }
 
     @Test
