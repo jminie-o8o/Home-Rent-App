@@ -1,9 +1,12 @@
 package com.example.home_rent_app.ui
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
@@ -36,9 +39,25 @@ class HomeActivity : AppCompatActivity() {
         binding.navigation.setupWithNavController(navHostFragment.navController)
     }
 
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        val imm: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        return true
+    }
+
     fun goWantHomeActivity() {
         val intent = Intent(this, WantHomeActivity::class.java)
         startActivity(intent)
     }
 
+    fun goLoginActivityWithLogout() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    fun goBack() {
+        onBackPressed()
+    }
 }

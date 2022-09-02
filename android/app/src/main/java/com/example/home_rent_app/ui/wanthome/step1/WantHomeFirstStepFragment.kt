@@ -2,6 +2,8 @@ package com.example.home_rent_app.ui.wanthome.step1
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +18,12 @@ import com.example.home_rent_app.databinding.FragmentWantHomeFirstStepBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.RangeValidator
+import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -31,6 +36,10 @@ class WantHomeFirstStepFragment : Fragment() {
 
     lateinit var binding: FragmentWantHomeFirstStepBinding
     private val viewModel: WantHomeViewModel by activityViewModels()
+    private var goInFlag = false
+    private var goOutFlag = false
+    private var depositFlag = false
+    private var monthlyPayFlag = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,10 +60,15 @@ class WantHomeFirstStepFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnGoSecondStep.isEnabled = false
         val navigationController = findNavController()
         goBack()
         showDatePicker()
         goSecondStep(navigationController)
+        binding.etGoIn.addTextChangedListener(goInListener)
+        binding.etGoOut.addTextChangedListener(goOutListener)
+        binding.etDeposit.addTextChangedListener(depositListener)
+        binding.etMonthlyRent.addTextChangedListener(monthlyPayListener)
     }
 
     private fun goSecondStep(navController: NavController) {
@@ -146,5 +160,73 @@ class WantHomeFirstStepFragment : Fragment() {
         val monthlyRent = binding.etMonthlyRent.text?.toString()?.toInt() ?: 0
         val list = listOf(deposit, monthlyRent)
         viewModel.setDeposit(list)
+    }
+
+    private val goInListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s != null) {
+                goInFlag = when {
+                    s.isNotEmpty() -> true
+                    else -> false
+                }
+                flagCheck()
+            }
+        }
+    }
+
+    private val goOutListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s != null) {
+                goOutFlag = when {
+                    s.isNotEmpty() -> true
+                    else -> false
+                }
+                flagCheck()
+            }
+        }
+    }
+
+    private val depositListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s != null) {
+                depositFlag = when {
+                    s.isNotEmpty() -> true
+                    else -> false
+                }
+                flagCheck()
+            }
+        }
+    }
+
+    private val monthlyPayListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s != null) {
+                monthlyPayFlag = when {
+                    s.isNotEmpty() -> true
+                    else -> false
+                }
+                flagCheck()
+            }
+        }
+    }
+
+    private fun flagCheck() {
+        binding.btnGoSecondStep.isEnabled =  goInFlag && goOutFlag && depositFlag && monthlyPayFlag
     }
 }

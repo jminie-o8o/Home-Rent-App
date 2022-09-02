@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.datastore.DataStore.PreferenceKeys.USER_ID
 import com.example.home_rent_app.data.dto.toJWT
 import com.example.home_rent_app.data.dto.toUser
+import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.model.UserProfileRequest
@@ -13,14 +14,18 @@ import com.example.home_rent_app.data.repository.loginProfile.LoginProfileReposi
 import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.util.Constants
 import com.example.home_rent_app.util.Constants.GENDER_DEFAULT
+import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.LoginCheck
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,6 +53,18 @@ class LoginViewModel @Inject constructor(
     private val _gender = MutableStateFlow<String>(GENDER_DEFAULT)
     val gender: StateFlow<String?> get() = _gender
 
+    private val _error = MutableSharedFlow<CEHModel>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val error = _error.asSharedFlow()
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        viewModelScope.launch {
+            _error.emit(CoroutineException.checkThrowable(throwable))
+        }
+    }
+
     var check = false
 
     init {
@@ -56,13 +73,13 @@ class LoginViewModel @Inject constructor(
 
     // UserSession 에 UserId 저장
     private fun setUserSession(userId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             loginRepository.setUserIdAtUserSession(userId)
         }
     }
 
     private fun setAppSession() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             tokenRepository.getToken().collect {
                 tokenRepository.setAppSession(it)
             }
@@ -79,13 +96,13 @@ class LoginViewModel @Inject constructor(
 
     // 유저 정보를 DataStore 에서 꺼내와 UserSession 에 저장
     private suspend fun setUserId(): Int {
-        return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO + exceptionHandler) {
             loginRepository.getUserId().first()[USER_ID] ?: 0
         }
     }
 
     fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val response = loginRepository.getKakaoToken(kakaoOauthRequest)
             val jwt = response.toJWT()
             val user = response.toUser()
@@ -113,7 +130,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun getNaverToken(naverOauthRequest: NaverOauthRequest) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val response = loginRepository.getNaverToken(naverOauthRequest)
             val jwt = response.toJWT()
             val user = response.toUser()
@@ -149,7 +166,7 @@ class LoginViewModel @Inject constructor(
 
     // 유저 이미지를 MultipartBody 로 보내서 Url 로 받기
     fun getProfileImage(body: MultipartBody.Part) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val bodyList = mutableListOf<MultipartBody.Part>().apply { this.add(body) }
             loginProfileRepository.getImageUrl(bodyList).collect {
                 _imageUrl.value = it.images.first()
@@ -159,20 +176,20 @@ class LoginViewModel @Inject constructor(
 
     // 유저 정보를 서버에 보내기
     fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             logger("Test UserId : $userId")
             loginProfileRepository.setUserProfile(userId, userProfileRequest)
         }
     }
 
     fun saveIsLogin() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             loginRepository.saveIsLogin()
         }
     }
 
     fun checkLogin() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             loginRepository.getIsLogin().collect { isLogin ->
                 if (isLogin) { // 자동로그인이 되어있는 경우
                     setAppSession()

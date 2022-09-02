@@ -10,6 +10,8 @@ import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.map
 import com.example.home_rent_app.data.dto.RentArticleBookmark
+import com.example.home_rent_app.data.dto.RentArticleProfile
+import com.example.home_rent_app.data.dto.WantArticleProfile
 import com.example.home_rent_app.data.dto.WantedArticleBookmark
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -74,6 +76,24 @@ fun MutableStateFlow<MutableList<WantedArticleBookmark>>.deleteWantBookmarkAtVie
 fun MutableStateFlow<MutableList<RentArticleBookmark>>.deleteGiveBookmarkAtView(id: Int) {
     val tempList = this.value.filter { RentArticleBookmark ->
         RentArticleBookmark.id != id
+    }.map {
+        it.copy()
+    }
+    this.value = tempList.toMutableList()
+}
+
+fun MutableStateFlow<MutableList<RentArticleProfile>>.deleteGiveProfileAtView(id: Int) {
+    val tempList = this.value.filter { RentArticleProfile ->
+        RentArticleProfile.id != id
+    }.map {
+        it.copy()
+    }
+    this.value = tempList.toMutableList()
+}
+
+fun MutableStateFlow<MutableList<WantArticleProfile>>.deleteWantProfileAtView(id: Int) {
+    val tempList = this.value.filter { WantArticleProfile ->
+        WantArticleProfile.id != id
     }.map {
         it.copy()
     }

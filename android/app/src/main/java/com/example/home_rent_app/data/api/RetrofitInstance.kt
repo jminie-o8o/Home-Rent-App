@@ -1,6 +1,7 @@
 package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.AuthInterceptor
+import com.example.home_rent_app.data.LogoutInterceptor
 import com.example.home_rent_app.data.RefreshInterceptor
 import com.example.home_rent_app.util.Constants.BASE_URL
 import com.example.home_rent_app.util.Constants.MAP_URL
@@ -33,8 +34,8 @@ object RetrofitInstance {
 
     @Provides
     @Singleton
-    @Named("refresh")
-    fun refreshOkHttpClient(
+    @Named("includeRefresh")
+    fun includeRefreshTokenOkHttpClient(
         refreshInterceptor: RefreshInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
@@ -91,7 +92,7 @@ object RetrofitInstance {
     @Provides
     @Singleton
     fun provideTokenRefreshApi(
-        @Named("refresh") okHttpClient: OkHttpClient
+        @Named("includeRefresh") okHttpClient: OkHttpClient
     ): TokenRefreshApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -216,5 +217,18 @@ object RetrofitInstance {
             .baseUrl(BASE_URL)
             .build()
             .create(ProfileApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun logout(
+        @Named("includeRefresh") okHttpClient: OkHttpClient
+    ): LogoutApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(LogoutApi::class.java)
     }
 }

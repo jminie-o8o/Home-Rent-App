@@ -22,20 +22,5 @@
         android:id="@+id/wantHomeSecondStepFragment"
         android:name="com.example.home_rent_app.ui.wanthome.step2.WantHomeSecondStepFragment"
         android:label="WantHomeSecondStepFragment"
-        tools:layout="@layout/fragment_want_home_second_step">
-        <action
-            android:id="@+id/action_wantHomeSecondStepFragment_to_wantHomeDetailFragment"
-            app:destination="@id/wantHomeDetailFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"
-            app:popUpTo="@id/take_home_nav_graph"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/wantHomeDetailFragment"
-        android:name="com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailFragment"
-        android:label="WantHomeDetailFragment"
-        tools:layout="@layout/fragment_want_home_detail"/>
+        tools:layout="@layout/fragment_want_home_second_step"/>
 </navigation>

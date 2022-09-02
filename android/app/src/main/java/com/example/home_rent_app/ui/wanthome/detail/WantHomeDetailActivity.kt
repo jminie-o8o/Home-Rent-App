@@ -2,15 +2,20 @@ package com.example.home_rent_app.ui.wanthome.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultActivity
 import com.example.home_rent_app.util.ItemIdSession
+import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.setLikeClickEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +28,8 @@ class WantHomeDetailActivity : AppCompatActivity() {
     private val viewModel: WantHomeViewModel by viewModels()
     @Inject
     lateinit var idSession: ItemIdSession
+    @Inject
+    lateinit var userSession: UserSession
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +39,12 @@ class WantHomeDetailActivity : AppCompatActivity() {
         goHomeActivity()
         clickLikeButton()
         getWantHomeDetail()
+        checkMyItem()
     }
 
     private fun goHomeActivity() {
         binding.btnGoToHome.setOnClickListener {
-            val intent = Intent(this, WantHomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressed()
         }
     }
 
@@ -49,7 +55,15 @@ class WantHomeDetailActivity : AppCompatActivity() {
     }
 
     private fun getWantHomeDetail() {
-        logger("테스트 : idSession ${idSession.itemId}")
         idSession.itemId?.let { viewModel.getWantHomeDetail(it) }
+    }
+
+    private fun checkMyItem() {
+        collectStateFlow(viewModel.wantHomeDetail) { Response ->
+            if (Response?.user?.userId == userSession.userId) {
+                binding.btnLike.visibility = View.GONE
+                binding.btnGoChat.visibility = View.GONE
+            }
+        }
     }
 }

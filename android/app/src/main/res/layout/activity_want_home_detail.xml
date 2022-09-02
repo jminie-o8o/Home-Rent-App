@@ -233,7 +233,7 @@
             tools:text="풀옵션 방이었으면 좋겠어요!\n날짜는 조율 가능합니다.\n많이 연락주세요!" />
 
         <Button
-            android:id="@+id/btn_go_second_step"
+            android:id="@+id/btn_go_chat"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginStart="80dp"

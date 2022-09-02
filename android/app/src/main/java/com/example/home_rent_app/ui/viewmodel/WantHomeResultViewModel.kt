@@ -6,13 +6,22 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
+import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
+import com.example.home_rent_app.ui.wanthomeresult.WantHomePagingSource
+import com.example.home_rent_app.util.CoroutineException
+import com.example.home_rent_app.util.UiState
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,8 +33,9 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
     private val _searchWord = MutableSharedFlow<String>()
     val searchWord = _searchWord.debounce { 400 }
 
-    private val _wantHomeResult = MutableStateFlow<PagingData<WantedArticle>>(PagingData.empty())
-    val wantHomeResult: StateFlow<PagingData<WantedArticle>> get() = _wantHomeResult
+    private val _wantHomeResult =
+        MutableStateFlow<UiState<PagingData<WantedArticle>>>(UiState.Loading)
+    val wantHomeResult: StateFlow<UiState<PagingData<WantedArticle>>> get() = _wantHomeResult
 
     private val _addBookmarkStatusCode = MutableSharedFlow<Int>()
     val addBookmarkStatusCode: SharedFlow<Int> get() = _addBookmarkStatusCode
@@ -33,8 +43,20 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
     private val _deleteBookmarkStatusCode = MutableSharedFlow<Int>()
     val deleteBookmarkStatusCode: SharedFlow<Int> get() = _deleteBookmarkStatusCode
 
-    fun handleSearchWork(searchWord: String) {
+    private val _error = MutableSharedFlow<CEHModel>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val error = _error.asSharedFlow()
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         viewModelScope.launch {
+            _error.emit(CoroutineException.checkThrowable(throwable))
+        }
+    }
+
+    fun handleSearchWork(searchWord: String) {
+        viewModelScope.launch(exceptionHandler) {
             _searchWord.emit(searchWord)
         }
     }
@@ -44,19 +66,19 @@ class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepo
             wantHomeResultRepository.getResult(wantHomeResultRequest)
                 .cachedIn(viewModelScope)
                 .collect { response ->
-                    _wantHomeResult.value = response
+                    _wantHomeResult.value = UiState.Success(response)
                 }
         }
     }
 
     fun addBookmark(bookmarkRequest: BookmarkRequest) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             _addBookmarkStatusCode.emit(wantHomeResultRepository.addBookmark(bookmarkRequest).code)
         }
     }
 
     fun deleteBookmark(bookmarkRequest: BookmarkRequest) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             _deleteBookmarkStatusCode.emit(wantHomeResultRepository.deleteBookmark(bookmarkRequest).code)
         }
     }

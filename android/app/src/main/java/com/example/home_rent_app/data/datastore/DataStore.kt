@@ -114,23 +114,6 @@ class DataStore @Inject constructor(
         }
     }
 
-//    suspend fun getUserInfo(): User {
-//        val user = User(null, null, null, null)
-//        context.userIdDataStore.data.collect { prefs ->
-//            user.userId = prefs[PreferenceKeys.USER_ID]
-//        }
-//        context.displayNameDataStore.data.collect { prefs ->
-//            user.displayName = prefs[PreferenceKeys.DISPLAY_NAME]
-//        }
-//        context.profileImageDataStore.data.collect { prefs ->
-//            user.profileImageUrl = prefs[PreferenceKeys.PROFILE_IMAGE]
-//        }
-//        context.genderDataStore.data.collect { prefs ->
-//            user.gender = prefs[PreferenceKeys.GENDER]
-//        }
-//        return user
-//    }
-
     fun getUserId() = context.userIdDataStore.data
 
     fun getDisplayName() = context.displayNameDataStore.data
@@ -139,4 +122,12 @@ class DataStore @Inject constructor(
 
     fun getGender() = context.genderDataStore.data
 
+    suspend fun clearDataStore() {
+        context.loginCheckDataStore.edit { it.clear() }
+        context.tokenDataStore.edit { it.clear() }
+        context.userIdDataStore.edit { it.clear() }
+        context.displayNameDataStore.edit { it.clear() }
+        context.profileImageDataStore.edit { it.clear() }
+        context.genderDataStore.edit { it.clear() }
+    }
 }
