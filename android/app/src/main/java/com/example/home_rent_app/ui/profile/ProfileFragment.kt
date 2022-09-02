@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentProfileBinding
 import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.util.collectStateFlow
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     lateinit var binding: FragmentProfileBinding
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +44,7 @@ class ProfileFragment : Fragment() {
             }
         }.attach()
         goToModifyProfile(navigationController)
+        observeMessage()
     }
 
     private fun goToModifyProfile(navController: NavController) {
@@ -45,6 +52,12 @@ class ProfileFragment : Fragment() {
             navController.navigate(
                 R.id.action_profileFragment_to_profileModifyFragment
             )
+        }
+    }
+
+    private fun observeMessage() {
+        collectStateFlow(profileViewModel.message) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
     }
 }

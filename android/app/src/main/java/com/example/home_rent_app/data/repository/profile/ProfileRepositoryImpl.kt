@@ -5,9 +5,19 @@ import com.example.home_rent_app.data.dto.DeleteGiveHomeResponseDTO
 import com.example.home_rent_app.data.dto.DeleteWantHomeResponseDTO
 import com.example.home_rent_app.data.dto.GiveHomeProfileDTO
 import com.example.home_rent_app.data.dto.WantHomeProfileDTO
+import com.example.home_rent_app.data.dto.toImageUrl
+import com.example.home_rent_app.data.dto.toNickNameCheck
+import com.example.home_rent_app.data.model.ImageUrl
+import com.example.home_rent_app.data.model.NickNameCheck
+import com.example.home_rent_app.data.model.UserProfileRequest
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi): ProfileRepository {
+class ProfileRepositoryImpl @Inject constructor(
+    private val api: ProfileApi
+) : ProfileRepository {
 
     override suspend fun getGiveHomeProfileResult(userId: Int, page: Int): GiveHomeProfileDTO {
         return api.getGiveHomeProfileResult(userId, page)
@@ -23,5 +33,19 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi): Pr
 
     override suspend fun deleteWantHome(id: Int): DeleteWantHomeResponseDTO {
         return api.deleteWantItem(id)
+    }
+
+    override suspend fun checkNickName(nickName: String): NickNameCheck {
+        return api.checkNickName(nickName).toNickNameCheck()
+    }
+
+    override fun getImageUrl(body: List<MultipartBody.Part>): Flow<ImageUrl> {
+        return flow {
+            emit(api.getImageUrl(body).toImageUrl())
+        }
+    }
+
+    override suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
+        api.setUserProfile(userId, userProfileRequest)
     }
 }

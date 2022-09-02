@@ -4,14 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.dto.RentArticleProfile
 import com.example.home_rent_app.data.dto.WantArticleProfile
+import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
 import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,6 +35,12 @@ class ProfileViewModel @Inject constructor(
 
     private val _message = MutableSharedFlow<String>()
     val message: SharedFlow<String> get() = _message
+
+    private val _nickNameCheck: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val nickNameCheck: SharedFlow<Boolean> get() = _nickNameCheck
+
+    private val _imageUrl: MutableStateFlow<String> = MutableStateFlow("")
+    val imageUrl: StateFlow<String> get() = _imageUrl
 
     init {
         getGiveHomeProfile(userSession.userId ?: 0)
@@ -77,6 +86,31 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             val response = profileRepository.deleteWantHome(id)
             if (response.statusCode == 200) _message.emit(response.message)
+        }
+    }
+
+    // 닉네임 중복 검사
+    fun checkNickName(nickName: String) {
+        viewModelScope.launch {
+            _nickNameCheck.emit(profileRepository.checkNickName(nickName).isDuplicated)
+        }
+    }
+
+    // 유저 이미지를 MultipartBody 로 보내서 Url 로 받기
+    fun getProfileImage(body: MultipartBody.Part) {
+        viewModelScope.launch {
+            val bodyList = mutableListOf<MultipartBody.Part>().apply { this.add(body) }
+            profileRepository.getImageUrl(bodyList).collect {
+                _imageUrl.value = it.images.first()
+            }
+        }
+    }
+
+    // 유저 정보를 서버에 보내기
+    fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
+        viewModelScope.launch {
+            profileRepository.setUserProfile(userId, userProfileRequest)
+            _message.emit("프로필이 수정되었습니다.")
         }
     }
 }
