@@ -1,11 +1,11 @@
 package com.example.home_rent_app.data.model
 
 data class DetailHomeData(
-    val address: String,
-    val addressDescription: String,
-    val addressDetail: String,
-    val availableFrom: String,
-    val bookmarkCount: Int,
+    val address: String = "",
+    val addressDescription: String = "",
+    val addressDetail: String = "",
+    val availableFrom: String = "",
+    val bookmarkCount: Int = 0,
     val completed: Boolean,
     val content: String,
     val contractExpiresAt: String,

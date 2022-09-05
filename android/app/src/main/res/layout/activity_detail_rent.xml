@@ -50,6 +50,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_page_count"
                 android:layout_width="50dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="200dp"
@@ -58,7 +59,6 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cb_favorite_top"
-                android:text="@{@string/page_count(item)}"
                 tools:text="1/6" />
 
             <ImageView
@@ -70,7 +70,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/vp_home_pic"
                 tools:background="@drawable/ic_baseline_account_circle_24"
-                imageUrl="@{item.user.profileImageUrl}"
+                imageSetting="@{item.user.profileImageUrl}"
                 tools:backgroundTint="@color/gray" />
 
             <TextView
@@ -160,7 +160,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
-                android:text="@{item.addressDescription}"
+                android:text="@{item.addressDetail}"
                 tools:text="부경대 정문 5분" />
 
             <TextView

@@ -57,16 +57,25 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
         val id = intent?.getIntExtra("homeId", -1)
 
         if (id != null) {
-            viewModel.getDetailHomeData(1)
+            viewModel.getDetailHomeData(id)
         }
+
+        val adapter = DetailThumbnailAdapter { currentPage, totalPage ->
+            binding.tvPageCount.text = getString(R.string.page_count, currentPage, totalPage)
+        }
+        binding.vpHomePic.adapter = adapter
 
         repeatOnStarted {
             viewModel.detailHomeData.collect {
                 when(it) {
                     is UiState.Success -> {
+                        logger("detailHomeData : ${it.data.availableFrom}")
                         binding.item = it.data
+                        adapter.submitList(it.data.houseImages)
+                        viewModel.getPosition()
                     }
                     is UiState.Error -> {
+                        logger("detailHomeData : ${it.message}")
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
                     is UiState.Loading -> {
@@ -94,7 +103,7 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
             isScaleBarEnabled = false
         }
         setPositionObserve()
-        viewModel.getPosition()
+//        viewModel.getPosition()
     }
 
     private fun setPosition(latLng: LatLng) {
@@ -124,5 +133,10 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
     }
 }

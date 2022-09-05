@@ -31,7 +31,7 @@ data class RentArticleProfile(
     @field:Json(name = "deposit")
     val deposit: Int,
     @field:Json(name = "houseImage")
-    val houseImage: String,
+    val houseImage: List<String>,
     @field:Json(name = "id")
     val id: Int,
     @field:Json(name = "rentFee")

@@ -443,7 +443,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
-                    android:text="@={vm.expiredAt}"
+                    android:text="@={vm.contractExpiresAt}"
                     android:focusableInTouchMode="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>

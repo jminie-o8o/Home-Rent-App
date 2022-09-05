@@ -231,7 +231,7 @@ class HomeDescriptionFragment : Fragment() {
     // 계약 만료일 입력
     private fun setEndDateObserver() {
         repeatOnStarted {
-            viewModel.expiredAt.collect {
+            viewModel.contractExpiresAt.collect {
                 viewModel.setHomeDescriptionState()
             }
         }
