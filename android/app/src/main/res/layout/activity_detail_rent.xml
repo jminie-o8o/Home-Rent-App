@@ -322,6 +322,7 @@
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="8dp"
                 style="@style/TextSubtitle1.14"
+                android:maxLength="15"
                 android:text="@{item.address}"
                 tools:text="부산광역시 남구 대연동"/>
 

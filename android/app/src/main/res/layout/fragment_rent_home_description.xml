@@ -155,7 +155,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="@string/TV"/>
+                    android:text="@string/tv"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_closet"

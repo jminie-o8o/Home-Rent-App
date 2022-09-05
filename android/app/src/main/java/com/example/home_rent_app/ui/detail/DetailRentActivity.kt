@@ -63,7 +63,12 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
         val adapter = DetailThumbnailAdapter { currentPage, totalPage ->
             binding.tvPageCount.text = getString(R.string.page_count, currentPage, totalPage)
         }
+        val optionAdapter = IconAdapter()
+        val securityAdapter = IconAdapter()
+
         binding.vpHomePic.adapter = adapter
+        binding.rvOptionList.adapter = optionAdapter
+        binding.rvSecurityList.adapter = securityAdapter
 
         repeatOnStarted {
             viewModel.detailHomeData.collect {
@@ -72,6 +77,8 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
                         logger("detailHomeData : ${it.data.availableFrom}")
                         binding.item = it.data
                         adapter.submitList(it.data.houseImages)
+                        optionAdapter.submitList(it.data.facilities)
+                        securityAdapter.submitList(it.data.securityFacilities)
                         viewModel.getPosition()
                     }
                     is UiState.Error -> {

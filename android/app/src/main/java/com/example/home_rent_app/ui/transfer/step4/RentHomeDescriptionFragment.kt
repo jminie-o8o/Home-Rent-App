@@ -81,7 +81,7 @@ class RentHomeDescriptionFragment : Fragment() {
                     R.id.chip_washer -> getString(R.string.washer)
                     R.id.chip_bed -> getString(R.string.bed)
                     R.id.chip_closet -> getString(R.string.closet)
-                    else -> getString(R.string.TV)
+                    else -> getString(R.string.tv)
                 }
             }
             viewModel.setFacilitiesList(list)
