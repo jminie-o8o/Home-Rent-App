@@ -47,12 +47,8 @@ public class WantedArticle {
     @OneToMany(mappedBy = "wantedArticle")
     private List<WantedArticleBookmark> bookmarks = new ArrayList<>();
 
-    private boolean isBookmarked;
     public void markAsDeleted(){
         isDeleted = true;
-    }
-    public void markBookmarked() {
-        isBookmarked = true;
     }
 
     public void modifyArticle(WantedArticleRequest request) {

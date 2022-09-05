@@ -32,7 +32,7 @@ public class WantedArticleResponse {
     private boolean isBookmarked;
 
 
-    public static WantedArticleResponse from(WantedArticle article) {
+    public static WantedArticleResponse from(WantedArticle article, boolean isBookmarked) {
         UserInfoDto userInfoDto = UserInfoDto.from(article.getUser());
         return WantedArticleResponse.builder()
                 .id(article.getId())
@@ -48,8 +48,25 @@ public class WantedArticleResponse {
                 .createdAt(article.getCreatedAt())
                 .modifiedAt(article.getModifiedAt())
                 .bookmarkCount(article.getBookmarks().size())
-                .isBookmarked(article.isBookmarked())
+                .isBookmarked(isBookmarked)
                 .build();
     }
 
+    public WantedArticleResponse(WantedArticle wantedArticle, boolean isBookmarked) {
+        UserInfoDto userInfoDto = UserInfoDto.from(wantedArticle.getUser());
+        this.id = wantedArticle.getId();
+        this.user = userInfoDto;
+        this.address = wantedArticle.getAddress();
+        this.title = wantedArticle.getTitle();
+        this.content = wantedArticle.getContent();
+        this.moveInDate = wantedArticle.getMoveInDate();
+        this.moveOutDate = wantedArticle.getMoveOutDate();
+        this.rentBudget = wantedArticle.getRentBudget();
+        this.depositBudget = wantedArticle.getDepositBudget();
+        this.viewCount = wantedArticle.getViewCount();
+        this.createdAt = wantedArticle.getCreatedAt();
+        this.modifiedAt = wantedArticle.getModifiedAt();
+        this.bookmarkCount = wantedArticle.getBookmarks().size();
+        this.isBookmarked = isBookmarked;
+    }
 }

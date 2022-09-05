@@ -70,12 +70,10 @@ public class WantedArticleService {
             throw new IllegalArgumentException("삭제된 글 입니다.");
         }
 
-        if (wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, article).get() != null) {
-            article.markBookmarked();
-        }
+        boolean isBookmarked = wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, article).isPresent();
 
         article.addViewCount();
-        return WantedArticleResponse.from(article);
+        return new WantedArticleResponse(article, isBookmarked);
     }
     
     public WantedArticleListResponse getWantedArticleList(SearchConditionDto searchCondition, Pageable pageable, String token) {
