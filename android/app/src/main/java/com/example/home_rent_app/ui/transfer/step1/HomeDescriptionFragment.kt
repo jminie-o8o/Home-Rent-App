@@ -241,17 +241,7 @@ class HomeDescriptionFragment : Fragment() {
     private fun setHomeDescriptionStateObserver() {
         repeatOnStarted {
             viewModel.homeDescriptionState.collect {
-                if (it) {
-                    binding.btnNext.apply {
-                        isEnabled = true
-                        backgroundTintList =
-                            ColorStateList.valueOf(
-                                binding.root.context.getColor(
-                                    R.color.purple_200
-                                )
-                            )
-                    }
-                }
+                binding.btnNext.isEnabled = it
             }
         }
     }

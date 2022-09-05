@@ -45,7 +45,10 @@ class RentHomeDescriptionFragment : Fragment() {
         setContent()
         setThisFloorObserve()
         setMaxFloorObserve()
+        setHomIdObserve()
+    }
 
+    private fun setHomIdObserve() {
         repeatOnStarted {
             viewModel.homeId.collect {
                 logger("homeId : $it")
@@ -85,6 +88,7 @@ class RentHomeDescriptionFragment : Fragment() {
                 }
             }
             viewModel.setFacilitiesList(list)
+            viewModel.setDetailPageState()
         }
     }
 
@@ -98,7 +102,6 @@ class RentHomeDescriptionFragment : Fragment() {
                     viewModel.setHasElevator(false)
                 }
             }
-            viewModel.setDetailPageState()
         }
     }
 
@@ -112,7 +115,6 @@ class RentHomeDescriptionFragment : Fragment() {
                     viewModel.setHasBalcony(false)
                 }
             }
-            viewModel.setDetailPageState()
         }
     }
 
@@ -126,7 +128,6 @@ class RentHomeDescriptionFragment : Fragment() {
                     viewModel.setHasParking(false)
                 }
             }
-            viewModel.setDetailPageState()
         }
     }
 
@@ -140,16 +141,14 @@ class RentHomeDescriptionFragment : Fragment() {
                 }
             }
             viewModel.setSecurity(list)
+            viewModel.setDetailPageState()
         }
     }
 
     private fun setRentDetailPageStateObserve() {
         repeatOnStarted {
             viewModel.rentDetailPageState.collect {
-                binding.btnAdd.apply {
-                    isEnabled = true
-                    setBackgroundColor(binding.root.context.getColor(R.color.main_color))
-                }
+                binding.btnAdd.isEnabled = it
             }
         }
     }
