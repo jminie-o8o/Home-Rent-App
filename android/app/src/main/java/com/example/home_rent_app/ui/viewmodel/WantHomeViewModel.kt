@@ -6,10 +6,7 @@ import com.example.home_rent_app.data.dto.WantHomeDetailResponseDTO
 import com.example.home_rent_app.data.model.AddWantHomeRequest
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
-import com.example.home_rent_app.util.CoroutineException
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.Location
-import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
@@ -24,7 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class WantHomeViewModel @Inject constructor(
     private val wantHomeRepository: WantHomeRepository,
-    private val idSession: ItemIdSession
+    private val idSession: ItemIdSession,
+    private val chatChannel: ChatChannel,
+    private val userSession: UserSession
 ) : ViewModel() {
 
     // 양방향 데이터 바인딩 이용
@@ -112,4 +111,12 @@ class WantHomeViewModel @Inject constructor(
             _wantHomeDetail.value = wantHomeRepository.getWantHome(itemId)
         }
     }
+
+    fun joinNewChannel() = chatChannel.joinNewChannel(
+        WANTED,
+        userSession.userId.toString(),
+        requireNotNull(wantHomeDetail.value?.user?.userId).toString(),
+        wantHomeDetail.value?.id.toString(),
+        wantHomeDetail.value?.user?.profileImageUrl ?: ""
+    )
 }

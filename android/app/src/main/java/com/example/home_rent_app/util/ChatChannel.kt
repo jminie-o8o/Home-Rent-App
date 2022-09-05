@@ -13,12 +13,12 @@ class ChatChannel @Inject constructor(
     private val chatClient: ChatClient,
 ) {
     @WorkerThread
-    fun joinNewChannel(userId: String, chatUserID: String, homeId: String, profileImage: String, ) = flow {
+    fun joinNewChannel(homeType: String, userId: String, chatUserID: String, homeId: String, profileImage: String, ) = flow {
         val result = chatClient.createChannel(
             channelType = "messaging",
             channelId = homeId,
             memberIds = listOf(userId, chatUserID),
-            extraData = mapOf("homeType" to "rent", "homeId" to homeId, "image" to profileImage) // userId 필드 생기면 수정하기
+            extraData = mapOf("homeType" to homeType, "homeId" to homeId, "image" to profileImage) // userId 필드 생기면 수정하기
         ).await()
 
         result.onSuccessSuspend {

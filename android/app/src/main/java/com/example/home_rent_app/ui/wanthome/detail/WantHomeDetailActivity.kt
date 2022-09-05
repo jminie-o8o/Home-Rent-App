@@ -40,6 +40,7 @@ class WantHomeDetailActivity : AppCompatActivity() {
         clickLikeButton()
         getWantHomeDetail()
         checkMyItem()
+        setGoChat()
     }
 
     private fun goHomeActivity() {
@@ -64,6 +65,12 @@ class WantHomeDetailActivity : AppCompatActivity() {
                 binding.btnLike.visibility = View.GONE
                 binding.btnGoChat.visibility = View.GONE
             }
+        }
+    }
+
+    private fun setGoChat() {
+        binding.btnGoChat.setOnClickListener {
+            viewModel.joinNewChannel()
         }
     }
 }
