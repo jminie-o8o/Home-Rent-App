@@ -48,10 +48,11 @@ public class RentArticleResponse {
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime modifiedAt;
     private boolean isCompleted;
+    private boolean isBookmarked;
 
 
     @Builder
-    public RentArticleResponse(RentArticle rentArticle) {
+    public RentArticleResponse(RentArticle rentArticle, boolean isBookmarked) {
         this.id = rentArticle.getId();
         this.user = UserInfoDto.from(rentArticle.getUser());
         this.address = rentArticle.getAddress();
@@ -81,6 +82,7 @@ public class RentArticleResponse {
         this.createdAt = rentArticle.getCreatedAt();
         this.modifiedAt = rentArticle.getModifiedAt();
         this.isCompleted = rentArticle.isCompleted();
+        this.isBookmarked = isBookmarked;
     }
 
     private static List<String> convertFacilityList(List<RentArticleFacility> facilityList){

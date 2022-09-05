@@ -130,7 +130,9 @@ public class RentArticleService {
         }
         rentArticle.addViewCount();
 
-        return new RentArticleResponse(rentArticle);
+        boolean isBookmarked = rentArticleBookmarkRepository.findByUserAndRentArticle(rentArticle.getUser(), rentArticle).isPresent();
+
+        return new RentArticleResponse(rentArticle, isBookmarked);
     }
 
     public GeneralResponseDto toggleIsCompleted(Long id) {
