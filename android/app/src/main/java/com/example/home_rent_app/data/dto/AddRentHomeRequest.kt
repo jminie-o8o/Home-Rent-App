@@ -22,8 +22,8 @@ data class AddRentHomeRequest(
     val contractType: String,
     @Json(name = "deposit")
     val deposit: Int,
-    @Json(name = "expiredAt")
-    val expiredAt: String,
+    @Json(name = "contractExpiresAt")
+    val contractExpiresAt: String,
     @Json(name = "facilities")
     val facilities: List<String>,
     @Json(name = "hasBalcony")
@@ -48,8 +48,8 @@ data class AddRentHomeRequest(
     val maxFloor: Int,
     @Json(name = "rentFee")
     val rentFee: Int,
-    @Json(name = "securityFaclities")
-    val securityFaclities: List<String>,
+    @Json(name = "securityFacilities")
+    val securityFacilities: List<String>,
     @Json(name = "thisFloor")
     val thisFloor: Int,
     @Json(name = "title")

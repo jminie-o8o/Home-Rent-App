@@ -45,7 +45,7 @@ class TransferViewModel @Inject constructor(
 
     val availableFrom = MutableStateFlow("")
 
-    val expiredAt = MutableStateFlow("")
+    val contractExpiresAt = MutableStateFlow("")
 
     private val _homeDescriptionState = MutableStateFlow(false)
     val homeDescriptionState = _homeDescriptionState.asStateFlow()
@@ -108,7 +108,7 @@ class TransferViewModel @Inject constructor(
                 rentFee = monthly.value.replace(",", "").toInt(),
                 deposit = deposit.value.replace(",", "").toInt(),
                 availableFrom = availableFrom.value,
-                expiredAt = expiredAt.value,
+                contractExpiresAt = contractExpiresAt.value,
                 maintenanceFeeDescription = maintenanceDescription.value,
                 maintenanceFee = maintenance.value.toInt(),
                 latitude = 523.12132,
@@ -117,7 +117,7 @@ class TransferViewModel @Inject constructor(
                 addressDetail = addressDetail.value,
                 addressDescription = "22-1",
                 facilities = facilities.value,
-                securityFaclities = securityFacilities.value,
+                securityFacilities = securityFacilities.value,
                 content = content.value,
                 houseType = houseType.value.value,
                 maxFloor = maxFloor.value.toInt(),
@@ -126,7 +126,7 @@ class TransferViewModel @Inject constructor(
                 hasBalcony = hasBalcony.value,
                 hasElevator = hasElevator.value
             )
-            logger("addData : ${addData}")
+            logger("addData : $addData")
             kotlin.runCatching {
                 transferRepository.addRentHome(
                     addData
@@ -182,8 +182,9 @@ class TransferViewModel @Inject constructor(
             maintenance.value != "" &&
             maintenanceDescription.value != "" &&
             availableFrom.value != "" &&
-            expiredAt.value != ""
+            contractExpiresAt.value != ""
         ) {
+            monthly.value = "0"
             _homeDescriptionState.value = true
         }
     }
@@ -195,7 +196,7 @@ class TransferViewModel @Inject constructor(
             maintenance.value != "" &&
             maintenanceDescription.value != "" &&
             availableFrom.value != "" &&
-            expiredAt.value != ""
+            contractExpiresAt.value != ""
         ) {
             _homeDescriptionState.value = true
         }
@@ -246,12 +247,12 @@ class TransferViewModel @Inject constructor(
     }
 
     suspend fun checkCorrectDate() {
-        if (availableFrom.value != "" && expiredAt.value != "") {
+        if (availableFrom.value != "" && contractExpiresAt.value != "") {
             _isCorrectDate.emit(compareToDate() < 0)
         }
     }
 
-    private fun compareToDate() = availableFrom.value.compareTo(expiredAt.value)
+    private fun compareToDate() = availableFrom.value.compareTo(contractExpiresAt.value)
 
     fun getImageUrl() {
         val list = mutableListOf<MultipartBody.Part>()

@@ -33,7 +33,7 @@ class DetailThumbnailAdapter(
                 crossfade(true)
                 error(R.drawable.ic_close)
             }
-            setPicCount(absoluteAdapterPosition, currentList.size)
+            setPicCount(absoluteAdapterPosition + 1, currentList.size)
         }
     }
 

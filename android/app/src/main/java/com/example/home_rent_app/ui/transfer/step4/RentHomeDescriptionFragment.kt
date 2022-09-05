@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -54,6 +53,7 @@ class RentHomeDescriptionFragment : Fragment() {
                     val intent = Intent(requireContext(), DetailRentActivity::class.java)
                     intent.putExtra("homeId", it)
                     requireActivity().startActivity(intent)
+                    requireActivity().finish()
                 }
             }
         }

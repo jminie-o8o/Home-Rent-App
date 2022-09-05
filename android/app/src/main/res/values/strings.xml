@@ -83,9 +83,9 @@
     <string name="price_unit">만원</string>
     <string name="rent_btn_label">%s 내 방 양도하기</string>
     <string name="wanted_btn_label">%s 방 양도 받기</string>
-    <string name="page_count">d%/d%</string>
+    <string name="page_count">%d/%d</string>
     <string name="bookmark_count_in_detail">관심 %d</string>
-    <string name="create_date">%s등록</string>
+    <string name="create_date">%s 등록</string>
     <string name="position_label">위치정보</string>
     <string name="floor_format">%d층/%d층</string>
 </resources>

@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.log
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -68,6 +69,7 @@ class ProfileViewModel @Inject constructor(
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         viewModelScope.launch {
+            logger("ProfileViewModel exceptionHandler : ${throwable.message}")
             _error.emit(CoroutineException.checkThrowable(throwable))
         }
     }
@@ -88,7 +90,9 @@ class ProfileViewModel @Inject constructor(
 
     fun getGiveHomeProfile(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
+            logger("getGiveHomeProfile response : launch")
             val response = profileRepository.getGiveHomeProfileResult(userId, page)
+            logger("getGiveHomeProfile response : ${response.rentArticles}")
             if (response.hasNext) {
                 return@launch
             }

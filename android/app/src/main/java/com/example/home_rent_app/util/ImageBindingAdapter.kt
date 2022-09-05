@@ -6,7 +6,7 @@ import coil.load
 import com.example.home_rent_app.R
 
 @BindingAdapter("imageUrl")
-fun setImage(view: de.hdodenhof.circleimageview.CircleImageView, imageUrl: String) {
+fun setImage(view: de.hdodenhof.circleimageview.CircleImageView, imageUrl: String?) {
     view.load(imageUrl)
 }
 

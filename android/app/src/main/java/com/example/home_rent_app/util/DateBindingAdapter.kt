@@ -10,7 +10,7 @@ fun setCreateDate(textView: TextView, date: String?) {
     date?.let {
         val dateTime = DateTime(date)
         val createDate = dateTime.format("YY/MM/DD")
-        textView.text = String.format(textView.context.getString(R.string.create_date), createDate)
+        textView.text = textView.context.getString(R.string.create_date, createDate)
     }
 }
 
