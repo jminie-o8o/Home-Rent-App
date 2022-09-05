@@ -123,14 +123,18 @@ public class RentArticleService {
         return pageable.getPageSize() < rentArticles.size();
     }
 
-    public RentArticleResponse getRentArticle(Long id){
+    public RentArticleResponse getRentArticle(Long id, String token){
         RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new ArticleNotFoundException());
         if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
             throw new IllegalArgumentException("삭제되었거나 거래가 완료된 글입니다.");
         }
         rentArticle.addViewCount();
 
-        boolean isBookmarked = rentArticleBookmarkRepository.findByUserAndRentArticle(rentArticle.getUser(), rentArticle).isPresent();
+        Long userId = jwtProvider.decode(token).getClaim("id").asLong();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        boolean isBookmarked = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle).isPresent();
 
         return new RentArticleResponse(rentArticle, isBookmarked);
     }

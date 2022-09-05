@@ -29,8 +29,8 @@ public class RentArticleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RentArticleResponse> getRentArticle(@PathVariable Long id) {
-        return ResponseEntity.ok(rentArticleService.getRentArticle(id));
+    public ResponseEntity<RentArticleResponse> getRentArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(rentArticleService.getRentArticle(id, token));
     }
 
     @PatchMapping("/{id}")
