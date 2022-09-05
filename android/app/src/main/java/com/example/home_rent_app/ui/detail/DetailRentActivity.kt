@@ -57,16 +57,24 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
         val id = intent?.getIntExtra("homeId", -1)
 
         if (id != null) {
-            viewModel.getDetailHomeData(1)
+            viewModel.getDetailHomeData(id)
         }
+
+        val adapter = DetailThumbnailAdapter { currentPage, totalPage ->
+            binding.tvPageCount.text = String.format(getString(R.string.page_count), currentPage, totalPage)
+        }
+        binding.vpHomePic.adapter = adapter
 
         repeatOnStarted {
             viewModel.detailHomeData.collect {
                 when(it) {
                     is UiState.Success -> {
+                        logger("detailHomeData : ${it.data.availableFrom}")
                         binding.item = it.data
+                        adapter.submitList(it.data.houseImages)
                     }
                     is UiState.Error -> {
+                        logger("detailHomeData : ${it.message}")
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
                     is UiState.Loading -> {

@@ -42,8 +42,8 @@ class HomeFragment : Fragment() {
     private fun goWantHomeActivity() {
         val wantedEmoji = String(Character.toChars(0x1F3E0))
         val rentEmoji = String(Character.toChars(0x1F91D))
-        binding.tvBtnWanted.text = String.format(getString(R.string.rent_btn_label), wantedEmoji)
-        binding.tvBtnRent.text = String.format(getString(R.string.wanted_btn_label), rentEmoji)
+        binding.tvBtnWanted.text = String.format(getString(R.string.wanted_btn_label), rentEmoji)
+        binding.tvBtnRent.text = String.format(getString(R.string.rent_btn_label), wantedEmoji)
 
         binding.tvBtnWanted.setOnClickListener {
             val activity = activity as HomeActivity

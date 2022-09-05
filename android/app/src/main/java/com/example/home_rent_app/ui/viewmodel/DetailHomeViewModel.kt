@@ -39,10 +39,12 @@ class DetailHomeViewModel @Inject constructor(
     fun getDetailHomeData(id: Int) {
         val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
             _detailHomeData.value = UiState.Error("네트워크 에러")
+            logger("CoroutineExceptionHandler ")
         }
 
         viewModelScope.launch(exceptionHandler + Dispatchers.IO) {
             _detailHomeData.value = UiState.Success(detailRepository.getHomeDetail(id))
+            logger("Success ")
         }
     }
 

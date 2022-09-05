@@ -59,19 +59,23 @@ fun monthlySimpleFormat(view: TextView, monthlyPay: String?) {
 }
 
 @BindingAdapter("hasOrNo")
-fun setHas(textView: TextView, has: Boolean) {
-    if (has) {
-        textView.text = "있음"
-    } else {
-        textView.text = "없음"
+fun setHas(textView: TextView, has: Boolean?) {
+    has?.let {
+        if (has) {
+            textView.text = "있음"
+        } else {
+            textView.text = "없음"
+        }
     }
 }
 
 @BindingAdapter("possibleOrImpossible")
-fun setHasParking(textView: TextView, has: Boolean) {
-    if (has) {
-        textView.text = "가능"
-    } else {
-        textView.text = "불가"
+fun setHasParking(textView: TextView, has: Boolean?) {
+    has?.let {
+        if (has) {
+            textView.text = "가능"
+        } else {
+            textView.text = "불가"
+        }
     }
 }

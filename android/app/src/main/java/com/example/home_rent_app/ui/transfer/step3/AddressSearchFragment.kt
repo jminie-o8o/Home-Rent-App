@@ -23,9 +23,11 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentAddressSearchBinding
 import com.example.home_rent_app.ui.viewmodel.TransferViewModel
 import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -58,6 +60,30 @@ class AddressSearchFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.action_addressSearchFragment_to_rentHomeDescriptionFragment)
             viewModel.setNextPage()
+        }
+
+        repeatOnStarted {
+            viewModel.address.collect {
+                viewModel.setAddressPageState()
+                logger("address")
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.addressDetail.collect {
+                viewModel.setAddressPageState()
+                logger("addressDetail")
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.addressPageState.collect {
+                logger("addressPageState")
+                if(it) {
+                    logger("addressPageState true")
+                    binding.btnNext.isEnabled = true
+                }
+            }
         }
 
         binding.btnBack.setOnClickListener {

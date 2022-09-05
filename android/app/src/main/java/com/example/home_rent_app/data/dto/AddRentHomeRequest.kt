@@ -6,6 +6,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class AddRentHomeRequest(
+    @Json(name = "userId")
+    val userId: Int,
     @Json(name = "address")
     val address: String,
     @Json(name = "addressDescription")

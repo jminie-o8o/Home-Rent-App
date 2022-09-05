@@ -47,18 +47,21 @@ class RentHomeDescriptionFragment : Fragment() {
         setThisFloorObserve()
         setMaxFloorObserve()
 
-    }
-
-    private fun setAddButtonListener() {
-        binding.btnAdd.setOnClickListener {
-            viewModel.addAccountRent()
-            repeatOnStarted {
-                viewModel.homeId.collect {
+        repeatOnStarted {
+            viewModel.homeId.collect {
+                logger("homeId : $it")
+                if(it != -1) {
                     val intent = Intent(requireContext(), DetailRentActivity::class.java)
                     intent.putExtra("homeId", it)
                     requireActivity().startActivity(intent)
                 }
             }
+        }
+    }
+
+    private fun setAddButtonListener() {
+        binding.btnAdd.setOnClickListener {
+            viewModel.addAccountRent()
         }
     }
 

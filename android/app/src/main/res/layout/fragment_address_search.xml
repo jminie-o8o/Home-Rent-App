@@ -96,16 +96,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tv_title_second_step"
-            style="@style/TextSubtitle1.18.bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="제목"
-            app:layout_constraintStart_toStartOf="@id/tv_locate_second_step"
-            app:layout_constraintTop_toBottomOf="@+id/til_find_address" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_title_second_step"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -118,14 +108,16 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_second_step">
+            app:layout_constraintTop_toBottomOf="@+id/til_find_address">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_title_second_step"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="예시) 부경대 정문 월세 200/30"
+                android:hint="위치 한줄 설명 (ex. 강남역 도보 5분)"
+                android:background="@android:color/transparent"
                 android:inputType="text"
+                android:text="@={vm.addressDetail}"
                 android:maxLength="20" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -154,6 +146,7 @@
             android:layout_marginTop="60dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintWidth_percent="0.42"
+            android:enabled="false"
             android:text="@string/next"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
