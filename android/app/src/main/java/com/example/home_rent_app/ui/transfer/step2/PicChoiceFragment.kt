@@ -229,11 +229,12 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         val beforePosition = item.text.toString().toInt()
         viewModel.replacePic(beforePosition, targetPosition)
         logger("$beforePosition, $targetPosition")
-
-        if(beforePosition == 0 || targetPosition == 0) {
-            picAdapter.notifyItemChanged(beforePosition)
-            picAdapter.notifyItemChanged(targetPosition)
-        }
+        picAdapter.notifyItemChanged(beforePosition)
+        picAdapter.notifyItemChanged(targetPosition)
+//        if(beforePosition == 0 || targetPosition == 0) {
+//            picAdapter.notifyItemChanged(beforePosition)
+//            picAdapter.notifyItemChanged(targetPosition)
+//        }
     }
 }
 

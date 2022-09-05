@@ -11,9 +11,7 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ItemThumbnailBinding
 import com.example.home_rent_app.util.logger
 
-class DetailThumbnailAdapter(
-    private val setPicCount: (Int, Int) -> Unit
-): ListAdapter<String, DetailThumbnailAdapter.DetailThumbnailViewHolder>(HomeThumbnailDiffUtil) {
+class DetailThumbnailAdapter: ListAdapter<String, DetailThumbnailAdapter.DetailThumbnailViewHolder>(HomeThumbnailDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailThumbnailViewHolder {
         return DetailThumbnailViewHolder(
@@ -33,7 +31,6 @@ class DetailThumbnailAdapter(
                 crossfade(true)
                 error(R.drawable.ic_close)
             }
-            setPicCount(absoluteAdapterPosition + 1, currentList.size)
         }
     }
 

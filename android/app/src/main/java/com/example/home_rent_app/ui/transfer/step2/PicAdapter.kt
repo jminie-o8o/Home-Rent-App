@@ -50,7 +50,7 @@ class PicAdapter(
             setRemoveClick()
             drag()
             drop(itemView, bindingAdapterPosition)
-            logger("bind : $bindingAdapterPosition")
+            logger("bind : $bindingAdapterPosition ${itemView.id}")
             // bind 후에 포지션이 변하지 않음
         }
 

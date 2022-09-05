@@ -6,6 +6,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityDetailRentBinding
 import com.example.home_rent_app.ui.chatting.RentMessageListActivity
@@ -42,6 +43,8 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
             }
     }
 
+    private var totalPicSize = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -60,15 +63,22 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
             viewModel.getDetailHomeData(id)
         }
 
-        val adapter = DetailThumbnailAdapter { currentPage, totalPage ->
-            binding.tvPageCount.text = getString(R.string.page_count, currentPage, totalPage)
-        }
+        val adapter = DetailThumbnailAdapter()
+
         val optionAdapter = IconAdapter()
         val securityAdapter = IconAdapter()
 
         binding.vpHomePic.adapter = adapter
         binding.rvOptionList.adapter = optionAdapter
         binding.rvSecurityList.adapter = securityAdapter
+
+        binding.vpHomePic.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tvPageCount.text = getString(R.string.page_count, position + 1, totalPicSize)
+            }
+        })
 
         repeatOnStarted {
             viewModel.detailHomeData.collect {
@@ -80,6 +90,7 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
                         optionAdapter.submitList(it.data.facilities)
                         securityAdapter.submitList(it.data.securityFacilities)
                         viewModel.getPosition()
+                        totalPicSize = it.data.houseImages.size
                     }
                     is UiState.Error -> {
                         logger("detailHomeData : ${it.message}")
@@ -97,6 +108,7 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
             repeatOnStarted {
                 viewModel.joinNewChannel().collect {
                     startActivity(RentMessageListActivity.newIntent(binding.root.context, it))
+                    finish()
                 }
             }
         }

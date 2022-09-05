@@ -11,10 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -118,5 +115,7 @@ class WantHomeViewModel @Inject constructor(
         requireNotNull(wantHomeDetail.value?.user?.userId).toString(),
         wantHomeDetail.value?.id.toString(),
         wantHomeDetail.value?.user?.profileImageUrl ?: ""
-    )
+    ).catch { e ->
+        logger("error : ${e.message}")
+    }
 }
