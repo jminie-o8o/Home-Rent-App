@@ -17,6 +17,7 @@ import com.nextsquad.house.repository.UserRepository;
 import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
 import com.nextsquad.house.repository.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.patterns.IToken;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,9 +59,21 @@ public class WantedArticleService {
     }
 
 
-    public WantedArticleResponse getWantedArticle(Long articleId) {
+    public WantedArticleResponse getWantedArticle(Long articleId, String token) {
+        DecodedJWT decode = jwtProvider.decode(token);
+        Long id = decode.getClaim("id").asLong();
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+
         WantedArticle article = wantedArticleRepository.findById(articleId)
                 .orElseThrow(() -> new ArticleNotFoundException());
+        if (article.isDeleted()) {
+            throw new IllegalArgumentException("삭제된 글 입니다.");
+        }
+
+        if (wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, article).get() != null) {
+            article.markBookmarked();
+        }
+
         article.addViewCount();
         return WantedArticleResponse.from(article);
     }

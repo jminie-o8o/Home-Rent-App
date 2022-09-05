@@ -27,8 +27,8 @@ public class WantedArticleController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id) {
-        return ResponseEntity.ok(wantedArticleService.getWantedArticle(id));
+    public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id, @RequestHeader(value = "access-token")String token) {
+        return ResponseEntity.ok(wantedArticleService.getWantedArticle(id, token));
     }
 
     @PatchMapping("/{id}")
