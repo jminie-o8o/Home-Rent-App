@@ -83,10 +83,6 @@ class WantHomeFirstStepFragment : Fragment() {
     }
 
     private fun goBack() {
-//        binding.btnClose.setOnClickListener {
-//            val activity = activity as WantHomeActivity
-//            activity.onBackPressed()
-//        }
         binding.btnClose.setOnClickListener {
             CancelDialogFragment().show(parentFragmentManager, "cancelDialog")
         }

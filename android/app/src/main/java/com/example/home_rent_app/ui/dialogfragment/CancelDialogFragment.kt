@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentCancelDialogBinding
+import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 
 class CancelDialogFragment : DialogFragment() {
 
@@ -32,6 +33,10 @@ class CancelDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvBtnKeepWrite.setOnClickListener { dismiss() }
-        
+        binding.tvBtnCancel.setOnClickListener {
+            val activity = activity as WantHomeActivity
+            activity.onBackPressed()
+            dismiss()
+        }
     }
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
+import com.example.home_rent_app.ui.dialogfragment.CancelDialogFragment
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.ItemIdSession
@@ -51,7 +52,7 @@ class WantHomeSecondStepFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnRegister.isEnabled = false
-        goHomeActivity()
+        goBack()
         register()
         setDetailLocation()
         setTitle()
@@ -62,10 +63,9 @@ class WantHomeSecondStepFragment : Fragment() {
     }
 
 
-    private fun goHomeActivity() {
+    private fun goBack() {
         binding.btnClose.setOnClickListener {
-            val activity = activity as WantHomeActivity
-            activity.goHomeActivity()
+            CancelDialogFragment().show(parentFragmentManager, "cancelDialog")
         }
     }
 
