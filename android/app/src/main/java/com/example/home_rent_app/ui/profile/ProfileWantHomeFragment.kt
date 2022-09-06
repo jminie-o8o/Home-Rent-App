@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
@@ -31,7 +30,8 @@ class ProfileWantHomeFragment : Fragment() {
     private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_want_home, container, false)
@@ -56,7 +56,7 @@ class ProfileWantHomeFragment : Fragment() {
     }
 
     private fun setRecyclerViewScrollListener() {
-        binding.rvProfileWantHome.addOnScrollListener( object : RecyclerView.OnScrollListener() {
+        binding.rvProfileWantHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)

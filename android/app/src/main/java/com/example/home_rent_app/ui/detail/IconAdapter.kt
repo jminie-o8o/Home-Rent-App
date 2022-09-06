@@ -29,7 +29,7 @@ class IconAdapter : ListAdapter<String, IconAdapter.IconViewHolder>(IconDiffUtil
 
         private fun checkIcon(icon: String) {
             val context = itemView.context
-            when(icon) {
+            when (icon) {
                 context.getString(R.string.conditioner) -> {
                     setIconInfo(icon, R.drawable.ic_conditioner)
                 }
@@ -60,7 +60,7 @@ class IconAdapter : ListAdapter<String, IconAdapter.IconViewHolder>(IconDiffUtil
             }
         }
 
-        private fun setIconInfo(name : String, iconId: Int) {
+        private fun setIconInfo(name: String, iconId: Int) {
             binding.ivIcon.setImageResource(iconId)
             binding.tvIconName.text = name
         }
@@ -75,6 +75,4 @@ class IconAdapter : ListAdapter<String, IconAdapter.IconViewHolder>(IconDiffUtil
             return oldItem == newItem
         }
     }
-
-
 }

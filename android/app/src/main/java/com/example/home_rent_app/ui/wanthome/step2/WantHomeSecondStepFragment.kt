@@ -61,7 +61,6 @@ class WantHomeSecondStepFragment : Fragment() {
         binding.etDetailSecondStep.addTextChangedListener(contentsListener)
     }
 
-
     private fun goHomeActivity() {
         binding.btnClose.setOnClickListener {
             val activity = activity as WantHomeActivity
@@ -167,6 +166,6 @@ class WantHomeSecondStepFragment : Fragment() {
     }
 
     private fun flagCheck() {
-        binding.btnRegister.isEnabled =  detailAddressFlag && titleFlag && contentsFlag
+        binding.btnRegister.isEnabled = detailAddressFlag && titleFlag && contentsFlag
     }
 }

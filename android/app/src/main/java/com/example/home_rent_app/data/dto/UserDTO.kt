@@ -10,13 +10,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class UserDTO(
     @field:Json(name = "userId")
-    val userId: Int?,
+    val userId: Int? = 0,
     @field:Json(name = "displayName")
-    val displayName: String?,
+    val displayName: String? = "",
     @field:Json(name = "profileImageUrl")
-    val profileImageUrl: String?,
+    val profileImageUrl: String? = "",
     @field:Json(name = "gender")
-    val gender: String?
+    val gender: String? = ""
 )
 
 fun UserDTO.toUserData() =

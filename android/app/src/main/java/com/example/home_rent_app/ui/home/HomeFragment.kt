@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeBinding
 import com.example.home_rent_app.ui.HomeActivity
-import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.findroom.FindHomeActivity
 import com.example.home_rent_app.ui.transfer.TransferActivity
 import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultActivity
@@ -60,7 +58,7 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.btnWnatedHome.setOnClickListener {
+        binding.btnWantedHome.setOnClickListener {
             val intent = Intent(binding.root.context, WantHomeResultActivity::class.java)
             startActivity(intent)
         }
@@ -83,6 +81,5 @@ class HomeFragment : Fragment() {
         }
 
         isFabOpen = !isFabOpen
-
     }
 }

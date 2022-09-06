@@ -8,5 +8,4 @@ interface DetailHomeDataSource {
     suspend fun getDetailHome(id: Int): DetailHomeDTO
 
     suspend fun refreshToken(): OAuthTokenResponse
-
 }

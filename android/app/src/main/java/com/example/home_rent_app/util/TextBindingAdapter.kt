@@ -82,7 +82,7 @@ fun setHasParking(textView: TextView, has: Boolean?) {
 
 @BindingAdapter("homeType")
 fun setHomeType(textView: TextView, type: String?) {
-    when(type) {
+    when (type) {
         RentType.MONTHLY.value -> {
             textView.text = "월세"
         }

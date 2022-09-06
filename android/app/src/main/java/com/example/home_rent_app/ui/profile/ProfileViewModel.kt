@@ -24,8 +24,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
-import javax.inject.Singleton
-import kotlin.math.log
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -59,7 +57,7 @@ class ProfileViewModel @Inject constructor(
     val imageUrl: StateFlow<String> get() = _imageUrl
 
     private val _userData = MutableStateFlow<GetUserInfoDTO?>(null)
-    val userData: StateFlow<GetUserInfoDTO?>  = _userData
+    val userData: StateFlow<GetUserInfoDTO?> = _userData
 
     private val _error = MutableSharedFlow<CEHModel>(
         extraBufferCapacity = 1,
@@ -76,7 +74,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         getUserInfo(userSession.userId ?: 0)
-        getGiveHomeProfile(userSession.userId ?: 0)
+//        getGiveHomeProfile(userSession.userId ?: 0)
         getWantHomeProfile(userSession.userId ?: 0)
     }
 

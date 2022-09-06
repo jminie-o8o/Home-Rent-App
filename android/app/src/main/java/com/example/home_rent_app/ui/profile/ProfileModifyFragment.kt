@@ -15,16 +15,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
-import com.example.home_rent_app.databinding.FragmentProfileBinding
 import com.example.home_rent_app.databinding.FragmentProfileModifyBinding
 import com.example.home_rent_app.ui.HomeActivity
-import com.example.home_rent_app.ui.LoginActivity
-import com.example.home_rent_app.ui.loginprofile.LoginProfileFragment
 import com.example.home_rent_app.util.FileController
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
@@ -44,7 +39,8 @@ class ProfileModifyFragment : Fragment() {
     lateinit var fileController: FileController
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_modify, container, false)
@@ -100,7 +96,8 @@ class ProfileModifyFragment : Fragment() {
         }
 
     private fun requestPermissions() {
-        ActivityCompat.requestPermissions(activity as Activity,
+        ActivityCompat.requestPermissions(
+            activity as Activity,
             REQUIRED_PERMISSIONS,
             REQ_GALLERY
         )

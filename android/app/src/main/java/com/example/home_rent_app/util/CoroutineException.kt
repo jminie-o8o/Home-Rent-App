@@ -19,5 +19,4 @@ object CoroutineException {
             else -> CEHModel(throwable, "알 수 없는 오류입니다.")
         }
     }
-
 }

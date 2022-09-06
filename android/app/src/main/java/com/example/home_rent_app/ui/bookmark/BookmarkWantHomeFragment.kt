@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentBookmarkWantHomeBinding
-import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultAdapter
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
@@ -31,7 +30,8 @@ class BookmarkWantHomeFragment : Fragment() {
     lateinit var idSession: ItemIdSession
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
@@ -62,7 +62,7 @@ class BookmarkWantHomeFragment : Fragment() {
     }
 
     private fun setRecyclerViewScrollListener() {
-        binding.rvBookmarkWantHome.addOnScrollListener( object : RecyclerView.OnScrollListener() {
+        binding.rvBookmarkWantHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)

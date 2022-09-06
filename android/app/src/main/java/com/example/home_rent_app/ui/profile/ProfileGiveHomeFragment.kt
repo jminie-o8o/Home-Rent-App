@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
@@ -35,7 +34,8 @@ class ProfileGiveHomeFragment : Fragment() {
     private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_give_home, container, false)
@@ -63,7 +63,7 @@ class ProfileGiveHomeFragment : Fragment() {
     }
 
     private fun setRecyclerViewScrollListener() {
-        binding.rvProfileGiveHome.addOnScrollListener( object : RecyclerView.OnScrollListener() {
+        binding.rvProfileGiveHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -75,6 +75,7 @@ class ProfileGiveHomeFragment : Fragment() {
                 // 스크롤이 끝에 도달했는지 확인
                 if (lastVisibleItemPosition == itemTotalCount) {
                     // 다음 페이지 불러오기
+                    logger("다음 페이지 불러오기")
                     userSession.userId?.let { viewModel.getGiveHomeProfile(it) }
                 }
             }

@@ -5,7 +5,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityTransferBinding
@@ -35,7 +34,7 @@ class TransferActivity : AppCompatActivity() {
 
     private fun setNavigationIconClick() {
         binding.topAppBar.setNavigationOnClickListener {
-            when(viewModel.page.value) {
+            when (viewModel.page.value) {
                 0 -> finish()
                 else -> navController.navigateUp()
             }

@@ -61,7 +61,7 @@ class FindHomeActivity : AppCompatActivity() {
     private fun setSearchResult() {
         repeatOnStarted {
             viewModel.result.collect { uiState ->
-                when(uiState) {
+                when (uiState) {
                     is UiState.Success -> {
                         adapter.submitList(uiState.data.rentArticles)
                     }

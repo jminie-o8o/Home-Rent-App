@@ -13,7 +13,13 @@ class ChatChannel @Inject constructor(
     private val chatClient: ChatClient,
 ) {
     @WorkerThread
-    fun joinNewChannel(homeType: String, userId: String, chatUserID: String, homeId: String, profileImage: String, ) = flow {
+    fun joinNewChannel(
+        homeType: String,
+        userId: String,
+        chatUserID: String,
+        homeId: String,
+        profileImage: String,
+    ) = flow {
         val result = chatClient.createChannel(
             channelType = "messaging",
             channelId = homeId,

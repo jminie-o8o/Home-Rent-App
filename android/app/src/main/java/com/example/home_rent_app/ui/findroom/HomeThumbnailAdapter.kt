@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
-import com.bumptech.glide.Glide
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ItemThumbnailBinding
 import com.example.home_rent_app.util.logger
 
-class HomeThumbnailAdapter: ListAdapter<String, HomeThumbnailAdapter.HomeThumbnailViewHolder>(HomeThumbnailDiffUtil) {
+class HomeThumbnailAdapter : ListAdapter<String, HomeThumbnailAdapter.HomeThumbnailViewHolder>(HomeThumbnailDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeThumbnailViewHolder {
         return HomeThumbnailViewHolder(
@@ -36,14 +35,12 @@ class HomeThumbnailAdapter: ListAdapter<String, HomeThumbnailAdapter.HomeThumbna
         }
     }
 
-    private object HomeThumbnailDiffUtil: DiffUtil.ItemCallback<String>() {
+    private object HomeThumbnailDiffUtil : DiffUtil.ItemCallback<String>() {
 
         override fun areItemsTheSame(oldItem: String, newItem: String) =
             oldItem.hashCode() == newItem.hashCode()
 
         override fun areContentsTheSame(oldItem: String, newItem: String) =
             oldItem == newItem
-
     }
-
 }

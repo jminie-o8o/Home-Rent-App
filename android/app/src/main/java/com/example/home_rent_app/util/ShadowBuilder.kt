@@ -25,5 +25,4 @@ class ShadowBuilder(view: View) : View.DragShadowBuilder(view) {
     override fun onDrawShadow(canvas: Canvas) {
         shadow.draw(canvas)
     }
-
 }

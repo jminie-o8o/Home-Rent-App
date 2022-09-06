@@ -78,5 +78,4 @@ class DetailHomeViewModel @Inject constructor(
 //            logger("실패 ${it.message}")
 //        }
 //    }
-
 }

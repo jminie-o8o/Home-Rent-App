@@ -2,7 +2,6 @@ package com.example.home_rent_app.data.datasource.transfer
 
 import com.example.home_rent_app.data.api.TransferApi
 import com.example.home_rent_app.data.dto.AddRentHomeRequest
-import com.example.home_rent_app.data.dto.AddWantHomeResponseDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -11,7 +10,7 @@ import javax.inject.Inject
 
 class TransferDataSourceImpl @Inject constructor(private val api: TransferApi) : TransferDataSource {
 
-    override fun getImageUrl(list : List<MultipartBody.Part>) = flow {
+    override fun getImageUrl(list: List<MultipartBody.Part>) = flow {
         emit(api.getImageUrl(list))
     }.flowOn(Dispatchers.IO)
 

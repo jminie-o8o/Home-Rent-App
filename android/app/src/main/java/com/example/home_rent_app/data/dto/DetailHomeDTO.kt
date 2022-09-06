@@ -1,6 +1,5 @@
 package com.example.home_rent_app.data.dto
 
-
 import com.example.home_rent_app.data.model.DetailHomeData
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -67,8 +66,6 @@ data class DetailHomeDTO(
     val user: UserDTO?
 )
 
-
-
 fun DetailHomeDTO.toDetailHomeData(): DetailHomeData {
     return DetailHomeData(
         address = requireNotNull(address),
@@ -102,4 +99,3 @@ fun DetailHomeDTO.toDetailHomeData(): DetailHomeData {
         user = requireNotNull(user).toUserData()
     )
 }
-

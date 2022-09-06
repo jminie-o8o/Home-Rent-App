@@ -37,7 +37,6 @@ class ChattingFragment : Fragment() {
         viewModel.bindView(binding.channelListView, this)
 
         setOnChannelClick()
-
     }
 
     private fun setOnChannelClick() {
@@ -45,5 +44,4 @@ class ChattingFragment : Fragment() {
             MessageListActivityFactory.create(requireContext(), channel)
         }
     }
-
 }

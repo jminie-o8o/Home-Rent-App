@@ -25,7 +25,7 @@ class BookmarkPagingSource(
                 userId = userSession.userId ?: 0,
                 start,
                 PAGE_SIZE
-                )
+            )
 
             val prevKey = if (start == STARTING_PAGE_INDEX) {
                 null
@@ -39,7 +39,6 @@ class BookmarkPagingSource(
                 start + params.loadSize
             }
             LoadResult.Page(response.wantedArticles, prevKey, nextKey)
-
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

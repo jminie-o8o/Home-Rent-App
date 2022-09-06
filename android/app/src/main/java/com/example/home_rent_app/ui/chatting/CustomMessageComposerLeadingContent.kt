@@ -35,6 +35,5 @@ class CustomMessageComposerLeadingContent : FrameLayout, MessageComposerContent 
 
     @ExperimentalStreamChatApi
     override fun renderState(state: MessageComposerState) {
-
     }
 }

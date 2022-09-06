@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentBookmarkGiveHomeBinding
-import com.example.home_rent_app.databinding.FragmentBookmarkWantHomeBinding
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
@@ -31,11 +30,18 @@ class BookmarkGiveHomeFragment : Fragment() {
     lateinit var idSession: ItemIdSession
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_bookmark_give_home, container, false)
+            DataBindingUtil
+                .inflate(
+                    inflater,
+                    R.layout.fragment_bookmark_give_home,
+                    container,
+                    false
+                )
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -57,18 +63,23 @@ class BookmarkGiveHomeFragment : Fragment() {
 
     private fun deleteBookMarkToast() {
         collectStateFlow(viewModel.deleteBookmarkStatusCode) { code ->
-            if (code == 200) Toast.makeText(requireContext(), "관심목록에서 제거되었습니다.", Toast.LENGTH_SHORT).show()
+            if (code == 200) Toast.makeText(
+                requireContext(),
+                "관심목록에서 제거되었습니다.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun setRecyclerViewScrollListener() {
-        binding.rvBookmarkGiveHome.addOnScrollListener( object : RecyclerView.OnScrollListener() {
+        binding.rvBookmarkGiveHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val lastVisibleItemPosition =
-                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!
+                        .findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
 
                 val itemTotalCount = recyclerView.adapter!!.itemCount - 1 // RecyclerView Item의 개수
                 // 스크롤이 끝에 도달했는지 확인
