@@ -46,7 +46,7 @@ class ProfileFragment : Fragment() {
         binding.vpProfileTab.adapter = ProfileViewPagerAdapter(activity as HomeActivity)
         val navigationController = findNavController()
         TabLayoutMediator(binding.tlProfileTab, binding.vpProfileTab) { tab, position ->
-            when(position) {
+            when (position) {
                 0 -> tab.text = "양도해요"
                 1 -> tab.text = "양수해요"
             }

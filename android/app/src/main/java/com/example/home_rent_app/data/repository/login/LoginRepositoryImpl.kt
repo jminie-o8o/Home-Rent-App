@@ -10,8 +10,8 @@ import javax.inject.Singleton
 
 @Singleton
 class LoginRepositoryImpl @Inject constructor(
-    private val loginDataSource : LoginDataSource
-) :   LoginRepository {
+    private val loginDataSource: LoginDataSource
+) : LoginRepository {
 
     override suspend fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest): OAuthTokenResponse {
         return loginDataSource.getKakaoToken(kakaoOauthRequest)
@@ -58,5 +58,4 @@ class LoginRepositoryImpl @Inject constructor(
     }
 
     override fun connectUser(name: String, image: String) = loginDataSource.connectUser(name, image)
-
 }

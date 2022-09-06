@@ -52,7 +52,7 @@ class WantHomeSecondStepFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnRegister.isEnabled = false
-        goBack()
+        goHomeActivity()
         register()
         setDetailLocation()
         setTitle()
@@ -62,8 +62,7 @@ class WantHomeSecondStepFragment : Fragment() {
         binding.etDetailSecondStep.addTextChangedListener(contentsListener)
     }
 
-
-    private fun goBack() {
+    private fun goHomeActivity() {
         binding.btnClose.setOnClickListener {
             CancelDialogFragment().show(parentFragmentManager, "cancelDialog")
         }
@@ -167,6 +166,6 @@ class WantHomeSecondStepFragment : Fragment() {
     }
 
     private fun flagCheck() {
-        binding.btnRegister.isEnabled =  detailAddressFlag && titleFlag && contentsFlag
+        binding.btnRegister.isEnabled = detailAddressFlag && titleFlag && contentsFlag
     }
 }

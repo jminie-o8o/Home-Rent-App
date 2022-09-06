@@ -1,7 +1,6 @@
 package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.AuthInterceptor
-import com.example.home_rent_app.data.LogoutInterceptor
 import com.example.home_rent_app.data.RefreshInterceptor
 import com.example.home_rent_app.util.Constants.BASE_URL
 import com.example.home_rent_app.util.Constants.MAP_URL

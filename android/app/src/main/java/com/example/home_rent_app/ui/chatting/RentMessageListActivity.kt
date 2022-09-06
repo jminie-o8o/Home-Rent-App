@@ -104,7 +104,7 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
         repeatOnStarted {
             messageListViewModel.channelState.collect {
                 it?.messages?.collect { list ->
-                    if(list.isNotEmpty()) {
+                    if (list.isNotEmpty()) {
                         binding.cloInstanceMessage.visibility = View.GONE
                     }
                 }
@@ -133,7 +133,7 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
 
         repeatOnStarted {
             detailHomeViewModel.detailHomeData.collect {
-                when(it) {
+                when (it) {
                     is UiState.Success -> {
                         binding.home = it.data
                     }
@@ -146,7 +146,6 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
         }
 
         detailHomeViewModel.getDetailHomeData(requireNotNull(homeId))
-
     }
 
     companion object {
@@ -155,11 +154,10 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
 
         fun newIntent(context: Context, channel: Channel): Intent {
             logger("newIntent ${channel.id}")
-            return  Intent(context, RentMessageListActivity::class.java)
+            return Intent(context, RentMessageListActivity::class.java)
                 .putExtra(CID_KEY, channel.cid)
                 .putExtra("homeType", channel.extraData["homeType"].toString())
                 .putExtra("homeId", channel.extraData["homeId"].toString())
         }
-
     }
 }

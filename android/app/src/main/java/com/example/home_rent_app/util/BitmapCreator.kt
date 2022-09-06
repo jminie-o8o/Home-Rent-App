@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 
-fun getBitmap(contentResolver: ContentResolver,  uri: Uri) = if (Build.VERSION.SDK_INT < 28) {
+fun getBitmap(contentResolver: ContentResolver, uri: Uri) = if (Build.VERSION.SDK_INT < 28) {
     MediaStore.Images.Media.getBitmap(
         contentResolver,
         uri

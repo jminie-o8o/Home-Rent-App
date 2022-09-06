@@ -81,7 +81,7 @@ class KakaoWebViewFragment : Fragment() {
                 url.host == KAKAO_OAUTH_REDIRECTION_HOST &&
                 code != null
             ) {
-                logger("test code ${code}")
+                logger("test code $code")
                 viewModel.getKakaoToken(KakaoOauthRequest(code.toString()))
             }
         }

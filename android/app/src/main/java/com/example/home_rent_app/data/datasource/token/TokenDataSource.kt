@@ -9,5 +9,4 @@ interface TokenDataSource {
     suspend fun getToken(): Flow<List<String>>
 
     fun setAppSession(token: List<String>)
-
 }

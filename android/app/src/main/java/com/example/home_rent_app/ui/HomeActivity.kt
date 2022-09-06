@@ -2,10 +2,8 @@ package com.example.home_rent_app.ui
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,7 +15,6 @@ import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.AppSession
 import com.example.home_rent_app.util.UserSession
 import dagger.hilt.android.AndroidEntryPoint
-import io.getstream.chat.android.client.models.User
 import javax.inject.Inject
 
 @AndroidEntryPoint

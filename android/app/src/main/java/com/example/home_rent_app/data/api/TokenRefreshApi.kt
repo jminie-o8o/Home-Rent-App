@@ -7,5 +7,4 @@ interface TokenRefreshApi {
 
     @POST("login/refresh")
     suspend fun getAuthToken(): OAuthTokenResponse
-
 }

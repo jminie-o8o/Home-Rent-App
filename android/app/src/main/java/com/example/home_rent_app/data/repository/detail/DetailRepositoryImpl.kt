@@ -20,6 +20,4 @@ class DetailRepositoryImpl @Inject constructor(
     override suspend fun refreshToken(): JWT {
         return dataSource.refreshToken().toJWT()
     }
-
-
 }

@@ -18,9 +18,14 @@ class BookmarkGiveHomeAdapter @Inject constructor(
     private val viewModel: BookmarkViewModel,
     private val userSession: UserSession,
     private val itemIdSession: ItemIdSession
-) : ListAdapter<RentArticleBookmark, BookmarkGiveHomeAdapter.BookmarkGiveHomeViewHolder>(BookmarkGiveAdapterDiffCallBack) {
+) : ListAdapter<RentArticleBookmark, BookmarkGiveHomeAdapter.BookmarkGiveHomeViewHolder>(
+    BookmarkGiveAdapterDiffCallBack
+) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkGiveHomeViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BookmarkGiveHomeViewHolder {
         val binding =
             ItemGivehomeBookmarkBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BookmarkGiveHomeViewHolder(binding)
@@ -32,7 +37,7 @@ class BookmarkGiveHomeAdapter @Inject constructor(
 
     inner class BookmarkGiveHomeViewHolder(private val binding: ItemGivehomeBookmarkBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(rentArticleBookmark : RentArticleBookmark) {
+        fun bind(rentArticleBookmark: RentArticleBookmark) {
             binding.rentArticleBookmark = rentArticleBookmark
             binding.cbRecommend.isChecked = true
             binding.cbRecommend.setOnCheckedChangeListener { _, isChecked ->
@@ -47,17 +52,28 @@ class BookmarkGiveHomeAdapter @Inject constructor(
         }
 
         private fun deleteBookmark(rentArticleBookmark: RentArticleBookmark) {
-            viewModel.deleteGiveHomeBookmark(BookmarkRequest(userSession.userId ?: 0, rentArticleBookmark.id))
+            viewModel.deleteGiveHomeBookmark(
+                BookmarkRequest(
+                    userSession.userId ?: 0,
+                    rentArticleBookmark.id
+                )
+            )
         }
     }
 }
 
 object BookmarkGiveAdapterDiffCallBack : DiffUtil.ItemCallback<RentArticleBookmark>() {
-    override fun areItemsTheSame(oldItem: RentArticleBookmark, newItem: RentArticleBookmark): Boolean {
+    override fun areItemsTheSame(
+        oldItem: RentArticleBookmark,
+        newItem: RentArticleBookmark
+    ): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: RentArticleBookmark, newItem: RentArticleBookmark): Boolean {
+    override fun areContentsTheSame(
+        oldItem: RentArticleBookmark,
+        newItem: RentArticleBookmark
+    ): Boolean {
         return oldItem == newItem
     }
 }

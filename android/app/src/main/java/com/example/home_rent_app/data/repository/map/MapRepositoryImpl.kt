@@ -9,5 +9,4 @@ class MapRepositoryImpl @Inject constructor(
 ) : MapRepository {
 
     override suspend fun getAddress(name: String) = dataSource.getAddress(name).toMapResponse()
-
 }

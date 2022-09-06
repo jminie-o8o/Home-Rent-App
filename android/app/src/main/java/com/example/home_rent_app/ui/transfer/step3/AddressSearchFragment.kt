@@ -17,7 +17,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentAddressSearchBinding
@@ -104,7 +103,6 @@ class AddressSearchFragment : Fragment() {
             webChromeClient = chromeClient
             loadUrl("http://54.180.8.0:8080/daum.html")
         }
-
     }
 
     private val client: WebViewClient = object : WebViewClient() {
@@ -186,5 +184,4 @@ class AddressSearchFragment : Fragment() {
             return true
         }
     }
-
 }

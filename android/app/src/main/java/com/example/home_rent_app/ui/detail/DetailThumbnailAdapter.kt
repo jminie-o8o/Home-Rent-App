@@ -6,12 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.transform.RoundedCornersTransformation
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ItemThumbnailBinding
 import com.example.home_rent_app.util.logger
 
-class DetailThumbnailAdapter: ListAdapter<String, DetailThumbnailAdapter.DetailThumbnailViewHolder>(HomeThumbnailDiffUtil) {
+class DetailThumbnailAdapter : ListAdapter<String, DetailThumbnailAdapter.DetailThumbnailViewHolder>(HomeThumbnailDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailThumbnailViewHolder {
         return DetailThumbnailViewHolder(
@@ -34,14 +33,12 @@ class DetailThumbnailAdapter: ListAdapter<String, DetailThumbnailAdapter.DetailT
         }
     }
 
-    private object HomeThumbnailDiffUtil: DiffUtil.ItemCallback<String>() {
+    private object HomeThumbnailDiffUtil : DiffUtil.ItemCallback<String>() {
 
         override fun areItemsTheSame(oldItem: String, newItem: String) =
             oldItem.hashCode() == newItem.hashCode()
 
         override fun areContentsTheSame(oldItem: String, newItem: String) =
             oldItem == newItem
-
     }
-
 }

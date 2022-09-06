@@ -9,10 +9,8 @@ import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
-import com.example.home_rent_app.ui.wanthomeresult.WantHomePagingSource
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.channels.BufferOverflow
@@ -21,13 +19,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WantHomeResultViewModel @Inject constructor(private val wantHomeResultRepository: WantHomeResultRepository) :
+class WantHomeResultViewModel @Inject constructor(
+    private val wantHomeResultRepository: WantHomeResultRepository
+) :
     ViewModel() {
 
     private val _searchWord = MutableSharedFlow<String>()

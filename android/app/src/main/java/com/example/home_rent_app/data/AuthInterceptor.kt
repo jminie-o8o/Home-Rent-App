@@ -7,9 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import okhttp3.Request
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,19 +37,22 @@ class AuthInterceptor @Inject constructor(
         return chain.proceed(requestBuilder.build())
     }
 
-    override fun authenticate(route: Route?, response: Response): Request {
+    override fun authenticate(route: Route?, response: Response): Request? {
         val list = runBlocking(Dispatchers.IO) {
             val jwt = refreshRepository.refreshToken()
-            val tokenCode = listOf(jwt.accessToken.tokenCode, jwt.refreshToken.tokenCode)
-            tokenRepository.saveToken(tokenCode)
-            tokenRepository.setAppSession(tokenCode)
+            val tokenCode = jwt?.let {
+                val tokenCode = listOf(jwt.accessToken.tokenCode, jwt.refreshToken.tokenCode)
+                tokenRepository.saveToken(tokenCode)
+                tokenRepository.setAppSession(tokenCode)
+                tokenCode
+            }
             tokenCode
-        }
+        } ?: return null
+
         return response.request
             .newBuilder()
             .removeHeader("access-token")
             .addHeader("access-token", list[0])
             .build()
     }
-
 }

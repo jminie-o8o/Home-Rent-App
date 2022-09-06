@@ -7,7 +7,6 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeBinding

@@ -28,7 +28,7 @@ class BookmarkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.vpBookmark.adapter = BookMarkViewPagerAdapter(activity as HomeActivity)
         TabLayoutMediator(binding.tlBookMark, binding.vpBookmark) { tab, position ->
-            when(position) {
+            when (position) {
                 0 -> tab.text = "양도해요"
                 1 -> tab.text = "양수해요"
             }

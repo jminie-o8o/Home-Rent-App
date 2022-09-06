@@ -14,5 +14,4 @@ interface MapApi {
         @Header("X-NCP-APIGW-API-KEY") key: String = BuildConfig.naverMapKey,
         @Query("query") name: String
     ): MapResponseDTO
-
 }

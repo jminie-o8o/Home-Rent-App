@@ -9,7 +9,7 @@ import com.example.home_rent_app.data.model.Article
 
 @BindingAdapter("priceLabel")
 fun setPriceLabel(textView: TextView, article: Article) {
-    textView.text = if(article.rentFee == 0) {
+    textView.text = if (article.rentFee == 0) {
         textView.context.getString(R.string.deposit, article.deposit)
     } else {
         textView.context.getString(R.string.deposit_and_monthly, article.deposit, article.rentFee)
@@ -18,7 +18,7 @@ fun setPriceLabel(textView: TextView, article: Article) {
 
 @BindingAdapter("priceLabelAtGiveHome")
 fun setPriceLabelAtGiveHome(textView: TextView, article: RentArticleBookmark) {
-    textView.text = if(article.rentFee == 0) {
+    textView.text = if (article.rentFee == 0) {
         textView.context.getString(R.string.deposit, article.deposit)
     } else {
         textView.context.getString(R.string.deposit_and_monthly, article.deposit, article.rentFee)
@@ -27,7 +27,7 @@ fun setPriceLabelAtGiveHome(textView: TextView, article: RentArticleBookmark) {
 
 @BindingAdapter("priceLabelAtGiveHomeProfile")
 fun setPriceLabelAtGiveHomeProfile(textView: TextView, article: RentArticleProfile) {
-    textView.text = if(article.rentFee == 0) {
+    textView.text = if (article.rentFee == 0) {
         textView.context.getString(R.string.deposit, article.deposit)
     } else {
         textView.context.getString(R.string.deposit_and_monthly, article.deposit, article.rentFee)

@@ -20,7 +20,6 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @Singleton
 class DataStore @Inject constructor(
     private val appSession: AppSession,

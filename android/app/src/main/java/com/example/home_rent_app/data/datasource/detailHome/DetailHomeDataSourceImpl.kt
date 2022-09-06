@@ -7,12 +7,11 @@ import javax.inject.Singleton
 
 @Singleton
 class DetailHomeDataSourceImpl @Inject constructor(
-    private val  api: DetailHomeApi,
+    private val api: DetailHomeApi,
     private val refreshApi: TokenRefreshApi
-): DetailHomeDataSource {
+) : DetailHomeDataSource {
 
     override suspend fun getDetailHome(id: Int) = api.getDetailHomeDTO(id)
 
     override suspend fun refreshToken() = refreshApi.getAuthToken()
-
 }

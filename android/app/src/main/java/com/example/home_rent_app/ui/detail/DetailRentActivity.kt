@@ -53,7 +53,8 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
 
         mapFragment.getMapAsync(this)
 
@@ -73,16 +74,16 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.rvSecurityList.adapter = securityAdapter
 
         binding.vpHomePic.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.tvPageCount.text = getString(R.string.page_count, position + 1, totalPicSize)
-            }
-        })
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding.tvPageCount.text = getString(R.string.page_count, position + 1, totalPicSize)
+                }
+            })
 
         repeatOnStarted {
             viewModel.detailHomeData.collect {
-                when(it) {
+                when (it) {
                     is UiState.Success -> {
                         logger("detailHomeData : ${it.data.availableFrom}")
                         binding.item = it.data
@@ -112,7 +113,6 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
-
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -138,7 +138,7 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setPositionObserve() {
         repeatOnStarted {
             viewModel.position.collect {
-                when(it) {
+                when (it) {
                     is UiState.Success -> {
                         val latLng = LatLng(it.data.y, it.data.x)
                         setPosition(latLng)
@@ -156,6 +156,5 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onBackPressed() {
         super.onBackPressed()
-
     }
 }

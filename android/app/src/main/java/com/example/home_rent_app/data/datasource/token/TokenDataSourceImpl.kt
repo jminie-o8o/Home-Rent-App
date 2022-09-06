@@ -23,5 +23,4 @@ class TokenDataSourceImpl @Inject constructor(
     override fun setAppSession(token: List<String>) {
         dataStore.setAppSession(token)
     }
-
 }

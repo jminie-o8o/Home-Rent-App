@@ -41,5 +41,4 @@ class FindRentTest {
             onView(withId(R.id.tilo_search_room)).check(matches(isDisplayed()))
         }
     }
-
 }

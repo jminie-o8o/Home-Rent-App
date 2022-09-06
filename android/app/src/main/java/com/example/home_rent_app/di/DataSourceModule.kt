@@ -28,31 +28,31 @@ abstract class DataSourceModule {
     @Binds
     abstract fun bindTransferRDataSource(
         transferDataSourceImpl: TransferDataSourceImpl
-    ) : TransferDataSource
+    ): TransferDataSource
 
     @Singleton
     @Binds
     abstract fun bindRoomFindDataSource(
         findRoomDataSourceImpl: FindRoomDataSourceImpl
-    ) : FindRoomDataSource
+    ): FindRoomDataSource
 
     @Singleton
     @Binds
     abstract fun bindDetailHomeDataSource(
         detailHomeDataSourceImpl: DetailHomeDataSourceImpl
-    ) : DetailHomeDataSource
+    ): DetailHomeDataSource
 
     @Singleton
     @Binds
     abstract fun bindRefreshDataSource(
         refreshDataSourceImpl: RefreshDataSourceImpl
-    ) : RefreshDataSource
+    ): RefreshDataSource
 
     @Singleton
     @Binds
     abstract fun bindTokenDataSource(
         tokenDataSourceImpl: TokenDataSourceImpl
-    ) : TokenDataSource
+    ): TokenDataSource
 
     @Singleton
     @Binds
@@ -65,6 +65,4 @@ abstract class DataSourceModule {
     abstract fun bindMapDataSource(
         mapDataSourceImpl: MapDataSourceImpl
     ): MapDataSource
-
 }
-

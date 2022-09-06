@@ -19,12 +19,9 @@ import com.example.home_rent_app.ui.dialogfragment.CancelDialogFragment
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.RangeValidator
-import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -227,6 +224,6 @@ class WantHomeFirstStepFragment : Fragment() {
     }
 
     private fun flagCheck() {
-        binding.btnGoSecondStep.isEnabled =  goInFlag && goOutFlag && depositFlag && monthlyPayFlag
+        binding.btnGoSecondStep.isEnabled = goInFlag && goOutFlag && depositFlag && monthlyPayFlag
     }
 }

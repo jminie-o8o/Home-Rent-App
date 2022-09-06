@@ -5,7 +5,6 @@ import com.example.home_rent_app.data.datastore.DataStore
 import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
-import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.logger
 import io.getstream.chat.android.client.ChatClient
@@ -23,7 +22,7 @@ class LoginDataSourceImpl @Inject constructor(
     private val userSession: UserSession,
     private val chatClient: ChatClient,
     private val dataStore: DataStore
-) : LoginDataSource{
+) : LoginDataSource {
 
     override suspend fun getKakaoToken(kakaoOauthRequest: KakaoOauthRequest): OAuthTokenResponse {
         return loginApi.getKakaoToken(kakaoOauthRequest)
