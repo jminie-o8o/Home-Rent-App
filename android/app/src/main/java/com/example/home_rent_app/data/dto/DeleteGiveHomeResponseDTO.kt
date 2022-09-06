@@ -7,6 +7,6 @@ import com.squareup.moshi.JsonClass
 data class DeleteGiveHomeResponseDTO(
     @field:Json(name = "message")
     val message: String,
-    @field:Json(name = "statusCode")
+    @field:Json(name = "code")
     val statusCode: Int
 )

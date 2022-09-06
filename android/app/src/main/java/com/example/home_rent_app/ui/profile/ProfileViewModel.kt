@@ -25,13 +25,15 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
+private const val FIRST = 0
+
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val userSession: UserSession
 ) : ViewModel() {
 
-    private var page = 0
+    private var page = 1
 
     private val _giveHomeProfileResult =
         MutableStateFlow<MutableList<RentArticleProfile>>(mutableListOf())
@@ -73,8 +75,8 @@ class ProfileViewModel @Inject constructor(
 
     init {
         getUserInfo(userSession.userId ?: 0)
-//        getGiveHomeProfile(userSession.userId ?: 0)
-        getWantHomeProfile(userSession.userId ?: 0)
+        getGiveHomeProfileAtFirstPage(userSession.userId ?: 0)
+        getWantHomeProfileAtFirstPage(userSession.userId ?: 0)
     }
 
     fun getUserInfo(userId: Int) {
@@ -99,6 +101,13 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun getGiveHomeProfileAtFirstPage(userId: Int) {
+        viewModelScope.launch {
+            val response = profileRepository.getGiveHomeProfileResult(userId, FIRST)
+            _giveHomeProfileResult.value = response.rentArticles.toMutableList()
+        }
+    }
+
     fun getWantHomeProfile(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
             val response = profileRepository.getWantHomeProfileResult(userId, page)
@@ -110,6 +119,13 @@ class ProfileViewModel @Inject constructor(
             list.addAll(response.wantedArticles)
             _wantHomeProfileResult.value = list
             page += 1
+        }
+    }
+
+    fun getWantHomeProfileAtFirstPage(userId: Int) {
+        viewModelScope.launch {
+            val response = profileRepository.getWantHomeProfileResult(userId, FIRST)
+            _wantHomeProfileResult.value = response.wantedArticles.toMutableList()
         }
     }
 

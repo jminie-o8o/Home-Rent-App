@@ -56,16 +56,14 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-//    init {
-//        getWantHomeResult(userId = userSession.userId ?: 0)
-//        getGiveHomeResult(userId = userSession.userId ?: 0)
-//    }
+    init {
+        getWantHomeResultAtFirstPage(userSession.userId ?: 0)
+        getGiveHomeResultAtFirstPage(userSession.userId ?: 0)
+    }
 
     fun getWantHomeResult(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            logger("WantHome 함수 작동")
             val response = bookmarkRepository.getWantBookmark(userId, page)
-
             if (!response.hasNext) {
                 return@launch
             }
@@ -93,7 +91,6 @@ class BookmarkViewModel @Inject constructor(
 
     fun getGiveHomeResult(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            logger("GiveHome 함수 작동")
             val response = bookmarkRepository.getGiveBookmark(userId, page)
             if (!response.hasNext) {
                 return@launch

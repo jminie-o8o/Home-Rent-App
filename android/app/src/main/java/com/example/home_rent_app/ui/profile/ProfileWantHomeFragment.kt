@@ -49,6 +49,11 @@ class ProfileWantHomeFragment : Fragment() {
         logout()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getWantHomeProfileAtFirstPage(userSession.userId ?: 0)
+    }
+
     private fun updateAdapter() {
         collectStateFlow(viewModel.wantHomeProfileResult) {
             adapter.submitList(it)

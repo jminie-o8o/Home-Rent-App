@@ -67,7 +67,6 @@ class BookmarkGiveHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        logger("양도 시작2")
         setRecyclerViewScrollListener()
         adapter = HomeListAdapter(geToDetail, addBookmark, deleteBookmark)
         binding.rvBookmarkGiveHome.adapter = adapter

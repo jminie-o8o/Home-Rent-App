@@ -53,9 +53,13 @@ class ProfileGiveHomeFragment : Fragment() {
         observeMessage(requireActivity().applicationContext)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getGiveHomeProfileAtFirstPage(userSession.userId ?: 0)
+    }
+
     private fun updateAdapter() {
         collectStateFlow(viewModel.giveHomeProfileResult) {
-            logger("giveHomeProfileResult : $it")
             adapter.submitList(it)
         }
     }
