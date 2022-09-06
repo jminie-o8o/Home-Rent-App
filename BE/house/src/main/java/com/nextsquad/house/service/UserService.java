@@ -54,7 +54,10 @@ public class UserService {
     public RentArticleListResponse getRentBookmark(long userId, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         Page<RentArticleBookmark> bookmarks = rentArticleBookmarkRepository.findByUser(user, pageable);
-        List<RentArticleListElement> elements = bookmarks.stream().map(RentArticleListElement::from).collect(Collectors.toList());
+        List<RentArticleListElement> elements = bookmarks.stream()
+                .map(RentArticleListElement::from)
+                .peek(element -> element.setBookmarked(true))
+                .collect(Collectors.toList());
         return new RentArticleListResponse(elements, hasNext(pageable, bookmarks));
     }
 
@@ -65,7 +68,10 @@ public class UserService {
     public WantedArticleListResponse getWantedBookmark(long userId, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         Page<WantedArticleBookmark> bookmarks = wantedArticleBookmarkRepository.findByUser(user, pageable);
-        List<WantedArticleElementResponse> elements = bookmarks.stream().map(WantedArticleElementResponse::from).collect(Collectors.toList());
+        List<WantedArticleElementResponse> elements = bookmarks.stream()
+                .map(WantedArticleElementResponse::from)
+                .peek(element -> element.setBookmarked(true))
+                .collect(Collectors.toList());
 
         return new WantedArticleListResponse(elements, hasNext(pageable, bookmarks));
 
