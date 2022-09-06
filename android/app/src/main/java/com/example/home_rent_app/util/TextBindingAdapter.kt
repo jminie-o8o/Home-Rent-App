@@ -44,8 +44,8 @@ fun depositFormat(view: TextView, deposit: String, monthlyPay: String) {
 
 @BindingAdapter("gender")
 fun genderFormat(view: TextView, gender: String?) {
-    if (gender == "MALE") view.text = "남"
-    else view.text = "여"
+    if (gender == "MALE") view.text = "・남"
+    else view.text = "・여"
 }
 
 @BindingAdapter("depositSimple")

@@ -2,7 +2,9 @@ package com.example.home_rent_app.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
+import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.example.home_rent_app.R
 
@@ -14,11 +16,20 @@ fun setImage(view: de.hdodenhof.circleimageview.CircleImageView, imageUrl: Strin
 @BindingAdapter("imageSetting")
 fun setNormalImage(imageView: ImageView, imageUrl: String?) {
     if (imageUrl == null) {
-        imageView.setImageResource(R.drawable.default_profile_image)
+        imageView.load(R.drawable.ic_baseline_account_circle_24) {
+            transformations(CircleCropTransformation())
+        }
         return
     }
+    val circularProgressDrawable = CircularProgressDrawable(imageView.context)
+    circularProgressDrawable.strokeWidth = 5f
+    circularProgressDrawable.centerRadius = 30f
+    circularProgressDrawable.start()
+
     imageView.load(imageUrl) {
-        error(R.drawable.default_profile_image)
+        placeholder(circularProgressDrawable)
+        error(R.drawable.ic_baseline_account_circle_24)
+        transformations(CircleCropTransformation())
     }
 }
 
@@ -27,7 +38,13 @@ fun setRoundImage(imageView: ImageView, imageUrl: String?) {
     if (imageUrl == null) {
         return
     }
+    val circularProgressDrawable = CircularProgressDrawable(imageView.context)
+    circularProgressDrawable.strokeWidth = 5f
+    circularProgressDrawable.centerRadius = 30f
+    circularProgressDrawable.start()
+
     imageView.load(imageUrl) {
+        placeholder(circularProgressDrawable)
         transformations(RoundedCornersTransformation(30f, 30f, 30f, 30f))
         error(R.drawable.ic_image_not)
     }
