@@ -75,6 +75,7 @@ class LoginViewModel @Inject constructor(
     private fun setUserSession(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
             loginRepository.setUserIdAtUserSession(userId)
+            connectUser(name, imageUrl.value) // 채팅 관련
         }
     }
 
@@ -193,7 +194,6 @@ class LoginViewModel @Inject constructor(
             loginRepository.getIsLogin().collect { isLogin ->
                 if (isLogin) { // 자동로그인이 되어있는 경우
                     setAppSession()
-                    connectUser(name, imageUrl.value) // 채팅 관련
                     setUserSession(setUserId())
                 }
                 _isLogin.emit(isLogin)
