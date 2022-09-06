@@ -12,11 +12,22 @@
         android:layout_height="match_parent"
         tools:context=".ui.login.LoginFragment">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_login_logo"
+            app:layout_constraintBottom_toTopOf="@id/tv_login_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="100dp"/>
+
         <TextView
             android:id="@+id/tv_login_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="간편하게 SNS 회원가입"
+            style="@style/TextSubtitle1.16.bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -31,6 +42,7 @@
             android:text="카카오톡으로 계속하기"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:drawableLeft="@drawable/ic_kakao_logo"
             android:backgroundTint="@color/kakao_yello"
             app:layout_constraintTop_toBottomOf="@+id/tv_login_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +58,9 @@
             android:textStyle="bold"
             android:layout_marginHorizontal="20dp"
             android:text="네이버로 계속하기"
+            android:textAlignment="center"
+            android:drawableLeft="@drawable/ic_naver_logo"
+            android:drawablePadding="10dp"
             app:layout_constraintTop_toBottomOf="@+id/btn_kakao_login"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
