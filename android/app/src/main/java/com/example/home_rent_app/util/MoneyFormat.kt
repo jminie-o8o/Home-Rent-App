@@ -32,15 +32,17 @@ class MoneyFormat(private val editText: EditText): TextWatcher {
 }
 
 @BindingAdapter("deposit", "rentFee")
-fun TextView.setDepositAndFee(deposit: Int, fee: Int) {
-    text = String().format(context.getString(R.string.deposit_and_monthly), convertMoney(deposit), convertMoney(fee))
+fun TextView.setDepositAndFee(deposit: Int?, fee: Int?) {
+    if(deposit != null && fee != null) {
+        text = String().format(context.getString(R.string.deposit_and_monthly), convertMoney(deposit), convertMoney(fee))
+    }
 }
 
 private fun convertMoney(price: Int): String {
     var temp = price
     for (i in 0..3) {
         if(temp / 10 == 0) {
-            return "${temp}원}"
+            return "${temp}원"
         }
         if(temp / 10 != 0) {
             temp /= 10
@@ -50,6 +52,8 @@ private fun convertMoney(price: Int): String {
 }
 
 @BindingAdapter("maintenanceFee")
-fun setMaintenanceFee(textView: TextView, maintenanceFee: Int) {
-    textView.text = convertMoney(maintenanceFee)
+fun setMaintenanceFee(textView: TextView, maintenanceFee: Int?) {
+    maintenanceFee?.let {
+        textView.text = convertMoney(maintenanceFee)
+    }
 }

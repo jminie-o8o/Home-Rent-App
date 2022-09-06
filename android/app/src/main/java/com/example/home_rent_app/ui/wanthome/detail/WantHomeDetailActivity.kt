@@ -10,15 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
+import com.example.home_rent_app.ui.chatting.WantedMessageListActivity
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultActivity
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
-import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
-import com.example.home_rent_app.util.setLikeClickEvent
+import com.example.home_rent_app.util.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,6 +39,7 @@ class WantHomeDetailActivity : AppCompatActivity() {
         clickLikeButton()
         getWantHomeDetail()
         checkMyItem()
+        setGoChat()
     }
 
     private fun goHomeActivity() {
@@ -63,6 +63,21 @@ class WantHomeDetailActivity : AppCompatActivity() {
             if (Response?.user?.userId == userSession.userId) {
                 binding.btnLike.visibility = View.GONE
                 binding.btnGoChat.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun setGoChat() {
+        binding.btnGoChat.setOnClickListener {
+            logger("btnGoChat")
+            repeatOnStarted {
+                viewModel.joinNewChannel().
+                catch { e ->
+                    logger("chat error : ${e.message}")
+                }.collect {
+                    startActivity(WantedMessageListActivity.newIntent(this@WantHomeDetailActivity, it))
+                    finish()
+                }
             }
         }
     }

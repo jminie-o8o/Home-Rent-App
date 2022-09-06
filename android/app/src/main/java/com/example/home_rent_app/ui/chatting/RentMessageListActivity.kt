@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.home_rent_app.databinding.ActivityMessageListRentBinding
 import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
+import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted
 import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel
@@ -49,11 +51,13 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
         cid = checkNotNull(intent.getStringExtra(CID_KEY)) {
             "MessageListActivity를 시작하기 위해서는 채널 아이디 (cid) 정보가 필요합니다."
         }
-        homeId = intent?.getIntExtra("homeId", -1)
+        intent?.getStringExtra("homeId")?.let {
+            homeId = it.toInt()
+        }
+
+        logger("RentMessageListActivity : $homeId")
 
         factory = MessageListViewModelFactory(cid)
-//        val listViewModel: MessageListViewModel by viewModels { factory }
-//        val messageComposerViewModel: MessageComposerViewModel by viewModels { factory }
 
         // Step 2 - 채팅방 컴포넌트에 뷰모델 연결
         messageListViewModel.bindView(binding.messageListView, this)
@@ -127,11 +131,23 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
             messageComposerViewModel.sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
         }
 
+        repeatOnStarted {
+            detailHomeViewModel.detailHomeData.collect {
+                when(it) {
+                    is UiState.Success -> {
+                        binding.home = it.data
+                    }
+                    is UiState.Error -> {
+                        Toast.makeText(this@RentMessageListActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> logger("detailHomeData Loading...")
+                }
+            }
+        }
+
         detailHomeViewModel.getDetailHomeData(requireNotNull(homeId))
 
     }
-
-//    private fun set
 
     companion object {
         // MessageListActivity의 인텐트 생성 및 채팅방의 cid 정보 전달

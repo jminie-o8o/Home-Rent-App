@@ -443,7 +443,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
-                    android:text="@={vm.expiredAt}"
+                    android:text="@={vm.contractExpiresAt}"
                     android:focusableInTouchMode="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -455,14 +455,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/otf_start_date"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_end_date_label"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintWidth_percent="0.35"
-                android:clickable="false"
+                android:layout_marginStart="16dp"
+                app:layout_constraintWidth_percent="0.4"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:elevation="0dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
                 android:text="@string/back_label"/>
 
             <Button
@@ -471,13 +471,14 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/otf_start_date"
-                app:layout_constraintStart_toEndOf="@id/btn_pre"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintWidth_percent="0.35"
+                app:layout_constraintWidth_percent="0.4"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:layout_marginEnd="16dp"
                 android:enabled="false"
-                android:backgroundTint="@color/gray"
                 android:text="@string/next"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

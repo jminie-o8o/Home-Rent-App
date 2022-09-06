@@ -6,6 +6,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityDetailRentBinding
 import com.example.home_rent_app.ui.chatting.RentMessageListActivity
@@ -42,6 +43,8 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
             }
     }
 
+    private var totalPicSize = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -57,16 +60,40 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
         val id = intent?.getIntExtra("homeId", -1)
 
         if (id != null) {
-            viewModel.getDetailHomeData(1)
+            viewModel.getDetailHomeData(id)
         }
+
+        val adapter = DetailThumbnailAdapter()
+
+        val optionAdapter = IconAdapter()
+        val securityAdapter = IconAdapter()
+
+        binding.vpHomePic.adapter = adapter
+        binding.rvOptionList.adapter = optionAdapter
+        binding.rvSecurityList.adapter = securityAdapter
+
+        binding.vpHomePic.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tvPageCount.text = getString(R.string.page_count, position + 1, totalPicSize)
+            }
+        })
 
         repeatOnStarted {
             viewModel.detailHomeData.collect {
                 when(it) {
                     is UiState.Success -> {
+                        logger("detailHomeData : ${it.data.availableFrom}")
                         binding.item = it.data
+                        adapter.submitList(it.data.houseImages)
+                        optionAdapter.submitList(it.data.facilities)
+                        securityAdapter.submitList(it.data.securityFacilities)
+                        viewModel.getPosition()
+                        totalPicSize = it.data.houseImages.size
                     }
                     is UiState.Error -> {
+                        logger("detailHomeData : ${it.message}")
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
                     is UiState.Loading -> {
@@ -81,6 +108,7 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
             repeatOnStarted {
                 viewModel.joinNewChannel().collect {
                     startActivity(RentMessageListActivity.newIntent(binding.root.context, it))
+                    finish()
                 }
             }
         }
@@ -94,7 +122,7 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
             isScaleBarEnabled = false
         }
         setPositionObserve()
-        viewModel.getPosition()
+//        viewModel.getPosition()
     }
 
     private fun setPosition(latLng: LatLng) {
@@ -124,5 +152,10 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
     }
 }

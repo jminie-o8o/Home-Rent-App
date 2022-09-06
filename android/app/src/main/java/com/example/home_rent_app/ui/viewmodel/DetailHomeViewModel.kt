@@ -1,24 +1,17 @@
 package com.example.home_rent_app.ui.viewmodel
 
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.model.DetailHomeData
 import com.example.home_rent_app.data.model.MapResponse
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.map.MapRepository
-import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.UserSession
-import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.getstream.chat.android.client.ChatClient
-import io.getstream.chat.android.client.utils.onErrorSuspend
-import io.getstream.chat.android.client.utils.onSuccessSuspend
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,7 +19,7 @@ import javax.inject.Inject
 class DetailHomeViewModel @Inject constructor(
     private val detailRepository: DetailRepository,
     private val mapRepository: MapRepository,
-    private val chatClient: ChatClient,
+    private val chatChannel: ChatChannel,
     private val userSession: UserSession
 ) : ViewModel() {
 
@@ -39,10 +32,12 @@ class DetailHomeViewModel @Inject constructor(
     fun getDetailHomeData(id: Int) {
         val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
             _detailHomeData.value = UiState.Error("네트워크 에러")
+            logger("CoroutineExceptionHandler ")
         }
 
         viewModelScope.launch(exceptionHandler + Dispatchers.IO) {
             _detailHomeData.value = UiState.Success(detailRepository.getHomeDetail(id))
+            logger("Success ")
         }
     }
 
@@ -57,25 +52,31 @@ class DetailHomeViewModel @Inject constructor(
         }
     }
 
-    @WorkerThread
-    fun joinNewChannel() = flow {
+    fun joinNewChannel() = chatChannel.joinNewChannel(
+        RENT,
+        userSession.userId.toString(),
+        requireNotNull(detailHomeData.value._data?.user?.userId).toString(),
+        detailHomeData.value._data?.id.toString(),
+        detailHomeData.value._data?.user?.profileImageUrl ?: ""
+    )
+//    fun joinNewChannel() = flow {
 //        val id = requireNotNull(detailHomeData.value._data?.user?.userId)
-        val homeId = detailHomeData.value._data?.id ?: 0
-        val profileImage = detailHomeData.value._data?.user?.profileImageUrl ?: ""
-        val result = chatClient.createChannel(
-            channelType = "messaging",
-            channelId = homeId.toString(),
-            memberIds = listOf(userSession.userId.toString(), "3"),
-            extraData = mapOf("homeType" to "rent", "homeId" to "$homeId", "image" to profileImage) // userId 필드 생기면 수정하기
-        ).await()
-
-        result.onSuccessSuspend {
-            logger("성공 ${it.id}")
-            emit(it)
-        }
-        result.onErrorSuspend {
-            logger("실패 ${it.message}")
-        }
-    }
+//        val homeId = detailHomeData.value._data?.id ?: 0
+//        val profileImage = detailHomeData.value._data?.user?.profileImageUrl ?: ""
+//        val result = chatClient.createChannel(
+//            channelType = "messaging",
+//            channelId = homeId.toString(),
+//            memberIds = listOf(userSession.userId.toString(), id.toString()),
+//            extraData = mapOf("homeType" to "rent", "homeId" to "$homeId", "image" to profileImage) // userId 필드 생기면 수정하기
+//        ).await()
+//
+//        result.onSuccessSuspend {
+//            logger("성공 ${it.id}")
+//            emit(it)
+//        }
+//        result.onErrorSuspend {
+//            logger("실패 ${it.message}")
+//        }
+//    }
 
 }

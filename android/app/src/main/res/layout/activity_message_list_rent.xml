@@ -56,6 +56,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:scaleType="fitXY"
+                roundImage="@{home.houseImages[0]}"
                 tools:src="@drawable/ic_launcher_foreground"/>
 
             <TextView
@@ -68,6 +69,7 @@
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"
                 android:textSize="17sp"
+                android:layout_marginStart="12dp"
                 android:text="@{home.title}"
                 tools:text="부산광역 남구 대연동"/>
 
@@ -77,6 +79,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_home_title"
                 app:layout_constraintStart_toEndOf="@id/iv_home_pic"
+                android:layout_marginStart="12dp"
                 android:text="@{@string/term_of_a_contract(home.availableFrom, home.contractExpiresAt)}"
                 tools:text="7월 23일 ~ 8월 31일"/>
 
@@ -88,6 +91,7 @@
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/tv_date_range"
                 app:layout_constraintStart_toEndOf="@id/iv_home_pic"
+                android:layout_marginStart="12dp"
                 android:text="@{@string/deposit_and_monthly(home.deposit, home.rentFee)}"
                 tools:text="월세 100/35"/>
 

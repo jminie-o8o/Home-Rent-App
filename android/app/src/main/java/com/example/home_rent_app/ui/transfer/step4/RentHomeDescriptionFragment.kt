@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -46,19 +45,26 @@ class RentHomeDescriptionFragment : Fragment() {
         setContent()
         setThisFloorObserve()
         setMaxFloorObserve()
+        setHomIdObserve()
+    }
 
+    private fun setHomIdObserve() {
+        repeatOnStarted {
+            viewModel.homeId.collect {
+                logger("homeId : $it")
+                if(it != -1) {
+                    val intent = Intent(requireContext(), DetailRentActivity::class.java)
+                    intent.putExtra("homeId", it)
+                    requireActivity().startActivity(intent)
+                    requireActivity().finish()
+                }
+            }
+        }
     }
 
     private fun setAddButtonListener() {
         binding.btnAdd.setOnClickListener {
             viewModel.addAccountRent()
-            repeatOnStarted {
-                viewModel.homeId.collect {
-                    val intent = Intent(requireContext(), DetailRentActivity::class.java)
-                    intent.putExtra("homeId", it)
-                    requireActivity().startActivity(intent)
-                }
-            }
         }
     }
 
@@ -78,10 +84,11 @@ class RentHomeDescriptionFragment : Fragment() {
                     R.id.chip_washer -> getString(R.string.washer)
                     R.id.chip_bed -> getString(R.string.bed)
                     R.id.chip_closet -> getString(R.string.closet)
-                    else -> getString(R.string.TV)
+                    else -> getString(R.string.tv)
                 }
             }
             viewModel.setFacilitiesList(list)
+            viewModel.setDetailPageState()
         }
     }
 
@@ -95,7 +102,6 @@ class RentHomeDescriptionFragment : Fragment() {
                     viewModel.setHasElevator(false)
                 }
             }
-            viewModel.setDetailPageState()
         }
     }
 
@@ -109,7 +115,6 @@ class RentHomeDescriptionFragment : Fragment() {
                     viewModel.setHasBalcony(false)
                 }
             }
-            viewModel.setDetailPageState()
         }
     }
 
@@ -123,7 +128,6 @@ class RentHomeDescriptionFragment : Fragment() {
                     viewModel.setHasParking(false)
                 }
             }
-            viewModel.setDetailPageState()
         }
     }
 
@@ -137,16 +141,14 @@ class RentHomeDescriptionFragment : Fragment() {
                 }
             }
             viewModel.setSecurity(list)
+            viewModel.setDetailPageState()
         }
     }
 
     private fun setRentDetailPageStateObserve() {
         repeatOnStarted {
             viewModel.rentDetailPageState.collect {
-                binding.btnAdd.apply {
-                    isEnabled = true
-                    setBackgroundColor(binding.root.context.getColor(R.color.main_color))
-                }
+                binding.btnAdd.isEnabled = it
             }
         }
     }

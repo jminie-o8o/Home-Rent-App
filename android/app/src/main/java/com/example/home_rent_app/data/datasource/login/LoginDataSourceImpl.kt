@@ -82,10 +82,6 @@ class LoginDataSourceImpl @Inject constructor(
 
     override fun getGender() = dataStore.getGender()
 
-//    override suspend fun getUserInfo(): User {
-//        return dataStore.getUserInfo()
-//    }
-
     override suspend fun setUserIdAtUserSession(userId: Int) {
         logger("LoginFragment ID DataSource: $userId")
         userSession.userId = userId
@@ -94,12 +90,15 @@ class LoginDataSourceImpl @Inject constructor(
     override fun connectUser(name: String, image: String) = flow {
         // disconnect a user if already connected.
         disconnectUser()
-        val token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsImV4cCI6MTY2MjEzOTI4OX0.-ibyL7ZuoxyAg18FQUKOjEb90Mjb0t_Gl_wMs-4K2DA"
+
         val user = User(
-            id = "1",
+            id = userSession.userId.toString(),
             name = name,
             image = image
         )
+
+        val token = chatClient.devToken(user.id)
+
         val result = chatClient.connectUser(user, token).await()
 
         result.onSuccessSuspend {

@@ -22,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TransferViewModel @Inject constructor(
     private val transferRepository: TransferRepository,
-    private val fileController: FileController
+    private val fileController: FileController,
+    private val userSession: UserSession
 ) : ViewModel() {
 
     private val _page = MutableStateFlow(0)
@@ -44,7 +45,7 @@ class TransferViewModel @Inject constructor(
 
     val availableFrom = MutableStateFlow("")
 
-    val expiredAt = MutableStateFlow("")
+    val contractExpiresAt = MutableStateFlow("")
 
     private val _homeDescriptionState = MutableStateFlow(false)
     val homeDescriptionState = _homeDescriptionState.asStateFlow()
@@ -68,11 +69,14 @@ class TransferViewModel @Inject constructor(
 
     val address = MutableStateFlow("")
 
-    private val addressDetail = MutableStateFlow("")
+    val addressDetail = MutableStateFlow("")
+
+    private val _addressPageState = MutableStateFlow(false)
+    val addressPageState = _addressPageState.asStateFlow()
 
     private val facilities = MutableStateFlow<List<String>>(emptyList())
 
-    private val securityFaclities = MutableStateFlow<List<String>>(emptyList())
+    private val securityFacilities = MutableStateFlow<List<String>>(emptyList())
 
     val content = MutableStateFlow("")
 
@@ -91,41 +95,46 @@ class TransferViewModel @Inject constructor(
 
     private var id = 0
 
-    private val _homeId = MutableStateFlow(0)
+    private val _homeId = MutableStateFlow(-1)
     val homeId = _homeId.asStateFlow()
 
     fun addAccountRent() {
         viewModelScope.launch {
+            val addData = AddRentHomeRequest(
+                userId = requireNotNull(userSession.userId),
+                houseImages = houseImages.value._data?.images.orEmpty(),
+                title = title.value,
+                contractType = contractType.value.value,
+                rentFee = monthly.value.replace(",", "").toInt(),
+                deposit = deposit.value.replace(",", "").toInt(),
+                availableFrom = availableFrom.value,
+                contractExpiresAt = contractExpiresAt.value,
+                maintenanceFeeDescription = maintenanceDescription.value,
+                maintenanceFee = maintenance.value.toInt(),
+                latitude = 523.12132,
+                longitude = 10.232,
+                address = address.value,
+                addressDetail = addressDetail.value,
+                addressDescription = "22-1",
+                facilities = facilities.value,
+                securityFacilities = securityFacilities.value,
+                content = content.value,
+                houseType = houseType.value.value,
+                maxFloor = maxFloor.value.toInt(),
+                thisFloor = thisFloor.value.toInt(),
+                hasParkingLot = hasParkingLot.value,
+                hasBalcony = hasBalcony.value,
+                hasElevator = hasElevator.value
+            )
+            logger("addData : $addData")
             kotlin.runCatching {
                 transferRepository.addRentHome(
-                    AddRentHomeRequest(
-                        houseImages = houseImages.value._data?.images.orEmpty(),
-                        title = title.value,
-                        contractType = contractType.value.value,
-                        rentFee = monthly.value.toInt(),
-                        deposit = deposit.value.toInt(),
-                        availableFrom = availableFrom.value,
-                        expiredAt = expiredAt.value,
-                        maintenanceFeeDescription = maintenanceDescription.value,
-                        maintenanceFee = maintenance.value.toInt(),
-                        latitude = 523.12132,
-                        longitude = 10.232,
-                        address = address.value,
-                        addressDetail = addressDetail.value,
-                        addressDescription = "22-1",
-                        facilities = facilities.value,
-                        securityFaclities = securityFaclities.value,
-                        content = content.value,
-                        houseType = houseType.value.value,
-                        maxFloor = maxFloor.value.toInt(),
-                        thisFloor = thisFloor.value.toInt(),
-                        hasParkingLot = hasParkingLot.value,
-                        hasBalcony = hasBalcony.value,
-                        hasElevator = hasElevator.value
-                    )
+                    addData
                 )
             }.onFailure {
                 logger("${it.message}")
+            }.onSuccess {
+                _homeId.value = it.id
             }
         }
     }
@@ -168,28 +177,27 @@ class TransferViewModel @Inject constructor(
     }
 
     private fun setJeonseHomeDescriptionState() {
-        if (title.value != "" &&
-            deposit.value != "" &&
-            maintenance.value != "" &&
-            maintenanceDescription.value != "" &&
-            availableFrom.value != "" &&
-            expiredAt.value != ""
-        ) {
-            _homeDescriptionState.value = true
-        }
+        monthly.value = "0"
+        _homeDescriptionState.value = title.value != "" &&
+                deposit.value != "" &&
+                maintenance.value != "" &&
+                maintenanceDescription.value != "" &&
+                availableFrom.value != "" &&
+                contractExpiresAt.value != ""
     }
 
     private fun setMonthlyHomeDescriptionState() {
-        if (title.value != "" &&
-            deposit.value != "" &&
-            monthly.value != "" &&
-            maintenance.value != "" &&
-            maintenanceDescription.value != "" &&
-            availableFrom.value != "" &&
-            expiredAt.value != ""
-        ) {
-            _homeDescriptionState.value = true
-        }
+        _homeDescriptionState.value = title.value != "" &&
+                deposit.value != "" &&
+                monthly.value != "" &&
+                maintenance.value != "" &&
+                maintenanceDescription.value != "" &&
+                availableFrom.value != "" &&
+                contractExpiresAt.value != ""
+    }
+
+    fun setAddressPageState() {
+        _addressPageState.value = address.value != "" && addressDetail.value != ""
     }
 
     fun replacePic(beforePosition: Int, targetPosition: Int) {
@@ -229,13 +237,12 @@ class TransferViewModel @Inject constructor(
     }
 
     suspend fun checkCorrectDate() {
-
-        if (availableFrom.value != "" && expiredAt.value != "") {
+        if (availableFrom.value != "" && contractExpiresAt.value != "") {
             _isCorrectDate.emit(compareToDate() < 0)
         }
     }
 
-    private fun compareToDate() = availableFrom.value.compareTo(expiredAt.value)
+    private fun compareToDate() = availableFrom.value.compareTo(contractExpiresAt.value)
 
     fun getImageUrl() {
         val list = mutableListOf<MultipartBody.Part>()
@@ -256,14 +263,11 @@ class TransferViewModel @Inject constructor(
     }
 
     fun setDetailPageState() {
-        if (content.value != "" &&
-            facilities.value.isEmpty() &&
-            thisFloor.value != "" &&
-            maxFloor.value != "" &&
-            securityFaclities.value.isEmpty()
-        ) {
-            _rentDetailPageState.value = true
-        }
+        _rentDetailPageState.value = content.value != "" &&
+                facilities.value.isNotEmpty() &&
+                thisFloor.value != "" &&
+                maxFloor.value != "" &&
+                securityFacilities.value.isNotEmpty()
     }
 
     fun setFacilitiesList(checkFacilities: List<String>) {
@@ -275,7 +279,7 @@ class TransferViewModel @Inject constructor(
     fun setSecurity(checkList: List<String>) {
         val list = mutableListOf<String>()
         list.addAll(checkList)
-        securityFaclities.value = list
+        securityFacilities.value = list
     }
 
     fun setHasElevator(check: Boolean) {
