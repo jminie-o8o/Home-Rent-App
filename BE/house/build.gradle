@@ -8,6 +8,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
+	id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.nextsquad'
@@ -59,6 +60,10 @@ dependencies {
 	//query dsl
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+	//restdocs
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
 }
 
 tasks.named('test') {
@@ -84,8 +89,45 @@ compileQuerydsl {
 jar {
 	enabled = false
 }
+
+
+ext {
+	snippetsDir = file('build/generated-snippets')
+}
+
+test {
+	useJUnitPlatform()
+	outputs.dir snippetsDir
+}
+
+asciidoctor {
+	dependsOn test
+	inputs.dir snippetsDir
+}
+
+asciidoctor.doFirst {
+	delete file('src/main/resources/static/docs')
+}
+
 bootJar {
 	archivesBaseName = 'app'
 	archiveFileName = 'app.jar'
 	archiveVersion = "0.0.0"
+	dependsOn asciidoctor
+	copy {
+		from "${asciidoctor.outputDir}"
+		into 'src/main/resources/static/docs'
+	}
 }
+
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+	from file("build/docs/asciidoc")
+	into file("src/main/resources/static/docs")
+}
+
+build {
+	dependsOn copyDocument
+}
+
+
