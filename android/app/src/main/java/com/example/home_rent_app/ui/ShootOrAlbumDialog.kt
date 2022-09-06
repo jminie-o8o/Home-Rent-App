@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.home_rent_app.databinding.DialogShootOrAlbumBinding
 
-class ShootOrAlbumDialog : DialogFragment()   {
+class ShootOrAlbumDialog : DialogFragment() {
 
     private val binding: DialogShootOrAlbumBinding by lazy {
         DialogShootOrAlbumBinding.inflate(layoutInflater)
@@ -33,13 +33,11 @@ class ShootOrAlbumDialog : DialogFragment()   {
     // 다이얼 로그 만들고 사진 찍거나 가져오기
     private fun setShootClick() {
         binding.cloShoot.setOnClickListener {
-
         }
     }
 
     private fun setAlbumClick() {
         binding.cloAlbum.setOnClickListener {
-
         }
     }
 }

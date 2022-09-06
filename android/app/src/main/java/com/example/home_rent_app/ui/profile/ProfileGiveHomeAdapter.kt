@@ -35,7 +35,7 @@ class ProfileGiveHomeAdapter @Inject constructor(
 
     inner class ProfileGiveHomeViewHolder(private val binding: ItemGivehomeProfileBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(rentArticleProfile : RentArticleProfile) {
+        fun bind(rentArticleProfile: RentArticleProfile) {
             binding.rentArticleProfile = rentArticleProfile
             itemView.setOnClickListener {
                 itemIdSession.itemId = rentArticleProfile.id

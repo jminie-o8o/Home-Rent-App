@@ -13,8 +13,6 @@ import com.example.home_rent_app.ui.viewmodel.WantHomeResultViewModel
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class WantHomeResultAdapter @Inject constructor(

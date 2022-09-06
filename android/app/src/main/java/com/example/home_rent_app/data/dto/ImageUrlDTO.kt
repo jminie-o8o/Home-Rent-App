@@ -1,6 +1,5 @@
 package com.example.home_rent_app.data.dto
 
-
 import com.example.home_rent_app.data.model.ImageUrl
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -13,10 +12,10 @@ data class ImageUrlDTO(
 
 fun ImageUrlDTO.toImageUrl(): ImageUrl {
     return ImageUrl(
-        this.
-        images.
-        map {
-            it.orEmpty()
-        }
+        this
+            .images
+            .map {
+                it.orEmpty()
+            }
     )
 }

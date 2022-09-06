@@ -8,8 +8,7 @@ import okhttp3.MultipartBody
 
 interface TransferDataSource {
 
-    fun getImageUrl(list : List<MultipartBody.Part>): Flow<ImageUrlDTO>
+    fun getImageUrl(list: List<MultipartBody.Part>): Flow<ImageUrlDTO>
 
     suspend fun addRentHome(request: AddRentHomeRequest): AddWantHomeResponseDTO
-
 }

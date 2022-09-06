@@ -9,29 +9,27 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class OAuthTokenResponse(
     @field:Json(name = "user")
-    val user: UserDTO,
+    val user: UserDTO = UserDTO(),
     @field:Json(name = "accessToken")
-    val accessToken: AccessTokenDTO?,
+    val accessToken: AccessTokenDTO? = AccessTokenDTO(),
     @field:Json(name = "refreshToken")
-    val refreshToken: RefreshTokenDTO?
+    val refreshToken: RefreshTokenDTO? = RefreshTokenDTO()
 )
-
-
 
 @JsonClass(generateAdapter = true)
 data class AccessTokenDTO(
     @field:Json(name = "expiresAt")
-    val expiresAt: String?,
+    val expiresAt: String? = "",
     @field:Json(name = "tokenCode")
-    val tokenCode: String?
+    val tokenCode: String? = ""
 )
 
 @JsonClass(generateAdapter = true)
 data class RefreshTokenDTO(
     @field:Json(name = "expiresAt")
-    val expiresAt: String?,
+    val expiresAt: String? = "",
     @field:Json(name = "tokenCode")
-    val tokenCode: String?
+    val tokenCode: String? = ""
 )
 
 fun RefreshTokenDTO.toRefreshToken(): RefreshToken {
@@ -47,4 +45,3 @@ fun OAuthTokenResponse.toJWT(): JWT {
     val refresh = requireNotNull(refreshToken)
     return JWT(access.toAccessToken(), refresh.toRefreshToken())
 }
-

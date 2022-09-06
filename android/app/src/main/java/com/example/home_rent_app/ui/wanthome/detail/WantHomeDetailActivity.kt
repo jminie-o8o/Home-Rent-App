@@ -1,19 +1,15 @@
 package com.example.home_rent_app.ui.wanthome.detail
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
 import com.example.home_rent_app.ui.chatting.WantedMessageListActivity
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
-import com.example.home_rent_app.ui.wanthome.WantHomeActivity
-import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultActivity
 import com.example.home_rent_app.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.catch
@@ -71,13 +67,13 @@ class WantHomeDetailActivity : AppCompatActivity() {
         binding.btnGoChat.setOnClickListener {
             logger("btnGoChat")
             repeatOnStarted {
-                viewModel.joinNewChannel().
-                catch { e ->
-                    logger("chat error : ${e.message}")
-                }.collect {
-                    startActivity(WantedMessageListActivity.newIntent(this@WantHomeDetailActivity, it))
-                    finish()
-                }
+                viewModel.joinNewChannel()
+                    .catch { e ->
+                        logger("chat error : ${e.message}")
+                    }.collect {
+                        startActivity(WantedMessageListActivity.newIntent(this@WantHomeDetailActivity, it))
+                        finish()
+                    }
             }
         }
     }

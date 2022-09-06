@@ -1,6 +1,5 @@
 package com.example.home_rent_app.data.dto
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -33,7 +32,6 @@ data class WantHomeDetailResponseDTO(
     @field:Json(name = "viewCount")
     val viewCount: Int
 )
-
 
 @JsonClass(generateAdapter = true)
 data class User(

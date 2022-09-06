@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class RefreshInterceptor @Inject constructor(
     private val appSession: AppSession
-): Interceptor {
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val jwt = appSession.jwt
@@ -29,5 +29,4 @@ class RefreshInterceptor @Inject constructor(
 
         return chain.proceed(requestBuilder.build())
     }
-
 }

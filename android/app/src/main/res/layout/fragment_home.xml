@@ -57,13 +57,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_find_wanted_image"
-            app:layout_constraintTop_toTopOf="@id/btn_wnated_home"
-            app:layout_constraintStart_toStartOf="@id/btn_wnated_home"
-            app:layout_constraintBottom_toBottomOf="@id/btn_wnated_home" />
+            app:layout_constraintTop_toTopOf="@id/btn_wanted_home"
+            app:layout_constraintStart_toStartOf="@id/btn_wanted_home"
+            app:layout_constraintBottom_toBottomOf="@id/btn_wanted_home" />
 
 
         <ImageView
-            android:id="@+id/btn_wnated_home"
+            android:id="@+id/btn_wanted_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
@@ -110,6 +110,7 @@
             android:gravity="center"
             android:background="@drawable/add_btn_shape"
             android:visibility="gone"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="@color/lightGray"
             android:textColor="@color/black"
             android:elevation="10dp"

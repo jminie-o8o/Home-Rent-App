@@ -1,7 +1,6 @@
 package com.example.home_rent_app.data.datasource.findroom
 
 import com.example.home_rent_app.data.dto.AddOrDeleteBookMarkResponseDTO
-import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.dto.RoomSearchResultDTO
 import com.example.home_rent_app.data.model.BookmarkRequest
 import kotlinx.coroutines.flow.Flow

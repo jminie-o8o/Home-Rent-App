@@ -4,7 +4,6 @@ import com.example.home_rent_app.data.dto.AddRentHomeRequest
 import com.example.home_rent_app.data.dto.AddWantHomeResponseDTO
 import com.example.home_rent_app.data.dto.ImageUrlDTO
 import okhttp3.MultipartBody
-import okhttp3.Request
 import retrofit2.http.Body
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -21,5 +20,4 @@ interface TransferApi {
     suspend fun addRentHome(
         @Body request: AddRentHomeRequest
     ): AddWantHomeResponseDTO
-
 }

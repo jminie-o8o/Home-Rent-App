@@ -179,21 +179,21 @@ class TransferViewModel @Inject constructor(
     private fun setJeonseHomeDescriptionState() {
         monthly.value = "0"
         _homeDescriptionState.value = title.value != "" &&
-                deposit.value != "" &&
-                maintenance.value != "" &&
-                maintenanceDescription.value != "" &&
-                availableFrom.value != "" &&
-                contractExpiresAt.value != ""
+            deposit.value != "" &&
+            maintenance.value != "" &&
+            maintenanceDescription.value != "" &&
+            availableFrom.value != "" &&
+            contractExpiresAt.value != ""
     }
 
     private fun setMonthlyHomeDescriptionState() {
         _homeDescriptionState.value = title.value != "" &&
-                deposit.value != "" &&
-                monthly.value != "" &&
-                maintenance.value != "" &&
-                maintenanceDescription.value != "" &&
-                availableFrom.value != "" &&
-                contractExpiresAt.value != ""
+            deposit.value != "" &&
+            monthly.value != "" &&
+            maintenance.value != "" &&
+            maintenanceDescription.value != "" &&
+            availableFrom.value != "" &&
+            contractExpiresAt.value != ""
     }
 
     fun setAddressPageState() {
@@ -264,10 +264,10 @@ class TransferViewModel @Inject constructor(
 
     fun setDetailPageState() {
         _rentDetailPageState.value = content.value != "" &&
-                facilities.value.isNotEmpty() &&
-                thisFloor.value != "" &&
-                maxFloor.value != "" &&
-                securityFacilities.value.isNotEmpty()
+            facilities.value.isNotEmpty() &&
+            thisFloor.value != "" &&
+            maxFloor.value != "" &&
+            securityFacilities.value.isNotEmpty()
     }
 
     fun setFacilitiesList(checkFacilities: List<String>) {
@@ -301,5 +301,4 @@ class TransferViewModel @Inject constructor(
     fun setBackPage() {
         _page.value -= 1
     }
-
 }

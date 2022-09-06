@@ -15,7 +15,6 @@ import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.util.Constants
 import com.example.home_rent_app.util.Constants.GENDER_DEFAULT
 import com.example.home_rent_app.util.CoroutineException
-import com.example.home_rent_app.util.LoginCheck
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler

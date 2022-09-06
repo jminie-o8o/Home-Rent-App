@@ -28,6 +28,4 @@ interface WantHomeResultApi {
     suspend fun deleteBookmark(
         @Body bookmarkRequest: BookmarkRequest
     ): AddOrDeleteBookMarkResponseDTO
-
 }
-

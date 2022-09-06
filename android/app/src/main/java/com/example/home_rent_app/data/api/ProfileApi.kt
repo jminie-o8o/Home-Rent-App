@@ -5,7 +5,6 @@ import com.example.home_rent_app.data.dto.DeleteWantHomeResponseDTO
 import com.example.home_rent_app.data.dto.GetUserInfoDTO
 import com.example.home_rent_app.data.dto.GiveHomeProfileDTO
 import com.example.home_rent_app.data.dto.ImageUrlDTO
-import com.example.home_rent_app.data.dto.LogoutResponseDTO
 import com.example.home_rent_app.data.dto.NickNameCheckDTO
 import com.example.home_rent_app.data.dto.WantHomeProfileDTO
 import com.example.home_rent_app.data.model.UserProfileRequest

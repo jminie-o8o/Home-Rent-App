@@ -104,7 +104,7 @@ class WantedMessageListActivity : AppCompatActivity(), MessageListActivity {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 messageListViewModel.channelState.collect {
                     it?.messages?.collect { list ->
-                        if(list.isNotEmpty()) {
+                        if (list.isNotEmpty()) {
                             binding.cloInstanceMessage.visibility = View.GONE
                         }
                     }
@@ -132,7 +132,6 @@ class WantedMessageListActivity : AppCompatActivity(), MessageListActivity {
         }
 
         detailHomeViewModel.getDetailHomeData(requireNotNull(homeId))
-
     }
 
 //    private fun set
@@ -146,8 +145,5 @@ class WantedMessageListActivity : AppCompatActivity(), MessageListActivity {
                 .putExtra(CID_KEY, channel.cid)
                 .putExtra("homeType", channel.extraData["homeType"].toString())
                 .putExtra("homeId", channel.extraData["homeId"].toString())
-
     }
-
-
 }

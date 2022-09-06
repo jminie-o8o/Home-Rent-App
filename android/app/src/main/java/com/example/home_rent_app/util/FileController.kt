@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @Singleton
 class FileController @Inject constructor(@ApplicationContext private val context: Context) {
 
-    fun uriToMultiPart(imageUri : Uri): MultipartBody.Part {
+    fun uriToMultiPart(imageUri: Uri): MultipartBody.Part {
         val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
         val c: Cursor? = context.contentResolver?.query(imageUri, proj, null, null, null)
         val index = c?.getColumnIndexOrThrow("_data") ?: -1
@@ -52,9 +52,8 @@ class FileController @Inject constructor(@ApplicationContext private val context
         outputStream.flush()
         val path = tempFile.absolutePath
         val file = File(path)
-        logger("path : ${path} fileName:  ${fileName} file.name : ${file.name}")
+        logger("path : $path fileName:  $fileName file.name : ${file.name}")
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("images", file.name, requestFile)
     }
-
 }

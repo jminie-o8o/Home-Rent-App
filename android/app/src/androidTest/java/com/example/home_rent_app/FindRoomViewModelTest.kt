@@ -17,7 +17,7 @@ import org.junit.runner.RunWith
 @LargeTest
 class FindRoomViewModelTest {
 
-    private lateinit var dispatchers : CoroutineDispatcher
+    private lateinit var dispatchers: CoroutineDispatcher
 
     @get:Rule
     val activityScenarioRule: ActivityScenarioRule<FindHomeActivity> =

@@ -29,7 +29,6 @@ import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class LoginProfileFragment : Fragment() {
 

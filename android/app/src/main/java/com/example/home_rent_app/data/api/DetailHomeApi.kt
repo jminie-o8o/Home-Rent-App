@@ -10,5 +10,4 @@ interface DetailHomeApi {
     suspend fun getDetailHomeDTO(
         @Path("houseId") id: Int
     ): DetailHomeDTO
-
 }

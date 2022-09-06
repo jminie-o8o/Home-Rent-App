@@ -46,37 +46,37 @@ abstract class RepositoryModule {
     @Binds
     abstract fun bindRoomFindRepository(
         findRoomRepositoryImpl: FindRoomRepositoryImpl
-    ) : FindRoomRepository
+    ): FindRoomRepository
 
     @Singleton
     @Binds
     abstract fun bindDetailHomeRepository(
         detailRepositoryImpl: DetailRepositoryImpl
-    ) : DetailRepository
+    ): DetailRepository
 
     @Singleton
     @Binds
     abstract fun bindRefreshRepository(
         refreshRepositoryImpl: RefreshRepositoryImpl
-    ) : RefreshRepository
+    ): RefreshRepository
 
     @Singleton
     @Binds
     abstract fun bindTokenRepository(
         tokenRepositoryImpl: TokenRepositoryImpl
-    ) : TokenRepository
+    ): TokenRepository
 
     @Singleton
     @Binds
     abstract fun bindWantHomeRepository(
         wantHomeRepositoryImpl: WantHomeRepositoryImpl
-    ) : WantHomeRepository
+    ): WantHomeRepository
 
     @Singleton
     @Binds
     abstract fun bindMapRepository(
         mapRepositoryImpl: MapRepositoryImpl
-    ) : MapRepository
+    ): MapRepository
 
     @Singleton
     @Binds
@@ -90,4 +90,3 @@ abstract class RepositoryModule {
         profileRepositoryImpl: ProfileRepositoryImpl
     ): ProfileRepository
 }
-

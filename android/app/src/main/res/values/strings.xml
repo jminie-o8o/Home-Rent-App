@@ -37,8 +37,8 @@
     <string name="end_date_format">%s월 %s일</string>
     <string name="deposit_format">예산 월세 %s만원/%s만원</string>
     <string name="term_of_a_contract">%s이후 - %s</string>
-    <string name="deposit_and_monthly">월세 %d/%d</string>
-    <string name="deposit">전세 %d</string>
+    <string name="deposit_and_monthly">월세 %d만원/%d만원</string>
+    <string name="deposit">전세 %d만원</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">
         com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior
     </string>

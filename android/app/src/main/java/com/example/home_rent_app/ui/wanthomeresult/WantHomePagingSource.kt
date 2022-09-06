@@ -9,7 +9,7 @@ import com.example.home_rent_app.data.model.WantHomeResultRequest
 class WantHomePagingSource(
     private val api: WantHomeResultApi,
     private val wantHomeResultRequest: WantHomeResultRequest
-): PagingSource<Int, WantedArticle>() {
+) : PagingSource<Int, WantedArticle>() {
 
     override fun getRefreshKey(state: PagingState<Int, WantedArticle>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -41,7 +41,6 @@ class WantHomePagingSource(
                 start + params.loadSize
             }
             LoadResult.Page(response.wantedArticles, prevKey, nextKey)
-
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

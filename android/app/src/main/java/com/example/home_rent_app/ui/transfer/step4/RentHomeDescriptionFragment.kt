@@ -24,7 +24,8 @@ class RentHomeDescriptionFragment : Fragment() {
     private val viewModel: TransferViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return binding.root
@@ -52,7 +53,7 @@ class RentHomeDescriptionFragment : Fragment() {
         repeatOnStarted {
             viewModel.homeId.collect {
                 logger("homeId : $it")
-                if(it != -1) {
+                if (it != -1) {
                     val intent = Intent(requireContext(), DetailRentActivity::class.java)
                     intent.putExtra("homeId", it)
                     requireActivity().startActivity(intent)
@@ -78,7 +79,7 @@ class RentHomeDescriptionFragment : Fragment() {
     private fun setHomeOptionObserve() {
         binding.cgHomeOption.setOnCheckedStateChangeListener { _, checkedIds ->
             val list = checkedIds.map {
-                when(it) {
+                when (it) {
                     R.id.chip_conditioner -> getString(R.string.conditioner)
                     R.id.chip_refrigerator -> getString(R.string.refrigerator)
                     R.id.chip_washer -> getString(R.string.washer)
@@ -94,7 +95,7 @@ class RentHomeDescriptionFragment : Fragment() {
 
     private fun setElevatorObserve() {
         binding.rgElevator.setOnCheckedChangeListener { _, checkedId ->
-            when(checkedId) {
+            when (checkedId) {
                 R.id.rb_elevator_have -> {
                     viewModel.setHasElevator(true)
                 }
@@ -107,7 +108,7 @@ class RentHomeDescriptionFragment : Fragment() {
 
     private fun setBalconyObserve() {
         binding.rgBalcony.setOnCheckedChangeListener { _, checkedId ->
-            when(checkedId) {
+            when (checkedId) {
                 R.id.rb_balcony_have -> {
                     viewModel.setHasBalcony(true)
                 }
@@ -120,7 +121,7 @@ class RentHomeDescriptionFragment : Fragment() {
 
     private fun setParkingObserve() {
         binding.rgParking.setOnCheckedChangeListener { _, checkedId ->
-            when(checkedId) {
+            when (checkedId) {
                 R.id.rb_parking_have -> {
                     viewModel.setHasParking(true)
                 }
@@ -134,7 +135,7 @@ class RentHomeDescriptionFragment : Fragment() {
     private fun setSecurityObserve() {
         binding.cgSecurity.setOnCheckedStateChangeListener { _, checkedIds ->
             val list = checkedIds.map {
-                when(it) {
+                when (it) {
                     R.id.chip_cctv -> getString(R.string.cctv)
                     R.id.chip_video -> getString(R.string.video_phone)
                     else -> getString(R.string.entrance)
@@ -178,5 +179,4 @@ class RentHomeDescriptionFragment : Fragment() {
             }
         }
     }
-
 }

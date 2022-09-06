@@ -8,5 +8,4 @@ class MapDataSourceImpl @Inject constructor(
 ) : MapDataSource {
 
     override suspend fun getAddress(name: String) = api.getAddress(name = name)
-
 }

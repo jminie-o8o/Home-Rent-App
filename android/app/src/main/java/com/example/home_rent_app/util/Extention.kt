@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.map
 import com.example.home_rent_app.data.dto.RentArticleBookmark

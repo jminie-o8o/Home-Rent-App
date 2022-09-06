@@ -13,7 +13,7 @@ fun setImage(view: de.hdodenhof.circleimageview.CircleImageView, imageUrl: Strin
 
 @BindingAdapter("imageSetting")
 fun setNormalImage(imageView: ImageView, imageUrl: String?) {
-    if(imageUrl == null) {
+    if (imageUrl == null) {
         imageView.setImageResource(R.drawable.default_profile_image)
         return
     }
@@ -23,8 +23,8 @@ fun setNormalImage(imageView: ImageView, imageUrl: String?) {
 }
 
 @BindingAdapter("roundImage")
-fun setRoundImage(imageView: ImageView, imageUrl:String?) {
-    if(imageUrl == null) {
+fun setRoundImage(imageView: ImageView, imageUrl: String?) {
+    if (imageUrl == null) {
         return
     }
     imageView.load(imageUrl) {

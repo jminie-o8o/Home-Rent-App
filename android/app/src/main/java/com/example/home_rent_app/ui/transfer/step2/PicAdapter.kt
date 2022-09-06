@@ -61,7 +61,7 @@ class PicAdapter(
         }
 
         private fun setMainLabel(roomPicture: RoomPicture) {
-            if(roomPicture.isMain) {
+            if (roomPicture.isMain) {
                 binding.tvMainLabel.visibility = VISIBLE
             } else {
                 binding.tvMainLabel.visibility = GONE
@@ -76,10 +76,10 @@ class PicAdapter(
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     view.startDragAndDrop(
-                        data,  // The data to be dragged
-                        shadow,  // The drag shadow builder
-                        null,      // No need to use local data
-                        DRAG_FLAG_GLOBAL    // Flags (not currently used, set to 0)
+                        data, // The data to be dragged
+                        shadow, // The drag shadow builder
+                        null, // No need to use local data
+                        DRAG_FLAG_GLOBAL // Flags (not currently used, set to 0)
                     )
                 } else {
                     Toast.makeText(binding.root.context, "버전이 낮아서 지원하지 않습니다.", Toast.LENGTH_SHORT)
@@ -87,9 +87,7 @@ class PicAdapter(
                 }
                 true
             }
-
         }
-
     }
 
     private object PicDiffUtil : DiffUtil.ItemCallback<RoomPicture>() {

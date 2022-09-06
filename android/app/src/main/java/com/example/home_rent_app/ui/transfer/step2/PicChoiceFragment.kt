@@ -5,9 +5,7 @@ import android.app.Activity.RESULT_OK
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.Intent
-import android.content.Intent.ACTION_GET_CONTENT
 import android.content.Intent.ACTION_PICK
-import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -55,12 +53,12 @@ class PicChoiceFragment : Fragment(), PicControlListener {
                         Toast.makeText(context, "사진은 6개까지 선택이 가능합니다.", Toast.LENGTH_SHORT).show()
                         return@registerForActivityResult
                     }
-                    if (clipData == null) { //이미지를 하나만 선택할 경우 clipData가 null이 올수 있음
+                    if (clipData == null) { // 이미지를 하나만 선택할 경우 clipData가 null이 올수 있음
                         val selectedImageUri = it?.data?.data ?: Uri.EMPTY
                         viewModel.setPictureUri(selectedImageUri)
                     } else {
                         clipData.let { data ->
-                            for (i in 0 until clipDataSize!!) { //선택 한 사진수만큼 반복
+                            for (i in 0 until clipDataSize!!) { // 선택 한 사진수만큼 반복
                                 val selectedImageUri = data.getItemAt(i).uri ?: Uri.EMPTY
                                 viewModel.setPictureUri(selectedImageUri)
                             }
@@ -94,7 +92,6 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         setCheckPictureMax()
         setPictureUrlObserver()
         setBackButton()
-
     }
 
     private fun setAdapter() {
@@ -107,13 +104,12 @@ class PicChoiceFragment : Fragment(), PicControlListener {
             adapter = picAdapter
             layoutManager = GridLayoutManager(this.context, 2, GridLayoutManager.VERTICAL, false)
         }
-
     }
 
     private fun setPictureUrlObserver() {
         repeatOnStarted {
             viewModel.houseImages.collect {
-                when(it) {
+                when (it) {
                     is UiState.Error -> {
                         logger("NetWork Error ${it.message}")
                     }
@@ -126,7 +122,6 @@ class PicChoiceFragment : Fragment(), PicControlListener {
                         logger("Loading")
                     }
                 }
-
             }
         }
     }
@@ -137,7 +132,6 @@ class PicChoiceFragment : Fragment(), PicControlListener {
 
     private fun setEnableNextButton() {
         binding.btnNext.isEnabled = true
-
     }
 
     private fun setNotEnableNextButton() {
@@ -237,4 +231,3 @@ class PicChoiceFragment : Fragment(), PicControlListener {
 //        }
     }
 }
-

@@ -11,7 +11,7 @@ class MainImageView(context: Context, attributeSet: AttributeSet) :
     AppCompatImageView(context, attributeSet) {
 
     private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.argb(160, 0,0,0)
+        color = Color.argb(160, 0, 0, 0)
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
