@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui.bookmark
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +8,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentBookmarkGiveHomeBinding
+import com.example.home_rent_app.ui.detail.DetailRentActivity
+import com.example.home_rent_app.ui.findroom.HomeListAdapter
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,8 +27,8 @@ import javax.inject.Inject
 class BookmarkGiveHomeFragment : Fragment() {
 
     lateinit var binding: FragmentBookmarkGiveHomeBinding
-    lateinit var adapter: BookmarkGiveHomeAdapter
-    private val viewModel: BookmarkViewModel by viewModels()
+    lateinit var adapter: HomeListAdapter
+    private val viewModel: BookmarkViewModel by activityViewModels()
     @Inject
     lateinit var userSession: UserSession
     @Inject
@@ -46,13 +51,33 @@ class BookmarkGiveHomeFragment : Fragment() {
         return binding.root
     }
 
+    private val geToDetail: (Int) -> Unit = {
+        // 상세화면 이동
+        val intent = Intent(requireContext(), DetailRentActivity::class.java)
+        intent.putExtra("homeId", it)
+        startActivity(intent)
+    }
+
+    private val addBookmark: (Int) -> Unit = {
+    }
+
+    private val deleteBookmark: (Int) -> Unit = {
+        viewModel.deleteGiveHomeBookmark(it)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        logger("양도 시작2")
         setRecyclerViewScrollListener()
-        adapter = BookmarkGiveHomeAdapter(viewModel, userSession, idSession)
+        adapter = HomeListAdapter(geToDetail, addBookmark, deleteBookmark)
         binding.rvBookmarkGiveHome.adapter = adapter
         updateAdapter()
         deleteBookMarkToast()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getGiveHomeResultAtFirstPage(userSession.userId ?: 0)
     }
 
     private fun updateAdapter() {

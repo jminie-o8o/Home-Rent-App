@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.example.home_rent_app.databinding.FragmentBookmarkWantHomeBinding
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,7 +25,7 @@ class BookmarkWantHomeFragment : Fragment() {
 
     lateinit var binding: FragmentBookmarkWantHomeBinding
     lateinit var adapter: BookmarkWantHomeAdapter
-    private val viewModel: BookmarkViewModel by viewModels()
+    private val viewModel: BookmarkViewModel by activityViewModels()
     @Inject
     lateinit var userSession: UserSession
     @Inject
@@ -47,6 +49,11 @@ class BookmarkWantHomeFragment : Fragment() {
         binding.rvBookmarkWantHome.adapter = adapter
         updateAdapter()
         deleteBookMarkToast()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getWantHomeResultAtFirstPage(userSession.userId ?: 0)
     }
 
     private fun updateAdapter() {
