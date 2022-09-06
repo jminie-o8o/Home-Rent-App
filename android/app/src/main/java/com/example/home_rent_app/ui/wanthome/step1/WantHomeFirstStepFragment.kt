@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeFirstStepBinding
+import com.example.home_rent_app.ui.dialogfragment.CancelDialogFragment
 import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.util.RangeValidator
@@ -82,9 +83,12 @@ class WantHomeFirstStepFragment : Fragment() {
     }
 
     private fun goBack() {
+//        binding.btnClose.setOnClickListener {
+//            val activity = activity as WantHomeActivity
+//            activity.onBackPressed()
+//        }
         binding.btnClose.setOnClickListener {
-            val activity = activity as WantHomeActivity
-            activity.onBackPressed()
+            CancelDialogFragment().show(parentFragmentManager, "cancelDialog")
         }
     }
 

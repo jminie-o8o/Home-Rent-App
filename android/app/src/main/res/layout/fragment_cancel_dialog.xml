@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightBlack">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="300dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:background="@drawable/dialog_shape"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_dialog_title"
+                style="@style/TextSubtitle1.16.bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="글 작성을 취소하시겠어요?"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_dialog_subtitle"
+                style="@style/TextSubtitle1.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="작성하시던 글은 저장되지 않습니다."
+                android:textColor="@color/gray03"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_dialog_title" />
+
+            <TextView
+                android:id="@+id/tv_btn_keep_write"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:background="@drawable/dialog_button_keep_write"
+                android:gravity="center"
+                android:text="계속 작성하기"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tv_btn_cancel"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:background="@drawable/dialog_button_cancel"
+                android:gravity="center"
+                android:text="취소하기"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</layout>
