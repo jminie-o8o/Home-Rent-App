@@ -65,6 +65,7 @@ public class RentArticleListElement {
                 .createdAt(rentArticle.getCreatedAt())
                 .isCompleted(rentArticle.isCompleted())
                 .isDeleted(rentArticle.isDeleted())
+                .bookmarked(true)
                 .build();
     }
 

@@ -51,6 +51,7 @@ public class WantedArticleElementResponse {
                 .rentBudget(article.getRentBudget())
                 .depositBudget(article.getDepositBudget())
                 .createdAt(article.getCreatedAt())
+                .bookmarked(true)
                 .build();
     }
 

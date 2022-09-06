@@ -56,7 +56,6 @@ public class UserService {
         Page<RentArticleBookmark> bookmarks = rentArticleBookmarkRepository.findByUser(user, pageable);
         List<RentArticleListElement> elements = bookmarks.stream()
                 .map(RentArticleListElement::from)
-                .peek(element -> element.setBookmarked(true))
                 .collect(Collectors.toList());
         return new RentArticleListResponse(elements, hasNext(pageable, bookmarks));
     }
@@ -70,7 +69,6 @@ public class UserService {
         Page<WantedArticleBookmark> bookmarks = wantedArticleBookmarkRepository.findByUser(user, pageable);
         List<WantedArticleElementResponse> elements = bookmarks.stream()
                 .map(WantedArticleElementResponse::from)
-                .peek(element -> element.setBookmarked(true))
                 .collect(Collectors.toList());
 
         return new WantedArticleListResponse(elements, hasNext(pageable, bookmarks));
