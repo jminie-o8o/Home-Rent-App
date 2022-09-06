@@ -177,37 +177,27 @@ class TransferViewModel @Inject constructor(
     }
 
     private fun setJeonseHomeDescriptionState() {
-        if (title.value != "" &&
-            deposit.value != "" &&
-            maintenance.value != "" &&
-            maintenanceDescription.value != "" &&
-            availableFrom.value != "" &&
-            contractExpiresAt.value != ""
-        ) {
-            monthly.value = "0"
-            _homeDescriptionState.value = true
-        }
+        monthly.value = "0"
+        _homeDescriptionState.value = title.value != "" &&
+                deposit.value != "" &&
+                maintenance.value != "" &&
+                maintenanceDescription.value != "" &&
+                availableFrom.value != "" &&
+                contractExpiresAt.value != ""
     }
 
     private fun setMonthlyHomeDescriptionState() {
-        if (title.value != "" &&
-            deposit.value != "" &&
-            monthly.value != "" &&
-            maintenance.value != "" &&
-            maintenanceDescription.value != "" &&
-            availableFrom.value != "" &&
-            contractExpiresAt.value != ""
-        ) {
-            _homeDescriptionState.value = true
-        }
+        _homeDescriptionState.value = title.value != "" &&
+                deposit.value != "" &&
+                monthly.value != "" &&
+                maintenance.value != "" &&
+                maintenanceDescription.value != "" &&
+                availableFrom.value != "" &&
+                contractExpiresAt.value != ""
     }
 
     fun setAddressPageState() {
-        if(
-            address.value != "" && addressDetail.value != ""
-        ) {
-            _addressPageState.value = true
-        }
+        _addressPageState.value = address.value != "" && addressDetail.value != ""
     }
 
     fun replacePic(beforePosition: Int, targetPosition: Int) {
@@ -273,14 +263,11 @@ class TransferViewModel @Inject constructor(
     }
 
     fun setDetailPageState() {
-        if (content.value != "" &&
-            facilities.value.isEmpty() &&
-            thisFloor.value != "" &&
-            maxFloor.value != "" &&
-            securityFacilities.value.isEmpty()
-        ) {
-            _rentDetailPageState.value = true
-        }
+        _rentDetailPageState.value = content.value != "" &&
+                facilities.value.isNotEmpty() &&
+                thisFloor.value != "" &&
+                maxFloor.value != "" &&
+                securityFacilities.value.isNotEmpty()
     }
 
     fun setFacilitiesList(checkFacilities: List<String>) {

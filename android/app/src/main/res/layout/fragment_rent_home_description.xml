@@ -155,7 +155,7 @@
                     android:checked="false"
                     app:textStartPadding="40dp"
                     android:textSize="15sp"
-                    android:text="@string/TV"/>
+                    android:text="@string/tv"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_closet"
@@ -430,6 +430,8 @@
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
                 android:layout_marginTop="60dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
                 android:text="@string/back_label"/>
 
             <Button
@@ -442,6 +444,8 @@
                 android:layout_marginTop="60dp"
                 app:layout_constraintWidth_percent="0.42"
                 android:enabled="false"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
                 android:text="@string/add_account"/>
 
             <View

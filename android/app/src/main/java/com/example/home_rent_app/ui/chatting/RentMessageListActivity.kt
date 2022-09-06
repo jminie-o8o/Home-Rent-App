@@ -51,12 +51,13 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
         cid = checkNotNull(intent.getStringExtra(CID_KEY)) {
             "MessageListActivity를 시작하기 위해서는 채널 아이디 (cid) 정보가 필요합니다."
         }
-        homeId = intent?.getStringExtra("homeId")?.toInt()
+        intent?.getStringExtra("homeId")?.let {
+            homeId = it.toInt()
+        }
+
         logger("RentMessageListActivity : $homeId")
 
         factory = MessageListViewModelFactory(cid)
-//        val listViewModel: MessageListViewModel by viewModels { factory }
-//        val messageComposerViewModel: MessageComposerViewModel by viewModels { factory }
 
         // Step 2 - 채팅방 컴포넌트에 뷰모델 연결
         messageListViewModel.bindView(binding.messageListView, this)
@@ -143,7 +144,6 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
                 }
             }
         }
-
 
         detailHomeViewModel.getDetailHomeData(requireNotNull(homeId))
 

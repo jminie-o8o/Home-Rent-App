@@ -42,7 +42,7 @@ private fun convertMoney(price: Int): String {
     var temp = price
     for (i in 0..3) {
         if(temp / 10 == 0) {
-            return "${temp}원}"
+            return "${temp}원"
         }
         if(temp / 10 != 0) {
             temp /= 10

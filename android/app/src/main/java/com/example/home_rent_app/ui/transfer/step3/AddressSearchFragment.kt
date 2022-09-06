@@ -79,10 +79,7 @@ class AddressSearchFragment : Fragment() {
         repeatOnStarted {
             viewModel.addressPageState.collect {
                 logger("addressPageState")
-                if(it) {
-                    logger("addressPageState true")
-                    binding.btnNext.isEnabled = true
-                }
+                binding.btnNext.isEnabled = it
             }
         }
 

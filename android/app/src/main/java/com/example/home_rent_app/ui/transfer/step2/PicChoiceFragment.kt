@@ -136,14 +136,12 @@ class PicChoiceFragment : Fragment(), PicControlListener {
     }
 
     private fun setEnableNextButton() {
-        binding.btnNext.apply {
-            isEnabled = true
-            backgroundTintList = ColorStateList.valueOf(
-                binding.root.context.getColor(
-                    R.color.purple_200
-                )
-            )
-        }
+        binding.btnNext.isEnabled = true
+
+    }
+
+    private fun setNotEnableNextButton() {
+        binding.btnNext.isEnabled = false
     }
 
     private fun setCheckPictureMax() {
@@ -163,8 +161,9 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         repeatOnStarted {
             viewModel.picture.collect {
                 picAdapter.submitList(it)
-                if(it.size >= 3) {
-                    setEnableNextButton()
+                when {
+                    it.size >= 3 -> setEnableNextButton()
+                    else -> setNotEnableNextButton()
                 }
                 setPicCount()
             }
@@ -230,11 +229,12 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         val beforePosition = item.text.toString().toInt()
         viewModel.replacePic(beforePosition, targetPosition)
         logger("$beforePosition, $targetPosition")
-
-        if(beforePosition == 0 || targetPosition == 0) {
-            picAdapter.notifyItemChanged(beforePosition)
-            picAdapter.notifyItemChanged(targetPosition)
-        }
+        picAdapter.notifyItemChanged(beforePosition)
+        picAdapter.notifyItemChanged(targetPosition)
+//        if(beforePosition == 0 || targetPosition == 0) {
+//            picAdapter.notifyItemChanged(beforePosition)
+//            picAdapter.notifyItemChanged(targetPosition)
+//        }
     }
 }
 
