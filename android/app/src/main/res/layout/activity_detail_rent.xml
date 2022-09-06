@@ -413,7 +413,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
                 android:textSize="14sp"
-                android:text="@{item.houseType}"
+                homeType="@{item.houseType}"
                 tools:text="원룸"/>
 
             <TextView
