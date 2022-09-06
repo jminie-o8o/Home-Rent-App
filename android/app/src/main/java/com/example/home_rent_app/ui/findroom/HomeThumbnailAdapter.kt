@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.home_rent_app.R
@@ -27,9 +28,15 @@ class HomeThumbnailAdapter : ListAdapter<String, HomeThumbnailAdapter.HomeThumbn
 
         fun bind(imageUrl: String) {
             logger("imageUrl : $imageUrl")
+            val circularProgressDrawable = CircularProgressDrawable(binding.root.context)
+            circularProgressDrawable.strokeWidth = 5f
+            circularProgressDrawable.centerRadius = 30f
+            circularProgressDrawable.start()
+
             binding.ivThumbnail.load(imageUrl) {
                 crossfade(true)
                 transformations(RoundedCornersTransformation(30f, 30f, 30f, 30f))
+                placeholder(circularProgressDrawable)
                 error(R.drawable.ic_close)
             }
         }
