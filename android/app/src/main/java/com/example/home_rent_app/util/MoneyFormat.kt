@@ -33,8 +33,9 @@ class MoneyFormat(private val editText: EditText): TextWatcher {
 
 @BindingAdapter("deposit", "rentFee")
 fun TextView.setDepositAndFee(deposit: Int?, fee: Int?) {
+    logger("setDepositAndFee $deposit , $fee")
     if(deposit != null && fee != null) {
-        text = String().format(context.getString(R.string.deposit_and_monthly), "$deposit 만원", "$fee 만원")
+        text = context.getString(R.string.deposit_and_monthly, deposit, fee)
     }
 }
 

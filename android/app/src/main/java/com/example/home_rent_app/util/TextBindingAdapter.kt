@@ -81,8 +81,7 @@ fun setHasParking(textView: TextView, has: Boolean?) {
 }
 
 @BindingAdapter("homeType")
-fun setHomeType(textView: TextView, type: String) {
-    val context = textView.context
+fun setHomeType(textView: TextView, type: String?) {
     when(type) {
         RentType.MONTHLY.value -> {
             textView.text = "월세"
@@ -90,5 +89,21 @@ fun setHomeType(textView: TextView, type: String) {
         RentType.JEONSE.value -> {
             textView.text = "전세"
         }
+        HouseType.ONE_ROOM.value -> {
+            textView.text = "원룸"
+        }
+        HouseType.TWO_ROOM.value -> {
+            textView.text = "투룸"
+        }
+        HouseType.THREE_ROOM.value -> {
+            textView.text = "쓰리룸"
+        }
+        HouseType.SHARE_HOUSE.value -> {
+            textView.text = "쉐어하우스"
+        }
+        HouseType.EFFICIENCY.value -> {
+            textView.text = "오피스텔"
+        }
+        else -> textView.text = ""
     }
 }
