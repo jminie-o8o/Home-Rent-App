@@ -40,6 +40,8 @@ class LoginProfileFragment : Fragment() {
     private val loginViewModel: LoginViewModel by viewModels()
     @Inject
     lateinit var userSession: UserSession
+    private var nickNameFlag = false
+    private var genderFlag = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -169,6 +171,23 @@ class LoginProfileFragment : Fragment() {
             val activity = activity as LoginActivity
             activity.moveToHomeActivity()
         }
+    }
+
+    fun nickNameFlagCheck() {
+        collectStateFlow(loginViewModel.nickNameCheck) { nickNameCheck ->
+            nickNameFlag = nickNameCheck
+            flagCheck()
+        }
+    }
+
+    fun genderFlagCheck() {
+        binding.rgChooseSex.setOnCheckedChangeListener { radioGroup, i ->
+
+        }
+    }
+
+    fun flagCheck() {
+        binding.btnLoginProfile.isEnabled = nickNameFlag && genderFlag
     }
 
     companion object {

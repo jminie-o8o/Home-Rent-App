@@ -16,6 +16,7 @@ import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -45,7 +46,6 @@ class ProfileWantHomeFragment : Fragment() {
         adapter = ProfileWantHomeAdapter(viewModel, idSession, requireContext())
         binding.rvProfileWantHome.adapter = adapter
         updateAdapter()
-        viewModel.getWantHomeProfile(userSession.userId ?: 0)
         logout()
     }
 

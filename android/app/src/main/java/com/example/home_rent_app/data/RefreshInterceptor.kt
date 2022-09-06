@@ -1,6 +1,7 @@
 package com.example.home_rent_app.data
 
 import com.example.home_rent_app.util.AppSession
+import com.example.home_rent_app.util.logger
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

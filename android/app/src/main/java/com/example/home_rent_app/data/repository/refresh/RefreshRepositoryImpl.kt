@@ -13,7 +13,6 @@ class RefreshRepositoryImpl @Inject constructor(
 ) : RefreshRepository {
 
     override suspend fun refreshToken(): JWT {
-        logger("RefreshRepositoryImpl refreshToken")
         return dataSource.refreshAuthToken().toJWT()
     }
 

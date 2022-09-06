@@ -31,7 +31,7 @@ class AuthInterceptor @Inject constructor(
             requestBuilder.addHeader(
                 "access-token",
                 it.accessToken.tokenCode
-            ) // 추후 수정
+            )
         }
 
         return chain.proceed(requestBuilder.build())

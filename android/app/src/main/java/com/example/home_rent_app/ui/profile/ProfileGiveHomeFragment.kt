@@ -45,12 +45,10 @@ class ProfileGiveHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        logger("ProfileGiveHomeFragment onViewCreated")
         setRecyclerViewScrollListener()
         adapter = ProfileGiveHomeAdapter(viewModel, idSession, requireContext())
         binding.rvProfileGiveHome.adapter = adapter
         updateAdapter()
-        viewModel.getGiveHomeProfile(userSession.userId ?: 0)
         logout()
         observeMessage(requireActivity().applicationContext)
     }
