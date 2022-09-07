@@ -30,6 +30,6 @@ class BookmarkRepositoryImpl @Inject constructor(
 
     override suspend fun deleteGiveBookmark(bookmarkRequest: BookmarkRequest):
             AddOrDeleteBookMarkResponseDTO {
-        return api.deleteWantBookmark(bookmarkRequest)
+        return api.deleteRentBookmark(bookmarkRequest)
     }
 }

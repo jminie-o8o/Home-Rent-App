@@ -56,6 +56,11 @@ class ProfileFragment : Fragment() {
         observeProfileModifyChange(requireActivity().applicationContext)
     }
 
+    override fun onResume() {
+        super.onResume()
+        profileViewModel.getUserInfo(userSession.userId ?: 0)
+    }
+
     private fun goToModifyProfile(navController: NavController) {
         binding.btnModifyProfile.setOnClickListener {
             navController.navigate(

@@ -10,7 +10,9 @@ import com.example.home_rent_app.R
 
 @BindingAdapter("imageUrl")
 fun setImage(view: de.hdodenhof.circleimageview.CircleImageView, imageUrl: String?) {
-    view.load(imageUrl)
+    view.load(imageUrl) {
+        error(R.drawable.ic_baseline_account_circle_24)
+    }
 }
 
 @BindingAdapter("imageSetting")

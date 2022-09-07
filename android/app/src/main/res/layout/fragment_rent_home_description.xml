@@ -122,8 +122,8 @@
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     style="@style/Widget.HomeRent.Chip.Choice"
+                    android:textAlignment="center"
                     android:checked="false"
-                    app:textStartPadding="40dp"
                     android:textSize="15sp"
                     android:text="@string/washer"/>
 
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.HomeRent.Chip.Choice"
                     android:checked="false"
-                    app:textStartPadding="40dp"
+                    android:textAlignment="center"
                     android:textSize="15sp"
                     android:text="@string/bed"/>
 
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.HomeRent.Chip.Choice"
                     android:checked="false"
-                    app:textStartPadding="40dp"
+                    android:textAlignment="center"
                     android:textSize="15sp"
                     android:text="@string/refrigerator"/>
 
@@ -153,7 +153,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.HomeRent.Chip.Choice"
                     android:checked="false"
-                    app:textStartPadding="40dp"
+                    android:textAlignment="center"
                     android:textSize="15sp"
                     android:text="@string/tv"/>
 
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.HomeRent.Chip.Choice"
                     android:checked="false"
-                    app:textStartPadding="40dp"
+                    android:textAlignment="center"
                     android:textSize="15sp"
                     android:text="@string/closet"/>
 

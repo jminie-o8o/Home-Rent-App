@@ -58,8 +58,7 @@ class BookmarkGiveHomeFragment : Fragment() {
         startActivity(intent)
     }
 
-    private val addBookmark: (Int) -> Unit = {
-    }
+    private val addBookmark: (Int) -> Unit = {}
 
     private val deleteBookmark: (Int) -> Unit = {
         viewModel.deleteGiveHomeBookmark(it)

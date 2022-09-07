@@ -166,7 +166,7 @@ class ProfileViewModel @Inject constructor(
     fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
         viewModelScope.launch(exceptionHandler) {
             profileRepository.setUserProfile(userId, userProfileRequest)
-            _deleteMessage.emit("성공적으로 프로필이 수정되었습니다.")
+            _profileModifyMessage.emit("성공적으로 프로필이 수정되었습니다.")
         }
     }
 

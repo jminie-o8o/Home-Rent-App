@@ -13,11 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_thumb_nail_list"
+        <ImageView
+            android:id="@+id/iv_thumb_nail_list"
             android:layout_width="328dp"
             android:layout_height="180dp"
             android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +48,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vp_thumb_nail_list"
+            app:layout_constraintTop_toBottomOf="@id/iv_thumb_nail_list"
             tools:text="부산광역 남구 대연동" />
 
         <ImageButton

@@ -1,6 +1,7 @@
 package com.example.home_rent_app.ui.profile
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentProfileGiveHomeBinding
 import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectLatestStateFlow
