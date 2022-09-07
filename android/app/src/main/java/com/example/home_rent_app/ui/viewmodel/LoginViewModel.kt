@@ -74,7 +74,15 @@ class LoginViewModel @Inject constructor(
     private fun setUserSession(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
             loginRepository.setUserIdAtUserSession(userId)
-            connectUser(name, imageUrl.value) // 채팅 관련
+            getUserInfo(userId)
+        }
+    }
+
+    private fun getUserInfo(userId: Int) {
+        viewModelScope.launch {
+            loginProfileRepository.getUserInfo(userId) { name, image ->
+                connectUser(name, image) // 채팅 관련
+            }
         }
     }
 
@@ -122,6 +130,7 @@ class LoginViewModel @Inject constructor(
                 logger("test viewmodel gender : ${user.gender}")
                 _gender.value = user.gender
                 val userId = user.userId
+                name = user.displayName
                 if (user.gender != Constants.GENDER_NEW) saveIsLogin()
                 loginRepository.saveUserIDAtDataStore(userId)
                 setUserSession(setUserId())

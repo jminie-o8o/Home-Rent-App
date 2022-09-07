@@ -11,6 +11,8 @@ import com.squareup.moshi.JsonClass
 data class UserDTO(
     @field:Json(name = "userId")
     val userId: Int? = 0,
+    @field:Json(name = "accountId")
+    val accountId: String? = "",
     @field:Json(name = "displayName")
     val displayName: String? = "",
     @field:Json(name = "profileImageUrl")

@@ -48,6 +48,7 @@ class RentMessageListActivity : AppCompatActivity(), MessageListActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         cid = checkNotNull(intent.getStringExtra(CID_KEY)) {
             "MessageListActivity를 시작하기 위해서는 채널 아이디 (cid) 정보가 필요합니다."
         }

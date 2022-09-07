@@ -1,7 +1,9 @@
 package com.example.home_rent_app.data.repository.loginProfile
 
+import com.example.home_rent_app.data.dto.UserDTO
 import com.example.home_rent_app.data.model.ImageUrl
 import com.example.home_rent_app.data.model.NickNameCheck
+import com.example.home_rent_app.data.model.UserData
 import com.example.home_rent_app.data.model.UserProfileRequest
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -13,4 +15,6 @@ interface LoginProfileRepository {
     fun getImageUrl(body: List<MultipartBody.Part>): Flow<ImageUrl>
 
     suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest)
+
+    suspend fun getUserInfo(userId: Int, callback: (String, String) -> Unit)
 }
