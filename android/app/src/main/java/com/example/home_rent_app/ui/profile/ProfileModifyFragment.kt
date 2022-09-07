@@ -20,10 +20,9 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.databinding.FragmentProfileModifyBinding
 import com.example.home_rent_app.ui.HomeActivity
-import com.example.home_rent_app.util.FileController
-import com.example.home_rent_app.util.UserSession
-import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.*
+import com.example.home_rent_app.util.Constants.REQUIRED_PERMISSIONS
+import com.example.home_rent_app.util.Constants.REQ_GALLERY
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -142,7 +141,7 @@ class ProfileModifyFragment : Fragment() {
         }
 
     // 권한 중 하나라도 허용되지 않았다면 false 를 반환하는 함수
-    private fun isAllPermissionGranted(): Boolean = ProfileModifyFragment.REQUIRED_PERMISSIONS.all { permission ->
+    private fun isAllPermissionGranted(): Boolean = REQUIRED_PERMISSIONS.all { permission ->
         ContextCompat.checkSelfPermission(
             requireContext(),
             permission
@@ -217,11 +216,11 @@ class ProfileModifyFragment : Fragment() {
         else bottomNavigationView.visibility = View.VISIBLE
     }
 
-    companion object {
-        private const val REQ_GALLERY = 1
-        private val REQUIRED_PERMISSIONS = arrayOf(
-            android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-    }
+//    companion object {
+//        private const val REQ_GALLERY = 1
+//        private val REQUIRED_PERMISSIONS = arrayOf(
+//            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+//            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+//        )
+//    }
 }

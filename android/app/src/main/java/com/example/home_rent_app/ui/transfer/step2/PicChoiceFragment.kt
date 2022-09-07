@@ -1,21 +1,28 @@
 package com.example.home_rent_app.ui.transfer.step2
 
+import android.Manifest
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
+import androidx.core.content.PermissionChecker.*
 import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.draganddrop.DropHelper
@@ -23,14 +30,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentPicChoiceBinding
 import com.example.home_rent_app.ui.viewmodel.TransferViewModel
-import com.example.home_rent_app.util.PicControlListener
-import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.logger
-import com.example.home_rent_app.util.repeatOnStarted
+import com.example.home_rent_app.util.*
+import com.example.home_rent_app.util.Constants.REQUIRED_PERMISSIONS
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
 @AndroidEntryPoint
 class PicChoiceFragment : Fragment(), PicControlListener {
@@ -42,6 +49,24 @@ class PicChoiceFragment : Fragment(), PicControlListener {
     private val viewModel: TransferViewModel by activityViewModels()
 
     private lateinit var picAdapter: PicAdapter
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { isGranted ->
+            val list = isGranted.filter { !it.value }.map { it.key }.toList()
+
+            if(list.isNotEmpty()) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), list[0])) {
+                    Toast.makeText(requireContext(), "권한 설정을 하지 않으면 어플을 사용할 수 없습니다.", Toast.LENGTH_SHORT)
+                        .show()
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        .setData(Uri.parse("package:" + BuildConfig.APPLICATION_ID))
+                    startActivity(intent)
+                }
+            }
+        }
+
 
     private val albumLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -181,11 +206,20 @@ class PicChoiceFragment : Fragment(), PicControlListener {
 
     private fun setUploadButton() {
         binding.cvUploadPic.setOnClickListener {
-            val intent = Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-                type = "image/*"
+            if(
+                REQUIRED_PERMISSIONS.all {
+                    logger("REQUIRED_PERMISSIONS : $it")
+                    checkSelfPermission(requireContext(), it) == PERMISSION_GRANTED
+                }
+            ) {
+                val intent = Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+                    type = "image/*"
+                }
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                albumLauncher.launch(intent)
+            } else {
+                requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
             }
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            albumLauncher.launch(Intent.createChooser(intent, "Select Picture"))
         }
     }
 
