@@ -22,7 +22,7 @@ class ChatChannel @Inject constructor(
     ) = flow {
         val result = chatClient.createChannel(
             channelType = "messaging",
-            channelId = homeId,
+            channelId = "$homeId-$homeType",
             memberIds = listOf(userId, chatUserID),
             extraData = mapOf("homeType" to homeType, "homeId" to homeId, "image" to profileImage) // userId 필드 생기면 수정하기
         ).await()
