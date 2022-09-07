@@ -1,8 +1,12 @@
 package com.example.home_rent_app.util
 
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
@@ -49,5 +53,19 @@ fun setRoundImage(imageView: ImageView, imageUrl: String?) {
         placeholder(circularProgressDrawable)
         transformations(RoundedCornersTransformation(30f, 30f, 30f, 30f))
         error(R.drawable.ic_image_not)
+    }
+}
+
+@BindingAdapter("deleteCheck")
+fun setDeleteView(textView: TextView, delete: Boolean) {
+    if(delete) {
+        textView.apply {
+            visibility = View.VISIBLE
+            text = "✓삭제됨"
+        }
+    } else {
+        textView.apply {
+            visibility = View.GONE
+        }
     }
 }

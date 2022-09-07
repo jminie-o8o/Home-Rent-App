@@ -11,4 +11,9 @@ object Constants {
     const val GENDER_NEW = "new"
     const val GENDER_DEFAULT = "default"
     const val MAP_URL = "https://naveropenapi.apigw.ntruss.com/"
+    const val REQ_GALLERY = 1
+    val REQUIRED_PERMISSIONS = arrayOf(
+        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 }
