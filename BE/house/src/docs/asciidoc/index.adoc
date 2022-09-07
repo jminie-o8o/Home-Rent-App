@@ -4,6 +4,15 @@ endif::[]
 
 = 집넘기기 API
 
+== 유저 정보 조회
+
+=== Request
+include::{snippets}/get-user-info/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-user-info/response-body.adoc[]
+
+
 == 양수글 목록 조회
 
 === Request
