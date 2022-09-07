@@ -150,6 +150,7 @@ public class RentArticleService {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException());
         rentArticle.markAsDeleted();
+        rentArticleBookmarkRepository.deleteByRentArticle(rentArticle);
         return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
     }
 

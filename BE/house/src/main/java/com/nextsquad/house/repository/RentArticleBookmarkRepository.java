@@ -17,4 +17,6 @@ public interface RentArticleBookmarkRepository extends JpaRepository<RentArticle
     Optional<RentArticleBookmark> findByUserAndRentArticle(User user, RentArticle rentArticle);
 
     List<RentArticleBookmark> findListByUser(User user);
+
+    void deleteByRentArticle(RentArticle rentArticle);
 }
