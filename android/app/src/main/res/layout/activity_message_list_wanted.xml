@@ -5,7 +5,7 @@
     <data>
         <variable
             name="home"
-            type="com.example.home_rent_app.data.model.DetailHomeData" />
+            type="com.example.home_rent_app.data.dto.WantHomeDetailResponseDTO" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_home_title"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
-                android:text="@{@string/term_of_a_contract(home.availableFrom, home.contractExpiresAt)}"
+                android:text="@{@string/term_of_a_contract(home.moveInDate, home.moveOutDate)}"
                 tools:text="7월 23일 ~ 8월 31일"/>
 
             <TextView
@@ -80,7 +80,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_date_range"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textStyle="bold"
-                android:text="@{@string/deposit_and_monthly(home.deposit, home.rentFee)}"
+                android:text="@{@string/deposit_and_monthly(home.depositBudget, home.rentBudget)}"
                 tools:text="예산 월세 100/35"/>
 
             <View

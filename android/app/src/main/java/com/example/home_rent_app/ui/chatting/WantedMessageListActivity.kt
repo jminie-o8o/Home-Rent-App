@@ -13,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.home_rent_app.databinding.ActivityMessageListWantedBinding
 import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
+import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
+import com.example.home_rent_app.util.repeatOnStarted
 import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.getstream.chat.android.client.models.Channel
@@ -34,29 +36,37 @@ class WantedMessageListActivity : AppCompatActivity(), MessageListActivity {
         ActivityMessageListWantedBinding.inflate(layoutInflater)
     }
 
-    private val cid: String = checkNotNull(intent.getStringExtra(CID_KEY)) {
-        "MessageListActivity를 시작하기 위해서는 채널 아이디 (cid) 정보가 필요합니다."
-    }
+    private lateinit var cid: String
 
-    private val factory: MessageListViewModelFactory by lazy {
-        MessageListViewModelFactory(cid)
-    }
+    private lateinit var factory: MessageListViewModelFactory
 
-    private val homeId = intent?.getIntExtra("homeId", -1)
+    private var homeId: Int? = null
 
     private val messageListViewModel: MessageListViewModel by viewModels { factory }
 
     private val messageComposerViewModel: MessageComposerViewModel by viewModels { factory }
 
-    private val detailHomeViewModel: DetailHomeViewModel by viewModels()
+    private val detailWantedViewModel: WantHomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-//        val factory = MessageListViewModelFactory(cid)
-//        val messageListViewModel: MessageListViewModel by viewModels { factory }
-//        val messageComposerViewModel: MessageComposerViewModel by viewModels { factory }
+        cid = checkNotNull(intent.getStringExtra(CID_KEY)) {
+            "MessageListActivity를 시작하기 위해서는 채널 아이디 (cid) 정보가 필요합니다."
+        }
+
+        factory = MessageListViewModelFactory(cid)
+
+        intent?.getIntExtra("homeId", -1)?.let {
+            homeId = it
+        }
+
+        repeatOnStarted {
+            detailWantedViewModel.wantHomeDetail.collect { wanted ->
+                wanted?.let { binding.home = it }
+            }
+        }
 
         // Step 2 - 채팅방 컴포넌트에 뷰모델 연결
         messageListViewModel.bindView(binding.messageListView, this)
@@ -131,7 +141,7 @@ class WantedMessageListActivity : AppCompatActivity(), MessageListActivity {
             messageComposerViewModel.sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
         }
 
-        detailHomeViewModel.getDetailHomeData(requireNotNull(homeId))
+        detailWantedViewModel.getWantHomeDetail(requireNotNull(homeId))
     }
 
 //    private fun set
