@@ -1,0 +1,21 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= 집넘기기 API
+
+== 양수글 목록 조회
+
+=== Request
+include::{snippets}/get-wanted-article-list/http-request.adoc[]
+
+=== Request
+include::{snippets}/get-wanted-article-list/http-response.adoc[]
+
+== 양수글 상세 조회
+
+=== Request
+include::{snippets}/get-wanted-article/http-request.adoc[]
+
+=== Request
+include::{snippets}/get-wanted-article/http-response.adoc[]
