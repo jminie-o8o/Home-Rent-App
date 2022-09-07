@@ -2,6 +2,7 @@ package com.example.home_rent_app.data.api
 
 import com.example.home_rent_app.data.dto.ImageUrlDTO
 import com.example.home_rent_app.data.dto.NickNameCheckDTO
+import com.example.home_rent_app.data.dto.UserDTO
 import com.example.home_rent_app.data.model.UserProfileRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -29,4 +30,9 @@ interface LoginProfileApi {
         @Path("userId") userId: Int?,
         @Body userProfileRequest: UserProfileRequest
     )
+
+    @GET("/users/{userId}")
+    suspend fun getUserInfo(
+        @Path("userId") userId: Int
+    ): UserDTO
 }

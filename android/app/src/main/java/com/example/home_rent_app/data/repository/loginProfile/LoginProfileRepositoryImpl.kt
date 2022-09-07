@@ -1,10 +1,13 @@
 package com.example.home_rent_app.data.repository.loginProfile
 
 import com.example.home_rent_app.data.api.LoginProfileApi
+import com.example.home_rent_app.data.dto.UserDTO
 import com.example.home_rent_app.data.dto.toImageUrl
 import com.example.home_rent_app.data.dto.toNickNameCheck
+import com.example.home_rent_app.data.dto.toUserData
 import com.example.home_rent_app.data.model.ImageUrl
 import com.example.home_rent_app.data.model.NickNameCheck
+import com.example.home_rent_app.data.model.UserData
 import com.example.home_rent_app.data.model.UserProfileRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -28,4 +31,10 @@ class LoginProfileRepositoryImpl @Inject constructor(
     override suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
         api.setUserProfile(userId, userProfileRequest)
     }
+
+    override suspend fun getUserInfo(userId: Int, callback: (String, String) -> Unit) {
+        val userInfo = api.getUserInfo(userId).toUserData()
+        callback(userInfo.displayName, userInfo.profileImageUrl)
+    }
+
 }
