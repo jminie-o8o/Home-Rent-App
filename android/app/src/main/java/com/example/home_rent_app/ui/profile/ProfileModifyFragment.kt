@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import coil.load
 import com.example.home_rent_app.R
@@ -31,7 +32,7 @@ import javax.inject.Inject
 class ProfileModifyFragment : Fragment() {
 
     lateinit var binding: FragmentProfileModifyBinding
-    private val profileViewModel: ProfileViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by activityViewModels()
     @Inject
     lateinit var userSession: UserSession
     @Inject
@@ -43,7 +44,6 @@ class ProfileModifyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_modify, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = profileViewModel
         return binding.root
     }
@@ -59,6 +59,7 @@ class ProfileModifyFragment : Fragment() {
             }
         }
         setNickname()
+        setImageUrl()
         setGender()
         checkNickname()
         addAccount()
@@ -167,7 +168,8 @@ class ProfileModifyFragment : Fragment() {
         val displayName = binding.etLoginProfileNickname.text?.toString() ?: ""
         val gender = if (binding.rbMale.isChecked) "MALE"
         else "FEMALE"
-        collectStateFlow(profileViewModel.imageUrl) {
+        collectStateFlow(this.profileViewModel.imageUrl) {
+            logger("imageUrl : $imageUrl")
             imageUrl = it
         }
         // User 정보를 서버에 보내기
@@ -190,17 +192,25 @@ class ProfileModifyFragment : Fragment() {
     }
 
     private fun setNickname() {
-        collectStateFlow(profileViewModel.userData) {
+        collectStateFlow(this.profileViewModel.userData) {
+            logger("userData : ${it?.displayName}")
             binding.etLoginProfileNickname.setText(it?.displayName)
         }
     }
 
     private fun setGender() {
-        collectStateFlow(profileViewModel.userData) {
+        collectStateFlow(this.profileViewModel.userData) {
             when (it?.gender) {
                 "MALE" -> binding.rbMale.isChecked = true
                 "FEMALE" -> binding.rbFemale.isChecked = true
             }
+        }
+    }
+
+    private fun setImageUrl() {
+        collectStateFlow(this.profileViewModel.imageUrl) { imageUrl ->
+            logger("imageUrl : $imageUrl")
+            binding.ivLoginProfile.load(imageUrl)
         }
     }
 

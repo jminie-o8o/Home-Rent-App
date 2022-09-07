@@ -113,6 +113,7 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+        goBack()
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -156,5 +157,11 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onBackPressed() {
         super.onBackPressed()
+    }
+
+    private fun goBack() {
+        binding.tvNavigationBack.setOnClickListener {
+            finish()
+        }
     }
 }

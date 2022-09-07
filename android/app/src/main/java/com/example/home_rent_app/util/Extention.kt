@@ -12,6 +12,7 @@ import com.example.home_rent_app.data.dto.RentArticleBookmark
 import com.example.home_rent_app.data.dto.RentArticleProfile
 import com.example.home_rent_app.data.dto.WantArticleProfile
 import com.example.home_rent_app.data.dto.WantedArticleBookmark
+import com.example.home_rent_app.data.model.Article
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,7 +73,7 @@ fun MutableStateFlow<MutableList<WantedArticleBookmark>>.deleteWantBookmarkAtVie
     this.value = tempList.toMutableList()
 }
 
-fun MutableStateFlow<MutableList<RentArticleBookmark>>.deleteGiveBookmarkAtView(id: Int) {
+fun MutableStateFlow<MutableList<Article>>.deleteGiveBookmarkAtView(id: Int) {
     val tempList = this.value.filter { RentArticleBookmark ->
         RentArticleBookmark.id != id
     }.map {

@@ -61,6 +61,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
     debugImplementation "androidx.fragment:fragment-testing:1.5.2"
+    implementation 'androidx.fragment:fragment-ktx:1.5.2'
 
     // Lifecycle
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'

@@ -29,7 +29,7 @@ data class RentArticleProfile(
     val deleted: Boolean,
     @field:Json(name = "deposit")
     val deposit: Int,
-    @field:Json(name = "houseImage")
+    @field:Json(name = "houseImages")
     val houseImage: List<String>,
     @field:Json(name = "id")
     val id: Int,

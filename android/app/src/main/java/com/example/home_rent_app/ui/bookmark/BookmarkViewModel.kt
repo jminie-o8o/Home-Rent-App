@@ -2,8 +2,8 @@ package com.example.home_rent_app.ui.bookmark
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.home_rent_app.data.dto.RentArticleBookmark
 import com.example.home_rent_app.data.dto.WantedArticleBookmark
+import com.example.home_rent_app.data.model.Article
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
@@ -11,6 +11,7 @@ import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.deleteGiveBookmarkAtView
 import com.example.home_rent_app.util.deleteWantBookmarkAtView
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.channels.BufferOverflow
@@ -22,21 +23,23 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val FIRST = 0
+
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
     private val bookmarkRepository: BookmarkRepository,
     private val userSession: UserSession
 ) : ViewModel() {
 
-    private var page = 0
+    private var page = 1
 
     private val _wantHomeBookmarkResult =
         MutableStateFlow<MutableList<WantedArticleBookmark>>(mutableListOf())
     val wantHomeBookmarkResult: StateFlow<MutableList<WantedArticleBookmark>> = _wantHomeBookmarkResult
 
     private val _giveHomeBookmarkResult =
-        MutableStateFlow<MutableList<RentArticleBookmark>>(mutableListOf())
-    val giveHomeBookmarkResult: StateFlow<MutableList<RentArticleBookmark>> = _giveHomeBookmarkResult
+        MutableStateFlow<MutableList<Article>>(mutableListOf())
+    val giveHomeBookmarkResult: StateFlow<MutableList<Article>> = _giveHomeBookmarkResult
 
     private val _deleteBookmarkStatusCode = MutableSharedFlow<Int>()
     val deleteBookmarkStatusCode: SharedFlow<Int> get() = _deleteBookmarkStatusCode
@@ -54,14 +57,14 @@ class BookmarkViewModel @Inject constructor(
     }
 
     init {
-        getWantHomeResult(userId = userSession.userId ?: 0)
-        getGiveHomeResult(userId = userSession.userId ?: 0)
+        getWantHomeResultAtFirstPage(userSession.userId ?: 0)
+        getGiveHomeResultAtFirstPage(userSession.userId ?: 0)
     }
 
     fun getWantHomeResult(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
             val response = bookmarkRepository.getWantBookmark(userId, page)
-            if (response.hasNext) {
+            if (!response.hasNext) {
                 return@launch
             }
             val list = mutableListOf<WantedArticleBookmark>()
@@ -72,9 +75,16 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
+    fun getWantHomeResultAtFirstPage(userId: Int) {
+        viewModelScope.launch {
+            val response = bookmarkRepository.getWantBookmark(userId, FIRST)
+            _wantHomeBookmarkResult.value = response.wantedArticles.toMutableList()
+        }
+    }
+
     fun deleteWantHomeBookmark(bookmarkRequest: BookmarkRequest) {
         viewModelScope.launch(exceptionHandler) {
-            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteBookmark(bookmarkRequest).code)
+            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteWantBookmark(bookmarkRequest).code)
             _wantHomeBookmarkResult.deleteWantBookmarkAtView(bookmarkRequest.articleId)
         }
     }
@@ -82,10 +92,10 @@ class BookmarkViewModel @Inject constructor(
     fun getGiveHomeResult(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
             val response = bookmarkRepository.getGiveBookmark(userId, page)
-            if (response.hasNext) {
+            if (!response.hasNext) {
                 return@launch
             }
-            val list = mutableListOf<RentArticleBookmark>()
+            val list = mutableListOf<Article>()
             list.addAll(_giveHomeBookmarkResult.value)
             list.addAll(response.rentArticles)
             _giveHomeBookmarkResult.value = list
@@ -93,10 +103,17 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-    fun deleteGiveHomeBookmark(bookmarkRequest: BookmarkRequest) {
+    fun getGiveHomeResultAtFirstPage(userId: Int) {
+        viewModelScope.launch {
+            val response = bookmarkRepository.getGiveBookmark(userId, FIRST)
+            _giveHomeBookmarkResult.value = response.rentArticles.toMutableList()
+        }
+    }
+
+    fun deleteGiveHomeBookmark(articleId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteBookmark(bookmarkRequest).code)
-            _giveHomeBookmarkResult.deleteGiveBookmarkAtView(bookmarkRequest.articleId)
+            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteGiveBookmark(BookmarkRequest(userSession.userId ?: 0, articleId)).code)
+            _giveHomeBookmarkResult.deleteGiveBookmarkAtView(articleId)
         }
     }
 }

@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.dto.RentArticleProfile
 import com.example.home_rent_app.databinding.ItemGivehomeProfileBinding
@@ -46,6 +48,7 @@ class ProfileGiveHomeAdapter @Inject constructor(
             binding.btnMoreAction.setOnClickListener {
                 showPopup(it, rentArticleProfile.id)
             }
+            binding.ivThumbNailList.load(rentArticleProfile.houseImage.first())
         }
 
         private fun showPopup(view: View, id: Int) {

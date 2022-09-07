@@ -25,13 +25,15 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
+private const val FIRST = 0
+
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val userSession: UserSession
 ) : ViewModel() {
 
-    private var page = 0
+    private var page = 1
 
     private val _giveHomeProfileResult =
         MutableStateFlow<MutableList<RentArticleProfile>>(mutableListOf())
@@ -67,15 +69,14 @@ class ProfileViewModel @Inject constructor(
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         viewModelScope.launch {
-            logger("ProfileViewModel exceptionHandler : ${throwable.message}")
             _error.emit(CoroutineException.checkThrowable(throwable))
         }
     }
 
     init {
         getUserInfo(userSession.userId ?: 0)
-//        getGiveHomeProfile(userSession.userId ?: 0)
-        getWantHomeProfile(userSession.userId ?: 0)
+        getGiveHomeProfileAtFirstPage(userSession.userId ?: 0)
+        getWantHomeProfileAtFirstPage(userSession.userId ?: 0)
     }
 
     fun getUserInfo(userId: Int) {
@@ -88,9 +89,7 @@ class ProfileViewModel @Inject constructor(
 
     fun getGiveHomeProfile(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            logger("getGiveHomeProfile response : launch")
             val response = profileRepository.getGiveHomeProfileResult(userId, page)
-            logger("getGiveHomeProfile response : ${response.rentArticles}")
             if (response.hasNext) {
                 return@launch
             }
@@ -99,6 +98,13 @@ class ProfileViewModel @Inject constructor(
             list.addAll(response.rentArticles)
             _giveHomeProfileResult.value = list
             page += 1
+        }
+    }
+
+    fun getGiveHomeProfileAtFirstPage(userId: Int) {
+        viewModelScope.launch {
+            val response = profileRepository.getGiveHomeProfileResult(userId, FIRST)
+            _giveHomeProfileResult.value = response.rentArticles.toMutableList()
         }
     }
 
@@ -113,6 +119,13 @@ class ProfileViewModel @Inject constructor(
             list.addAll(response.wantedArticles)
             _wantHomeProfileResult.value = list
             page += 1
+        }
+    }
+
+    fun getWantHomeProfileAtFirstPage(userId: Int) {
+        viewModelScope.launch {
+            val response = profileRepository.getWantHomeProfileResult(userId, FIRST)
+            _wantHomeProfileResult.value = response.wantedArticles.toMutableList()
         }
     }
 
@@ -153,7 +166,7 @@ class ProfileViewModel @Inject constructor(
     fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
         viewModelScope.launch(exceptionHandler) {
             profileRepository.setUserProfile(userId, userProfileRequest)
-            _deleteMessage.emit("성공적으로 프로필이 수정되었습니다.")
+            _profileModifyMessage.emit("성공적으로 프로필이 수정되었습니다.")
         }
     }
 

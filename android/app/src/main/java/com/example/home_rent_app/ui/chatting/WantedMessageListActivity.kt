@@ -141,7 +141,7 @@ class WantedMessageListActivity : AppCompatActivity(), MessageListActivity {
         private const val CID_KEY = "key:cid"
 
         fun newIntent(context: Context, channel: Channel): Intent =
-            Intent(context, RentMessageListActivity::class.java)
+            Intent(context, WantedMessageListActivity::class.java)
                 .putExtra(CID_KEY, channel.cid)
                 .putExtra("homeType", channel.extraData["homeType"].toString())
                 .putExtra("homeId", channel.extraData["homeId"].toString())

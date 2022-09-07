@@ -31,36 +31,36 @@
                 app:navigationIcon="@drawable/ic_arrow_back"
                 app:title="방찾기"/>
 
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilo_search_room"
-            android:layout_width="0dp"
-            app:layout_constraintTop_toBottomOf="@id/alo_appbar_layout"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:startIconDrawable="@android:drawable/ic_menu_search"
-            app:layout_constraintWidth_percent="0.9"
-            app:hintEnabled="false"
-            style="@style/searchLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_search"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_want_home_result_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="OO구 또는 OO동으로 검색하세요."
-                style="@style/editTextStyle"
-                android:background="@color/lightGray"
-                android:text="@={vm.searchAddress}"/>
+                android:layout_height="80dp"
+                app:layout_scrollFlags="scroll|enterAlways">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/et_want_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edittext_rounded_corner"
+                    android:drawableStart="@drawable/ic_baseline_search_26"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/gray02"
+                    android:hint="OO구 또는 OO동으로 검색하세요"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:text="@={vm.searchAddress}"
+                    tools:targetApi="O" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_result"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/tilo_search_room"
+            app:layout_constraintTop_toBottomOf="@id/alo_appbar_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
