@@ -17,7 +17,6 @@ import com.nextsquad.house.repository.UserRepository;
 import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
 import com.nextsquad.house.repository.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.patterns.IToken;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +25,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -108,7 +106,7 @@ public class WantedArticleService {
         WantedArticle wantedArticle = wantedArticleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException());
         wantedArticle.markAsDeleted();
-        wantedArticleRepository.save(wantedArticle);
+        wantedArticleBookmarkRepository.deleteByWantedArticle(wantedArticle);
         return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
     }
     

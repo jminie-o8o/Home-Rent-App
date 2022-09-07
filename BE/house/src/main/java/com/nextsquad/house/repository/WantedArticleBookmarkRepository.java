@@ -15,4 +15,6 @@ public interface WantedArticleBookmarkRepository extends JpaRepository<WantedArt
     Page<WantedArticleBookmark> findByUser(User user, Pageable pageable);
     Optional<WantedArticleBookmark> findByUserAndWantedArticle(User user, WantedArticle wantedArticle);
     List<WantedArticleBookmark> findListByUser(User user);
+
+    void deleteByWantedArticle(WantedArticle article);
 }
