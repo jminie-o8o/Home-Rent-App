@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wanthomeresult
+package com.example.home_rent_app.ui.searchwanthome
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -10,13 +10,13 @@ import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
-import com.example.home_rent_app.ui.wanthomeresult.viewmodel.WantHomeResultViewModel
+import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import javax.inject.Inject
 
 class WantHomeResultAdapter @Inject constructor(
-    private val viewModel: WantHomeResultViewModel,
+    private val viewModel: SearchWantHomeViewModel,
     private val userSession: UserSession,
     private val itemIdSession: ItemIdSession
 ) : PagingDataAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {

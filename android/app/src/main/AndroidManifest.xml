@@ -44,10 +44,10 @@
             android:name=".ui.chatting.RentMessageListActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.wanthomeresult.WantHomeResultActivity"
+            android:name=".ui.searchwanthome.SearchWantHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.findhome.FindHomeActivity"
+            android:name=".ui.searchrenthome.SearchRentHomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"

@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.findhome.adapter
+package com.example.home_rent_app.ui.searchrenthome.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ItemThumbnailBinding
 import com.example.home_rent_app.util.logger
 
-class HomeThumbnailAdapter : ListAdapter<String, HomeThumbnailAdapter.HomeThumbnailViewHolder>(
+class RentHomeThumbnailAdapter : ListAdapter<String, RentHomeThumbnailAdapter.HomeThumbnailViewHolder>(
     HomeThumbnailDiffUtil
 ) {
 

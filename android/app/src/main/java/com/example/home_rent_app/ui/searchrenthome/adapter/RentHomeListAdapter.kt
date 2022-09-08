@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.findhome.adapter
+package com.example.home_rent_app.ui.searchrenthome.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,11 +9,11 @@ import com.example.home_rent_app.data.model.Article
 import com.example.home_rent_app.databinding.ItemHomeListBinding
 import com.example.home_rent_app.util.logger
 
-class HomeListAdapter(
+class RentHomeListAdapter(
     private val goToDetail: (Int) -> Unit,
     private val addBookmark: (Int) -> Unit,
     private val deleteBookmark: (Int) -> Unit
-) : ListAdapter<Article, HomeListAdapter.HomeListViewHolder>(TempDiffUtil) {
+) : ListAdapter<Article, RentHomeListAdapter.HomeListViewHolder>(TempDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeListViewHolder {
         return HomeListViewHolder(ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -30,7 +30,7 @@ class HomeListAdapter(
                 logger("HomeListViewHolder : $it")
             }
             binding.item = item
-            val viewPagerAdapter = HomeThumbnailAdapter()
+            val viewPagerAdapter = RentHomeThumbnailAdapter()
             binding.vpThumbNailList.adapter = viewPagerAdapter
 
             viewPagerAdapter.submitList(item.houseImages)

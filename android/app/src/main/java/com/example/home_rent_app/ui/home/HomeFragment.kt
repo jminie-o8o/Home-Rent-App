@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeBinding
-import com.example.home_rent_app.ui.findhome.FindHomeActivity
+import com.example.home_rent_app.ui.searchrenthome.SearchRentHomeActivity
 import com.example.home_rent_app.ui.renthome.RentHomeActivity
-import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultActivity
+import com.example.home_rent_app.ui.searchwanthome.SearchWantHomeActivity
 
 class HomeFragment : Fragment() {
 
@@ -52,12 +52,12 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnFindHome.setOnClickListener {
-            val intent = Intent(binding.root.context, FindHomeActivity::class.java)
+            val intent = Intent(binding.root.context, SearchRentHomeActivity::class.java)
             startActivity(intent)
         }
 
         binding.btnWantedHome.setOnClickListener {
-            val intent = Intent(binding.root.context, WantHomeResultActivity::class.java)
+            val intent = Intent(binding.root.context, SearchWantHomeActivity::class.java)
             startActivity(intent)
         }
 

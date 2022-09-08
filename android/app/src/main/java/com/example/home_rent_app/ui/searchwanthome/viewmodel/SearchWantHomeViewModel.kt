@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wanthomeresult.viewmodel
+package com.example.home_rent_app.ui.searchwanthome.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WantHomeResultViewModel @Inject constructor(
+class SearchWantHomeViewModel @Inject constructor(
     private val wantHomeResultRepository: WantHomeResultRepository
 ) :
     ViewModel() {

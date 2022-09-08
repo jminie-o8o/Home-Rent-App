@@ -15,7 +15,7 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentBookmarkGiveHomeBinding
 import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
 import com.example.home_rent_app.ui.detail.DetailRentActivity
-import com.example.home_rent_app.ui.findhome.adapter.HomeListAdapter
+import com.example.home_rent_app.ui.searchrenthome.adapter.RentHomeListAdapter
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class BookmarkRentHomeFragment : Fragment() {
 
     lateinit var binding: FragmentBookmarkGiveHomeBinding
-    lateinit var adapter: HomeListAdapter
+    lateinit var adapter: RentHomeListAdapter
     private val viewModel: BookmarkViewModel by activityViewModels()
     @Inject
     lateinit var userSession: UserSession
@@ -66,7 +66,7 @@ class BookmarkRentHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewScrollListener()
-        adapter = HomeListAdapter(geToDetail, addBookmark, deleteBookmark)
+        adapter = RentHomeListAdapter(geToDetail, addBookmark, deleteBookmark)
         binding.rvBookmarkGiveHome.adapter = adapter
         updateAdapter()
         deleteBookMarkToast()

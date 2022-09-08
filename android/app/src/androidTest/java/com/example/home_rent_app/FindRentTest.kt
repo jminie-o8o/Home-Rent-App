@@ -9,7 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.example.home_rent_app.ui.findhome.FindHomeActivity
+import com.example.home_rent_app.ui.searchrenthome.SearchRentHomeActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,11 +19,11 @@ import org.junit.runner.RunWith
 class FindRentTest {
 
     @get:Rule
-    val activityScenarioRule: ActivityScenarioRule<FindHomeActivity> =
+    val activityScenarioRule: ActivityScenarioRule<SearchRentHomeActivity> =
         ActivityScenarioRule(
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                FindHomeActivity::class.java
+                SearchRentHomeActivity::class.java
             )
         )
 

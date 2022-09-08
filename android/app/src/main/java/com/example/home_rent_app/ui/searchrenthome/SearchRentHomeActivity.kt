@@ -1,27 +1,27 @@
-package com.example.home_rent_app.ui.findhome
+package com.example.home_rent_app.ui.searchrenthome
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.home_rent_app.databinding.ActivityFindRoomBinding
+import com.example.home_rent_app.databinding.ActivitySearchRentHomeBinding
 import com.example.home_rent_app.ui.detail.DetailRentActivity
-import com.example.home_rent_app.ui.findhome.adapter.HomeListAdapter
-import com.example.home_rent_app.ui.findhome.viewmodel.FindHomeViewModel
+import com.example.home_rent_app.ui.searchrenthome.adapter.RentHomeListAdapter
+import com.example.home_rent_app.ui.searchrenthome.viewmodel.SearchRentHomeViewModel
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FindHomeActivity : AppCompatActivity() {
+class SearchRentHomeActivity : AppCompatActivity() {
 
-    private val binding: ActivityFindRoomBinding by lazy {
-        ActivityFindRoomBinding.inflate(layoutInflater)
+    private val binding: ActivitySearchRentHomeBinding by lazy {
+        ActivitySearchRentHomeBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: FindHomeViewModel by viewModels()
+    private val viewModel: SearchRentHomeViewModel by viewModels()
 
     private val geToDetail: (Int) -> Unit = {
         // 상세화면 이동
@@ -38,7 +38,7 @@ class FindHomeActivity : AppCompatActivity() {
         viewModel.deleteBookmark(it)
     }
 
-    private val adapter: HomeListAdapter = HomeListAdapter(geToDetail, addBookmark, deleteBookmark)
+    private val adapter: RentHomeListAdapter = RentHomeListAdapter(geToDetail, addBookmark, deleteBookmark)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

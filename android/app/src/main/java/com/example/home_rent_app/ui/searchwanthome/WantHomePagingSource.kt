@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wanthomeresult
+package com.example.home_rent_app.ui.searchwanthome
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

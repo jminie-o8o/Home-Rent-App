@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.findhome.viewmodel
+package com.example.home_rent_app.ui.searchrenthome.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
-class FindHomeViewModel @Inject constructor(
+class SearchRentHomeViewModel @Inject constructor(
     private val repository: FindHomeRepository,
     private val userSession: UserSession
 ) : ViewModel() {

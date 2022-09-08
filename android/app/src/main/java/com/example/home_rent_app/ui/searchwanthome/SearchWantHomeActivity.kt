@@ -1,4 +1,4 @@
-package com.example.home_rent_app.ui.wanthomeresult
+package com.example.home_rent_app.ui.searchwanthome
 
 import android.os.Bundle
 import android.widget.Toast
@@ -10,8 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
-import com.example.home_rent_app.databinding.ActivityWantHomeResultBinding
-import com.example.home_rent_app.ui.wanthomeresult.viewmodel.WantHomeResultViewModel
+import com.example.home_rent_app.databinding.ActivitySearchWantHomeBinding
+import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.UserSession
@@ -25,10 +25,10 @@ import java.net.ConnectException
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WantHomeResultActivity : AppCompatActivity() {
+class SearchWantHomeActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityWantHomeResultBinding
-    private val viewModel: WantHomeResultViewModel by viewModels()
+    lateinit var binding: ActivitySearchWantHomeBinding
+    private val viewModel: SearchWantHomeViewModel by viewModels()
     lateinit var adapter: WantHomeResultAdapter
 
     @Inject
@@ -39,7 +39,7 @@ class WantHomeResultActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_want_home_result)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_want_home)
         binding.lifecycleOwner = this
         handleSearchWord()
         setDefaultResult()

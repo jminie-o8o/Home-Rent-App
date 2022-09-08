@@ -4,32 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="vm"
-            type="com.example.home_rent_app.ui.findhome.viewmodel.FindHomeViewModel" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clo_find_room_activity"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.findhome.FindHomeActivity">
+        android:fitsSystemWindows="true"
+        tools:context=".ui.searchwanthome.SearchWantHomeActivity">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/alo_appbar_layout"
+            android:id="@+id/abb_bar_issue_search_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:elevation="10dp"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="144dp"
+            android:background="@color/white">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/ab_top_appbar"
+                android:id="@+id/tb_want_home_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:titleCentered="true"
-                app:navigationIcon="@drawable/ic_arrow_back"
-                app:title="방찾기"/>
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="btn_back"
+                    android:src="@drawable/ic_baseline_arrow_back_ios_26"
+                    app:tint="@color/gray03" />
+
+                <TextView
+                    android:id="@+id/tv_toolbar_title"
+                    style="@style/TextSubtitle1.18.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="양수인 찾기"
+                    tools:text="양수인 찾기" />
+
+
+            </com.google.android.material.appbar.MaterialToolbar>
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/tb_want_home_result_edit_text"
@@ -49,7 +65,6 @@
                     android:hint="OO구 또는 OO동으로 검색하세요"
                     android:importantForAutofill="no"
                     android:inputType="text"
-                    android:text="@={vm.searchAddress}"
                     tools:targetApi="O" />
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -57,12 +72,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_search_result"
+            android:id="@+id/rv_wanthome_result"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/alo_appbar_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
