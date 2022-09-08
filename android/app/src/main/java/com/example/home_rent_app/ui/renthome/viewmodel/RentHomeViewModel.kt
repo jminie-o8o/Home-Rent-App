@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.dto.AddRentHomeRequest
 import com.example.home_rent_app.data.model.ImageUrl
 import com.example.home_rent_app.data.model.RoomPicture
+import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepository
 import com.example.home_rent_app.data.repository.renthome.RentHomeRepository
 import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.FileController
@@ -27,8 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 class RentHomeViewModel @Inject constructor(
     private val rentHomeRepository: RentHomeRepository,
+    private val imageUrlRepository: ImageUrlRepository,
     private val fileController: FileController,
-    private val userSession: UserSession
+    private val userSession: UserSession,
 ) : ViewModel() {
 
     private val _page = MutableStateFlow(0)
@@ -259,7 +261,7 @@ class RentHomeViewModel @Inject constructor(
             list.forEach {
                 logger("image : ${it.headers}, ${it.body}")
             }
-            rentHomeRepository.getImageUrl(list).catch { e ->
+            imageUrlRepository.getImageUrl(list).catch { e ->
                 _houseImages.value = UiState.Error(e.stackTraceToString())
             }.collect {
                 _houseImages.value = UiState.Success(it)

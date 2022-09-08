@@ -10,11 +10,6 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface AddRentHomeApi {
-    @Multipart
-    @POST("images")
-    suspend fun getImageUrl(
-        @Part images: List<MultipartBody.Part>
-    ): ImageUrlDTO
 
     @POST("houses/rent")
     suspend fun addRentHome(

@@ -6,6 +6,8 @@ import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSource
 import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSourceImpl
 import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSource
 import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSourceImpl
+import com.example.home_rent_app.data.datasource.imageurl.ImageUrlDataSource
+import com.example.home_rent_app.data.datasource.imageurl.ImageUrlDataSourceImpl
 import com.example.home_rent_app.data.datasource.login.LoginDataSource
 import com.example.home_rent_app.data.datasource.login.LoginDataSourceImpl
 import com.example.home_rent_app.data.datasource.loginprofile.LoginProfileDataSource
@@ -81,4 +83,10 @@ abstract class DataSourceModule {
     abstract fun bindLoginProfileDataSource(
         loginProfileDataSourceImpl: LoginProfileDataSourceImpl
     ): LoginProfileDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindImageUrlDataSource(
+        imageUrlDataSourceImpl: ImageUrlDataSourceImpl
+    ): ImageUrlDataSource
 }

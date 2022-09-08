@@ -19,12 +19,6 @@ interface LoginProfileApi {
     @GET("users/check-duplication")
     suspend fun checkNickName(@Query("nickname") nickName: String): NickNameCheckDTO
 
-    @Multipart
-    @POST("images")
-    suspend fun getImageUrl(
-        @Part images: List<MultipartBody.Part>
-    ): ImageUrlDTO
-
     @PATCH("users/{userId}")
     suspend fun setUserProfile(
         @Path("userId") userId: Int?,

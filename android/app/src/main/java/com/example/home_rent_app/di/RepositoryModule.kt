@@ -6,6 +6,8 @@ import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.detail.DetailRepositoryImpl
 import com.example.home_rent_app.data.repository.findhome.FindHomeRepository
 import com.example.home_rent_app.data.repository.findhome.FindHomeRepositoryImpl
+import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepository
+import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepositoryImpl
 import com.example.home_rent_app.data.repository.map.MapRepository
 import com.example.home_rent_app.data.repository.map.MapRepositoryImpl
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
@@ -89,4 +91,10 @@ abstract class RepositoryModule {
     abstract fun bindWantHomeProfileRepository(
         profileRepositoryImpl: ProfileRepositoryImpl
     ): ProfileRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindImageUrlRepository(
+        imageUrlRepositoryImpl: ImageUrlRepositoryImpl
+    ): ImageUrlRepository
 }

@@ -8,11 +8,9 @@ import kotlinx.coroutines.flow.flowOn
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class RentHomeDataSourceImpl @Inject constructor(private val api: AddRentHomeApi) : RentHomeDataSource {
-
-    override fun getImageUrl(list: List<MultipartBody.Part>) = flow {
-        emit(api.getImageUrl(list))
-    }.flowOn(Dispatchers.IO)
+class RentHomeDataSourceImpl @Inject constructor(
+    private val api: AddRentHomeApi
+) : RentHomeDataSource {
 
     override suspend fun addRentHome(request: AddRentHomeRequest) = api.addRentHome(request)
 }

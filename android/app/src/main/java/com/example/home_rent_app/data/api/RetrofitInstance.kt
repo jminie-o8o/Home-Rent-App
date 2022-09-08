@@ -230,4 +230,17 @@ object RetrofitInstance {
             .build()
             .create(LogoutApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun retrofitWithImageUrl(
+        @Named("jwt") okHttpClient: OkHttpClient
+    ): ImageUrlApi {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(ImageUrlApi::class.java)
+    }
 }

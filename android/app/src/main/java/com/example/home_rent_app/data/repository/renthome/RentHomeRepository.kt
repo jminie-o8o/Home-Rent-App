@@ -8,7 +8,5 @@ import okhttp3.MultipartBody
 
 interface RentHomeRepository {
 
-    fun getImageUrl(list: List<MultipartBody.Part>): Flow<ImageUrl>
-
     suspend fun addRentHome(request: AddRentHomeRequest): AddWantHomeResponseDTO
 }

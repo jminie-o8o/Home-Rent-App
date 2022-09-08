@@ -11,9 +11,6 @@ class RentHomeRepositoryImpl @Inject constructor(
     private val rentHomeDataSource: RentHomeDataSource
 ) : RentHomeRepository {
 
-    override fun getImageUrl(list: List<MultipartBody.Part>) =
-        rentHomeDataSource.getImageUrl(list).mapNotNull { it.toImageUrl() }
-
     override suspend fun addRentHome(request: AddRentHomeRequest) =
         rentHomeDataSource.addRentHome(request)
 }

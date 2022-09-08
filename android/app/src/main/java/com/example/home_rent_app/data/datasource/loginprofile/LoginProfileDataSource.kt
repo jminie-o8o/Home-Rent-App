@@ -11,8 +11,6 @@ interface LoginProfileDataSource {
 
     suspend fun checkNickName(nickName: String): NickNameCheckDTO
 
-    fun getImageUrl(body: List<MultipartBody.Part>): Flow<ImageUrl>
-
     suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest)
 
     suspend fun getUserInfo(userId: Int): UserDTO

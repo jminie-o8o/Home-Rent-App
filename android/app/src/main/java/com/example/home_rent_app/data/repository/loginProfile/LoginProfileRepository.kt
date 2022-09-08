@@ -10,8 +10,6 @@ interface LoginProfileRepository {
 
     suspend fun checkNickName(nickName: String): NickNameCheck
 
-    fun getImageUrl(body: List<MultipartBody.Part>): Flow<ImageUrl>
-
     suspend fun setUserProfile(userProfileRequest: UserProfileRequest)
 
     suspend fun connectUserInfo(userId: Int, connectChat: (String, String) -> Unit)

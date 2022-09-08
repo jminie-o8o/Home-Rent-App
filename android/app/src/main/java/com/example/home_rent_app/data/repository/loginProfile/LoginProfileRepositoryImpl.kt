@@ -20,10 +20,6 @@ class LoginProfileRepositoryImpl @Inject constructor(
         return loginProfileDataSource.checkNickName(nickName).toNickNameCheck()
     }
 
-    override fun getImageUrl(body: List<MultipartBody.Part>): Flow<ImageUrl> {
-        return loginProfileDataSource.getImageUrl(body)
-    }
-
     override suspend fun setUserProfile(userProfileRequest: UserProfileRequest) {
         loginProfileDataSource.setUserProfile(userSession.userId ?: 0, userProfileRequest)
     }

@@ -9,6 +9,7 @@ import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.data.model.UserProfileRequest
+import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepository
 import com.example.home_rent_app.data.repository.login.LoginRepository
 import com.example.home_rent_app.data.repository.loginProfile.LoginProfileRepository
 import com.example.home_rent_app.data.repository.token.TokenRepository
@@ -35,7 +36,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
     private val tokenRepository: TokenRepository,
-    private val loginProfileRepository: LoginProfileRepository
+    private val loginProfileRepository: LoginProfileRepository,
+    private val imageUrlRepository: ImageUrlRepository
 ) : ViewModel() {
 
     private val _nickNameCheck: MutableSharedFlow<Boolean> = MutableSharedFlow()
@@ -177,7 +179,7 @@ class LoginViewModel @Inject constructor(
     fun getProfileImage(body: MultipartBody.Part) {
         viewModelScope.launch(exceptionHandler) {
             val bodyList = mutableListOf<MultipartBody.Part>().apply { this.add(body) }
-            loginProfileRepository.getImageUrl(bodyList).collect {
+            imageUrlRepository.getImageUrl(bodyList).collect {
                 _imageUrl.value = it.images.first()
             }
         }
