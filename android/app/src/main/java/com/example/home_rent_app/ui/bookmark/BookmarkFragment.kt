@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.example.home_rent_app.databinding.FragmentBookmarkBinding
-import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.util.BookMarkViewPagerAdapter
-import com.example.home_rent_app.data.session.UserSession
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookmarkFragment : Fragment() {

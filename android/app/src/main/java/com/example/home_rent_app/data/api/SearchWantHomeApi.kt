@@ -9,7 +9,7 @@ import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface WantHomeResultApi {
+interface SearchWantHomeApi {
 
     @GET("houses/wanted")
     suspend fun getWantHomeResult(

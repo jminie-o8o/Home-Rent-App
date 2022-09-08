@@ -4,11 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.dto.WantedArticleBookmark
 import com.example.home_rent_app.data.model.Article
-import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.util.CoroutineException
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.deleteGiveBookmarkAtView
 import com.example.home_rent_app.util.deleteWantBookmarkAtView
 import dagger.hilt.android.lifecycle.HiltViewModel

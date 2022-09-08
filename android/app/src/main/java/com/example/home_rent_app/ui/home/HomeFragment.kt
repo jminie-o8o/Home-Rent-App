@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeBinding
-import com.example.home_rent_app.ui.searchrenthome.SearchRentHomeActivity
 import com.example.home_rent_app.ui.renthome.RentHomeActivity
+import com.example.home_rent_app.ui.searchrenthome.SearchRentHomeActivity
 import com.example.home_rent_app.ui.searchwanthome.SearchWantHomeActivity
 
 class HomeFragment : Fragment() {

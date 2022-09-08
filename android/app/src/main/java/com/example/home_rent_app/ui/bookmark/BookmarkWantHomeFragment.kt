@@ -15,13 +15,9 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentBookmarkWantHomeBinding
 import com.example.home_rent_app.ui.bookmark.adapter.BookmarkWantHomeAdapter
 import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
-import com.example.home_rent_app.data.session.ItemIdSession
-import com.example.home_rent_app.data.session.UserSession
-import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookmarkWantHomeFragment : Fragment() {

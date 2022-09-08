@@ -105,13 +105,13 @@ object RetrofitInstance {
     @Singleton
     fun provideMenuListApi(
         @Named("jwt") okHttpClient: OkHttpClient
-    ): RentHomeApi {
+    ): AddRentHomeApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-            .create(RentHomeApi::class.java)
+            .create(AddRentHomeApi::class.java)
     }
 
     @Provides
@@ -131,26 +131,26 @@ object RetrofitInstance {
     @Singleton
     fun getWantHomeResultRetrofit(
         @Named("jwt") okHttpClient: OkHttpClient
-    ): WantHomeResultApi {
+    ): SearchWantHomeApi {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .baseUrl(BASE_URL)
             .build()
-            .create(WantHomeResultApi::class.java)
+            .create(SearchWantHomeApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideFindRoomApi(
         @Named("jwt") okHttpClient: OkHttpClient
-    ): FindHomeApi {
+    ): SearchRentHomeApi {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .baseUrl(BASE_URL)
             .build()
-            .create(FindHomeApi::class.java)
+            .create(SearchRentHomeApi::class.java)
     }
 
     @Provides

@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
-import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
-import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
-import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
 import com.example.home_rent_app.data.session.ItemIdSession
 import com.example.home_rent_app.data.session.UserSession
+import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
+import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import javax.inject.Inject
 
 class WantHomeResultAdapter @Inject constructor(

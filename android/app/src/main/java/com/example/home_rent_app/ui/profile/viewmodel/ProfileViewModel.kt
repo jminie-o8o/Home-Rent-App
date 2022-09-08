@@ -8,8 +8,8 @@ import com.example.home_rent_app.data.dto.WantArticleProfile
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
-import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.data.session.UserSession
+import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.deleteGiveProfileAtView
 import com.example.home_rent_app.util.deleteWantProfileAtView
 import dagger.hilt.android.lifecycle.HiltViewModel

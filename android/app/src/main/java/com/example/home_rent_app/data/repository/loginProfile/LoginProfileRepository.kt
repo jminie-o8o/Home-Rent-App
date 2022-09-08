@@ -12,7 +12,7 @@ interface LoginProfileRepository {
 
     fun getImageUrl(body: List<MultipartBody.Part>): Flow<ImageUrl>
 
-    suspend fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest)
+    suspend fun setUserProfile(userProfileRequest: UserProfileRequest)
 
-    suspend fun getUserInfo(userId: Int, callback: (String, String) -> Unit)
+    suspend fun connectUserInfo(userId: Int, connectChat: (String, String) -> Unit)
 }

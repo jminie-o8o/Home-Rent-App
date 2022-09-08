@@ -6,10 +6,10 @@ import com.example.home_rent_app.data.model.DetailHomeData
 import com.example.home_rent_app.data.model.MapResponse
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.map.MapRepository
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.ChatChannel
 import com.example.home_rent_app.util.RENT
 import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler

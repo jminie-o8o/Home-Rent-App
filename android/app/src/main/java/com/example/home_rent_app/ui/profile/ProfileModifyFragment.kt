@@ -22,9 +22,11 @@ import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.FragmentProfileModifyBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
-import com.example.home_rent_app.util.*
 import com.example.home_rent_app.util.Constants.REQUIRED_PERMISSIONS
 import com.example.home_rent_app.util.Constants.REQ_GALLERY
+import com.example.home_rent_app.util.FileController
+import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

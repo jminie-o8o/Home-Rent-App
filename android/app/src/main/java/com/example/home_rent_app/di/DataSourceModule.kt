@@ -8,6 +8,8 @@ import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSource
 import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSourceImpl
 import com.example.home_rent_app.data.datasource.login.LoginDataSource
 import com.example.home_rent_app.data.datasource.login.LoginDataSourceImpl
+import com.example.home_rent_app.data.datasource.loginprofile.LoginProfileDataSource
+import com.example.home_rent_app.data.datasource.loginprofile.LoginProfileDataSourceImpl
 import com.example.home_rent_app.data.datasource.map.MapDataSource
 import com.example.home_rent_app.data.datasource.map.MapDataSourceImpl
 import com.example.home_rent_app.data.datasource.refresh.RefreshDataSource
@@ -73,4 +75,10 @@ abstract class DataSourceModule {
     abstract fun bindBookmarkDataSource(
         bookmarkDataSourceImpl: BookmarkDataSourceImpl
     ): BookmarkDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindLoginProfileDataSource(
+        loginProfileDataSourceImpl: LoginProfileDataSourceImpl
+    ): LoginProfileDataSource
 }

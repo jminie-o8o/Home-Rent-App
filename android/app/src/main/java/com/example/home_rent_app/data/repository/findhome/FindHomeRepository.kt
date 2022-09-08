@@ -1,7 +1,5 @@
 package com.example.home_rent_app.data.repository.findhome
 
-import com.example.home_rent_app.data.dto.AddOrDeleteBookMarkResponseDTO
-import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.RoomSearchResult
 import kotlinx.coroutines.flow.Flow
 

@@ -2,12 +2,12 @@ package com.example.home_rent_app.ui.searchwanthome
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.home_rent_app.data.api.WantHomeResultApi
+import com.example.home_rent_app.data.api.SearchWantHomeApi
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 
 class WantHomePagingSource(
-    private val api: WantHomeResultApi,
+    private val api: SearchWantHomeApi,
     private val wantHomeResultRequest: WantHomeResultRequest
 ) : PagingSource<Int, WantedArticle>() {
 

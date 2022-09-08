@@ -2,14 +2,12 @@ package com.example.home_rent_app.ui.searchrenthome.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.RoomSearchResult
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.data.repository.findhome.FindHomeRepository
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler

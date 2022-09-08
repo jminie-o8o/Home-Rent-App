@@ -32,14 +32,6 @@ class LoginDataSourceImpl @Inject constructor(
         return loginApi.getNaverToken(naverOauthRequest)
     }
 
-//    override suspend fun getKakaoUser(kakaoOauthRequest: KakaoOauthRequest): User {
-//        return loginApi.getKakaoToken(kakaoOauthRequest).toUser()
-//    }
-//
-//    override suspend fun getNaverUser(naverOauthRequest: NaverOauthRequest): User {
-//        return loginApi.getNaverToken(naverOauthRequest).toUser()
-//    }
-
     override suspend fun saveIsLogin() {
         // AccessToken, RefreshToken 이 제대로 들어온 여부를 확인하는 boolean 값
         dataStore.saveIsLogin()

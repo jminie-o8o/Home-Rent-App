@@ -80,7 +80,7 @@ class LoginViewModel @Inject constructor(
 
     private fun getUserInfo(userId: Int) {
         viewModelScope.launch {
-            loginProfileRepository.getUserInfo(userId) { name, image ->
+            loginProfileRepository.connectUserInfo(userId) { name, image ->
                 connectUser(name, image) // 채팅 관련
             }
         }
@@ -184,10 +184,9 @@ class LoginViewModel @Inject constructor(
     }
 
     // 유저 정보를 서버에 보내기
-    fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
+    fun setUserProfile(userProfileRequest: UserProfileRequest) {
         viewModelScope.launch(exceptionHandler) {
-            logger("Test UserId : $userId")
-            loginProfileRepository.setUserProfile(userId, userProfileRequest)
+            loginProfileRepository.setUserProfile(userProfileRequest)
         }
     }
 
