@@ -9,7 +9,7 @@ endif::[]
 === Request
 include::{snippets}/get-wanted-article-list/http-request.adoc[]
 
-=== Request
+=== Response
 include::{snippets}/get-wanted-article-list/http-response.adoc[]
 
 == 양수글 상세 조회
@@ -17,5 +17,21 @@ include::{snippets}/get-wanted-article-list/http-response.adoc[]
 === Request
 include::{snippets}/get-wanted-article/http-request.adoc[]
 
-=== Request
+=== Response
 include::{snippets}/get-wanted-article/http-response.adoc[]
+
+== 양수글 삭제
+
+=== Request
+include::{snippets}/delete-wanted-article/http-request.adoc[]
+
+=== Response
+include::{snippets}/delete-wanted-article/http-response.adoc[]
+
+== 양수글 수정
+
+=== Request
+include::{snippets}/update-wanted-article/http-request.adoc[]
+
+=== Response
+include::{snippets}/update-wanted-article/http-response.adoc[]

@@ -1,5 +1,6 @@
 package com.nextsquad.house.acceptance.wantedArticle;
 
+import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.repository.UserRepository;
@@ -21,6 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -123,7 +126,7 @@ public class WantedArticleAcceptanceTest {
     @Test
     void id가_1번인_양수글을_삭제한다(){
         given(documentationSpec)
-                .filter(document("get-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(document("delete-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
 
@@ -135,6 +138,27 @@ public class WantedArticleAcceptanceTest {
                 .assertThat()
                 .body("code", equalTo(200))
                 .body("message", equalTo("게시글이 삭제되었습니다."));
+    }
+
+    @Test
+    void id가_2번인_양수글을_수정한다(){
+        WantedArticleRequest request = new WantedArticleRequest(1L, "주소 수정 테스트", "제목 수정 테스트"
+        , "내용 수정 테스트", LocalDate.now(), LocalDate.now(), 500, 20000);
+        given(documentationSpec)
+                .filter(document("update-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("houses/wanted/2")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("게시글이 수정되었습니다."));
     }
 
 
