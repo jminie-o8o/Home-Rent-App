@@ -161,6 +161,26 @@ public class WantedArticleAcceptanceTest {
                 .body("message", equalTo("게시글이 수정되었습니다."));
     }
 
+    @Test
+    void 양수글을_작성하고_저장했을_때_글번호_13을_리턴한다(){
+        WantedArticleRequest request = new WantedArticleRequest(1L, "글작성 테스트 주소",
+                "글쓰기 테스트", "양도글 작성 테스트 본문", LocalDate.now(), LocalDate.now(), 100, 100);
+        given(documentationSpec)
+                .filter(document("update-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .post("houses/wanted")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("id", equalTo(13));
+    }
+
 
 
 //    @Test // 이렇게 하면 문서까지 예쁘게 작성이 되는데 로그를 가져오는 것이라서 사실상 의미가 없지 않나...
