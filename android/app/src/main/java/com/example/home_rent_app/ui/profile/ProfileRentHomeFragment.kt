@@ -1,6 +1,7 @@
 package com.example.home_rent_app.ui.profile
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,28 +13,20 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
-import com.example.home_rent_app.data.session.ItemIdSession
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.FragmentProfileRentHomeBinding
+import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileGiveHomeAdapter
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
 import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileRentHomeFragment : Fragment() {
 
     lateinit var binding: FragmentProfileRentHomeBinding
     lateinit var adapter: ProfileGiveHomeAdapter
-
-    @Inject
-    lateinit var userSession: UserSession
-
-    @Inject
-    lateinit var idSession: ItemIdSession
     private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -47,10 +40,21 @@ class ProfileRentHomeFragment : Fragment() {
         return binding.root
     }
 
+    private val goToDetail: (Int) -> Unit = {
+        // 상세화면 이동
+        val intent = Intent(requireContext(), DetailRentActivity::class.java)
+        intent.putExtra("homeId", it)
+        startActivity(intent)
+    }
+
+    private val deleteWantItem: (Int) -> Unit = {
+        viewModel.deleteGiveItem(it)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewScrollListener()
-        adapter = ProfileGiveHomeAdapter(viewModel, idSession, requireContext())
+        adapter = ProfileGiveHomeAdapter(goToDetail, deleteWantItem, requireContext())
         binding.rvProfileGiveHome.adapter = adapter
         updateAdapter()
         logout()
