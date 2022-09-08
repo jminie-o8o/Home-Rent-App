@@ -4,8 +4,6 @@ import com.example.home_rent_app.data.datasource.bookmark.BookmarkDataSource
 import com.example.home_rent_app.data.datasource.bookmark.BookmarkDataSourceImpl
 import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSource
 import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSourceImpl
-import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSource
-import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSourceImpl
 import com.example.home_rent_app.data.datasource.imageurl.ImageUrlDataSource
 import com.example.home_rent_app.data.datasource.imageurl.ImageUrlDataSourceImpl
 import com.example.home_rent_app.data.datasource.login.LoginDataSource
@@ -20,8 +18,14 @@ import com.example.home_rent_app.data.datasource.refresh.RefreshDataSource
 import com.example.home_rent_app.data.datasource.refresh.RefreshDataSourceImpl
 import com.example.home_rent_app.data.datasource.renthome.RentHomeDataSource
 import com.example.home_rent_app.data.datasource.renthome.RentHomeDataSourceImpl
+import com.example.home_rent_app.data.datasource.searchrenthome.SearchRentHomeDataSource
+import com.example.home_rent_app.data.datasource.searchrenthome.SearchRentHomeDataSourceImpl
+import com.example.home_rent_app.data.datasource.searchwanthome.SearchWantHomeDataSource
+import com.example.home_rent_app.data.datasource.searchwanthome.SearchWantHomeDataSourceImpl
 import com.example.home_rent_app.data.datasource.token.TokenDataSource
 import com.example.home_rent_app.data.datasource.token.TokenDataSourceImpl
+import com.example.home_rent_app.data.datasource.wanthome.WantHomeDataSource
+import com.example.home_rent_app.data.datasource.wanthome.WantHomeDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -41,8 +45,8 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindRoomFindDataSource(
-        findRoomDataSourceImpl: FindHomeDataSourceImpl
-    ): FindHomeDataSource
+        findRoomDataSourceImpl: SearchRentHomeDataSourceImpl
+    ): SearchRentHomeDataSource
 
     @Singleton
     @Binds
@@ -97,4 +101,16 @@ abstract class DataSourceModule {
     abstract fun bindProfileDataSource(
         profileDataSourceImpl: ProfileDataSourceImpl
     ): ProfileDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindWantHomeDataSource(
+        wantHomeDataSourceImpl: WantHomeDataSourceImpl
+    ): WantHomeDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindSearchWantHomeDataSource(
+        searchWantHomeDataSourceImpl: SearchWantHomeDataSourceImpl
+    ): SearchWantHomeDataSource
 }

@@ -4,8 +4,6 @@ import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepositoryImpl
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.detail.DetailRepositoryImpl
-import com.example.home_rent_app.data.repository.findhome.FindHomeRepository
-import com.example.home_rent_app.data.repository.findhome.FindHomeRepositoryImpl
 import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepository
 import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepositoryImpl
 import com.example.home_rent_app.data.repository.login.LoginRepository
@@ -20,12 +18,14 @@ import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepositoryImpl
 import com.example.home_rent_app.data.repository.renthome.RentHomeRepository
 import com.example.home_rent_app.data.repository.renthome.RentHomeRepositoryImpl
+import com.example.home_rent_app.data.repository.searchrenthome.SearchRentHomeRepository
+import com.example.home_rent_app.data.repository.searchrenthome.SearchRentHomeRepositoryImpl
+import com.example.home_rent_app.data.repository.searchwanthome.SearchWantHomeRepository
+import com.example.home_rent_app.data.repository.searchwanthome.SearchWantHomeRepositoryImpl
 import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.data.repository.token.TokenRepositoryImpl
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepositoryImpl
-import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
-import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -57,14 +57,14 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindWantHomeResultRepository(
-        wantHomeResultRepositoryImpl: WantHomeResultRepositoryImpl
-    ): WantHomeResultRepository
+        wantHomeResultRepositoryImpl: SearchWantHomeRepositoryImpl
+    ): SearchWantHomeRepository
 
     @Singleton
     @Binds
     abstract fun bindRoomFindRepository(
-        findRoomRepositoryImpl: FindHomeRepositoryImpl
-    ): FindHomeRepository
+        findRoomRepositoryImpl: SearchRentHomeRepositoryImpl
+    ): SearchRentHomeRepository
 
     @Singleton
     @Binds

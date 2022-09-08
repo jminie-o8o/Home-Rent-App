@@ -5,10 +5,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.home_rent_app.data.dto.WantedArticle
-import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.WantHomeResultRequest
-import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
+import com.example.home_rent_app.data.repository.searchwanthome.SearchWantHomeRepository
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchWantHomeViewModel @Inject constructor(
-    private val wantHomeResultRepository: WantHomeResultRepository
+    private val searchWantHomeRepository: SearchWantHomeRepository
 ) :
     ViewModel() {
 
@@ -62,7 +61,7 @@ class SearchWantHomeViewModel @Inject constructor(
 
     fun getWantHomeResult(wantHomeResultRequest: WantHomeResultRequest) {
         viewModelScope.launch {
-            wantHomeResultRepository.getResult(wantHomeResultRequest)
+            searchWantHomeRepository.getResult(wantHomeResultRequest)
                 .cachedIn(viewModelScope)
                 .collect { response ->
                     _wantHomeResult.value = UiState.Success(response)
@@ -70,15 +69,15 @@ class SearchWantHomeViewModel @Inject constructor(
         }
     }
 
-    fun addBookmark(bookmarkRequest: BookmarkRequest) {
+    fun addBookmark(articleId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            _addBookmarkStatusCode.emit(wantHomeResultRepository.addBookmark(bookmarkRequest).code)
+            _addBookmarkStatusCode.emit(searchWantHomeRepository.addBookmark(articleId).code)
         }
     }
 
-    fun deleteBookmark(bookmarkRequest: BookmarkRequest) {
+    fun deleteBookmark(articleId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            _deleteBookmarkStatusCode.emit(wantHomeResultRepository.deleteBookmark(bookmarkRequest).code)
+            _deleteBookmarkStatusCode.emit(searchWantHomeRepository.deleteBookmark(articleId).code)
         }
     }
 }

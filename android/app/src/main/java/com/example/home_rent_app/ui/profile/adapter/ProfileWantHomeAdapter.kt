@@ -1,7 +1,6 @@
 package com.example.home_rent_app.ui.profile.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.dto.WantArticleProfile
-import com.example.home_rent_app.data.session.ItemIdSession
 import com.example.home_rent_app.databinding.ItemWanthomeProfileBinding
-import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
-import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

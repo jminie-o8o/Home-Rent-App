@@ -1,24 +1,18 @@
 package com.example.home_rent_app.ui.searchwanthome
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.dto.WantedArticle
-import com.example.home_rent_app.data.model.BookmarkRequest
-import com.example.home_rent_app.data.session.ItemIdSession
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
-import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
-import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import javax.inject.Inject
 
 class WantHomeResultAdapter @Inject constructor(
-    private val viewModel: SearchWantHomeViewModel,
-    private val userSession: UserSession,
-    private val itemIdSession: ItemIdSession
+    private val goToDetail: (Int) -> Unit,
+    private val addBookmark: (Int) -> Unit,
+    private val deleteBookmark: (Int) -> Unit
 ) : PagingDataAdapter<WantedArticle, WantHomeResultAdapter.WantHomeResultViewHolder>(DiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WantHomeResultViewHolder {
@@ -47,19 +41,16 @@ class WantHomeResultAdapter @Inject constructor(
                 }
             }
             itemView.setOnClickListener {
-                itemIdSession.itemId = wantedArticle.id
-                Intent(it.context, WantHomeDetailActivity::class.java).run {
-                    it.context.startActivity(this)
-                }
+                goToDetail(wantedArticle.id)
             }
         }
 
         private fun addBookmark(wantedArticle: WantedArticle) {
-            viewModel.addBookmark((BookmarkRequest(userSession.userId ?: 0, wantedArticle.id)))
+            addBookmark(wantedArticle.id)
         }
 
         private fun deleteBookmark(wantedArticle: WantedArticle) {
-            viewModel.deleteBookmark((BookmarkRequest(userSession.userId ?: 0, wantedArticle.id)))
+            deleteBookmark(wantedArticle.id)
         }
 
         private fun checkBookmark(wantedArticle: WantedArticle) {

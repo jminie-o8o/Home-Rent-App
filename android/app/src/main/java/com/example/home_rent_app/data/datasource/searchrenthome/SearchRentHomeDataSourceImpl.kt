@@ -1,4 +1,4 @@
-package com.example.home_rent_app.data.datasource.findhome
+package com.example.home_rent_app.data.datasource.searchrenthome
 
 import com.example.home_rent_app.data.api.SearchRentHomeApi
 import kotlinx.coroutines.Dispatchers
@@ -8,9 +8,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FindHomeDataSourceImpl @Inject constructor(
+class SearchRentHomeDataSourceImpl @Inject constructor(
     private val api: SearchRentHomeApi
-) : FindHomeDataSource {
+) : SearchRentHomeDataSource {
 
     override fun getSearchResult(
         page: Int,

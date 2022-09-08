@@ -71,7 +71,7 @@ class WantHomeSecondStepFragment : Fragment() {
     private fun register() {
         binding.btnRegister.setOnClickListener {
             lifecycleScope.launch {
-                idSession.itemId = viewModel.addWantHome(userSession.userId ?: 0)
+                idSession.itemId = viewModel.addWantHome()
                 val activity = activity as WantHomeActivity
                 activity.clickRegister()
             }

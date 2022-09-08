@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.RoomSearchResult
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
-import com.example.home_rent_app.data.repository.findhome.FindHomeRepository
+import com.example.home_rent_app.data.repository.searchrenthome.SearchRentHomeRepository
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchRentHomeViewModel @Inject constructor(
-    private val repository: FindHomeRepository,
+    private val repository: SearchRentHomeRepository,
     private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
 

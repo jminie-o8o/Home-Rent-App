@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui.searchwanthome
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -10,10 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
-import com.example.home_rent_app.data.session.ItemIdSession
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.ActivitySearchWantHomeBinding
+import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
@@ -22,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.net.ConnectException
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchWantHomeActivity : AppCompatActivity() {
@@ -31,19 +31,27 @@ class SearchWantHomeActivity : AppCompatActivity() {
     private val viewModel: SearchWantHomeViewModel by viewModels()
     lateinit var adapter: WantHomeResultAdapter
 
-    @Inject
-    lateinit var userSession: UserSession
+    private val geToDetail: (Int) -> Unit = {
+        // 상세화면 이동
+        val intent = Intent(this, WantHomeDetailActivity::class.java)
+        intent.putExtra("homeId", it)
+        startActivity(intent)
+    }
 
-    @Inject
-    lateinit var idSession: ItemIdSession
+    private val addBookmark: (Int) -> Unit = {
+        viewModel.addBookmark(it)
+    }
 
+    private val deleteBookmark: (Int) -> Unit = {
+        viewModel.deleteBookmark(it)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_want_home)
         binding.lifecycleOwner = this
         handleSearchWord()
         setDefaultResult()
-        adapter = WantHomeResultAdapter(viewModel, userSession, idSession)
+        adapter = WantHomeResultAdapter(geToDetail, addBookmark, deleteBookmark)
         handlePagingError(adapter)
         binding.rvWanthomeResult.adapter = adapter
         updateAdapter()

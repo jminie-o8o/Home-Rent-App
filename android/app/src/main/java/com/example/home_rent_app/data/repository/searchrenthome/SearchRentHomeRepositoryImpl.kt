@@ -1,6 +1,6 @@
-package com.example.home_rent_app.data.repository.findhome
+package com.example.home_rent_app.data.repository.searchrenthome
 
-import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSource
+import com.example.home_rent_app.data.datasource.searchrenthome.SearchRentHomeDataSource
 import com.example.home_rent_app.data.dto.toRoomSearchResult
 import com.example.home_rent_app.data.model.RoomSearchResult
 import kotlinx.coroutines.flow.Flow
@@ -9,9 +9,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FindHomeRepositoryImpl @Inject constructor(
-    private val dataSource: FindHomeDataSource
-) : FindHomeRepository {
+class SearchRentHomeRepositoryImpl @Inject constructor(
+    private val dataSource: SearchRentHomeDataSource
+) : SearchRentHomeRepository {
 
     override fun getSearchResult(
         page: Int,

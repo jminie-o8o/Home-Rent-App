@@ -6,7 +6,6 @@ import com.example.home_rent_app.data.dto.WantHomeDetailResponseDTO
 import com.example.home_rent_app.data.model.AddWantHomeRequest
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
-import com.example.home_rent_app.data.session.ItemIdSession
 import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.ChatChannel
 import com.example.home_rent_app.util.CoroutineException
@@ -74,11 +73,11 @@ class WantHomeViewModel @Inject constructor(
         }
     }
 
-    suspend fun addWantHome(userId: Int): Int {
+    suspend fun addWantHome(): Int {
         val response = viewModelScope.async(exceptionHandler) {
             val response = wantHomeRepository.addWantHome(
                 AddWantHomeRequest(
-                    userId = userId,
+                    userId = userSession.userId ?: 0,
                     address = location.value.locationName + " " + detailAddress.value,
                     title = title.value,
                     content = detailContents.value,

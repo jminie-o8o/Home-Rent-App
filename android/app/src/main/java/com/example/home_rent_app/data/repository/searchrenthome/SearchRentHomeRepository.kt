@@ -1,9 +1,9 @@
-package com.example.home_rent_app.data.repository.findhome
+package com.example.home_rent_app.data.repository.searchrenthome
 
 import com.example.home_rent_app.data.model.RoomSearchResult
 import kotlinx.coroutines.flow.Flow
 
-interface FindHomeRepository {
+interface SearchRentHomeRepository {
 
     fun getSearchResult(
         page: Int = 0,
