@@ -5,9 +5,9 @@ import com.example.home_rent_app.data.dto.RoomSearchResultDTO
 import com.example.home_rent_app.data.model.BookmarkRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Query
-import retrofit2.http.HTTP
 
 interface FindHomeApi {
 

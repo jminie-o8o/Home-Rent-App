@@ -19,8 +19,7 @@ import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.NaverOauthRequest
 import com.example.home_rent_app.databinding.FragmentNaverWebViewBinding
-import com.example.home_rent_app.ui.LoginActivity
-import com.example.home_rent_app.ui.viewmodel.LoginViewModel
+import com.example.home_rent_app.ui.login.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 

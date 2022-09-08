@@ -8,15 +8,15 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentBookmarkWantHomeBinding
+import com.example.home_rent_app.ui.bookmark.adapter.BookmarkWantHomeAdapter
+import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

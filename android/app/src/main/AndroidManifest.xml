@@ -50,7 +50,7 @@
             android:name=".ui.findhome.FindHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SplashScreenActivity"
+            android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.Splash">
             <intent-filter>
@@ -66,11 +66,11 @@
             android:name=".ui.wanthome.WantHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:windowSoftInputMode="adjustNothing"
             android:exported="true" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true" />
 
         <provider

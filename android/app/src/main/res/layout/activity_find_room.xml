@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.home_rent_app.ui.viewmodel.FindHomeViewModel" />
+            type="com.example.home_rent_app.ui.findhome.viewmodel.FindHomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

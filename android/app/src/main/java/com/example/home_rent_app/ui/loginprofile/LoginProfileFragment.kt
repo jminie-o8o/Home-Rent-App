@@ -20,8 +20,8 @@ import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
-import com.example.home_rent_app.ui.LoginActivity
-import com.example.home_rent_app.ui.viewmodel.LoginViewModel
+import com.example.home_rent_app.ui.login.LoginActivity
+import com.example.home_rent_app.ui.login.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.FileController
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow

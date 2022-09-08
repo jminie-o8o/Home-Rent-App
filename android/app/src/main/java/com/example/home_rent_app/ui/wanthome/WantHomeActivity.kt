@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeBinding
-import com.example.home_rent_app.ui.HomeActivity
-import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
+import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
+import com.example.home_rent_app.ui.wanthome.viewmodel.WantHomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

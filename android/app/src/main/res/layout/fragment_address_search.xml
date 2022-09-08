@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.example.home_rent_app.ui.viewmodel.RentHomeViewModel" />
+            type="com.example.home_rent_app.ui.renthome.viewmodel.RentHomeViewModel" />
 
     </data>
 

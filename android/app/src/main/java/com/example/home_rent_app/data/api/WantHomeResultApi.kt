@@ -1,7 +1,7 @@
 package com.example.home_rent_app.data.api
 
-import com.example.home_rent_app.data.dto.WantHomeResultDTO
 import com.example.home_rent_app.data.dto.AddOrDeleteBookMarkResponseDTO
+import com.example.home_rent_app.data.dto.WantHomeResultDTO
 import com.example.home_rent_app.data.model.BookmarkRequest
 import retrofit2.http.Body
 import retrofit2.http.GET

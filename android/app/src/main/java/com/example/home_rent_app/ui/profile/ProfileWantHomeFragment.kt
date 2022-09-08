@@ -1,21 +1,22 @@
 package com.example.home_rent_app.ui.profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentProfileWantHomeBinding
-import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.home.HomeActivity
+import com.example.home_rent_app.ui.profile.adapter.ProfileWantHomeAdapter
+import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

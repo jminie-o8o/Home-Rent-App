@@ -18,7 +18,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker.*
+import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
+import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.draganddrop.DropHelper
@@ -29,9 +30,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.home_rent_app.BuildConfig
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentPicChoiceBinding
-import com.example.home_rent_app.ui.viewmodel.RentHomeViewModel
-import com.example.home_rent_app.util.*
+import com.example.home_rent_app.ui.renthome.adapter.PicAdapter
+import com.example.home_rent_app.ui.renthome.viewmodel.RentHomeViewModel
 import com.example.home_rent_app.util.Constants.REQUIRED_PERMISSIONS
+import com.example.home_rent_app.util.PicControlListener
+import com.example.home_rent_app.util.UiState
+import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

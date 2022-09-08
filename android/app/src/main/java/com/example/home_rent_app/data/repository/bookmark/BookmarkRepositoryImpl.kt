@@ -2,7 +2,6 @@ package com.example.home_rent_app.data.repository.bookmark
 
 import com.example.home_rent_app.data.api.BookmarkApi
 import com.example.home_rent_app.data.dto.AddOrDeleteBookMarkResponseDTO
-import com.example.home_rent_app.data.dto.GiveBookmarkResponseDTO
 import com.example.home_rent_app.data.dto.WantBookmarkResponseDTO
 import com.example.home_rent_app.data.dto.toRoomSearchResult
 import com.example.home_rent_app.data.model.BookmarkRequest

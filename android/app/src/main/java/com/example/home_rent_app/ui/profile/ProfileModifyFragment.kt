@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.databinding.FragmentProfileModifyBinding
-import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.home.HomeActivity
+import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
 import com.example.home_rent_app.util.*
 import com.example.home_rent_app.util.Constants.REQUIRED_PERMISSIONS
 import com.example.home_rent_app.util.Constants.REQ_GALLERY

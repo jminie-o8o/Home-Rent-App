@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityRenthomeBinding
-import com.example.home_rent_app.ui.viewmodel.RentHomeViewModel
+import com.example.home_rent_app.ui.renthome.viewmodel.RentHomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

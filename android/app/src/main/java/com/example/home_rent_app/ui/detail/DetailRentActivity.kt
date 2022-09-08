@@ -10,7 +10,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityDetailRentBinding
 import com.example.home_rent_app.ui.chatting.RentMessageListActivity
-import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
+import com.example.home_rent_app.ui.detail.adapter.DetailThumbnailAdapter
+import com.example.home_rent_app.ui.detail.adapter.IconAdapter
+import com.example.home_rent_app.ui.detail.viewmodel.DetailHomeViewModel
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted

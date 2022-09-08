@@ -7,7 +7,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.home_rent_app.databinding.ActivityFindRoomBinding
 import com.example.home_rent_app.ui.detail.DetailRentActivity
-import com.example.home_rent_app.ui.viewmodel.FindHomeViewModel
+import com.example.home_rent_app.ui.findhome.adapter.HomeListAdapter
+import com.example.home_rent_app.ui.findhome.viewmodel.FindHomeViewModel
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted

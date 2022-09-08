@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeBinding
-import com.example.home_rent_app.ui.HomeActivity
 import com.example.home_rent_app.ui.findhome.FindHomeActivity
 import com.example.home_rent_app.ui.renthome.RentHomeActivity
 import com.example.home_rent_app.ui.wanthomeresult.WantHomeResultActivity

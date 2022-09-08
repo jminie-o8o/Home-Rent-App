@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.home_rent_app.databinding.FragmentBookmarkBinding
-import com.example.home_rent_app.ui.HomeActivity
+import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
+import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.util.BookMarkViewPagerAdapter
 import com.example.home_rent_app.util.UserSession
 import com.google.android.material.tabs.TabLayoutMediator

@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeDescriptionBinding
-import com.example.home_rent_app.ui.viewmodel.RentHomeViewModel
+import com.example.home_rent_app.ui.renthome.viewmodel.RentHomeViewModel
 import com.example.home_rent_app.util.MoneyFormat
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.repeatOnStarted

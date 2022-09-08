@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentRentHomeDescriptionBinding
 import com.example.home_rent_app.ui.detail.DetailRentActivity
-import com.example.home_rent_app.ui.viewmodel.RentHomeViewModel
+import com.example.home_rent_app.ui.renthome.viewmodel.RentHomeViewModel
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted
 

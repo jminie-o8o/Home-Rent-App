@@ -13,8 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
 import com.example.home_rent_app.ui.dialogfragment.CancelDialogFragment
-import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.ui.wanthome.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.util.ItemIdSession
 import com.example.home_rent_app.util.UserSession
 import dagger.hilt.android.AndroidEntryPoint
