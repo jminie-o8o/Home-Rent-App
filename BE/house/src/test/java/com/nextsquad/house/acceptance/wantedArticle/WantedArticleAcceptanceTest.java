@@ -90,19 +90,19 @@ public class WantedArticleAcceptanceTest {
     }
 
     @Test
-    void id가_1번인_양수글을_상세조회한다() {
+    void id가_7번인_양수글을_상세조회한다() {
         given(documentationSpec)
                 .filter(document("get-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
 
                 .when()
-                .get("/houses/wanted/1")
+                .get("/houses/wanted/7")
 
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
-                .body("id", equalTo(1))
+                .body("id", equalTo(7))
                 .body("user.userId", equalTo(1))
                 .body("user.displayName", equalTo("lee"))
                 .body("user.profileImageUrl", equalTo("lucas.com"))
@@ -118,9 +118,26 @@ public class WantedArticleAcceptanceTest {
                 .body("modifiedAt", equalTo("2022-08-19T02:57:51.892033"))
                 .body("bookmarkCount", equalTo(0))
                 .body("bookmarked", equalTo(false));
-
-
     }
+
+    @Test
+    void id가_1번인_양수글을_삭제한다(){
+        given(documentationSpec)
+                .filter(document("get-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .delete("houses/wanted/1")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("게시글이 삭제되었습니다."));
+    }
+
+
 
 //    @Test // 이렇게 하면 문서까지 예쁘게 작성이 되는데 로그를 가져오는 것이라서 사실상 의미가 없지 않나...
 //    void 양수글을_상세조회한다() {
