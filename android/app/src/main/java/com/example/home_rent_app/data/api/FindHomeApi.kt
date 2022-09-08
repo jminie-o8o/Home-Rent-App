@@ -19,14 +19,4 @@ interface FindHomeApi {
         @Query("sortedBy") sortedBy: String,
         @Query("keyword") searchAddress: String
     ): RoomSearchResultDTO
-
-    @POST("houses/rent/bookmarks")
-    suspend fun addBookmark(
-        @Body bookmarkRequest: BookmarkRequest
-    ): AddOrDeleteBookMarkResponseDTO
-
-    @HTTP(method = "DELETE", path = "houses/rent/bookmarks", hasBody = true)
-    suspend fun deleteBookmark(
-        @Body bookmarkRequest: BookmarkRequest
-    ): AddOrDeleteBookMarkResponseDTO
 }

@@ -8,7 +8,7 @@ import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.util.CoroutineException
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.deleteGiveBookmarkAtView
 import com.example.home_rent_app.util.deleteWantBookmarkAtView
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,8 +26,7 @@ private const val FIRST = 0
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
-    private val bookmarkRepository: BookmarkRepository,
-    private val userSession: UserSession
+    private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
 
     private var page = 1
@@ -56,13 +55,13 @@ class BookmarkViewModel @Inject constructor(
     }
 
     init {
-        getWantHomeResultAtFirstPage(userSession.userId ?: 0)
-        getGiveHomeResultAtFirstPage(userSession.userId ?: 0)
+        getWantHomeResultAtFirstPage()
+        getGiveHomeResultAtFirstPage()
     }
 
-    fun getWantHomeResult(userId: Int) {
+    fun getWantHomeResult() {
         viewModelScope.launch(exceptionHandler) {
-            val response = bookmarkRepository.getWantBookmark(userId, page)
+            val response = bookmarkRepository.getWantBookmark(page)
             if (!response.hasNext) {
                 return@launch
             }
@@ -74,23 +73,23 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-    fun getWantHomeResultAtFirstPage(userId: Int) {
+    fun getWantHomeResultAtFirstPage() {
         viewModelScope.launch {
-            val response = bookmarkRepository.getWantBookmark(userId, FIRST)
+            val response = bookmarkRepository.getWantBookmark(FIRST)
             _wantHomeBookmarkResult.value = response.wantedArticles.toMutableList()
         }
     }
 
-    fun deleteWantHomeBookmark(bookmarkRequest: BookmarkRequest) {
+    fun deleteWantHomeBookmark(articleId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteWantBookmark(bookmarkRequest).code)
-            _wantHomeBookmarkResult.deleteWantBookmarkAtView(bookmarkRequest.articleId)
+            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteWantHomeBookmark(articleId).code)
+            _wantHomeBookmarkResult.deleteWantBookmarkAtView(articleId)
         }
     }
 
-    fun getGiveHomeResult(userId: Int) {
+    fun getRentHomeResult() {
         viewModelScope.launch(exceptionHandler) {
-            val response = bookmarkRepository.getGiveBookmark(userId, page)
+            val response = bookmarkRepository.getGiveBookmark(page)
             if (!response.hasNext) {
                 return@launch
             }
@@ -102,16 +101,16 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-    fun getGiveHomeResultAtFirstPage(userId: Int) {
+    fun getGiveHomeResultAtFirstPage() {
         viewModelScope.launch {
-            val response = bookmarkRepository.getGiveBookmark(userId, FIRST)
+            val response = bookmarkRepository.getGiveBookmark(FIRST)
             _giveHomeBookmarkResult.value = response.rentArticles.toMutableList()
         }
     }
 
     fun deleteGiveHomeBookmark(articleId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteGiveBookmark(BookmarkRequest(userSession.userId ?: 0, articleId)).code)
+            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteRentHomeBookmark(articleId).code)
             _giveHomeBookmarkResult.deleteGiveBookmarkAtView(articleId)
         }
     }

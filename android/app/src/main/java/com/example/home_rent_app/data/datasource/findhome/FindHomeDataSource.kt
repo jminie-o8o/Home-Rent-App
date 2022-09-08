@@ -14,8 +14,4 @@ interface FindHomeDataSource {
         sortedBy: String,
         searchAddress: String
     ): Flow<RoomSearchResultDTO>
-
-    suspend fun addBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO
-
-    suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO
 }

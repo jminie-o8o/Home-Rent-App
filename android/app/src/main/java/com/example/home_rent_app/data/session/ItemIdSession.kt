@@ -1,4 +1,4 @@
-package com.example.home_rent_app.util
+package com.example.home_rent_app.data.session
 
 import javax.inject.Inject
 import javax.inject.Singleton

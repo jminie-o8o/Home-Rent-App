@@ -16,11 +16,8 @@ import com.example.home_rent_app.databinding.FragmentBookmarkGiveHomeBinding
 import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
 import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.searchrenthome.adapter.RentHomeListAdapter
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookmarkRentHomeFragment : Fragment() {
@@ -28,10 +25,6 @@ class BookmarkRentHomeFragment : Fragment() {
     lateinit var binding: FragmentBookmarkGiveHomeBinding
     lateinit var adapter: RentHomeListAdapter
     private val viewModel: BookmarkViewModel by activityViewModels()
-    @Inject
-    lateinit var userSession: UserSession
-    @Inject
-    lateinit var idSession: ItemIdSession
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,7 +67,7 @@ class BookmarkRentHomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getGiveHomeResultAtFirstPage(userSession.userId ?: 0)
+        viewModel.getGiveHomeResultAtFirstPage()
     }
 
     private fun updateAdapter() {
@@ -107,7 +100,7 @@ class BookmarkRentHomeFragment : Fragment() {
                 // 스크롤이 끝에 도달했는지 확인
                 if (lastVisibleItemPosition == itemTotalCount) {
                     // 다음 페이지 불러오기
-                    userSession.userId?.let { viewModel.getGiveHomeResult(it) }
+                    viewModel.getRentHomeResult()
                 }
             }
         })

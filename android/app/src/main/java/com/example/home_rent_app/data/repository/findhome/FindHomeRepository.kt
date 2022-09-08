@@ -14,8 +14,4 @@ interface FindHomeRepository {
         sortedBy: String = "rentFee",
         searchAddress: String
     ): Flow<RoomSearchResult>
-
-    suspend fun addBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO
-
-    suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO
 }

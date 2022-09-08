@@ -22,10 +22,4 @@ class FindHomeDataSourceImpl @Inject constructor(
     ) = flow {
         emit(api.getSearchResult(page, size, availableOnly, sortedBy, searchAddress))
     }.flowOn(Dispatchers.IO)
-
-    override suspend fun addBookmark(bookmarkRequest: BookmarkRequest) =
-        api.addBookmark(bookmarkRequest)
-
-    override suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest) =
-        api.deleteBookmark(bookmarkRequest)
 }

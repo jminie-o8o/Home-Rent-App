@@ -2,7 +2,7 @@ package com.example.home_rent_app.data
 
 import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.token.TokenRepository
-import com.example.home_rent_app.util.AppSession
+import com.example.home_rent_app.data.session.AppSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator

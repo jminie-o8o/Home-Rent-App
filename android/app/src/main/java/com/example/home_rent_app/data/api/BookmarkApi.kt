@@ -7,6 +7,7 @@ import com.example.home_rent_app.data.model.BookmarkRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HTTP
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -25,6 +26,16 @@ interface BookmarkApi {
         @Query("page") page: Int,
         @Query("size") size: Int = 5
     ): RoomSearchResultDTO
+
+    @POST("houses/rent/bookmarks")
+    suspend fun addRentHomeBookmark(
+        @Body bookmarkRequest: BookmarkRequest
+    ): AddOrDeleteBookMarkResponseDTO
+
+    @POST("houses/wanted/bookmarks")
+    suspend fun addWantHomeBookmark(
+        @Body bookmarkRequest: BookmarkRequest
+    ): AddOrDeleteBookMarkResponseDTO
 
     @HTTP(method = "DELETE", path = "houses/wanted/bookmarks", hasBody = true)
     suspend fun deleteWantBookmark(

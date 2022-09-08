@@ -5,7 +5,7 @@ import com.example.home_rent_app.data.datastore.DataStore
 import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.logger
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.models.User

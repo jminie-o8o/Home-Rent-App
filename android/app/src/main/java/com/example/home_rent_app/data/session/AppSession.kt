@@ -1,4 +1,4 @@
-package com.example.home_rent_app.util
+package com.example.home_rent_app.data.session
 
 import com.example.home_rent_app.data.model.JWT
 import javax.inject.Inject

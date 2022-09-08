@@ -10,7 +10,7 @@ import com.example.home_rent_app.databinding.FragmentBookmarkBinding
 import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.util.BookMarkViewPagerAdapter
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,9 +21,6 @@ class BookmarkFragment : Fragment() {
     private val binding: FragmentBookmarkBinding by lazy {
         FragmentBookmarkBinding.inflate(layoutInflater)
     }
-    private val viewModel: BookmarkViewModel by activityViewModels()
-    @Inject
-    lateinit var userSession: UserSession
 
     override fun onCreateView(
         inflater: LayoutInflater,

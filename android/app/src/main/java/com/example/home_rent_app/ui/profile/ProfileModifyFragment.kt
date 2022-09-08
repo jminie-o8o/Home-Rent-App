@@ -18,6 +18,7 @@ import androidx.fragment.app.activityViewModels
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.FragmentProfileModifyBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel

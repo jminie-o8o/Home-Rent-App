@@ -16,8 +16,8 @@ import com.example.home_rent_app.databinding.FragmentProfileRentHomeBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileGiveHomeAdapter
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.ItemIdSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger

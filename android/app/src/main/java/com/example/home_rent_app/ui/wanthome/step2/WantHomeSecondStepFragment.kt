@@ -15,8 +15,8 @@ import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
 import com.example.home_rent_app.ui.dialogfragment.CancelDialogFragment
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
 import com.example.home_rent_app.ui.wanthome.viewmodel.WantHomeViewModel
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.ItemIdSession
+import com.example.home_rent_app.data.session.UserSession
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject

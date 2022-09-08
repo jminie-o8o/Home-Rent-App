@@ -1,24 +1,16 @@
 package com.example.home_rent_app.ui.bookmark.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.data.dto.WantedArticleBookmark
-import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeBookmarkBinding
-import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
-import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
-import javax.inject.Inject
 
-class BookmarkWantHomeAdapter @Inject constructor(
-    private val viewModel: BookmarkViewModel,
-    private val userSession: UserSession,
-    private val itemIdSession: ItemIdSession
+class BookmarkWantHomeAdapter(
+    private val goToDetail: (Int) -> Unit,
+    private val deleteBookmark: (Int) -> Unit
 ) : ListAdapter<WantedArticleBookmark, BookmarkWantHomeAdapter.BookmarkWantHomeViewHolder>(
     BookmarkAdapterDiffCallBack
 ) {
@@ -39,18 +31,11 @@ class BookmarkWantHomeAdapter @Inject constructor(
             binding.bookmarkWantedBookmark = wantedArticleBookmark
             binding.btnLike.isChecked = true
             binding.btnLike.setOnCheckedChangeListener { _, isChecked ->
-                if (!isChecked) deleteBookmark(wantedArticleBookmark)
+                if (!isChecked) deleteBookmark(wantedArticleBookmark.id)
             }
             itemView.setOnClickListener {
-                itemIdSession.itemId = wantedArticleBookmark.id
-                Intent(it.context, WantHomeDetailActivity::class.java).run {
-                    it.context.startActivity(this)
-                }
+                goToDetail(wantedArticleBookmark.id)
             }
-        }
-
-        private fun deleteBookmark(wantedArticleBookmark: WantedArticleBookmark) {
-            viewModel.deleteWantHomeBookmark(BookmarkRequest(userSession.userId ?: 0, wantedArticleBookmark.id))
         }
     }
 }

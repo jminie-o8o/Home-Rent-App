@@ -10,8 +10,8 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
 import com.example.home_rent_app.ui.chatting.WantedMessageListActivity
 import com.example.home_rent_app.ui.wanthome.viewmodel.WantHomeViewModel
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.ItemIdSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted

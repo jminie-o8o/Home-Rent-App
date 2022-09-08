@@ -1,5 +1,7 @@
 package com.example.home_rent_app.di
 
+import com.example.home_rent_app.data.datasource.bookmark.BookmarkDataSource
+import com.example.home_rent_app.data.datasource.bookmark.BookmarkDataSourceImpl
 import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSource
 import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSourceImpl
 import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSource
@@ -65,4 +67,10 @@ abstract class DataSourceModule {
     abstract fun bindMapDataSource(
         mapDataSourceImpl: MapDataSourceImpl
     ): MapDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindBookmarkDataSource(
+        bookmarkDataSourceImpl: BookmarkDataSourceImpl
+    ): BookmarkDataSource
 }

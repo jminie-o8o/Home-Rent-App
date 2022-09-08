@@ -14,7 +14,7 @@ import com.example.home_rent_app.data.dto.WantArticleProfile
 import com.example.home_rent_app.databinding.ItemWanthomeProfileBinding
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
-import com.example.home_rent_app.util.ItemIdSession
+import com.example.home_rent_app.data.session.ItemIdSession
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

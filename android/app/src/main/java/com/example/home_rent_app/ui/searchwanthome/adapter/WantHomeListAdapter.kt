@@ -11,8 +11,8 @@ import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.databinding.ItemWanthomeResultBinding
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.ItemIdSession
+import com.example.home_rent_app.data.session.UserSession
 import javax.inject.Inject
 
 class WantHomeResultAdapter @Inject constructor(

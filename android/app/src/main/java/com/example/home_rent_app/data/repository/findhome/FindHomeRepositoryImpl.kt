@@ -26,13 +26,5 @@ class FindHomeRepositoryImpl @Inject constructor(
                 it.toRoomSearchResult()
             }
     }
-
-    override suspend fun addBookmark(
-        bookmarkRequest: BookmarkRequest
-    ) = dataSource.addBookmark(bookmarkRequest)
-
-    override suspend fun deleteBookmark(
-        bookmarkRequest: BookmarkRequest
-    ) = dataSource.deleteBookmark(bookmarkRequest)
 }
 

@@ -13,8 +13,8 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityHomeBinding
 import com.example.home_rent_app.ui.login.LoginActivity
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
-import com.example.home_rent_app.util.AppSession
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.AppSession
+import com.example.home_rent_app.data.session.UserSession
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

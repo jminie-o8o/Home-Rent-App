@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.home_rent_app.data.api.BookmarkApi
 import com.example.home_rent_app.data.dto.WantedArticleBookmark
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 
 class BookmarkPagingSource(
     private val api: BookmarkApi,

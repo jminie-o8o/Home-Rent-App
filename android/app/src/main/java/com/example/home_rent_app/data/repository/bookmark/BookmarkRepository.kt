@@ -7,11 +7,15 @@ import com.example.home_rent_app.data.model.RoomSearchResult
 
 interface BookmarkRepository {
 
-    suspend fun getWantBookmark(userId: Int, page: Int): WantBookmarkResponseDTO
+    suspend fun getWantBookmark(page: Int): WantBookmarkResponseDTO
 
-    suspend fun getGiveBookmark(userId: Int, page: Int): RoomSearchResult
+    suspend fun getGiveBookmark(page: Int): RoomSearchResult
 
-    suspend fun deleteWantBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO
+    suspend fun addRentHomeBookmark(articleId: Int): AddOrDeleteBookMarkResponseDTO
 
-    suspend fun deleteGiveBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO
+    suspend fun addWantHomeBookmark(articleId: Int): AddOrDeleteBookMarkResponseDTO
+
+    suspend fun deleteRentHomeBookmark(articleId: Int): AddOrDeleteBookMarkResponseDTO
+
+    suspend fun deleteWantHomeBookmark(articleId: Int): AddOrDeleteBookMarkResponseDTO
 }

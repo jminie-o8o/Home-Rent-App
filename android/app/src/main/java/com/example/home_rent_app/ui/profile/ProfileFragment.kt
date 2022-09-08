@@ -16,7 +16,7 @@ import com.example.home_rent_app.databinding.FragmentProfileBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileViewPagerAdapter
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.collectLatestStateFlow
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint

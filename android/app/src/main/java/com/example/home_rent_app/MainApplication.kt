@@ -1,4 +1,4 @@
-package com.example.home_rent_app.util
+package com.example.home_rent_app
 
 import android.app.Application
 import com.example.home_rent_app.BuildConfig

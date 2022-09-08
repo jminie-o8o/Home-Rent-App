@@ -12,9 +12,9 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivitySearchWantHomeBinding
 import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
-import com.example.home_rent_app.util.ItemIdSession
+import com.example.home_rent_app.data.session.ItemIdSession
 import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger

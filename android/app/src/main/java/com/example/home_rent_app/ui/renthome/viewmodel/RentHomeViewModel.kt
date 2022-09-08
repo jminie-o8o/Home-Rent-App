@@ -11,7 +11,7 @@ import com.example.home_rent_app.util.FileController
 import com.example.home_rent_app.util.HouseType
 import com.example.home_rent_app.util.RentType
 import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow

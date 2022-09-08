@@ -9,7 +9,7 @@ import com.example.home_rent_app.data.repository.map.MapRepository
 import com.example.home_rent_app.util.ChatChannel
 import com.example.home_rent_app.util.RENT
 import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler

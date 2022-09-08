@@ -14,8 +14,8 @@ import com.example.home_rent_app.databinding.FragmentProfileWantHomeBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileWantHomeAdapter
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.ItemIdSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
