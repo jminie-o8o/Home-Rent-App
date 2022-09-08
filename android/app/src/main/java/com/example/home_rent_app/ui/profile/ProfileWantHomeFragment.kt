@@ -11,8 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
-import com.example.home_rent_app.data.session.ItemIdSession
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.FragmentProfileWantHomeBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileWantHomeAdapter
@@ -20,19 +18,12 @@ import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileWantHomeFragment : Fragment() {
 
     lateinit var binding: FragmentProfileWantHomeBinding
     lateinit var adapter: ProfileWantHomeAdapter
-
-    @Inject
-    lateinit var userSession: UserSession
-
-    @Inject
-    lateinit var idSession: ItemIdSession
     private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(

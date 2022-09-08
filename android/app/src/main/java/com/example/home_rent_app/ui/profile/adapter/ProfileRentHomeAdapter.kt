@@ -1,7 +1,6 @@
 package com.example.home_rent_app.ui.profile.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.dto.RentArticleProfile
-import com.example.home_rent_app.data.session.ItemIdSession
 import com.example.home_rent_app.databinding.ItemGivehomeProfileBinding
-import com.example.home_rent_app.ui.detail.DetailRentActivity
-import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class ProfileGiveHomeAdapter @Inject constructor(
-    private val viewModel: ProfileViewModel,
-    private val itemIdSession: ItemIdSession,
+    private val goToDetail: (Int) -> Unit,
+    private val deleteWantItem: (Int) -> Unit,
     @ApplicationContext private val context: Context
 ) : ListAdapter<RentArticleProfile, ProfileGiveHomeAdapter.ProfileGiveHomeViewHolder>(
     ProfileGiveAdapterDiffCallBack
@@ -42,10 +38,7 @@ class ProfileGiveHomeAdapter @Inject constructor(
         fun bind(rentArticleProfile: RentArticleProfile) {
             binding.rentArticleProfile = rentArticleProfile
             itemView.setOnClickListener {
-                itemIdSession.itemId = rentArticleProfile.id
-                Intent(it.context, DetailRentActivity::class.java).run {
-                    it.context.startActivity(this)
-                }
+                goToDetail(rentArticleProfile.id)
             }
             binding.btnMoreAction.setOnClickListener {
                 showPopup(it, rentArticleProfile.id)
@@ -71,7 +64,7 @@ class ProfileGiveHomeAdapter @Inject constructor(
         }
 
         private fun delete(id: Int) {
-            viewModel.deleteGiveItem(id)
+            deleteWantItem(id)
         }
     }
 }
