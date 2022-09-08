@@ -17,7 +17,7 @@
     </queries>
 
     <application
-        android:name=".util.MainApplication"
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -44,13 +44,13 @@
             android:name=".ui.chatting.RentMessageListActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.wanthomeresult.WantHomeResultActivity"
+            android:name=".ui.searchwanthome.SearchWantHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.findroom.FindHomeActivity"
+            android:name=".ui.searchrenthome.SearchRentHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SplashScreenActivity"
+            android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.Splash">
             <intent-filter>
@@ -60,17 +60,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.transfer.TransferActivity"
+            android:name=".ui.renthome.RentHomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.wanthome.WantHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:windowSoftInputMode="adjustNothing"
             android:exported="true" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true" />
 
         <provider

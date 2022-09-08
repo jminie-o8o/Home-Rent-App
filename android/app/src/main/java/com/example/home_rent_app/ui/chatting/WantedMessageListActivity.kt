@@ -12,8 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.home_rent_app.databinding.ActivityMessageListWantedBinding
-import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
-import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
+import com.example.home_rent_app.ui.wanthome.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.util.repeatOnStarted
 import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -133,12 +132,14 @@ class WantedMessageListActivity : AppCompatActivity(), MessageListActivity {
 
         binding.tvSampleMessageOne.setOnClickListener { message ->
             message as TextView
-            messageComposerViewModel.sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
+            messageComposerViewModel
+                .sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
         }
 
         binding.tvSampleMessageTwo.setOnClickListener { message ->
             message as TextView
-            messageComposerViewModel.sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
+            messageComposerViewModel
+                .sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
         }
 
         detailWantedViewModel.getWantHomeDetail(requireNotNull(homeId))

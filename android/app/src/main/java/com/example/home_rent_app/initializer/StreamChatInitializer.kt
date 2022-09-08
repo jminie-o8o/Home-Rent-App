@@ -20,7 +20,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.startup.Initializer
 import com.example.home_rent_app.BuildConfig
-import com.example.home_rent_app.ui.LoginActivity
+import com.example.home_rent_app.ui.login.LoginActivity
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.logger.ChatLogLevel
 import io.getstream.chat.android.client.notifications.handler.NotificationConfig

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeDescriptionFragment"
-        android:name="com.example.home_rent_app.ui.transfer.step1.HomeDescriptionFragment"
+        android:name="com.example.home_rent_app.ui.renthome.step1.HomeDescriptionFragment"
         android:label="fragment_first_input"
         tools:layout="@layout/fragment_home_description" >
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/picChoiceFragment"
-        android:name="com.example.home_rent_app.ui.transfer.step2.PicChoiceFragment"
+        android:name="com.example.home_rent_app.ui.renthome.step2.PicChoiceFragment"
         android:label="fragment_pic_choice"
         tools:layout="@layout/fragment_pic_choice" >
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressSearchFragment"
-        android:name="com.example.home_rent_app.ui.transfer.step3.AddressSearchFragment"
+        android:name="com.example.home_rent_app.ui.renthome.step3.AddressSearchFragment"
         android:label="fragment_address_search"
         tools:layout="@layout/fragment_address_search" >
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/rentHomeDescriptionFragment"
-        android:name="com.example.home_rent_app.ui.transfer.step4.RentHomeDescriptionFragment"
+        android:name="com.example.home_rent_app.ui.renthome.step4.RentHomeDescriptionFragment"
         android:label="fragment_rent_home_description"
         tools:layout="@layout/fragment_rent_home_description" >
         <action

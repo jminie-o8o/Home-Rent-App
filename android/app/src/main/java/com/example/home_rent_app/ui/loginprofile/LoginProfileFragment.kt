@@ -20,12 +20,10 @@ import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
-import com.example.home_rent_app.ui.LoginActivity
-import com.example.home_rent_app.ui.viewmodel.LoginViewModel
+import com.example.home_rent_app.ui.login.LoginActivity
+import com.example.home_rent_app.ui.login.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.FileController
-import com.example.home_rent_app.util.UserSession
 import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -37,10 +35,6 @@ class LoginProfileFragment : Fragment() {
     @Inject
     lateinit var fileController: FileController
     private val loginViewModel: LoginViewModel by viewModels()
-    @Inject
-    lateinit var userSession: UserSession
-    private var nickNameFlag = false
-    private var genderFlag = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,7 +74,6 @@ class LoginProfileFragment : Fragment() {
             if (result.resultCode == RESULT_OK) {
                 val imageUri = result.data?.data
                 imageUri?.let {
-                    logger("URI: ${fileController.uriToMultiPart(it)}")
                     this.loginViewModel.getProfileImage(fileController.uriToMultiPart(it))
                     binding.ivLoginProfile.load(it)
                 }
@@ -160,7 +153,7 @@ class LoginProfileFragment : Fragment() {
             imageUrl = it
         }
         // User 정보를 서버에 보내기
-        loginViewModel.setUserProfile(userSession.userId ?: 0, UserProfileRequest(displayName, imageUrl, gender))
+        loginViewModel.setUserProfile(UserProfileRequest(displayName, imageUrl, gender))
     }
 
     private fun addAccount() {
@@ -170,23 +163,6 @@ class LoginProfileFragment : Fragment() {
             val activity = activity as LoginActivity
             activity.moveToHomeActivity()
         }
-    }
-
-    fun nickNameFlagCheck() {
-        collectStateFlow(loginViewModel.nickNameCheck) { nickNameCheck ->
-            nickNameFlag = nickNameCheck
-            flagCheck()
-        }
-    }
-
-    fun genderFlagCheck() {
-        binding.rgChooseSex.setOnCheckedChangeListener { radioGroup, i ->
-
-        }
-    }
-
-    fun flagCheck() {
-        binding.btnLoginProfile.isEnabled = nickNameFlag && genderFlag
     }
 
     companion object {

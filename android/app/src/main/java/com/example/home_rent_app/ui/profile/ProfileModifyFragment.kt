@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,16 +13,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.FragmentProfileModifyBinding
-import com.example.home_rent_app.ui.HomeActivity
-import com.example.home_rent_app.util.*
+import com.example.home_rent_app.ui.home.HomeActivity
+import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
 import com.example.home_rent_app.util.Constants.REQUIRED_PERMISSIONS
 import com.example.home_rent_app.util.Constants.REQ_GALLERY
+import com.example.home_rent_app.util.FileController
+import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -33,8 +36,10 @@ class ProfileModifyFragment : Fragment() {
 
     lateinit var binding: FragmentProfileModifyBinding
     private val profileViewModel: ProfileViewModel by activityViewModels()
+
     @Inject
     lateinit var userSession: UserSession
+
     @Inject
     lateinit var fileController: FileController
 
@@ -43,7 +48,8 @@ class ProfileModifyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_modify, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_profile_modify, container, false)
         binding.vm = profileViewModel
         return binding.root
     }
@@ -173,7 +179,7 @@ class ProfileModifyFragment : Fragment() {
             imageUrl = it
         }
         // User 정보를 서버에 보내기
-        profileViewModel.setUserProfile(userSession.userId ?: 0, UserProfileRequest(displayName, imageUrl, gender))
+        profileViewModel.setUserProfile(UserProfileRequest(displayName, imageUrl, gender))
     }
 
     private fun addAccount() {
@@ -221,7 +227,8 @@ class ProfileModifyFragment : Fragment() {
     }
 
     private fun hideBottomNavigation(boolean: Boolean) {
-        val bottomNavigationView = (activity as HomeActivity).findViewById<BottomNavigationView>(R.id.navigation)
+        val bottomNavigationView =
+            (activity as HomeActivity).findViewById<BottomNavigationView>(R.id.navigation)
         if (boolean) bottomNavigationView.visibility = View.GONE
         else bottomNavigationView.visibility = View.VISIBLE
     }

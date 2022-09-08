@@ -10,7 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.home_rent_app.data.model.AccessToken
 import com.example.home_rent_app.data.model.JWT
 import com.example.home_rent_app.data.model.RefreshToken
-import com.example.home_rent_app.util.AppSession
+import com.example.home_rent_app.data.session.AppSession
 import com.example.home_rent_app.util.Constants
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow

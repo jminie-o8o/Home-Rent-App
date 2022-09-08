@@ -10,7 +10,7 @@ import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.home_rent_app.databinding.ActivityMessageListRentBinding
-import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
+import com.example.home_rent_app.ui.detail.viewmodel.DetailHomeViewModel
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted

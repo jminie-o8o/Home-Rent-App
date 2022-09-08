@@ -10,7 +10,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityDetailRentBinding
 import com.example.home_rent_app.ui.chatting.RentMessageListActivity
-import com.example.home_rent_app.ui.viewmodel.DetailHomeViewModel
+import com.example.home_rent_app.ui.detail.adapter.DetailThumbnailAdapter
+import com.example.home_rent_app.ui.detail.adapter.IconAdapter
+import com.example.home_rent_app.ui.detail.viewmodel.DetailHomeViewModel
 import com.example.home_rent_app.util.UiState
 import com.example.home_rent_app.util.logger
 import com.example.home_rent_app.util.repeatOnStarted
@@ -77,7 +79,8 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    binding.tvPageCount.text = getString(R.string.page_count, position + 1, totalPicSize)
+                    binding.tvPageCount.text =
+                        getString(R.string.page_count, position + 1, totalPicSize)
                 }
             })
 

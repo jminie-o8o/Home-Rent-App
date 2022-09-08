@@ -18,7 +18,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".ui.transfer.step2.PicChoiceFragment">
+                tools:context=".ui.renthome.step2.PicChoiceFragment">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/cg_step"

@@ -16,8 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentWantHomeFirstStepBinding
 import com.example.home_rent_app.ui.dialogfragment.CancelDialogFragment
-import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
-import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.ui.wanthome.viewmodel.WantHomeViewModel
 import com.example.home_rent_app.util.RangeValidator
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker

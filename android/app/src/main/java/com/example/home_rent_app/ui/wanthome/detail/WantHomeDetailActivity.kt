@@ -9,22 +9,19 @@ import androidx.lifecycle.lifecycleScope
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ActivityWantHomeDetailBinding
 import com.example.home_rent_app.ui.chatting.WantedMessageListActivity
-import com.example.home_rent_app.ui.viewmodel.WantHomeViewModel
-import com.example.home_rent_app.util.*
+import com.example.home_rent_app.ui.wanthome.viewmodel.WantHomeViewModel
+import com.example.home_rent_app.util.collectStateFlow
+import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.repeatOnStarted
+import com.example.home_rent_app.util.setLikeClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class WantHomeDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWantHomeDetailBinding
     private val viewModel: WantHomeViewModel by viewModels()
-    @Inject
-    lateinit var idSession: ItemIdSession
-    @Inject
-    lateinit var userSession: UserSession
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +48,15 @@ class WantHomeDetailActivity : AppCompatActivity() {
     }
 
     private fun getWantHomeDetail() {
-        idSession.itemId?.let { viewModel.getWantHomeDetail(it) }
+        val id = intent?.getIntExtra("homeId", -1)
+        if (id != null) {
+            viewModel.getWantHomeDetail(id)
+        }
     }
 
     private fun checkMyItem() {
         collectStateFlow(viewModel.wantHomeDetail) { Response ->
-            if (Response?.user?.userId == userSession.userId) {
+            if (Response?.user?.userId == viewModel.getUserIdFromUserSession()) {
                 binding.btnLike.visibility = View.GONE
                 binding.btnGoChat.visibility = View.GONE
             }
@@ -71,7 +71,12 @@ class WantHomeDetailActivity : AppCompatActivity() {
                     .catch { e ->
                         logger("chat error : ${e.message}")
                     }.collect {
-                        startActivity(WantedMessageListActivity.newIntent(this@WantHomeDetailActivity, it))
+                        startActivity(
+                            WantedMessageListActivity.newIntent(
+                                this@WantHomeDetailActivity,
+                                it
+                            )
+                        )
                         finish()
                     }
             }

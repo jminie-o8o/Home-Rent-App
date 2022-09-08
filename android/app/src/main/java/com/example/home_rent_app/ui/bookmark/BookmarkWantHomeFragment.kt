@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui.bookmark
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +9,15 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentBookmarkWantHomeBinding
-import com.example.home_rent_app.util.ItemIdSession
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.ui.bookmark.adapter.BookmarkWantHomeAdapter
+import com.example.home_rent_app.ui.bookmark.viewmodel.BookmarkViewModel
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookmarkWantHomeFragment : Fragment() {
@@ -26,10 +25,6 @@ class BookmarkWantHomeFragment : Fragment() {
     lateinit var binding: FragmentBookmarkWantHomeBinding
     lateinit var adapter: BookmarkWantHomeAdapter
     private val viewModel: BookmarkViewModel by activityViewModels()
-    @Inject
-    lateinit var userSession: UserSession
-    @Inject
-    lateinit var idSession: ItemIdSession
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,10 +37,21 @@ class BookmarkWantHomeFragment : Fragment() {
         return binding.root
     }
 
+    private val goToDetail: (Int) -> Unit = {
+        // 상세화면 이동
+        val intent = Intent(requireContext(), WantHomeDetailActivity::class.java)
+        intent.putExtra("homeId", it)
+        startActivity(intent)
+    }
+
+    private val deleteBookmark: (Int) -> Unit = {
+        viewModel.deleteWantHomeBookmark(it)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewScrollListener()
-        adapter = BookmarkWantHomeAdapter(viewModel, userSession, idSession)
+        adapter = BookmarkWantHomeAdapter(goToDetail, deleteBookmark)
         binding.rvBookmarkWantHome.adapter = adapter
         updateAdapter()
         deleteBookMarkToast()
@@ -53,7 +59,7 @@ class BookmarkWantHomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getWantHomeResultAtFirstPage(userSession.userId ?: 0)
+        viewModel.getWantHomeResultAtFirstPage()
     }
 
     private fun updateAdapter() {
@@ -81,7 +87,7 @@ class BookmarkWantHomeFragment : Fragment() {
                 // 스크롤이 끝에 도달했는지 확인
                 if (lastVisibleItemPosition == itemTotalCount) {
                     // 다음 페이지 불러오기
-                    userSession.userId?.let { viewModel.getWantHomeResult(it) }
+                    viewModel.getWantHomeResult()
                 }
             }
         })

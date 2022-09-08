@@ -5,7 +5,7 @@ import com.example.home_rent_app.data.datastore.DataStore
 import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.model.KakaoOauthRequest
 import com.example.home_rent_app.data.model.NaverOauthRequest
-import com.example.home_rent_app.util.UserSession
+import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.logger
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.models.User
@@ -31,14 +31,6 @@ class LoginDataSourceImpl @Inject constructor(
     override suspend fun getNaverToken(naverOauthRequest: NaverOauthRequest): OAuthTokenResponse {
         return loginApi.getNaverToken(naverOauthRequest)
     }
-
-//    override suspend fun getKakaoUser(kakaoOauthRequest: KakaoOauthRequest): User {
-//        return loginApi.getKakaoToken(kakaoOauthRequest).toUser()
-//    }
-//
-//    override suspend fun getNaverUser(naverOauthRequest: NaverOauthRequest): User {
-//        return loginApi.getNaverToken(naverOauthRequest).toUser()
-//    }
 
     override suspend fun saveIsLogin() {
         // AccessToken, RefreshToken 이 제대로 들어온 여부를 확인하는 boolean 값

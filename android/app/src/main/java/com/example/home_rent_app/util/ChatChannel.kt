@@ -24,7 +24,11 @@ class ChatChannel @Inject constructor(
             channelType = "messaging",
             channelId = "$homeId-$homeType",
             memberIds = listOf(userId, chatUserID),
-            extraData = mapOf("homeType" to homeType, "homeId" to homeId, "image" to profileImage) // userId 필드 생기면 수정하기
+            extraData = mapOf(
+                "homeType" to homeType,
+                "homeId" to homeId,
+                "image" to profileImage
+            ) // userId 필드 생기면 수정하기
         ).await()
 
         result.onSuccessSuspend {

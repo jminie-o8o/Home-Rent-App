@@ -4,22 +4,28 @@ import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepositoryImpl
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.detail.DetailRepositoryImpl
-import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
-import com.example.home_rent_app.data.repository.findroom.FindRoomRepositoryImpl
+import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepository
+import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepositoryImpl
+import com.example.home_rent_app.data.repository.login.LoginRepository
+import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl
+import com.example.home_rent_app.data.repository.loginProfile.LoginProfileRepository
+import com.example.home_rent_app.data.repository.loginProfile.LoginProfileRepositoryImpl
 import com.example.home_rent_app.data.repository.map.MapRepository
 import com.example.home_rent_app.data.repository.map.MapRepositoryImpl
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
 import com.example.home_rent_app.data.repository.profile.ProfileRepositoryImpl
 import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepositoryImpl
+import com.example.home_rent_app.data.repository.renthome.RentHomeRepository
+import com.example.home_rent_app.data.repository.renthome.RentHomeRepositoryImpl
+import com.example.home_rent_app.data.repository.searchrenthome.SearchRentHomeRepository
+import com.example.home_rent_app.data.repository.searchrenthome.SearchRentHomeRepositoryImpl
+import com.example.home_rent_app.data.repository.searchwanthome.SearchWantHomeRepository
+import com.example.home_rent_app.data.repository.searchwanthome.SearchWantHomeRepositoryImpl
 import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.data.repository.token.TokenRepositoryImpl
-import com.example.home_rent_app.data.repository.transfer.TransferRepository
-import com.example.home_rent_app.data.repository.transfer.TransferRepositoryImpl
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepositoryImpl
-import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
-import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -32,21 +38,33 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
+    abstract fun bindLoginRepository(
+        loginRepositoryImpl: LoginRepositoryImpl
+    ): LoginRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindLoginProfileRepository(
+        loginProfileRepositoryImpl: LoginProfileRepositoryImpl
+    ): LoginProfileRepository
+
+    @Singleton
+    @Binds
     abstract fun bindTransferRepository(
-        transferRepositoryImpl: TransferRepositoryImpl
-    ): TransferRepository
+        transferRepositoryImpl: RentHomeRepositoryImpl
+    ): RentHomeRepository
 
     @Singleton
     @Binds
     abstract fun bindWantHomeResultRepository(
-        wantHomeResultRepositoryImpl: WantHomeResultRepositoryImpl
-    ): WantHomeResultRepository
+        wantHomeResultRepositoryImpl: SearchWantHomeRepositoryImpl
+    ): SearchWantHomeRepository
 
     @Singleton
     @Binds
     abstract fun bindRoomFindRepository(
-        findRoomRepositoryImpl: FindRoomRepositoryImpl
-    ): FindRoomRepository
+        findRoomRepositoryImpl: SearchRentHomeRepositoryImpl
+    ): SearchRentHomeRepository
 
     @Singleton
     @Binds
@@ -89,4 +107,10 @@ abstract class RepositoryModule {
     abstract fun bindWantHomeProfileRepository(
         profileRepositoryImpl: ProfileRepositoryImpl
     ): ProfileRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindImageUrlRepository(
+        imageUrlRepositoryImpl: ImageUrlRepositoryImpl
+    ): ImageUrlRepository
 }

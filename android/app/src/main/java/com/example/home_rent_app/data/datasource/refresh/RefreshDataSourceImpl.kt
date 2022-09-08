@@ -2,9 +2,9 @@ package com.example.home_rent_app.data.datasource.refresh
 
 import android.content.Context
 import com.example.home_rent_app.data.api.TokenRefreshApi
-import com.example.home_rent_app.data.dto.OAuthTokenResponse
 import com.example.home_rent_app.data.datastore.DataStore
-import com.example.home_rent_app.ui.LoginActivity
+import com.example.home_rent_app.data.dto.OAuthTokenResponse
+import com.example.home_rent_app.ui.login.LoginActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

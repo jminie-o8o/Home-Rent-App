@@ -13,10 +13,6 @@ interface LoginDataSource {
 
     suspend fun getNaverToken(naverOauthRequest: NaverOauthRequest): OAuthTokenResponse
 
-//    suspend fun getKakaoUser(kakaoOauthRequest: KakaoOauthRequest): User
-//
-//    suspend fun getNaverUser(naverOauthRequest: NaverOauthRequest): User
-
     // DataStore
 
     suspend fun saveIsLogin()
@@ -30,8 +26,6 @@ interface LoginDataSource {
     suspend fun saveProfileImage(image: String?)
 
     suspend fun saveGender(gender: String?)
-
-//    suspend fun getUserInfo(): User
 
     fun getUserId(): Flow<Preferences>
 

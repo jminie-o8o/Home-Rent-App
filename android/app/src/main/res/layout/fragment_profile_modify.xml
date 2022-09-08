@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.home_rent_app.ui.profile.ProfileViewModel" />
+            type="com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
