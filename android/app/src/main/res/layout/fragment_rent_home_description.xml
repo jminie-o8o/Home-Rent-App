@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.home_rent_app.ui.viewmodel.TransferViewModel" />
+            type="com.example.home_rent_app.ui.viewmodel.RentHomeViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -16,7 +16,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.transfer.step4.RentHomeDescriptionFragment">
+            tools:context=".ui.renthome.step4.RentHomeDescriptionFragment">
 
             <TextView
                 android:id="@+id/tv_detail_label"

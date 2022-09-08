@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.home_rent_app.ui.viewmodel.TransferViewModel" />
+            type="com.example.home_rent_app.ui.viewmodel.RentHomeViewModel" />
 
     </data>
 
@@ -14,7 +14,7 @@
         android:id="@+id/ns_home_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.transfer.step1.HomeDescriptionFragment">
+        tools:context=".ui.renthome.step1.HomeDescriptionFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -4,8 +4,8 @@ import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.data.repository.bookmark.BookmarkRepositoryImpl
 import com.example.home_rent_app.data.repository.detail.DetailRepository
 import com.example.home_rent_app.data.repository.detail.DetailRepositoryImpl
-import com.example.home_rent_app.data.repository.findroom.FindRoomRepository
-import com.example.home_rent_app.data.repository.findroom.FindRoomRepositoryImpl
+import com.example.home_rent_app.data.repository.findhome.FindHomeRepository
+import com.example.home_rent_app.data.repository.findhome.FindHomeRepositoryImpl
 import com.example.home_rent_app.data.repository.map.MapRepository
 import com.example.home_rent_app.data.repository.map.MapRepositoryImpl
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
@@ -14,8 +14,8 @@ import com.example.home_rent_app.data.repository.refresh.RefreshRepository
 import com.example.home_rent_app.data.repository.refresh.RefreshRepositoryImpl
 import com.example.home_rent_app.data.repository.token.TokenRepository
 import com.example.home_rent_app.data.repository.token.TokenRepositoryImpl
-import com.example.home_rent_app.data.repository.transfer.TransferRepository
-import com.example.home_rent_app.data.repository.transfer.TransferRepositoryImpl
+import com.example.home_rent_app.data.repository.renthome.RentHomeRepository
+import com.example.home_rent_app.data.repository.renthome.RentHomeRepositoryImpl
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepository
 import com.example.home_rent_app.data.repository.wanthome.WantHomeRepositoryImpl
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
@@ -33,8 +33,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindTransferRepository(
-        transferRepositoryImpl: TransferRepositoryImpl
-    ): TransferRepository
+        transferRepositoryImpl: RentHomeRepositoryImpl
+    ): RentHomeRepository
 
     @Singleton
     @Binds
@@ -45,8 +45,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindRoomFindRepository(
-        findRoomRepositoryImpl: FindRoomRepositoryImpl
-    ): FindRoomRepository
+        findRoomRepositoryImpl: FindHomeRepositoryImpl
+    ): FindHomeRepository
 
     @Singleton
     @Binds

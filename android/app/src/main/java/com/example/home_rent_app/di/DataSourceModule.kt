@@ -2,8 +2,8 @@ package com.example.home_rent_app.di
 
 import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSource
 import com.example.home_rent_app.data.datasource.detailHome.DetailHomeDataSourceImpl
-import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSource
-import com.example.home_rent_app.data.datasource.findroom.FindRoomDataSourceImpl
+import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSource
+import com.example.home_rent_app.data.datasource.findhome.FindHomeDataSourceImpl
 import com.example.home_rent_app.data.datasource.login.LoginDataSource
 import com.example.home_rent_app.data.datasource.login.LoginDataSourceImpl
 import com.example.home_rent_app.data.datasource.map.MapDataSource
@@ -12,8 +12,8 @@ import com.example.home_rent_app.data.datasource.refresh.RefreshDataSource
 import com.example.home_rent_app.data.datasource.refresh.RefreshDataSourceImpl
 import com.example.home_rent_app.data.datasource.token.TokenDataSource
 import com.example.home_rent_app.data.datasource.token.TokenDataSourceImpl
-import com.example.home_rent_app.data.datasource.transfer.TransferDataSource
-import com.example.home_rent_app.data.datasource.transfer.TransferDataSourceImpl
+import com.example.home_rent_app.data.datasource.renthome.RentHomeDataSource
+import com.example.home_rent_app.data.datasource.renthome.RentHomeDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,14 +27,14 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindTransferRDataSource(
-        transferDataSourceImpl: TransferDataSourceImpl
-    ): TransferDataSource
+        transferDataSourceImpl: RentHomeDataSourceImpl
+    ): RentHomeDataSource
 
     @Singleton
     @Binds
     abstract fun bindRoomFindDataSource(
-        findRoomDataSourceImpl: FindRoomDataSourceImpl
-    ): FindRoomDataSource
+        findRoomDataSourceImpl: FindHomeDataSourceImpl
+    ): FindHomeDataSource
 
     @Singleton
     @Binds

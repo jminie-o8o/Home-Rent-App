@@ -6,14 +6,14 @@
     <data>
         <variable
             name="vm"
-            type="com.example.home_rent_app.ui.viewmodel.FindRoomViewModel" />
+            type="com.example.home_rent_app.ui.viewmodel.FindHomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clo_find_room_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.findroom.FindHomeActivity">
+        tools:context=".ui.findhome.FindHomeActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/alo_appbar_layout"
