@@ -56,7 +56,7 @@ fun setRoundImage(imageView: ImageView, imageUrl: String?) {
 
 @BindingAdapter("deleteCheck")
 fun setDeleteView(textView: TextView, delete: Boolean) {
-    if(delete) {
+    if (delete) {
         textView.apply {
             visibility = View.VISIBLE
             text = "✓삭제됨"

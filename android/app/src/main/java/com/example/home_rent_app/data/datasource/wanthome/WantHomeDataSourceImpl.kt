@@ -8,9 +8,11 @@ import javax.inject.Inject
 
 class WantHomeDataSourceImpl @Inject constructor(
     private val api: AddWantHomeApi
-): WantHomeDataSource {
+) : WantHomeDataSource {
 
-    override suspend fun addWantHome(addWantHomeRequest: AddWantHomeRequest): AddWantHomeResponseDTO {
+    override suspend fun addWantHome(
+        addWantHomeRequest: AddWantHomeRequest
+    ): AddWantHomeResponseDTO {
         return api.addWantHome(addWantHomeRequest)
     }
 

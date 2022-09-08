@@ -132,12 +132,14 @@ class WantedMessageListActivity : AppCompatActivity(), MessageListActivity {
 
         binding.tvSampleMessageOne.setOnClickListener { message ->
             message as TextView
-            messageComposerViewModel.sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
+            messageComposerViewModel
+                .sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
         }
 
         binding.tvSampleMessageTwo.setOnClickListener { message ->
             message as TextView
-            messageComposerViewModel.sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
+            messageComposerViewModel
+                .sendMessage(messageComposerViewModel.buildNewMessage(message.text.toString()))
         }
 
         detailWantedViewModel.getWantHomeDetail(requireNotNull(homeId))

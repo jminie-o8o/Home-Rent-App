@@ -26,4 +26,3 @@ class SearchRentHomeRepositoryImpl @Inject constructor(
             }
     }
 }
-

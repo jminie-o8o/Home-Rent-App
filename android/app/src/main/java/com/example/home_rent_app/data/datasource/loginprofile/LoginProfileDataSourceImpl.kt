@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class LoginProfileDataSourceImpl @Inject constructor(
     private val api: LoginProfileApi
-): LoginProfileDataSource {
+) : LoginProfileDataSource {
 
     override suspend fun checkNickName(nickName: String): NickNameCheckDTO {
         return api.checkNickName(nickName)

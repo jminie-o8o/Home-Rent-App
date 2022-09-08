@@ -68,11 +68,17 @@ class ProfileWantHomeAdapter @Inject constructor(
 }
 
 object ProfileWantAdapterDiffCallBack : DiffUtil.ItemCallback<WantArticleProfile>() {
-    override fun areItemsTheSame(oldItem: WantArticleProfile, newItem: WantArticleProfile): Boolean {
+    override fun areItemsTheSame(
+        oldItem: WantArticleProfile,
+        newItem: WantArticleProfile
+    ): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: WantArticleProfile, newItem: WantArticleProfile): Boolean {
+    override fun areContentsTheSame(
+        oldItem: WantArticleProfile,
+        newItem: WantArticleProfile
+    ): Boolean {
         return oldItem == newItem
     }
 }

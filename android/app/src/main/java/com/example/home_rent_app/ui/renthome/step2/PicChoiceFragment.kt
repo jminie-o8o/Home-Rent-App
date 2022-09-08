@@ -56,9 +56,17 @@ class PicChoiceFragment : Fragment(), PicControlListener {
         ) { isGranted ->
             val list = isGranted.filter { !it.value }.map { it.key }.toList()
 
-            if(list.isNotEmpty()) {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), list[0])) {
-                    Toast.makeText(requireContext(), "권한 설정을 하지 않으면 어플을 사용할 수 없습니다.", Toast.LENGTH_SHORT)
+            if (list.isNotEmpty()) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        list[0]
+                    )
+                ) {
+                    Toast.makeText(
+                        requireContext(),
+                        "권한 설정을 하지 않으면 어플을 사용할 수 없습니다.",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         .setData(Uri.parse("package:" + BuildConfig.APPLICATION_ID))
@@ -66,7 +74,6 @@ class PicChoiceFragment : Fragment(), PicControlListener {
                 }
             }
         }
-
 
     private val albumLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -176,6 +183,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
             }
         }
     }
+
     private fun setPictureObserver() {
         repeatOnStarted {
             viewModel.picture.collect {
@@ -206,15 +214,16 @@ class PicChoiceFragment : Fragment(), PicControlListener {
 
     private fun setUploadButton() {
         binding.cvUploadPic.setOnClickListener {
-            if(
+            if (
                 REQUIRED_PERMISSIONS.all {
                     logger("REQUIRED_PERMISSIONS : $it")
                     checkSelfPermission(requireContext(), it) == PERMISSION_GRANTED
                 }
             ) {
-                val intent = Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-                    type = "image/*"
-                }
+                val intent =
+                    Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+                        type = "image/*"
+                    }
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                 albumLauncher.launch(intent)
             } else {

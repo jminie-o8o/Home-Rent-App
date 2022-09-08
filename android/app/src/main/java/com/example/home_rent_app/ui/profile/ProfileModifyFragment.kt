@@ -36,8 +36,10 @@ class ProfileModifyFragment : Fragment() {
 
     lateinit var binding: FragmentProfileModifyBinding
     private val profileViewModel: ProfileViewModel by activityViewModels()
+
     @Inject
     lateinit var userSession: UserSession
+
     @Inject
     lateinit var fileController: FileController
 
@@ -46,7 +48,8 @@ class ProfileModifyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_modify, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_profile_modify, container, false)
         binding.vm = profileViewModel
         return binding.root
     }
@@ -224,7 +227,8 @@ class ProfileModifyFragment : Fragment() {
     }
 
     private fun hideBottomNavigation(boolean: Boolean) {
-        val bottomNavigationView = (activity as HomeActivity).findViewById<BottomNavigationView>(R.id.navigation)
+        val bottomNavigationView =
+            (activity as HomeActivity).findViewById<BottomNavigationView>(R.id.navigation)
         if (boolean) bottomNavigationView.visibility = View.GONE
         else bottomNavigationView.visibility = View.VISIBLE
     }

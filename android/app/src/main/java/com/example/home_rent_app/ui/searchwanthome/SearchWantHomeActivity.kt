@@ -12,7 +12,6 @@ import androidx.paging.LoadState
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.databinding.ActivitySearchWantHomeBinding
-import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.searchwanthome.viewmodel.SearchWantHomeViewModel
 import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.UiState
@@ -66,7 +65,7 @@ class SearchWantHomeActivity : AppCompatActivity() {
     private fun handleSearchWord() {
         binding.etWantHome.addTextChangedListener { text ->
             if (text != null) viewModel.handleSearchWork(text.toString())
-            logger("로그 : ${text.toString()}")
+            logger("로그 : $text")
         }
     }
 
@@ -92,7 +91,7 @@ class SearchWantHomeActivity : AppCompatActivity() {
 
     private fun setDefaultResult() {
         collectStateFlow(viewModel.searchWord) { keyword ->
-            logger("로그 keyword: ${keyword}")
+            logger("로그 keyword: $keyword")
             viewModel.getWantHomeResult(
                 WantHomeResultRequest(
                     keyword,

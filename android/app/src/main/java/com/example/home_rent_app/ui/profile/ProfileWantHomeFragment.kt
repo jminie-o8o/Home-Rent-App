@@ -27,8 +27,10 @@ class ProfileWantHomeFragment : Fragment() {
 
     lateinit var binding: FragmentProfileWantHomeBinding
     lateinit var adapter: ProfileWantHomeAdapter
+
     @Inject
     lateinit var userSession: UserSession
+
     @Inject
     lateinit var idSession: ItemIdSession
     private val viewModel: ProfileViewModel by activityViewModels()
@@ -38,7 +40,8 @@ class ProfileWantHomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_want_home, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_profile_want_home, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -81,7 +84,8 @@ class ProfileWantHomeFragment : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val lastVisibleItemPosition =
-                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!
+                        .findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
 
                 val itemTotalCount = recyclerView.adapter!!.itemCount - 1 // RecyclerView Item의 개수
                 // 스크롤이 끝에 도달했는지 확인

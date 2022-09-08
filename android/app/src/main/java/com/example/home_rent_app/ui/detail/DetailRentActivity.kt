@@ -79,7 +79,8 @@ class DetailRentActivity : AppCompatActivity(), OnMapReadyCallback {
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    binding.tvPageCount.text = getString(R.string.page_count, position + 1, totalPicSize)
+                    binding.tvPageCount.text =
+                        getString(R.string.page_count, position + 1, totalPicSize)
                 }
             })
 

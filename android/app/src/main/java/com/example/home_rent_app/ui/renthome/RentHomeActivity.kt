@@ -26,7 +26,9 @@ class RentHomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_renthome)
         binding.lifecycleOwner = this
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view_in_transfer) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager
+                .findFragmentById(R.id.fragment_container_view_in_transfer) as NavHostFragment
         navController = navHostFragment.navController
 
         setNavigationIconClick()

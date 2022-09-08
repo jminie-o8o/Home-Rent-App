@@ -22,9 +22,12 @@ class CancelDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cancel_dialog, container, false)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // 다이얼로그의 곡선 주변에 배경색을 맞춰주는 코드
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_cancel_dialog, container, false)
+        dialog?.window
+            ?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // 다이얼로그의 곡선 주변에 배경색을 맞춰주는 코드
+        dialog?.window
+            ?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.setCanceledOnTouchOutside(false) // 다이얼로그 외부의 영역 터치 시 취소 불가능
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root

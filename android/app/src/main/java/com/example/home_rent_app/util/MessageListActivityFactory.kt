@@ -13,7 +13,12 @@ class MessageListActivityFactory() {
         fun create(context: Context, channel: Channel) {
             when (channel.extraData["homeType"].toString()) {
                 RENT -> context.startActivity(RentMessageListActivity.newIntent(context, channel))
-                WANTED -> context.startActivity(WantedMessageListActivity.newIntent(context, channel))
+                WANTED -> context.startActivity(
+                    WantedMessageListActivity.newIntent(
+                        context,
+                        channel
+                    )
+                )
             }
         }
     }

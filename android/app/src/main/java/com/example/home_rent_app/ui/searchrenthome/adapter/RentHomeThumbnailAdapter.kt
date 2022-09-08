@@ -12,9 +12,10 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.ItemThumbnailBinding
 import com.example.home_rent_app.util.logger
 
-class RentHomeThumbnailAdapter : ListAdapter<String, RentHomeThumbnailAdapter.HomeThumbnailViewHolder>(
-    HomeThumbnailDiffUtil
-) {
+class RentHomeThumbnailAdapter :
+    ListAdapter<String, RentHomeThumbnailAdapter.HomeThumbnailViewHolder>(
+        HomeThumbnailDiffUtil
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeThumbnailViewHolder {
         return HomeThumbnailViewHolder(
@@ -26,7 +27,9 @@ class RentHomeThumbnailAdapter : ListAdapter<String, RentHomeThumbnailAdapter.Ho
         holder.bind(getItem(position))
     }
 
-    inner class HomeThumbnailViewHolder(private val binding: ItemThumbnailBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class HomeThumbnailViewHolder(
+        private val binding: ItemThumbnailBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(imageUrl: String) {
             logger("imageUrl : $imageUrl")

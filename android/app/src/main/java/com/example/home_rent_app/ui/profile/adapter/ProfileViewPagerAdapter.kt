@@ -6,7 +6,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.home_rent_app.ui.profile.ProfileRentHomeFragment
 import com.example.home_rent_app.ui.profile.ProfileWantHomeFragment
 
-class ProfileViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class ProfileViewPagerAdapter(
+    fragmentActivity: FragmentActivity
+) : FragmentStateAdapter(fragmentActivity) {
     companion object {
         const val NUM_PAGE = 2
     }

@@ -17,7 +17,7 @@ class ProfileDataSourceImpl @Inject constructor(
     private val api: ProfileApi,
     private val logoutApi: LogoutApi,
     private val dataStore: DataStore
-): ProfileDataSource {
+) : ProfileDataSource {
 
     override suspend fun getUserInfo(userId: Int): GetUserInfoDTO {
         return api.getUserInfo(userId)
@@ -25,7 +25,6 @@ class ProfileDataSourceImpl @Inject constructor(
 
     override suspend fun getGiveHomeProfileResult(userId: Int, page: Int): GiveHomeProfileDTO {
         return api.getGiveHomeProfileResult(userId, page)
-
     }
 
     override suspend fun getWantHomeProfileResult(userId: Int, page: Int): WantHomeProfileDTO {

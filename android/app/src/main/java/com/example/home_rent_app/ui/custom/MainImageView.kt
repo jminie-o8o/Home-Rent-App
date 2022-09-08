@@ -29,7 +29,13 @@ class MainImageView(context: Context, attributeSet: AttributeSet) :
 
         val rectHeight = height * 0.7
 
-        canvas?.drawRect(0f, rectHeight.toFloat(), width.toFloat(), height.toFloat(), backgroundPaint)
+        canvas?.drawRect(
+            0f,
+            rectHeight.toFloat(),
+            width.toFloat(),
+            height.toFloat(),
+            backgroundPaint
+        )
         canvas?.drawText("대표사진", textX, textY, textPaint)
     }
 }

@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class ImageUrlDataSourceImpl @Inject constructor(
     private val api: ImageUrlApi
-): ImageUrlDataSource {
+) : ImageUrlDataSource {
 
     override fun getImageUrl(list: List<MultipartBody.Part>): Flow<ImageUrl> {
         return flow {

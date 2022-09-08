@@ -6,7 +6,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.home_rent_app.ui.bookmark.BookmarkRentHomeFragment
 import com.example.home_rent_app.ui.bookmark.BookmarkWantHomeFragment
 
-class BookMarkViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class BookMarkViewPagerAdapter(
+    fragmentActivity: FragmentActivity
+) : FragmentStateAdapter(fragmentActivity) {
     companion object {
         const val NUM_PAGE = 2
     }

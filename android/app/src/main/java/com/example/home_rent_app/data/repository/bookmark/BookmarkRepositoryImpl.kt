@@ -15,30 +15,51 @@ class BookmarkRepositoryImpl @Inject constructor(
 ) : BookmarkRepository {
 
     override suspend fun getWantBookmark(page: Int):
-            WantBookmarkResponseDTO {
+        WantBookmarkResponseDTO {
         return bookmarkDataSource.getWantBookmark(userSession.userId ?: 0, page)
     }
 
     override suspend fun getGiveBookmark(page: Int):
-            RoomSearchResult {
-        return bookmarkDataSource.getGiveBookmark(userSession.userId ?: 0, page).toRoomSearchResult()
+        RoomSearchResult {
+        return bookmarkDataSource.getGiveBookmark(userSession.userId ?: 0, page)
+            .toRoomSearchResult()
     }
 
     override suspend fun addRentHomeBookmark(articleId: Int): AddOrDeleteBookMarkResponseDTO {
-        return bookmarkDataSource.addRentHomeBookmark(BookmarkRequest(userSession.userId ?: 0, articleId))
+        return bookmarkDataSource.addRentHomeBookmark(
+            BookmarkRequest(
+                userSession.userId ?: 0,
+                articleId
+            )
+        )
     }
 
     override suspend fun addWantHomeBookmark(articleId: Int): AddOrDeleteBookMarkResponseDTO {
-        return bookmarkDataSource.addWantHomeBookmark(BookmarkRequest(userSession.userId ?: 0, articleId))
+        return bookmarkDataSource.addWantHomeBookmark(
+            BookmarkRequest(
+                userSession.userId ?: 0,
+                articleId
+            )
+        )
     }
 
     override suspend fun deleteRentHomeBookmark(articleId: Int):
-            AddOrDeleteBookMarkResponseDTO {
-        return bookmarkDataSource.deleteRentBookmark(BookmarkRequest(userSession.userId ?: 0, articleId))
+        AddOrDeleteBookMarkResponseDTO {
+        return bookmarkDataSource.deleteRentBookmark(
+            BookmarkRequest(
+                userSession.userId ?: 0,
+                articleId
+            )
+        )
     }
 
     override suspend fun deleteWantHomeBookmark(articleId: Int):
-            AddOrDeleteBookMarkResponseDTO {
-        return bookmarkDataSource.deleteWantBookmark(BookmarkRequest(userSession.userId ?: 0, articleId))
+        AddOrDeleteBookMarkResponseDTO {
+        return bookmarkDataSource.deleteWantBookmark(
+            BookmarkRequest(
+                userSession.userId ?: 0,
+                articleId
+            )
+        )
     }
 }

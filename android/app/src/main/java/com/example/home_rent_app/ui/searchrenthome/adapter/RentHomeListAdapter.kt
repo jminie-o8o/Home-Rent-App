@@ -16,14 +16,22 @@ class RentHomeListAdapter(
 ) : ListAdapter<Article, RentHomeListAdapter.HomeListViewHolder>(TempDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeListViewHolder {
-        return HomeListViewHolder(ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return HomeListViewHolder(
+            ItemHomeListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: HomeListViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class HomeListViewHolder(private val binding: ItemHomeListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class HomeListViewHolder(
+        private val binding: ItemHomeListBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Article) {
             item.houseImages.forEach {

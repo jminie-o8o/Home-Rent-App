@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class BookmarkDataSourceImpl @Inject constructor(
     private val api: BookmarkApi
-): BookmarkDataSource {
+) : BookmarkDataSource {
 
     override suspend fun getWantBookmark(userId: Int, page: Int): WantBookmarkResponseDTO {
         return api.getWantBookmarkResult(userId, page)

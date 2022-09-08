@@ -14,20 +14,27 @@ import javax.inject.Inject
 
 class SearchWantHomeDataSourceImpl @Inject constructor(
     private val api: SearchWantHomeApi
-): SearchWantHomeDataSource {
-    override suspend fun getResult(wantHomeResultRequest: WantHomeResultRequest): Flow<PagingData<WantedArticle>> {
-        val pagingSourceFactory = { WantHomePagingSource(api, wantHomeResultRequest) }
+) : SearchWantHomeDataSource {
+    override suspend fun getResult(
+        wantHomeResultRequest: WantHomeResultRequest
+    ): Flow<PagingData<WantedArticle>> {
+        val pagingSourceFactory =
+            { WantHomePagingSource(api, wantHomeResultRequest) }
         return Pager(
             config = PagingConfig(pageSize = 5, enablePlaceholders = false),
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }
 
-    override suspend fun addBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO {
+    override suspend fun addBookmark(
+        bookmarkRequest: BookmarkRequest
+    ): AddOrDeleteBookMarkResponseDTO {
         return api.addBookmark(bookmarkRequest)
     }
 
-    override suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): AddOrDeleteBookMarkResponseDTO {
+    override suspend fun deleteBookmark(
+        bookmarkRequest: BookmarkRequest
+    ): AddOrDeleteBookMarkResponseDTO {
         return api.deleteBookmark(bookmarkRequest)
     }
 }
