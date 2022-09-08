@@ -58,6 +58,7 @@ class SearchWantHomeActivity : AppCompatActivity() {
     private fun handleSearchWord() {
         binding.etWantHome.addTextChangedListener { text ->
             if (text != null) viewModel.handleSearchWork(text.toString())
+            logger("로그 : ${text.toString()}")
         }
     }
 
@@ -83,6 +84,7 @@ class SearchWantHomeActivity : AppCompatActivity() {
 
     private fun setDefaultResult() {
         collectStateFlow(viewModel.searchWord) { keyword ->
+            logger("로그 keyword: ${keyword}")
             viewModel.getWantHomeResult(
                 WantHomeResultRequest(
                     keyword,

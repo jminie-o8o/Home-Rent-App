@@ -8,6 +8,10 @@ import com.example.home_rent_app.data.repository.findhome.FindHomeRepository
 import com.example.home_rent_app.data.repository.findhome.FindHomeRepositoryImpl
 import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepository
 import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepositoryImpl
+import com.example.home_rent_app.data.repository.login.LoginRepository
+import com.example.home_rent_app.data.repository.login.LoginRepositoryImpl
+import com.example.home_rent_app.data.repository.loginProfile.LoginProfileRepository
+import com.example.home_rent_app.data.repository.loginProfile.LoginProfileRepositoryImpl
 import com.example.home_rent_app.data.repository.map.MapRepository
 import com.example.home_rent_app.data.repository.map.MapRepositoryImpl
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
@@ -31,6 +35,18 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
+    @Singleton
+    @Binds
+    abstract fun bindLoginRepository(
+        loginRepositoryImpl: LoginRepositoryImpl
+    ): LoginRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindLoginProfileRepository(
+        loginProfileRepositoryImpl: LoginProfileRepositoryImpl
+    ): LoginProfileRepository
 
     @Singleton
     @Binds

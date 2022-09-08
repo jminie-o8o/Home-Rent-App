@@ -10,7 +10,7 @@ import com.example.home_rent_app.data.session.ItemIdSession
 import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.ChatChannel
 import com.example.home_rent_app.util.CoroutineException
-import com.example.home_rent_app.util.Location
+import com.example.home_rent_app.util.type.Location
 import com.example.home_rent_app.util.WANTED
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -4,6 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.example.home_rent_app.R
+import com.example.home_rent_app.util.type.Location
 import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter("locationTypeFilter")

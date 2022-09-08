@@ -18,7 +18,6 @@ import com.example.home_rent_app.databinding.FragmentProfileRentHomeBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileGiveHomeAdapter
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
-import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
@@ -95,7 +94,7 @@ class ProfileRentHomeFragment : Fragment() {
     }
 
     private fun observeMessage(context: Context) {
-        collectLatestStateFlow(viewModel.logoutMessage) {
+        collectStateFlow(viewModel.logoutMessage) {
             Toast.makeText(context, "성공적으로 로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }

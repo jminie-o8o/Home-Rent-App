@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.home_rent_app.R
+import com.example.home_rent_app.util.type.HouseType
+import com.example.home_rent_app.util.type.RentType
 import java.text.SimpleDateFormat
 
 @SuppressLint("SimpleDateFormat")

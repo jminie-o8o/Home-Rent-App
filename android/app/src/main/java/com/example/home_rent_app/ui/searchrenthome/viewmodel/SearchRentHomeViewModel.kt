@@ -66,7 +66,6 @@ class SearchRentHomeViewModel @Inject constructor(
             repository.getSearchResult(searchAddress = searchAddress.value)
                 .catch { exception ->
                     _result.value = UiState.Error("네트워크 에러")
-                    logger("Exception ${exception.message}")
                 }.collect {
                     _result.value = UiState.Success(it)
                 }

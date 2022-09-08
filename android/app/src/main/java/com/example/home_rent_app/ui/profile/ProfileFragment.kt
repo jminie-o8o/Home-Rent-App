@@ -18,6 +18,7 @@ import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileViewPagerAdapter
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
 import com.example.home_rent_app.util.collectLatestStateFlow
+import com.example.home_rent_app.util.collectStateFlow
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -70,13 +71,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun observeDeleteMessage(context: Context) {
-        collectLatestStateFlow(profileViewModel.deleteMessage) {
+        collectStateFlow(profileViewModel.deleteMessage) {
             Toast.makeText(context, "글이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun observeProfileModifyChange(context: Context) {
-        collectLatestStateFlow(profileViewModel.profileModifyMessage) {
+        collectStateFlow(profileViewModel.profileModifyMessage) {
             Toast.makeText(context, "프로필이 변경되었습니다..", Toast.LENGTH_SHORT).show()
         }
     }

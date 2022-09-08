@@ -13,6 +13,7 @@ import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.login.LoginActivity
 import com.example.home_rent_app.ui.login.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.collectLatestStateFlow
+import com.example.home_rent_app.util.collectStateFlow
 import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +32,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun checkIsLogin(content: View) {
-        collectLatestStateFlow(viewModel.isLogin) { isLogin ->
+        collectStateFlow(viewModel.isLogin) { isLogin ->
             content.viewTreeObserver.addOnPreDrawListener(
                 object : ViewTreeObserver.OnPreDrawListener {
                     override fun onPreDraw(): Boolean {
