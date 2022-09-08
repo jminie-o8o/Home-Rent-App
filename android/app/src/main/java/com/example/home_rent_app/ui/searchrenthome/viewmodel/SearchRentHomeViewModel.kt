@@ -8,7 +8,6 @@ import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.data.repository.findhome.FindHomeRepository
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.FlowPreview

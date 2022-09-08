@@ -19,8 +19,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class ProfileWantHomeAdapter @Inject constructor(
-    private val viewModel: ProfileViewModel,
-    private val itemIdSession: ItemIdSession,
+    private val goToDetail: (Int) -> Unit,
+    private val deleteWantItem: (Int) -> Unit,
     @ApplicationContext private val context: Context
 ) : ListAdapter<WantArticleProfile, ProfileWantHomeAdapter.ProfileWantHomeViewHolder>(
     ProfileWantAdapterDiffCallBack
@@ -41,10 +41,7 @@ class ProfileWantHomeAdapter @Inject constructor(
         fun bind(wantArticleProfile: WantArticleProfile) {
             binding.wantArticleProfile = wantArticleProfile
             itemView.setOnClickListener {
-                itemIdSession.itemId = wantArticleProfile.id
-                Intent(it.context, WantHomeDetailActivity::class.java).run {
-                    it.context.startActivity(this)
-                }
+                goToDetail(wantArticleProfile.id)
             }
             binding.btnMoreAction.setOnClickListener {
                 showPopup(it, wantArticleProfile.id)
@@ -69,7 +66,7 @@ class ProfileWantHomeAdapter @Inject constructor(
         }
 
         private fun delete(id: Int) {
-            viewModel.deleteWantItem(id)
+            deleteWantItem(id)
         }
     }
 }

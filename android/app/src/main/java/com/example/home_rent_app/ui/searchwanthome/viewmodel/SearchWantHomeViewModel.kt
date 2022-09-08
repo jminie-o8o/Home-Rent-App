@@ -11,7 +11,6 @@ import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.data.repository.wanthomeresult.WantHomeResultRepository
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.UiState
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.channels.BufferOverflow
@@ -63,7 +62,6 @@ class SearchWantHomeViewModel @Inject constructor(
 
     fun getWantHomeResult(wantHomeResultRequest: WantHomeResultRequest) {
         viewModelScope.launch {
-            logger("로그 viewmodel")
             wantHomeResultRepository.getResult(wantHomeResultRequest)
                 .cachedIn(viewModelScope)
                 .collect { response ->

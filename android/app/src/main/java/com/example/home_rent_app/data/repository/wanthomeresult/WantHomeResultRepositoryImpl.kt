@@ -9,7 +9,6 @@ import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.BookmarkRequest
 import com.example.home_rent_app.data.model.WantHomeResultRequest
 import com.example.home_rent_app.ui.searchwanthome.WantHomePagingSource
-import com.example.home_rent_app.util.logger
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -18,7 +17,6 @@ class WantHomeResultRepositoryImpl @Inject constructor(private val api: SearchWa
     override suspend fun getResult(
         wantHomeResultRequest: WantHomeResultRequest
     ): Flow<PagingData<WantedArticle>> {
-        logger("로그 repository")
         val pagingSourceFactory = { WantHomePagingSource(api, wantHomeResultRequest) }
         return Pager(
             config = PagingConfig(pageSize = 5, enablePlaceholders = false),

@@ -12,24 +12,19 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.home_rent_app.R
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.FragmentProfileBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileViewPagerAdapter
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
-import com.example.home_rent_app.util.collectLatestStateFlow
 import com.example.home_rent_app.util.collectStateFlow
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     lateinit var binding: FragmentProfileBinding
     private val profileViewModel: ProfileViewModel by activityViewModels()
-    @Inject
-    lateinit var userSession: UserSession
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +54,7 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        profileViewModel.getUserInfo(userSession.userId ?: 0)
+        profileViewModel.getUserInfo()
     }
 
     private fun goToModifyProfile(navController: NavController) {

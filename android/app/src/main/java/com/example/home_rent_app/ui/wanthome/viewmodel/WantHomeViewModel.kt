@@ -10,9 +10,9 @@ import com.example.home_rent_app.data.session.ItemIdSession
 import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.ChatChannel
 import com.example.home_rent_app.util.CoroutineException
-import com.example.home_rent_app.util.type.Location
 import com.example.home_rent_app.util.WANTED
 import com.example.home_rent_app.util.logger
+import com.example.home_rent_app.util.type.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
@@ -28,7 +28,6 @@ import javax.inject.Inject
 @HiltViewModel
 class WantHomeViewModel @Inject constructor(
     private val wantHomeRepository: WantHomeRepository,
-    private val idSession: ItemIdSession,
     private val chatChannel: ChatChannel,
     private val userSession: UserSession
 ) : ViewModel() {
@@ -59,6 +58,9 @@ class WantHomeViewModel @Inject constructor(
 
     private val _wantHomeDetail = MutableStateFlow<WantHomeDetailResponseDTO?>(null)
     val wantHomeDetail: StateFlow<WantHomeDetailResponseDTO?> get() = _wantHomeDetail
+
+    private val _userSessionId = MutableStateFlow(0)
+    val userSessionId: StateFlow<Int> get() = _userSessionId
 
     private val _error = MutableSharedFlow<CEHModel>(
         extraBufferCapacity = 1,
@@ -127,5 +129,9 @@ class WantHomeViewModel @Inject constructor(
         wantHomeDetail.value?.user?.profileImageUrl ?: ""
     ).catch { e ->
         logger("error : ${e.message}")
+    }
+
+    fun getUserIdFromUserSession(): Int {
+        return userSession.userId ?: 0
     }
 }

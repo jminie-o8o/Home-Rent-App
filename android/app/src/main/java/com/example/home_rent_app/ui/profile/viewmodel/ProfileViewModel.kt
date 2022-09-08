@@ -7,8 +7,8 @@ import com.example.home_rent_app.data.dto.RentArticleProfile
 import com.example.home_rent_app.data.dto.WantArticleProfile
 import com.example.home_rent_app.data.model.CEHModel
 import com.example.home_rent_app.data.model.UserProfileRequest
+import com.example.home_rent_app.data.repository.imageurl.ImageUrlRepository
 import com.example.home_rent_app.data.repository.profile.ProfileRepository
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.deleteGiveProfileAtView
 import com.example.home_rent_app.util.deleteWantProfileAtView
@@ -29,7 +29,7 @@ private const val FIRST = 0
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
-    private val userSession: UserSession
+    private val imageUrlRepository: ImageUrlRepository
 ) : ViewModel() {
 
     private var page = 1
@@ -73,22 +73,22 @@ class ProfileViewModel @Inject constructor(
     }
 
     init {
-        getUserInfo(userSession.userId ?: 0)
-        getGiveHomeProfileAtFirstPage(userSession.userId ?: 0)
-        getWantHomeProfileAtFirstPage(userSession.userId ?: 0)
+        getUserInfo()
+        getGiveHomeProfileAtFirstPage()
+        getWantHomeProfileAtFirstPage()
     }
 
-    fun getUserInfo(userId: Int) {
+    fun getUserInfo() {
         viewModelScope.launch(exceptionHandler) {
-            val response = profileRepository.getUserInfo(userId)
+            val response = profileRepository.getUserInfo()
             _userData.value = response
             _imageUrl.value = response.profileImageUrl
         }
     }
 
-    fun getGiveHomeProfile(userId: Int) {
+    fun getGiveHomeProfile() {
         viewModelScope.launch(exceptionHandler) {
-            val response = profileRepository.getGiveHomeProfileResult(userId, page)
+            val response = profileRepository.getGiveHomeProfileResult(page)
             if (response.hasNext) {
                 return@launch
             }
@@ -100,16 +100,16 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun getGiveHomeProfileAtFirstPage(userId: Int) {
+    fun getGiveHomeProfileAtFirstPage() {
         viewModelScope.launch {
-            val response = profileRepository.getGiveHomeProfileResult(userId, FIRST)
+            val response = profileRepository.getGiveHomeProfileResult(FIRST)
             _giveHomeProfileResult.value = response.rentArticles.toMutableList()
         }
     }
 
-    fun getWantHomeProfile(userId: Int) {
+    fun getWantHomeProfile() {
         viewModelScope.launch(exceptionHandler) {
-            val response = profileRepository.getWantHomeProfileResult(userId, page)
+            val response = profileRepository.getWantHomeProfileResult(page)
             if (response.hasNext) {
                 return@launch
             }
@@ -121,16 +121,16 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun getWantHomeProfileAtFirstPage(userId: Int) {
+    fun getWantHomeProfileAtFirstPage() {
         viewModelScope.launch {
-            val response = profileRepository.getWantHomeProfileResult(userId, FIRST)
+            val response = profileRepository.getWantHomeProfileResult(FIRST)
             _wantHomeProfileResult.value = response.wantedArticles.toMutableList()
         }
     }
 
     fun deleteGiveItem(id: Int) {
         viewModelScope.launch(exceptionHandler) {
-            val response = profileRepository.delete(id)
+            val response = profileRepository.deleteRentHome(id)
             if (response.statusCode == 200) _deleteMessage.emit(response.message)
             _giveHomeProfileResult.deleteGiveProfileAtView(id)
         }
@@ -155,16 +155,16 @@ class ProfileViewModel @Inject constructor(
     fun getProfileImage(body: MultipartBody.Part) {
         viewModelScope.launch(exceptionHandler) {
             val bodyList = mutableListOf<MultipartBody.Part>().apply { this.add(body) }
-            profileRepository.getImageUrl(bodyList).collect {
+            imageUrlRepository.getImageUrl(bodyList).collect {
                 _imageUrl.value = it.images.first()
             }
         }
     }
 
     // 유저 정보를 서버에 보내기
-    fun setUserProfile(userId: Int, userProfileRequest: UserProfileRequest) {
+    fun setUserProfile(userProfileRequest: UserProfileRequest) {
         viewModelScope.launch(exceptionHandler) {
-            profileRepository.setUserProfile(userId, userProfileRequest)
+            profileRepository.setUserProfile(userProfileRequest)
             _profileModifyMessage.emit("성공적으로 프로필이 수정되었습니다.")
         }
     }

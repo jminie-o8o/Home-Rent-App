@@ -14,6 +14,8 @@ import com.example.home_rent_app.data.datasource.loginprofile.LoginProfileDataSo
 import com.example.home_rent_app.data.datasource.loginprofile.LoginProfileDataSourceImpl
 import com.example.home_rent_app.data.datasource.map.MapDataSource
 import com.example.home_rent_app.data.datasource.map.MapDataSourceImpl
+import com.example.home_rent_app.data.datasource.profile.ProfileDataSource
+import com.example.home_rent_app.data.datasource.profile.ProfileDataSourceImpl
 import com.example.home_rent_app.data.datasource.refresh.RefreshDataSource
 import com.example.home_rent_app.data.datasource.refresh.RefreshDataSourceImpl
 import com.example.home_rent_app.data.datasource.renthome.RentHomeDataSource
@@ -89,4 +91,10 @@ abstract class DataSourceModule {
     abstract fun bindImageUrlDataSource(
         imageUrlDataSourceImpl: ImageUrlDataSourceImpl
     ): ImageUrlDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindProfileDataSource(
+        profileDataSourceImpl: ProfileDataSourceImpl
+    ): ProfileDataSource
 }

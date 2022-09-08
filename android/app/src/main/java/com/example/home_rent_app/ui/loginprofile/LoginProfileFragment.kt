@@ -19,13 +19,11 @@ import androidx.fragment.app.viewModels
 import coil.load
 import com.example.home_rent_app.R
 import com.example.home_rent_app.data.model.UserProfileRequest
-import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.FragmentLoginProfileBinding
 import com.example.home_rent_app.ui.login.LoginActivity
 import com.example.home_rent_app.ui.login.viewmodel.LoginViewModel
 import com.example.home_rent_app.util.FileController
 import com.example.home_rent_app.util.collectStateFlow
-import com.example.home_rent_app.util.logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

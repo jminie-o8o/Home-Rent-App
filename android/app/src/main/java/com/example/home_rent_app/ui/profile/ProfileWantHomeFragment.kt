@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.home_rent_app.databinding.FragmentProfileWantHomeBinding
 import com.example.home_rent_app.ui.home.HomeActivity
 import com.example.home_rent_app.ui.profile.adapter.ProfileWantHomeAdapter
 import com.example.home_rent_app.ui.profile.viewmodel.ProfileViewModel
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.util.collectStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -41,10 +43,21 @@ class ProfileWantHomeFragment : Fragment() {
         return binding.root
     }
 
+    private val goToDetail: (Int) -> Unit = {
+        // 상세화면 이동
+        val intent = Intent(requireContext(), WantHomeDetailActivity::class.java)
+        intent.putExtra("homeId", it)
+        startActivity(intent)
+    }
+
+    private val deleteWantItem: (Int) -> Unit = {
+        viewModel.deleteWantItem(it)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewScrollListener()
-        adapter = ProfileWantHomeAdapter(viewModel, idSession, requireContext())
+        adapter = ProfileWantHomeAdapter(goToDetail, deleteWantItem, requireContext())
         binding.rvProfileWantHome.adapter = adapter
         updateAdapter()
         logout()
@@ -52,7 +65,7 @@ class ProfileWantHomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getWantHomeProfileAtFirstPage(userSession.userId ?: 0)
+        viewModel.getWantHomeProfileAtFirstPage()
     }
 
     private fun updateAdapter() {
@@ -74,7 +87,7 @@ class ProfileWantHomeFragment : Fragment() {
                 // 스크롤이 끝에 도달했는지 확인
                 if (lastVisibleItemPosition == itemTotalCount) {
                     // 다음 페이지 불러오기
-                    userSession.userId?.let { viewModel.getWantHomeProfile(it) }
+                    viewModel.getWantHomeProfile()
                 }
             }
         })

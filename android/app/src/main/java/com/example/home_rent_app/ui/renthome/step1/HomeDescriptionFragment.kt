@@ -12,8 +12,8 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.databinding.FragmentHomeDescriptionBinding
 import com.example.home_rent_app.ui.renthome.viewmodel.RentHomeViewModel
 import com.example.home_rent_app.util.MoneyFormat
-import com.example.home_rent_app.util.type.RentType
 import com.example.home_rent_app.util.repeatOnStarted
+import com.example.home_rent_app.util.type.RentType
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import hirondelle.date4j.DateTime

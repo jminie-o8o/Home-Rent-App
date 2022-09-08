@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import com.example.home_rent_app.data.api.SearchWantHomeApi
 import com.example.home_rent_app.data.dto.WantedArticle
 import com.example.home_rent_app.data.model.WantHomeResultRequest
-import com.example.home_rent_app.util.logger
 
 class WantHomePagingSource(
     private val api: SearchWantHomeApi,
@@ -21,7 +20,6 @@ class WantHomePagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, WantedArticle> {
         val start = params.key ?: STARTING_PAGE_INDEX
-        logger("로그 pagingsource")
         return try {
             val response = api.getWantHomeResult(
                 start,

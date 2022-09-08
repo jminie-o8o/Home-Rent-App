@@ -176,7 +176,7 @@ class ProfileModifyFragment : Fragment() {
             imageUrl = it
         }
         // User 정보를 서버에 보내기
-        profileViewModel.setUserProfile(userSession.userId ?: 0, UserProfileRequest(displayName, imageUrl, gender))
+        profileViewModel.setUserProfile(UserProfileRequest(displayName, imageUrl, gender))
     }
 
     private fun addAccount() {

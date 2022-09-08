@@ -56,7 +56,7 @@ class ProfileRentHomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getGiveHomeProfileAtFirstPage(userSession.userId ?: 0)
+        viewModel.getGiveHomeProfileAtFirstPage()
     }
 
     private fun updateAdapter() {
@@ -79,7 +79,7 @@ class ProfileRentHomeFragment : Fragment() {
                 if (lastVisibleItemPosition == itemTotalCount) {
                     // 다음 페이지 불러오기
                     logger("다음 페이지 불러오기")
-                    userSession.userId?.let { viewModel.getGiveHomeProfile(it) }
+                    viewModel.getGiveHomeProfile()
                 }
             }
         })
