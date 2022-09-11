@@ -1,6 +1,6 @@
 # 집넘기기
   
-#### 팀원소개
+## 팀원소개
 |Name|Part|Github|
 |---|---|---|
 |Stark|android|[jminie-o8o](https://github.com/jminie-o8o)|
@@ -42,17 +42,17 @@
 - REST API 통신을 위한 [Retrofit](https://square.github.io/retrofit/)
 - 이미지 로더 라이브러리 [Coil](https://square.github.io/retrofit/)
 - DI를 위한 [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
--  [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+- 주소 검색 API [다음 우편번호 API](https://postcode.map.daum.net/guide)
+- 지도 API [Naver Cloud Maps API](https://www.ncloud.com/product/applicationService/maps)
 
 
-| 회원가입 및 로그인  | GitHub OAuth 로그인 | 이슈 추가 | 이슈 닫기 |
+| 로그인 및 프로필 등록 | 양도글 추가 | 양수글 추가 | 매물 검색 |
 |:--------:|:--------:|:--------:|:--------:|
 | <img src=https://user-images.githubusercontent.com/79504043/183874034-4253dc6c-7c72-4e4a-a0f5-2df3a06d2960.gif width=200> | <img src=https://user-images.githubusercontent.com/79504043/183874953-b8c4ee09-9dec-4d38-9e9f-f4b94d18e7a7.gif width=200> | <img src=https://user-images.githubusercontent.com/79504043/183877513-b1838be6-5e5a-4462-b437-1a1835411447.gif width=200> | <img src=https://user-images.githubusercontent.com/79504043/183875847-1b086c37-3289-4f0a-8b12-aadf7d1731d6.gif width=200> |
 
-| 이슈 필터 | 이슈 검색 | 레이블 추가 | 마일스톤 추가 |
+| 채팅 | 관심목록 추가 및 제거 | 프로필 | 로그아웃 |
 |:--------:|:--------:|:--------:|:--------:|
 | <img src=https://user-images.githubusercontent.com/79504043/183876156-8cc0684f-181c-4ed8-a021-ddcba04f0a43.gif width=200> | <img src=https://user-images.githubusercontent.com/79504043/183877330-6bd6b04e-833c-40f5-b03c-399ac53ed2c7.gif width=200> | <img src=https://user-images.githubusercontent.com/79504043/177966815-7abcda81-aca1-487d-bd36-847e304eacf8.gif width=200> | <img src=https://user-images.githubusercontent.com/79504043/183878295-cf489780-46ea-4faf-8bec-a7019e292e1f.gif width=200> |
 
-## MAD Scorecard
-<img src="https://user-images.githubusercontent.com/79504043/177989379-37cf40dc-0e11-4944-a1a9-8a3ee113065b.png">  
-
+## 시연영상
+- [시연영상 바로가기](https://www.youtube.com/watch?v=EhMm6OVVgiE)
