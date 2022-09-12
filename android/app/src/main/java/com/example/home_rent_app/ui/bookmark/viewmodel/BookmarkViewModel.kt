@@ -9,6 +9,7 @@ import com.example.home_rent_app.data.repository.bookmark.BookmarkRepository
 import com.example.home_rent_app.util.CoroutineException
 import com.example.home_rent_app.util.deleteGiveBookmarkAtView
 import com.example.home_rent_app.util.deleteWantBookmarkAtView
+import com.example.home_rent_app.util.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.channels.BufferOverflow
@@ -37,8 +38,11 @@ class BookmarkViewModel @Inject constructor(
         MutableStateFlow<MutableList<Article>>(mutableListOf())
     val giveHomeBookmarkResult: StateFlow<MutableList<Article>> = _giveHomeBookmarkResult
 
-    private val _deleteBookmarkStatusCode = MutableSharedFlow<Int>()
-    val deleteBookmarkStatusCode: SharedFlow<Int> get() = _deleteBookmarkStatusCode
+    private val _deleteRentBookmarkStatusCode = MutableSharedFlow<Int>()
+    val deleteRentBookmarkStatusCode: SharedFlow<Int> get() = _deleteRentBookmarkStatusCode
+
+    private val _deleteWantBookmarkStatusCode = MutableSharedFlow<Int>()
+    val deleteWantBookmarkStatusCode: SharedFlow<Int> get() = _deleteWantBookmarkStatusCode
 
     private val _error = MutableSharedFlow<CEHModel>(
         extraBufferCapacity = 1,
@@ -80,7 +84,7 @@ class BookmarkViewModel @Inject constructor(
 
     fun deleteWantHomeBookmark(articleId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteWantHomeBookmark(articleId).code)
+            _deleteWantBookmarkStatusCode.emit(bookmarkRepository.deleteWantHomeBookmark(articleId).code)
             _wantHomeBookmarkResult.deleteWantBookmarkAtView(articleId)
         }
     }
@@ -108,7 +112,7 @@ class BookmarkViewModel @Inject constructor(
 
     fun deleteGiveHomeBookmark(articleId: Int) {
         viewModelScope.launch(exceptionHandler) {
-            _deleteBookmarkStatusCode.emit(bookmarkRepository.deleteRentHomeBookmark(articleId).code)
+            _deleteRentBookmarkStatusCode.emit(bookmarkRepository.deleteRentHomeBookmark(articleId).code)
             _giveHomeBookmarkResult.deleteGiveBookmarkAtView(articleId)
         }
     }

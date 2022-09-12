@@ -1,5 +1,6 @@
 package com.example.home_rent_app.ui.wanthome.step2
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,8 +15,10 @@ import com.example.home_rent_app.R
 import com.example.home_rent_app.data.session.ItemIdSession
 import com.example.home_rent_app.data.session.UserSession
 import com.example.home_rent_app.databinding.FragmentWantHomeSecondStepBinding
+import com.example.home_rent_app.ui.detail.DetailRentActivity
 import com.example.home_rent_app.ui.dialogfragment.CancelDialogFragment
 import com.example.home_rent_app.ui.wanthome.WantHomeActivity
+import com.example.home_rent_app.ui.wanthome.detail.WantHomeDetailActivity
 import com.example.home_rent_app.ui.wanthome.viewmodel.WantHomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,8 +29,6 @@ class WantHomeSecondStepFragment : Fragment() {
 
     lateinit var binding: FragmentWantHomeSecondStepBinding
     private val viewModel: WantHomeViewModel by activityViewModels()
-    @Inject lateinit var userSession: UserSession
-    @Inject lateinit var idSession: ItemIdSession
     private var detailAddressFlag = false
     private var titleFlag = false
     private var contentsFlag = false
@@ -71,9 +72,8 @@ class WantHomeSecondStepFragment : Fragment() {
     private fun register() {
         binding.btnRegister.setOnClickListener {
             lifecycleScope.launch {
-                idSession.itemId = viewModel.addWantHome()
                 val activity = activity as WantHomeActivity
-                activity.clickRegister()
+                activity.clickRegister(viewModel.addWantHome())
             }
         }
     }
