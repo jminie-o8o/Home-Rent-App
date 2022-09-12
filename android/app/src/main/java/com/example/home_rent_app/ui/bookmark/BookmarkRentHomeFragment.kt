@@ -77,7 +77,7 @@ class BookmarkRentHomeFragment : Fragment() {
     }
 
     private fun deleteBookMarkToast() {
-        collectStateFlow(viewModel.deleteBookmarkStatusCode) { code ->
+        collectStateFlow(viewModel.deleteRentBookmarkStatusCode) { code ->
             if (code == 200) Toast.makeText(
                 requireContext(),
                 "관심목록에서 제거되었습니다.",
