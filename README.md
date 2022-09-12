@@ -48,19 +48,21 @@
 ## 📌 안드로이드 기술 스택
 - Architecture
   - MVVM Architecture ( View - Databinding - ViewModel - Model )
-- 100% [Kotlin](https://kotlinlang.org/)
-- 비동기 및 반응형 프로그래밍 [Coroutines](https://developer.android.com/kotlin/coroutines) + [Flow](https://developer.android.com/kotlin/flow)
+- 언어 [Kotlin](https://kotlinlang.org/)
+- 비동기 및 반응형 프로그래밍을 위한 [Coroutines](https://developer.android.com/kotlin/coroutines) + [Flow](https://developer.android.com/kotlin/flow)
 - [Jetpack](https://developer.android.com/jetpack)
-  - UI 관련 데이터를 저장하고 관리하는 [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel?gclid=CjwKCAjwq5-WBhB7EiwAl-HEkrzYCgxFBbYLSC4yenlZRy5NtxWbTHP-xThSz_yMY_JUTl3TCklhnBoCDIcQAvD_BwE&gclsrc=aw.ds)
+  - UI 관련 데이터를 저장하고 관리하기 위한 [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel?gclid=CjwKCAjwq5-WBhB7EiwAl-HEkrzYCgxFBbYLSC4yenlZRy5NtxWbTHP-xThSz_yMY_JUTl3TCklhnBoCDIcQAvD_BwE&gclsrc=aw.ds)
+  - 데이터 목록을 표시하기 위한 [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview?gclid=CjwKCAjwsfuYBhAZEiwA5a6CDExaCCkZkSghgMvbHs6a80REENk05bEMNW1cW1j37ZAeNJrmF1efxRoCnr0QAvD_BwE&gclsrc=aw.ds)
   - 앱내 화면 이동을 위한 [Navigation](https://developer.android.com/guide/navigation)
   - 앱내 간단한 데이터 저장을 위한 [DataStore](https://developer.android.com/topic/libraries/architecture/datastore?gclid=Cj0KCQjwjvaYBhDlARIsAO8PkE0p3ASRb3EbJTGUtzY1aiUiGqQJwR9n8dEeo1g76RxQjpOciuUP5-QaAr6eEALw_wcB&gclsrc=aw.ds)
-  - 이미지 슬라이더 [ViewPager2](https://developer.android.com/jetpack/androidx/releases/viewpager2)
+  - 이미지 슬라이더를 위한 [ViewPager2](https://developer.android.com/jetpack/androidx/releases/viewpager2)
   - 데이터 페이징을 위한 [Paging3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
 - REST API 통신을 위한 [Retrofit](https://square.github.io/retrofit/)
-- 이미지 로더 라이브러리 [Coil](https://square.github.io/retrofit/)
+- 이미지 로더를 위한 [Coil](https://square.github.io/retrofit/)
 - DI를 위한 [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
-- 주소 검색 API [다음 우편번호 API](https://postcode.map.daum.net/guide)
-- 지도 API [Naver Cloud Maps API](https://www.ncloud.com/product/applicationService/maps)
+- 채팅을 위한 [Stream SDK](https://getstream.io/chat/?utm_source={google}&utm_medium={cpc}&utm_campaign=GOO|S|BRN|ROW|ALL-EN%26utm_adgroup=Chat%26utm_custom%3D15702481917%26utm_content%3D571825906719%26utm_term%3Dstream%20chat%20api%26matchtype=e%26device=c%26location=1009871&_bt=571825906719&_bk=stream%20chat%20api&_bm=e&_bn=g&gclid=CjwKCAjwsfuYBhAZEiwA5a6CDAJOBXFLKt0q8_ib1I1_fwzsfxM4Ii2B3aKzyNZ8O6xY42BcG_VVzRoCJPwQAvD_BwE)
+- 주소 검색을 위한 [다음 우편번호 API](https://postcode.map.daum.net/guide)
+- 주소를 지도에 표현하기 위한 [Naver Cloud Maps API](https://www.ncloud.com/product/applicationService/maps)
 
 </br>
 
