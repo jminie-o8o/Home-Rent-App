@@ -1,7 +1,7 @@
-# 집넘기기
+# 🏠 집넘기기
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189599604-36c291f8-821f-461d-aa5f-31564292c0bb.png" width="900" height="430"/></p>
 
-## 프로젝트 기획 의도
+## 🚀 프로젝트 기획 의도
 월세, 전세, 매매를 중개해주는 플랫폼은 많지만 집을 양도를 중개해주는 플랫폼은 존재하지 않습니다. 
   
   
