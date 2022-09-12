@@ -86,4 +86,4 @@
 이미지를 클릭하면 시연영상 링크로 이동합니다. 
 </Blockquote>
  
-[![시연영상 바로가기](https://i9.ytimg.com/vi/EhMm6OVVgiE/mq1.jpg?sqp=CPCx-5gG&rs=AOn4CLD40eiH42T_Qg1utaq4ceT3wKXb1g)](https://www.youtube.com/watch?v=EhMm6OVVgiE)
+[![시연영상 바로가기](https://i9.ytimg.com/vi/EhMm6OVVgiE/mq1.jpg?sqp=CLC4_ZgG&rs=AOn4CLA50qaec9-FhblWkf03fNxdExFqKQ)](https://www.youtube.com/watch?v=EhMm6OVVgiE)
