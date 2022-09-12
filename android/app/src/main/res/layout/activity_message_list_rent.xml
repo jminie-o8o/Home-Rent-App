@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="home"
+            type="com.example.home_rent_app.data.model.DetailHomeData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.chatting.RentMessageListActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/messageListHeaderView_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/white">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/messageListHeaderView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="채팅"
+                app:titleCentered="true"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:menu="@menu/chat_menu"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clo_home_info"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            app:layout_constraintTop_toBottomOf="@id/messageListHeaderView_layout">
+            <View
+                android:id="@+id/empty_space"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/stream_ui_grey"/>
+
+            <ImageView
+                android:id="@+id/iv_home_pic"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:scaleType="fitXY"
+                roundImage="@{home.houseImages[0]}"
+                tools:src="@drawable/ic_launcher_foreground"/>
+
+            <TextView
+                android:id="@+id/tv_home_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/iv_home_pic"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textSize="17sp"
+                android:layout_marginStart="12dp"
+                android:text="@{home.title}"
+                tools:text="부산광역 남구 대연동"/>
+
+            <TextView
+                android:id="@+id/tv_date_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_home_title"
+                app:layout_constraintStart_toEndOf="@id/iv_home_pic"
+                android:layout_marginStart="12dp"
+                android:text="@{@string/term_of_a_contract(home.availableFrom, home.contractExpiresAt)}"
+                tools:text="7월 23일 ~ 8월 31일"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/tv_date_range"
+                app:layout_constraintStart_toEndOf="@id/iv_home_pic"
+                android:layout_marginStart="12dp"
+                android:text="@{@string/deposit_and_monthly(home.deposit, home.rentFee)}"
+                tools:text="월세 100/35"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@color/stream_ui_grey" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <io.getstream.chat.android.ui.message.list.MessageListView
+            android:id="@+id/messageListView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/messageComposerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clo_home_info" />
+
+        <io.getstream.chat.android.ui.message.composer.MessageComposerView
+            android:id="@+id/messageComposerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:streamUiAttachmentVideoLengthVisible="true"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clo_instance_message"
+            app:layout_constraintTop_toBottomOf="@id/clo_home_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/instance_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
+                android:text="@string/message_label"/>
+
+            <TextView
+                android:id="@+id/tv_instance_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/instance_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:text="@string/instance_description"/>
+
+            <TextView
+                android:id="@+id/tv_sample_message_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_instance_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.85"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/instance_shape"
+                android:text="@string/sample_message_one"
+                app:drawableEndCompat="@drawable/ic_baseline_arrow_circle_up_24" />
+
+            <TextView
+                android:id="@+id/tv_sample_message_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_sample_message_one"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.85"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/instance_shape"
+                android:text="@string/sample_message_two"
+                app:drawableEndCompat="@drawable/ic_baseline_arrow_circle_up_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

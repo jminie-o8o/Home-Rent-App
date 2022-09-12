@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PriceEditText">
+        <attr name="labelText" format="string" />
+        <attr name="position" format="integer" />
+    </declare-styleable>
+</resources>

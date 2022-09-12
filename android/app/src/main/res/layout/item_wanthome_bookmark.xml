@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="bookmarkWantedBookmark"
+            type="com.example.home_rent_app.data.dto.WantedArticleBookmark" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_wanted_home_result_title"
+            style="@style/TextSubtitle1.16.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{bookmarkWantedBookmark.title}"
+            tools:text="부산광역시 남구, 강서구" />
+
+        <CheckBox
+            android:id="@+id/btn_like"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:button="@android:color/transparent"
+            android:background="@drawable/heart_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/tv_wanted_home_result_contents"
+            style="@style/TextSubtitle1.14"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="2"
+            android:text="@{bookmarkWantedBookmark.content}"
+            android:textColor="@color/gray03"
+            app:layout_constraintStart_toStartOf="@+id/tv_wanted_home_result_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_result_title"
+            tools:text="부경대 근처 한달간 살 원룸 구해요. 최대 2줄" />
+
+        <TextView
+            android:id="@+id/tv_wanted_home_start_date"
+            style="@style/TextSubtitle1.14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            formattingStartDate="@{bookmarkWantedBookmark.moveInDate}"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_wanted_home_result_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_result_contents"
+            tools:text="7월 23일이후 - " />
+
+        <TextView
+            android:id="@+id/tv_wanted_home_end_date"
+            style="@style/TextSubtitle1.14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            formattingEndDate="@{bookmarkWantedBookmark.moveOutDate}"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_wanted_home_start_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_result_contents"
+            tools:text="12월 23일" />
+
+        <TextView
+            android:id="@+id/tv_wanted_home_result_deposit"
+            style="@style/TextSubtitle1.14.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            deposit="@{String.valueOf(bookmarkWantedBookmark.depositBudget)}"
+            monthlyPay="@{String.valueOf(bookmarkWantedBookmark.rentBudget)}"
+            app:layout_constraintStart_toStartOf="@+id/tv_wanted_home_result_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_start_date"
+            tools:text="예산 월세 100/35" />
+
+        <TextView
+            android:id="@+id/tv_wanted_home_result_time"
+            style="@style/TextSubtitle1.14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/gray03"
+            formattingTime="@{bookmarkWantedBookmark.createdAt}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_wanted_home_start_date"
+            tools:text="3시간 전" />
+
+        <View
+            android:id="@+id/view_want_home_result"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray01"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
