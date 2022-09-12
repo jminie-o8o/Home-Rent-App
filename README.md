@@ -71,7 +71,7 @@
 
 | 로그인 및 프로필 등록 | 양도글 추가 | 양수글 추가 | 매물 검색 |
 |:--------:|:--------:|:--------:|:--------:|
-| ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%A7%91%EB%84%98%EA%B8%B0%EA%B8%B0%20%EC%B2%AB%EB%B2%88%EC%A7%B8.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%A7%91%EB%84%98%EA%B8%B0%EA%B8%B0%20%EB%91%90%EB%B2%88%EC%A7%B8.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%96%91%EB%8F%84%EA%B8%80%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%96%91%EC%88%98%EA%B8%80%20%EB%93%B1%EB%A1%9D.gif) |
+| ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EB%B0%8F%20%ED%94%84%EB%A1%9C%ED%95%84%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%96%91%EB%8F%84%EA%B8%80%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%96%91%EC%88%98%EA%B8%80%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EB%A7%A4%EB%AC%BC%20%EA%B2%80%EC%83%89.gif) |
 
 | 채팅 | 관심목록 추가 및 제거 | 프로필 | 로그아웃 |
 |:--------:|:--------:|:--------:|:--------:|
