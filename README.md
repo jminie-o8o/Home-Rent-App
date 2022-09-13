@@ -45,6 +45,21 @@
 
 </br>
 
+## 📱 동작 화면
+<Blockquote>
+집넘기기의 실제 동작화면 입니다.🏠
+</Blockquote>
+
+| 로그인 및 프로필 등록 | 양도글 추가 | 양수글 추가 | 매물 검색 |
+|:--------:|:--------:|:--------:|:--------:|
+| ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EB%B0%8F%20%ED%94%84%EB%A1%9C%ED%95%84%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%96%91%EB%8F%84%EA%B8%80%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%96%91%EC%88%98%EA%B8%80%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EB%A7%A4%EB%AC%BC%20%EA%B2%80%EC%83%89.gif) |
+
+| 채팅 | 관심목록 추가 및 제거 | 프로필 | 로그아웃 |
+|:--------:|:--------:|:--------:|:--------:|
+| ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%B1%84%ED%8C%85.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EA%B4%80%EC%8B%AC%EB%AA%A9%EB%A1%9D%20%EC%B6%94%EA%B0%80%20%EB%B0%8F%20%EC%A0%9C%EA%B1%B0.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%ED%94%84%EB%A1%9C%ED%95%84.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83.gif) |
+
+</br>
+
 ## 😎 안드로이드 기술적 고민
 ### 📌 코드 컨벤션 통일
 <details>
@@ -66,11 +81,11 @@
 저희는 여러 정적 분석 도구 중 공식 style을 기본으로 제공하는 ktlint를 적용하기로 하였습니다.
 
 실제로 이번 집넘기기 프로젝트를 하면서 ktlint를 적용하였더니 팀원의 PR 코드리뷰 때 
-한줄로 길게 쓴 코드가 사라지고 코드가 더 눈에 잘 들어와서 좋았습니다.
+한 줄로 길게 쓴 코드가 사라지고 코드가 더 눈에 잘 들어와서 좋았습니다.
 
 </br>
 
-### ktlint 적용전
+### ktlint 적용 전
 ```kotlin
 private fun setDefaultResult() {
         collectStateFlow(viewModel.searchWord) { keyword ->
@@ -79,7 +94,7 @@ private fun setDefaultResult() {
     }
 ```
 
-### ktlint 적용후
+### ktlint 적용 후
 ```kotlin
 private fun setDefaultResult() {
         collectStateFlow(viewModel.searchWord) { keyword ->
@@ -121,22 +136,22 @@ private fun setDefaultResult() {
 ### 🤷‍♂️ 그렇다면 왜 MVVM?
 
 **MVC 패턴의 단점**
-- View와 Model사이의 의존성이 높다.
-- Controller가 안드로이드에 종속되기 때문에 테스트가 어려워진다.
-- Controller에 많은 코드가 모이게 되어 Activity가 비대해진다.
-- 안드로이드 특성상 Activity가 View 표시와 Controller 역할을 같이 수행해야 하기 때문에 두 요소의 결합도가 높아진다.
+- View와 Model 사이의 의존성이 높음
+- Controller가 안드로이드에 종속되기 때문에 테스트가 어려워잠
+- Controller에 많은 코드가 모이게 되어 Activity가 비대해잠
+- 안드로이드 특성상 Activity가 View 표시와 Controller 역할을 같이 수행해야 하기 때문에 두 요소의 결합도가 높아잠
 
 **MVP 패턴의 단점**
-- View와 Presenter가 1:1로 강한 의존성을 가지게 된다.
-- 각각의 View마다 Presenter가 존재하게 되어서 코드량이 많아져 유지 보수가 힘들어질 수 있다.
+- View와 Presenter가 1:1로 강한 의존성을 가지게 됨
+- 각각의 View마다 Presenter가 존재하게 되어서 코드량이 많아져 유지 보수가 힘들어질 수 있음
 
 </br>
 
 **이에 비해 MVVM 패턴은**
-- View와 Model 사이의 의존성이 없다.
-- View는 ViewModel을 참조하지만 ViewModel은 View를 참조하지 않는다.
-- 각각 부분이 독립적이라 모듈화 개발에 적합하다. 
-- DataBinding을 함께 활용하면 View와 ViewModel 간의 의존성을 낮추고 View에서 처리하는 로직을 감소시킬 수 있다.
+- View와 Model 사이의 의존성이 없음
+- View는 ViewModel을 참조하지만 ViewModel은 View를 참조하지 않음
+- 각각 부분이 독립적이라 모듈화 개발에 적합
+- DataBinding을 함께 활용하면 View와 ViewModel 간의 의존성을 낮추고 View에서 처리하는 로직을 감소시킬 수 있
 
 이에 따라 집넘기기는 MVVM 패턴을 사용하게 되었습니다.
 
@@ -158,7 +173,7 @@ private fun setDefaultResult() {
 
 ### 🤷‍♂️ 의존성주입이 필요한 이유?
 - 의존성 주입을 사용하지 않는다면 클래스 내부에서 직접 의존 항목의 인스턴스를 생성하거나, 직접 DI 객체를 만들어 수동으로 의존성을 주입해야 합니다.
-- 이러한 방식은 코드의 재사용이 어렵고 리팩토링이 힘듭니다. 또한 ViewModelFactory의 경우 보일러플레이트 코드가 발생하게됩니다.
+- 이러한 방식은 코드의 재사용이 어렵고 리팩토링이 힘듭니다. 또한 ViewModelFactory의 경우 보일러 플레이트 코드가 발생하게 됩니다.
 
 ```kotlin
 // ViewModel이 Repository를 가지고 있고, Repository가 DataSource를, DataSource는 AssetLoader를 ...
@@ -261,14 +276,14 @@ fun <E> MutableStateFlow<MutableList<E>>.removeElement(element: E) {
 
 </br>
 
-따라서 삭제 로직을 수행하는 부분에서는 Scrool Listener 를 통한 커스텀 구현으로 패이징을 사용했습니다.
+따라서 삭제 로직을 수행하는 부분에서는 Scrool Listener를 통한 커스텀 구현으로 페이징을 사용했습니다.
 
 
 </div>
 </details>
 
 
-### 📌 자동로그인
+### 📌 자동 로그인
 
 <details>
 <summary>토글 접기/펼치기</summary>
@@ -276,7 +291,7 @@ fun <E> MutableStateFlow<MutableList<E>>.removeElement(element: E) {
 
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189825339-4e046daa-f0cb-4396-80fa-3a405027088b.jpeg" width="660" height="350"/></p>
 
-> 집넘기기🏠는 자동로그인 구현을 위해 DataStore를 이용했습니다.
+> 집넘기기🏠는 자동 로그인 구현을 위해 DataStore를 이용했습니다.
 
 </br>
 
@@ -286,15 +301,19 @@ fun <E> MutableStateFlow<MutableList<E>>.removeElement(element: E) {
 
 SharedPreferences에는 다음과 같은 한계점이 존재했습니다.
 
-- UI 스레드(메인 스레드)에서 호출할 수 있도록 API가 설계되었지만, UI 스레드를 블로킹해 ANR을 발생시킬 수 있다.
-- 런타임에 예외가 생기면 에러가 발생해 앱이 강제 종료될 수도 있다.
-- Type Safey가 보장되지 않아 어떤 데이터가 저장되고 추출되는지 일일히 데이터로 Type Convertind(형 변환) 해주어야 함.
+- UI 스레드(메인 스레드)에서 호출할 수 있도록 API가 설계되었지만, UI 스레드를 블로킹해 ANR을 발생시킬 수 있음
+- 런타임에 예외가 생기면 에러가 발생해 앱이 강제 종료될 수도 있음
+- Type Safey가 보장되지 않아 어떤 데이터가 저장되고 추출되는지 일일히 데이터로 Type Convertind(형 변환) 해주어야 함
 
-또한 공식문서에서도 만약 SharedPrefereces를 사용하고 있다면 DataStore로 이전할 것을 권고하고 있습니다.
+또한 공식문서에서도 만약 SharedPrefereces를 사용하고 있다면 DataStore로 이전할 것을 권고하고 있었습니다.
+
+</br>
 
 ![공식문서 datastore](https://user-images.githubusercontent.com/79504043/189825824-b502a79c-509a-4836-8197-9edca1b66af5.png)
 
-DataStore는 Coroutine을 사용해 동시성 프로그래밍에 최적화된 API를 제공합니다.
+</br>
+
+SharedPreferences에 비교하여 DataStore의 장점은 이러했습니다.
 - 경량 스레드 모델을 구현하는 Coroutine을 사용해 내부를 구현함으로써 더욱 효율적으로 데이터를 저장할 수 있도록 함
 	- 기존 UI 스레드에서 호출되어 ANR을 발생시킬 수 있었던 SharedPreferences와 다름
 	- 내부에서 Coroutine의 IO Dispathcer를 사용해 IO를 담당하는 스레드 풀에서 데이터를 조작하도록 강제
@@ -311,20 +330,86 @@ DataStore는 Coroutine을 사용해 동시성 프로그래밍에 최적화된 AP
 </div>
 </details>
 
-</br>
+### 📌 JWT 갱신
 
-## 📱 동작 화면
-<Blockquote>
-집넘기기의 실제 동작화면 입니다.🏠
-</Blockquote>
+<details>
+<summary>토글 접기/펼치기</summary>
+<div markdown="1">
 
-| 로그인 및 프로필 등록 | 양도글 추가 | 양수글 추가 | 매물 검색 |
-|:--------:|:--------:|:--------:|:--------:|
-| ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EB%B0%8F%20%ED%94%84%EB%A1%9C%ED%95%84%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%96%91%EB%8F%84%EA%B8%80%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%96%91%EC%88%98%EA%B8%80%20%EB%93%B1%EB%A1%9D.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EB%A7%A4%EB%AC%BC%20%EA%B2%80%EC%83%89.gif) |
 
-| 채팅 | 관심목록 추가 및 제거 | 프로필 | 로그아웃 |
-|:--------:|:--------:|:--------:|:--------:|
-| ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EC%B1%84%ED%8C%85.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EA%B4%80%EC%8B%AC%EB%AA%A9%EB%A1%9D%20%EC%B6%94%EA%B0%80%20%EB%B0%8F%20%EC%A0%9C%EA%B1%B0.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%ED%94%84%EB%A1%9C%ED%95%84.gif) | ![](https://github.com/street62/Home-Rent-App/blob/android_develop/screenshot/%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83.gif) |
+### 🤷‍♂ 왜 Refresh JWT?
+
+JWT를 이용할 경우 클라이언트에서 Access Token을 헤더에 넣어서 요청을 하게 되면 서버 측에서 Access Token을 확인을 하여 본인을 인증하고, 요청을 확인하게됩니다.
+그러나 서버 측에서는 Access Token만 가지고는 정말 해당 클라이언트가 맞는지 확인이 불가능합니다.
+
+그에 대한 해결책으로 저희 프로젝트에서는 Refresh Token을 이용해서 Access Token의 기간을 짧게 하고, 만료가 되면 Refresh Token과 함께 서버에 요청을 하여 Access Token을 갱신하고 다시 재요청을 보내는 방식으로 Access Token이 탈취당하더라도 금방 만료되어 다시 사용할 수 없도록 해서 피해를 최소화할 수 있도록 JWT를 갱신하는 방식을 채택하였습니다.
+
+### Client Detail
+
+안드로이드의 과제는 두 가지였습니다.
+- 유저가 알지 못하게 재로그인을 하지않아도 토큰이 갱신 될 것
+- 토큰이 갱신된 후 갱신된 토큰으로 보냈던 요청을 다시 보낼 것
+
+이 두 가지의 문제를 해결하기 위해서 Okhttp3의 Authenticator와 Coroutine의 runblocking을 사용하였습니다.
+- Access Token 만료 시 401코드가 내려옴
+- 401이 응답으로 오면 Authenticator가 자동으로 Access Token과 Refresh Token을 헤더에 넣어주는 Interceptor를 이용해서 refresh 요청을 보냄
+- 갱신된 토큰을 Appsession에 저장하고, 원래 진행하던 요청을 다시 요청
+
+갱신된 토큰을 동기화하고 갱신된 토큰으로 다신 요청을 하기위해서 runblocking을 사용하여 잠시 스레드를 정지하였습니다.
+
+
+</div>
+</details>
+
+### 📌 Flow를 이용한 다양한 기능
+
+<details>
+<summary>토글 접기/펼치기</summary>
+<div markdown="1">
+
+### 🤷‍♂️ 왜 Flow?
+
+- Coroutine Flow는 단일 값을 반환하는 suspend 함수와 다르게 순차적으로 여러값을 내보낼 수 있음
+- 실시간으로 데이터를 내보내며 값을 소비하지 않고도 처리할 수 있는 장점이 있음
+
+
+이 장점들을 이용하여 사용자의 이벤트를 받아서 처리하는 기능들을 구현하는데 Flow를 사용하였습니다.
+
+
+### Client Detail
+
+- 순간 검색기능
+    - Flow의 debounce와 양방향 데이터 바인딩을 이용해서 사용자의 검색 내용을 바탕으로 검색을 합니다.
+    - 사용자가 입력을 멈추면 해당 단어로 검색을 자동으로 시작합니다.
+    - 양방향 데이터 바인딩으로 StateFlow에 값을 저장하고, StateFlow이 일정 시간 이후에 방출한 최신의 값을 이용해서 검색을 진행
+    
+- 다중클릭 방지
+	- 좋아요 버튼같이 버튼 클릭으로 API 요청이 가는 경우 사용자가 악의(?)를 품고 연속으로 수 많은 클릭을 하게 되면 서버에 부하가 올 수도 있습니다.
+	- 따라서 이를 방지하기 위해 일정 시간동안 들어온 값 중에서 가장 첫 번째 이벤트만 발행하고 나머지는 무시하는 RxJava의 throttleFirst() 기능이 필요했습니다.
+	- 하지만 Flow에는 throttleFirst()의 기능을 하는 연산자가 없어 직접 확잠함수로 만들어 사용했습니다.
+
+```kotlin
+// 클릭 이벤트를 flow로 변환
+fun View.clicks(): Flow<Unit> = callbackFlow {
+    setOnClickListener {
+        this.trySend(Unit)
+    }
+    awaitClose { setOnClickListener(null) }
+}
+
+// 마지막 발행 시간과 현재 시간 비교해서 이벤트 발행, 나머지는 무시.
+fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
+    var lastEmissionTime = 0L
+    collect { upstream ->
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastEmissionTime > windowDuration) {
+            lastEmissionTime = currentTime
+            emit(upstream)
+        }
+```
+
+</div>
+</details>
 
 </br>
 
