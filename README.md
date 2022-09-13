@@ -336,6 +336,7 @@ SharedPreferences에 비교하여 DataStore의 장점은 이러했습니다.
 <summary>토글 접기/펼치기</summary>
 <div markdown="1">
 
+> 집넘기기🏠는 유저 인증 유지를 위해 JWT의 RefreshToken을 사용했습니다.
 
 ### 🤷‍♂ 왜 Refresh JWT?
 
@@ -367,6 +368,8 @@ JWT를 이용할 경우 클라이언트에서 Access Token을 헤더에 넣어�
 <summary>토글 접기/펼치기</summary>
 <div markdown="1">
 
+> 집넘기기🏠는 반응형 프로그래밍을 구현하기 위헤 **Flow**의 다양한 기능을 이용했습니다.	
+	
 ### 🤷‍♂️ 왜 Flow?
 
 - Coroutine Flow는 단일 값을 반환하는 suspend 함수와 다르게 순차적으로 여러값을 내보낼 수 있음
