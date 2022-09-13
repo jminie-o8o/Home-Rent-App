@@ -69,6 +69,7 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189822483-f6f6bf50-11f2-416c-85ae-3185979b0042.png" width="560" height="300"/></p>
 
 > 집넘기기🏠는 coding convention, style guide 준수를 위해 ktlint를 사용했습니다.  
+
 </br>
 
 ### 🤷‍♂️ 왜 ktlint?
@@ -119,6 +120,7 @@ private fun setDefaultResult() {
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189823885-b9eddb33-861b-4bdf-b152-01ce5fac4a7e.png" width="560" height="400"/></p>
 
 > 집넘기기🏠는 프로젝트 아키텍처 패턴으로 MVVM 패턴을 사용했습니다.
+
 </br>
 
 ### 🤷‍♂️ 왜 아키텍처 패턴?
@@ -166,6 +168,7 @@ private fun setDefaultResult() {
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189824297-fff7ce52-6b99-40fa-835a-894678bb25e5.png" width="660" height="400"/></p>
 
 > 집넘기기🏠는 의존성 주입(DI)을 위해 Hilt를 사용했습니다.
+
 </br>
 
 ### 🤷‍♂️ 의존성주입이 필요한 이유?
@@ -216,6 +219,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189824780-88d9439f-9f1d-4d69-a663-53db92c6e195.jpeg" width="660" height="350"/></p>
 
 > 집넘기기🏠는 서버에서 데이터 페이징 처리를 위해 **Paging3** 와 **Scrool Listener 를 통한 커스텀 구현** 2가지를 이용했습니다.
+
 </br>
 
 ### 🤷‍♂️ 왜 페이징인가?
@@ -288,6 +292,7 @@ fun <E> MutableStateFlow<MutableList<E>>.removeElement(element: E) {
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189825339-4e046daa-f0cb-4396-80fa-3a405027088b.jpeg" width="660" height="350"/></p>
 
 > 집넘기기🏠는 자동 로그인 구현을 위해 DataStore를 이용했습니다.
+
 </br>
 
 ### 🤷‍♂️ 왜 DataStore?
@@ -331,6 +336,7 @@ SharedPreferences에 비교하여 DataStore의 장점은 이러했습니다.
 <summary>토글 접기/펼치기</summary>
 <div markdown="1">
 
+> 집넘기기🏠는 유저 인증 유지를 위해 JWT의 RefreshToken을 사용했습니다.
 
 ### 🤷‍♂ 왜 Refresh JWT?
 
@@ -362,6 +368,8 @@ JWT를 이용할 경우 클라이언트에서 Access Token을 헤더에 넣어�
 <summary>토글 접기/펼치기</summary>
 <div markdown="1">
 
+> 집넘기기🏠는 반응형 프로그래밍을 구현하기 위헤 **Flow**의 다양한 기능을 이용했습니다.	
+	
 ### 🤷‍♂️ 왜 Flow?
 
 - Coroutine Flow는 단일 값을 반환하는 suspend 함수와 다르게 순차적으로 여러값을 내보낼 수 있음
@@ -391,6 +399,7 @@ fun View.clicks(): Flow<Unit> = callbackFlow {
     }
     awaitClose { setOnClickListener(null) }
 }
+
 // 마지막 발행 시간과 현재 시간 비교해서 이벤트 발행, 나머지는 무시.
 fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
     var lastEmissionTime = 0L
@@ -401,13 +410,16 @@ fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
             emit(upstream)
         }
 ```
+
 </div>
 </details>
+
 </br>
-  
+
 ## 시연영상
 <Blockquote>
 이미지를 클릭하면 시연영상 링크로 이동합니다. 
 </Blockquote>
  
 [![시연영상 바로가기](https://user-images.githubusercontent.com/79504043/189822255-776cf84d-057d-4f0a-8662-423253a6bd62.jpeg)](https://www.youtube.com/watch?v=EhMm6OVVgiE)
+
