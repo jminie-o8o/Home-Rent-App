@@ -375,6 +375,10 @@ JWT를 이용할 경우 클라이언트에서 Access Token을 헤더에 넣어�
 - Coroutine Flow는 단일 값을 반환하는 suspend 함수와 다르게 순차적으로 여러값을 내보낼 수 있음
 - 실시간으로 데이터를 내보내며 값을 소비하지 않고도 처리할 수 있는 장점이 있음
 
+<img width="607" alt="Flow" src="https://user-images.githubusercontent.com/79504043/189902836-daefd6b7-54d2-4cd6-867f-796b01f772ca.png">
+
+<br>
+</br>
 
 이 장점들을 이용하여 사용자의 이벤트를 받아서 처리하는 기능들을 구현하는데 Flow를 사용하였습니다.
 
@@ -422,4 +426,5 @@ fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
 </Blockquote>
  
 [![시연영상 바로가기](https://user-images.githubusercontent.com/79504043/189822255-776cf84d-057d-4f0a-8662-423253a6bd62.jpeg)](https://www.youtube.com/watch?v=EhMm6OVVgiE)
+
 
