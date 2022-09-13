@@ -8,9 +8,7 @@ import com.nextsquad.house.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -38,7 +36,8 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 @ExtendWith({RestDocumentationExtension.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-@DisplayName("")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("양수글 인수 테스트")
 public class WantedArticleAcceptanceTest {
 
     @LocalServerPort
@@ -182,6 +181,7 @@ public class WantedArticleAcceptanceTest {
                 .body("id", equalTo(13));
     }
 
+    @Order(1)
     @Test
     void 양수글_한개를_북마크에_저장한다(){
         BookmarkRequestDto request = new BookmarkRequestDto(1L, 12L);
@@ -200,6 +200,26 @@ public class WantedArticleAcceptanceTest {
                 .assertThat()
                 .body("code", equalTo(200))
                 .body("message", equalTo("북마크에 추가 되었습니다."));
+    }
+    @Order(2)
+    @Test
+    void 저장한_양수글_북마크_한개를_삭제한다(){
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 12L);
+        given(documentationSpec)
+                .filter(document("delete-wanted-article-bookmark", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .delete("houses/wanted/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("북마크가 삭제되었습니다."));
     }
 
 //    @Test // 이렇게 하면 문서까지 예쁘게 작성이 되는데 로그를 가져오는 것이라서 사실상 의미가 없지 않나...
