@@ -203,7 +203,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
 
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189824780-88d9439f-9f1d-4d69-a663-53db92c6e195.jpeg" width="660" height="350"/></p>
 
-> 집넘기기🏠는 서버에서 데이터 페이징 처리를 위해 **Paging3*8 와 *8Scrool Listener 를 통한 커스텀 구현** 2가지를 이용했습니다.
+> 집넘기기🏠는 서버에서 데이터 페이징 처리를 위해 **Paging3** 와 **Scrool Listener 를 통한 커스텀 구현** 2가지를 이용했습니다.
 
 </br>
 
