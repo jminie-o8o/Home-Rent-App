@@ -1,5 +1,6 @@
 package com.nextsquad.house.acceptance.wantedArticle;
 
+import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
@@ -181,7 +182,25 @@ public class WantedArticleAcceptanceTest {
                 .body("id", equalTo(13));
     }
 
+    @Test
+    void 양수글_한개를_북마크에_저장한다(){
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 12L);
+        given(documentationSpec)
+                .filter(document("save-wanted-article-bookmark", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
 
+                .when()
+                .post("houses/wanted/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("북마크에 추가 되었습니다."));
+    }
 
 //    @Test // 이렇게 하면 문서까지 예쁘게 작성이 되는데 로그를 가져오는 것이라서 사실상 의미가 없지 않나...
 //    void 양수글을_상세조회한다() {
