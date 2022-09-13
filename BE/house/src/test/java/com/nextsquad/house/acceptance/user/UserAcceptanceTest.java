@@ -27,6 +27,7 @@ import org.springframework.restdocs.restassured3.RestAssuredRestDocumentation;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
@@ -81,9 +82,7 @@ public class UserAcceptanceTest {
     @Test
     @DisplayName("사용자 정보를 수정한다")
     void modifyUserInfoTest() {
-        User savedUser = userRepository.save(new User());
-        Long userId = savedUser.getId();
-        UserInfoDto dto = new UserInfoDto(userId, "testName", "test.com", "MALE");
+        UserInfoDto dto = new UserInfoDto(1L, "testName", "test.com", "MALE");
         RestAssured
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -92,11 +91,114 @@ public class UserAcceptanceTest {
                 .header("access-token", token.getAccessToken().getTokenCode())
                 .body(dto)
             .when()
-                .patch("/users/{userId}", userId)
+                .patch("/users/{userId}", 1)
             .then()
                 .statusCode(HttpStatus.OK.value());
-
-        userRepository.delete(savedUser);
     }
 
+    @Test
+    @DisplayName("사용자의 양도 게시글을 출력한다")
+    void viewUserRentArticleList() {
+        RestAssured
+            .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("modify-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .header("access-token", token.getAccessToken().getTokenCode())
+            .when()
+                .get("/users/{userId}/articles/rent", 1)
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("rentArticles", hasSize(12))
+                .body("rentArticles[0].id", equalTo(1))
+                .body("rentArticles[0].address", equalTo("서울특별시 성동구")) // 이미지 추가
+                .body("rentArticles[0].availableFrom", equalTo("2022-08-01"))
+                .body("rentArticles[0].contractType", equalTo("MONTHLY"))
+                .body("rentArticles[0].createdAt", equalTo("2022-08-19T02:55:06.239433"))
+                .body("rentArticles[0].deposit", equalTo(0))
+                .body("rentArticles[0].completed", equalTo(false))
+                .body("rentArticles[0].deleted", equalTo(false))
+                .body("rentArticles[0].rentFee", equalTo(500000))
+                .body("rentArticles[0].title", equalTo("왕십리역 원룸(1000/50)"))
+                .body("rentArticles[0].bookmarked", equalTo(false));
+    }
+
+    @Test
+    @DisplayName("사용자의 양수 게시글을 출력한다")
+    void viewUserWantedArticleList() {
+        RestAssured
+            .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("modify-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .header("access-token", token.getAccessToken().getTokenCode())
+            .when()
+                .get("/users/{userId}/articles/wanted", 1)
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("wantedArticles", hasSize(12))
+                .body("wantedArticles[0].id", equalTo(1))
+                .body("wantedArticles[0].address", equalTo("서울특별시 성동구")) // 이미지 추가
+                .body("wantedArticles[0].title", equalTo("왕십리역 원룸 구합니다"))
+                .body("wantedArticles[0].content", equalTo("안녕하세요. 갑자기 왕십리 쪽에 살 일이 있어서 급하게 집 구합니다."))
+                .body("wantedArticles[0].moveInDate", equalTo("2022-08-01"))
+                .body("wantedArticles[0].moveOutDate", equalTo("2023-02-02"))
+                .body("wantedArticles[0].rentBudget", equalTo(550000))
+                .body("wantedArticles[0].depositBudget", equalTo(10000000))
+                .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:57:51"))
+                .body("wantedArticles[0].bookmarked", equalTo(false));
+    }
+
+    @Test
+    @DisplayName("사용자의 양도 게시글 북마크를 출력한다")
+    void viewUserRentBookmarkList() {
+        RestAssured
+            .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("modify-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .header("access-token", token.getAccessToken().getTokenCode())
+            .when()
+                .get("/users/{userId}/bookmarks/rent", 1)
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("rentArticles", hasSize(2))
+                .body("rentArticles[0].id", equalTo(13))
+                .body("rentArticles[0].address", equalTo("서울특별시 성동구")) // 이미지 추가
+                .body("rentArticles[0].availableFrom", equalTo("2022-08-01"))
+                .body("rentArticles[0].contractType", equalTo("MONTHLY"))
+                .body("rentArticles[0].createdAt", equalTo("2022-08-19T02:55:06.239433"))
+                .body("rentArticles[0].deposit", equalTo(0))
+                .body("rentArticles[0].completed", equalTo(false))
+                .body("rentArticles[0].deleted", equalTo(false))
+                .body("rentArticles[0].rentFee", equalTo(500000))
+                .body("rentArticles[0].title", equalTo("왕십리역 원룸(1000/50)"))
+                .body("rentArticles[0].bookmarked", equalTo(true));
+    }
+
+    @Test
+    @DisplayName("사용자의 양수 게시글 북마크를 출력한다")
+    void viewUserWantedBookmarkList() {
+        RestAssured
+            .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("modify-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .header("access-token", token.getAccessToken().getTokenCode())
+            .when()
+                .get("/users/{userId}/bookmarks/wanted", 1)
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("wantedArticles", hasSize(2))
+                .body("wantedArticles[0].id", equalTo(13))
+                .body("wantedArticles[0].address", equalTo("서울특별시 성동구")) // 이미지 추가
+                .body("wantedArticles[0].title", equalTo("왕십리역 원룸 구합니다"))
+                .body("wantedArticles[0].content", equalTo("안녕하세요. 갑자기 왕십리 쪽에 살 일이 있어서 급하게 집 구합니다."))
+                .body("wantedArticles[0].moveInDate", equalTo("2022-08-01"))
+                .body("wantedArticles[0].moveOutDate", equalTo("2023-02-02"))
+                .body("wantedArticles[0].rentBudget", equalTo(550000))
+                .body("wantedArticles[0].depositBudget", equalTo(10000000))
+                .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:57:51"))
+                .body("wantedArticles[0].bookmarked", equalTo(true));
+    }
 }
