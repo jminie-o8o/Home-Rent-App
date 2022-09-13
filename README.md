@@ -120,19 +120,19 @@ private fun setDefaultResult() {
 
 ### 🤷‍♂️ 그렇다면 왜 MVVM?
 
-MVC 패턴의 단점
+**MVC 패턴의 단점**
 - View와 Model사이의 의존성이 높다.
 - Controller가 안드로이드에 종속되기 때문에 테스트가 어려워진다.
 - Controller에 많은 코드가 모이게 되어 Activity가 비대해진다.
 - 안드로이드 특성상 Activity가 View 표시와 Controller 역할을 같이 수행해야 하기 때문에 두 요소의 결합도가 높아진다.
 
-MVP 패턴의 단점
+**MVP 패턴의 단점**
 - View와 Presenter가 1:1로 강한 의존성을 가지게 된다.
 - 각각의 View마다 Presenter가 존재하게 되어서 코드량이 많아져 유지 보수가 힘들어질 수 있다.
 
 </br>
 
-이에 비해 MVVM 패턴은 
+**이에 비해 MVVM 패턴은**
 - View와 Model 사이의 의존성이 없다.
 - View는 ViewModel을 참조하지만 ViewModel은 View를 참조하지 않는다.
 - 각각 부분이 독립적이라 모듈화 개발에 적합하다. 
@@ -203,7 +203,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
 
 <p align="center"><img src="https://user-images.githubusercontent.com/79504043/189824780-88d9439f-9f1d-4d69-a663-53db92c6e195.jpeg" width="660" height="350"/></p>
 
-> 집넘기기🏠는 서버에서 데이터를 Paging3 와 Scrool Listener 를 통한 커스텀 구현 2가지를 이용했습니다.
+> 집넘기기🏠는 서버에서 데이터 페이징 처리를 위해 **Paging3*8 와 *8Scrool Listener 를 통한 커스텀 구현** 2가지를 이용했습니다.
 
 </br>
 
