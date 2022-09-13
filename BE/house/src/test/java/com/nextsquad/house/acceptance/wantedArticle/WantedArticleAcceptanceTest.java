@@ -166,7 +166,7 @@ public class WantedArticleAcceptanceTest {
         WantedArticleRequest request = new WantedArticleRequest(1L, "글작성 테스트 주소",
                 "글쓰기 테스트", "양도글 작성 테스트 본문", LocalDate.now(), LocalDate.now(), 100, 100);
         given(documentationSpec)
-                .filter(document("update-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(document("write-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
