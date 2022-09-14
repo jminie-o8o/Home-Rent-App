@@ -347,4 +347,18 @@ public class RentArticleAcceptanceTest {
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
+
+    @Test
+    void 존재하지_않는_양도글을_상세조회_하면_예외가_발생한다(){
+        given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .get("houses/rent/22")
+
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
 }
