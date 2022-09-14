@@ -172,4 +172,22 @@ public class RentArticleAcceptanceTest {
                 .body("code", equalTo(200))
                 .body("message", equalTo("게시글이 수정되었습니다."));
     }
+
+    @Test
+    void id가_11번인_양도글을_거래완료_처리한다(){
+        given(documentationSpec)
+                .filter(document("completed-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .patch("/houses/rent/11/isCompleted")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("게시글 상태가 변경되었습니다."));
+    }
 }
