@@ -194,7 +194,7 @@ public class RentArticleAcceptanceTest {
     @Test
     void id가_11번인_양도글을_삭제한다(){
         given(documentationSpec)
-                .filter(document("completed-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(document("deleted-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
