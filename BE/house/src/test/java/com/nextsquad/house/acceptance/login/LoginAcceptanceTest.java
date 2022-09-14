@@ -9,6 +9,7 @@ import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.login.oauth.*;
 import com.nextsquad.house.login.userinfo.UserInfo;
 import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.service.RedisService;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -33,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
@@ -43,22 +45,19 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 @Transactional
 public class LoginAcceptanceTest {
     private RequestSpecification spec;
-
-    @Autowired
-    private JwtProvider jwtProvider;
-
     @LocalServerPort
     private int port;
-
+    @Autowired
+    private JwtProvider jwtProvider;
     @Autowired
     private UserRepository userRepository;
-
-    private JwtToken token;
-
-    private User user;
-
     @MockBean
     private OauthClientMapper oauthClientMapper;
+    @MockBean
+    private RedisService redisService;
+
+    private JwtToken token;
+    private User user;
 
     @BeforeEach
     void setup(RestDocumentationContextProvider restDocumentation) {
@@ -68,6 +67,11 @@ public class LoginAcceptanceTest {
         spec = new RequestSpecBuilder()
                 .addFilter(documentationConfiguration(restDocumentation))
                 .build();
+
+        Mockito.when(redisService.get(anyString())).thenReturn("accessToken");
+        Mockito.doNothing().when(redisService).save(anyString(), anyString(), anyInt());
+        Mockito.doNothing().when(redisService).save(anyString(), anyString());
+        Mockito.doNothing().when(redisService).delete(anyString());
     }
 
     @Test
@@ -92,4 +96,8 @@ public class LoginAcceptanceTest {
                 .statusCode(HttpStatus.OK.value())
                 .log();
     }
+
+
+
+
 }
