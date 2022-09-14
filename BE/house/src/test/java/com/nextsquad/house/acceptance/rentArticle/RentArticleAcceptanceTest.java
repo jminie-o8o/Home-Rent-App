@@ -209,6 +209,38 @@ public class RentArticleAcceptanceTest {
                 .body("message", equalTo("게시글이 삭제되었습니다."));
     }
 
+    @Test
+    void 양도글을_작성하고_저장하면_글id_13번을_리턴한다(){
+        List<String> images = new ArrayList<>();
+        List<String> facilities = new ArrayList<>();
+        facilities.add("에어컨");
+        List<String> securityFacilities = new ArrayList<>();
+        securityFacilities.add("공동현관");
+        RentArticleRequest request = new RentArticleRequest(1L, "대전 서구 둔산동", "둔산 하이츠",
+                "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
+                "MONTHLY", "ONEROOM", facilities, securityFacilities, 1000000, 300000,
+                140000, "전기,수도,인터넷 등 모두 포함", LocalDate.of(2022, 9, 20),
+                LocalDate.of(2023, 4,10), 10, 5, true, true, true,
+                images);
+
+        given(documentationSpec)
+                .filter(document("write-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .post("houses/rent")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("id", equalTo(13));
+
+
+    }
+
     @Order(2)
     @Test
     void id가_1번인_사용자가_id_10번_양도글을_북마크에_추가한다(){
