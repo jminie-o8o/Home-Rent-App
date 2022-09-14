@@ -87,7 +87,7 @@ public class WantedArticleAcceptanceTest {
                 .body("wantedArticles[0].moveOutDate", equalTo("2023-02-02"))
                 .body("wantedArticles[0].rentBudget", equalTo(550000))
                 .body("wantedArticles[0].depositBudget", equalTo(10000000))
-                .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:58:34.054144"))
+                .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:59:34.054144"))
                 .body("wantedArticles[0].bookmarked", equalTo(false))
                 .body("hasNext", equalTo(true));
     }
@@ -117,7 +117,7 @@ public class WantedArticleAcceptanceTest {
                 .body("moveOutDate", equalTo("2023-02-02"))
                 .body("rentBudget", equalTo(550000))
                 .body("depositBudget", equalTo(10000000))
-                .body("createdAt", equalTo("2022-08-19T02:57:51"))
+                .body("createdAt", equalTo("2022-08-19T02:58:51"))
                 .body("modifiedAt", equalTo("2022-08-19T02:57:51.892033"))
                 .body("bookmarkCount", equalTo(0))
                 .body("bookmarked", equalTo(false));
