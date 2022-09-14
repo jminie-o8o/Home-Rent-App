@@ -283,4 +283,36 @@ public class RentArticleAcceptanceTest {
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
+
+    @Test
+    void 존재하지_않는_북마크를_삭제하면_예외가_발생한다(){
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 9L);
+        given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .delete("houses/rent/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void 존재하지_않는_양도글을_북마크에서_삭제하면_예외가_발생한다(){
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 18L);
+        given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .delete("houses/rent/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
 }
