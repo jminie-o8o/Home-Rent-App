@@ -222,6 +222,22 @@ public class WantedArticleAcceptanceTest {
                 .body("message", equalTo("북마크가 삭제되었습니다."));
     }
 
+    @Test
+    void 삭제된_글을_북마크에_추가하려하면_예외가_발생한다(){
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 1L);
+        given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .post("houses/wanted/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
 //    @Test // 이렇게 하면 문서까지 예쁘게 작성이 되는데 로그를 가져오는 것이라서 사실상 의미가 없지 않나...
 //    void 양수글을_상세조회한다() {
 //        given(documentationSpec)
