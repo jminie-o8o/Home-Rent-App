@@ -209,6 +209,7 @@ public class RentArticleAcceptanceTest {
                 .body("message", equalTo("게시글이 삭제되었습니다."));
     }
 
+    @Order(2)
     @Test
     void id가_1번인_사용자가_id_10번_양도글을_북마크에_추가한다(){
         BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
@@ -247,5 +248,39 @@ public class RentArticleAcceptanceTest {
                 .assertThat()
                 .body("code", equalTo(200))
                 .body("message", equalTo("북마크가 삭제되었습니다."));
+    }
+
+    //Restdocs 생성하지 않는 테스트(예외 확인용 테스트)
+    @Test
+    void 사용자가_삭제된_11번_양도글을_북마크에_추가하면_예외가_발생한다() {
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 11L);
+        given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .post("houses/rent/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Order(3)
+    @Test
+    void 사용자가_이미_북마크에_존재하는_양도글을_다시_추가하면_예외가_발생한다(){
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .post("houses/rent/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 }
