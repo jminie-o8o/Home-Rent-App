@@ -1,14 +1,13 @@
 package com.nextsquad.house.acceptance.rentArticle;
 
+import com.nextsquad.house.dto.RentArticleRequest;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -21,6 +20,10 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -35,6 +38,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 @ExtendWith({RestDocumentationExtension.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("양도글 인수 테스트")
 public class RentArticleAcceptanceTest {
 
@@ -59,6 +63,7 @@ public class RentArticleAcceptanceTest {
         jwtToken = jwtProvider.createJwtToken(userRepository.findById(1L).get());
     }
 
+    @Order(1)
     @Test
     void 삭제되지_않은_양도글의_목록을_조회한다(){
         given(documentationSpec)
@@ -93,7 +98,7 @@ public class RentArticleAcceptanceTest {
     }
 
     @Test
-    void id가_번인_양도글을_상세조회한다(){
+    void id가_12번인_양도글을_상세조회한다(){
         given(documentationSpec)
                 .filter(document("get-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -141,4 +146,30 @@ public class RentArticleAcceptanceTest {
                 .body("bookmarked", equalTo(false));
     }
 
+    @Test
+    void id가_11번인_양도글을_수정한다(){
+        List<String> images = new ArrayList<>();
+        List<String> facilities = new ArrayList<>();
+        List<String> securityFacilities = new ArrayList<>();
+        images.add("테스트 이미지 주소");
+        RentArticleRequest request = new RentArticleRequest(1L, "테스트 주소", "테스트 주소 디테일", "주소 설명",
+                109.32, 2342.44, "제목", "내용", "MONTHLY", "ONEROOM", facilities, securityFacilities,
+                0, 340000, 50000, "전기 포함", LocalDate.now(), LocalDate.of(2023, 9, 10),
+                5, 2, false, false, false, images);
+        given(documentationSpec)
+                .filter(document("modify-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("/houses/rent/11")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("게시글이 수정되었습니다."));
+    }
 }
