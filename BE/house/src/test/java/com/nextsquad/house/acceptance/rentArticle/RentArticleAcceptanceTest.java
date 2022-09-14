@@ -1,6 +1,7 @@
 package com.nextsquad.house.acceptance.rentArticle;
 
 import com.nextsquad.house.dto.RentArticleRequest;
+import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.repository.UserRepository;
@@ -96,7 +97,6 @@ public class RentArticleAcceptanceTest {
                 .body("rentArticles[0].bookmarked", equalTo(false))
                 .body("hasNext", equalTo(true));
     }
-
     @Test
     void id가_12번인_양도글을_상세조회한다(){
         given(documentationSpec)
@@ -207,5 +207,45 @@ public class RentArticleAcceptanceTest {
                 .assertThat()
                 .body("code", equalTo(200))
                 .body("message", equalTo("게시글이 삭제되었습니다."));
+    }
+
+    @Test
+    void id가_1번인_사용자가_id_10번_양도글을_북마크에_추가한다(){
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        given(documentationSpec)
+                .filter(document("add-bookmark-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .post("houses/rent/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("북마크에 추가 되었습니다."));
+    }
+
+    @Test
+    void id가_1번인_사용자가_id_10번_양도글을_북마크에서_해제한다() {
+        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        given(documentationSpec)
+                .filter(document("delete-bookmark-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .delete("houses/rent/bookmarks")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("북마크가 삭제되었습니다."));
     }
 }
