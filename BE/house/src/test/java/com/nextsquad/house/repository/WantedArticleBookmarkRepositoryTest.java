@@ -3,7 +3,6 @@ package com.nextsquad.house.repository;
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.login.oauth.OauthClientType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,13 +51,9 @@ class WantedArticleBookmarkRepositoryTest {
 
     @BeforeEach
     void setup() {
-        user = userRepository.save(new User("tester1", "tester", "image.com", OauthClientType.KAKAO));
+        user = userRepository.findById(1L).orElseThrow();
         pageable = PageRequest.of(0, 5);
-        wantedArticle = WantedArticle.builder()
-                .user(user)
-                .build();
-        wantedArticleRepository.save(wantedArticle);
-
+        wantedArticle = wantedArticleRepository.findById(1L).orElseThrow();
     }
 
     @Test

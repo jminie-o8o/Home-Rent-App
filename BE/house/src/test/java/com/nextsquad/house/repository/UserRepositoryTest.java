@@ -36,14 +36,14 @@ class UserRepositoryTest {
 
     @BeforeEach
     void setup() {
-        user = userRepository.save(new User("tester1", "tester", "image.com", OauthClientType.KAKAO));
+        user = userRepository.findById(1L).orElseThrow();
     }
 
     @Test
     @DisplayName("account id 로 유저를 찾는다")
     void findByAccountId() {
         //given
-        String accountId = "tester1";
+        String accountId = "street62";
 
         //when
         User found = userRepository.findByAccountId(accountId).orElseThrow();
