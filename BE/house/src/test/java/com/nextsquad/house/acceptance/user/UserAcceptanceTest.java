@@ -1,7 +1,6 @@
 package com.nextsquad.house.acceptance.user;
 
 import com.nextsquad.house.config.RestDocsConfiguration;
-import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.UserInfoDto;
 import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
@@ -26,8 +25,8 @@ import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.restassured3.RestAssuredRestDocumentation;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
@@ -201,4 +200,39 @@ public class UserAcceptanceTest {
                 .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:57:51"))
                 .body("wantedArticles[0].bookmarked", equalTo(true));
     }
+
+    @Test
+    @DisplayName("이미 DB에 있는 닉네임을 넣고 중복검사를 요청하면 true가 응답된다")
+    void duplicateTrueTest() {
+        RestAssured
+            .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .param("nickname", "lee")
+                .header("access-token", token.getAccessToken().getTokenCode())
+            .when()
+                .get("/users/check-duplication")
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("isDuplicated", is(true));
+    }
+
+    @Test
+    @DisplayName("DB에 없는 닉네임을 넣고 중복검사를 요청하면 false가 응답된다")
+    void duplicateFalseTest() {
+        RestAssured
+            .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .param("nickname", "testnickname")
+                .header("access-token", token.getAccessToken().getTokenCode())
+            .when()
+                .get("/users/check-duplication")
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("isDuplicated", is(false));
+    }
+
 }
