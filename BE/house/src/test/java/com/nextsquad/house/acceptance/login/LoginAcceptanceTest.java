@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
@@ -68,7 +69,7 @@ public class LoginAcceptanceTest {
                 .addFilter(documentationConfiguration(restDocumentation))
                 .build();
 
-        Mockito.when(redisService.get(anyString())).thenReturn("accessToken");
+        Mockito.when(redisService.get(anyString())).thenReturn(null);
         Mockito.doNothing().when(redisService).save(anyString(), anyString(), anyInt());
         Mockito.doNothing().when(redisService).save(anyString(), anyString());
         Mockito.doNothing().when(redisService).delete(anyString());
@@ -88,7 +89,6 @@ public class LoginAcceptanceTest {
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .header("access-token", token.getAccessToken().getTokenCode())
                 .body(requestDto)
             .when()
                 .post("/login/oauth")
@@ -97,7 +97,54 @@ public class LoginAcceptanceTest {
                 .log();
     }
 
+    @Test
+    @DisplayName("헤더에 access-token과 refresh-token을 넣어 로그아웃 요청을 보내면 OK 응답이 온다")
+    void logoutTest() {
+        RestAssured
+            .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .header("access-token", token.getAccessToken().getTokenCode())
+                .header("refresh-token", token.getRefreshToken().getTokenCode())
+            .when()
+                .post("/logout")
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .log();
+    }
 
+    @Test
+    @DisplayName("이미 DB에 있는 닉네임을 넣고 중복검사를 요청하면 true가 응답된다")
+    void duplicateTrueTest() {
+        RestAssured
+            .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .param("nickname", "lee")
+                .header("access-token", token.getAccessToken().getTokenCode())
+            .when()
+                .get("/users/check-duplication")
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("isDuplicated", is(true));
+    }
 
-
+    @Test
+    @DisplayName("DB에 없는 닉네임을 넣고 중복검사를 요청하면 false가 응답된다")
+    void duplicateFalseTest() {
+        RestAssured
+                .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .param("nickname", "testnickname")
+                .header("access-token", token.getAccessToken().getTokenCode())
+                .when()
+                .get("/users/check-duplication")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("isDuplicated", is(false));
+    }
 }
