@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.*;
+
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
@@ -68,11 +68,6 @@ public class LoginAcceptanceTest {
         spec = new RequestSpecBuilder()
                 .addFilter(documentationConfiguration(restDocumentation))
                 .build();
-
-        Mockito.when(redisService.get(anyString())).thenReturn(null);
-        Mockito.doNothing().when(redisService).save(anyString(), anyString(), anyInt());
-        Mockito.doNothing().when(redisService).save(anyString(), anyString());
-        Mockito.doNothing().when(redisService).delete(anyString());
     }
 
     @Test
