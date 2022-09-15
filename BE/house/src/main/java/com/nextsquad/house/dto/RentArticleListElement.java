@@ -23,7 +23,6 @@ public class RentArticleListElement {
     private Integer deposit;
     private Integer rentFee;
     private LocalDate availableFrom;
-    private Integer bookmarkCount;
     private LocalDate contractExpiresAt;
     private LocalDateTime createdAt;
     private boolean isCompleted;
@@ -41,7 +40,6 @@ public class RentArticleListElement {
                 .deposit(article.getDeposit())
                 .rentFee(article.getRentFee())
                 .availableFrom(article.getAvailableFrom())
-                .bookmarkCount(article.getBookmarks().size())
                 .contractExpiresAt(article.getContractExpiresAt())
                 .createdAt(article.getCreatedAt())
                 .isCompleted(article.isCompleted())
@@ -60,7 +58,6 @@ public class RentArticleListElement {
                 .deposit(rentArticle.getDeposit())
                 .rentFee(rentArticle.getRentFee())
                 .availableFrom(rentArticle.getAvailableFrom())
-                .bookmarkCount(rentArticle.getBookmarks().size())
                 .contractExpiresAt(rentArticle.getContractExpiresAt())
                 .createdAt(rentArticle.getCreatedAt())
                 .isCompleted(rentArticle.isCompleted())
