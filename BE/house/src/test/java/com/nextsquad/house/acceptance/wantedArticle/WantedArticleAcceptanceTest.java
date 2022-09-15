@@ -79,16 +79,16 @@ public class WantedArticleAcceptanceTest {
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
                 .body("wantedArticles", hasSize(1))
-                .body("wantedArticles[0].id", equalTo(12))
+                .body("wantedArticles[0].id", equalTo(14))
                 .body("wantedArticles[0].address", equalTo("서울특별시 성동구"))
-                .body("wantedArticles[0].title", equalTo("왕십리 근처 원룸 구해요"))
-                .body("wantedArticles[0].content", equalTo("왕십리 원룸 구합니다 연락주세요."))
+                .body("wantedArticles[0].title", equalTo("왕십리역 원룸 구합니다"))
+                .body("wantedArticles[0].content", equalTo("안녕하세요. 갑자기 왕십리 쪽에 살 일이 있어서 급하게 집 구합니다."))
                 .body("wantedArticles[0].moveInDate", equalTo("2022-08-01"))
                 .body("wantedArticles[0].moveOutDate", equalTo("2023-02-02"))
                 .body("wantedArticles[0].rentBudget", equalTo(550000))
                 .body("wantedArticles[0].depositBudget", equalTo(10000000))
-                .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:59:34.054144"))
-                .body("wantedArticles[0].bookmarked", equalTo(false))
+                .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:59:52"))
+                .body("wantedArticles[0].bookmarked", equalTo(true))
                 .body("hasNext", equalTo(true));
     }
 
@@ -178,7 +178,7 @@ public class WantedArticleAcceptanceTest {
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
-                .body("id", equalTo(13));
+                .body("id", equalTo(15));
     }
 
     @Order(1)
