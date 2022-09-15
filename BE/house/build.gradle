@@ -67,7 +67,47 @@ dependencies {
 }
 
 tasks.named('test') {
+	outputs.dir snippetsDir
 	useJUnitPlatform()
+}
+
+ext {
+	snippetsDir = file('build/generated-snippets')
+}
+
+asciidoctor {
+	dependsOn test
+	inputs.dir snippetsDir
+}
+
+asciidoctor.doFirst {
+	delete file('src/main/resources/static/docs')
+}
+
+
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+	from file("build/docs/asciidoc")
+	into file("src/main/resources/static/docs")
+}
+
+build {
+	dependsOn copyDocument
+	dependsOn asciidoctor
+	copy {
+		from "${asciidoctor.outputDir}"
+		into 'src/main/resources/static/docs'
+	}
+}
+
+jar {
+	enabled = false
+}
+
+bootJar {
+	archivesBaseName = 'app'
+	archiveFileName = 'app.jar'
+	archiveVersion = "0.0.0"
 }
 
 //querydsl
@@ -85,49 +125,4 @@ configurations {
 compileQuerydsl {
 	options.annotationProcessorPath = configurations.querydsl
 }
-
-jar {
-	enabled = false
-}
-
-
-ext {
-	snippetsDir = file('build/generated-snippets')
-}
-
-test {
-	useJUnitPlatform()
-	outputs.dir snippetsDir
-}
-
-asciidoctor {
-	dependsOn test
-	inputs.dir snippetsDir
-}
-
-asciidoctor.doFirst {
-	delete file('src/main/resources/static/docs')
-}
-
-bootJar {
-	archivesBaseName = 'app'
-	archiveFileName = 'app.jar'
-	archiveVersion = "0.0.0"
-	dependsOn asciidoctor
-	copy {
-		from "${asciidoctor.outputDir}"
-		into 'src/main/resources/static/docs'
-	}
-}
-
-task copyDocument(type: Copy) {
-	dependsOn asciidoctor
-	from file("build/docs/asciidoc")
-	into file("src/main/resources/static/docs")
-}
-
-build {
-	dependsOn copyDocument
-}
-
 
