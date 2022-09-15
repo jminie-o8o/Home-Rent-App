@@ -36,6 +36,7 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.*;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
@@ -130,16 +131,35 @@ public class LoginAcceptanceTest {
     @DisplayName("DB에 없는 닉네임을 넣고 중복검사를 요청하면 false가 응답된다")
     void duplicateFalseTest() {
         RestAssured
-                .given(spec)
+            .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .param("nickname", "testnickname")
                 .header("access-token", token.getAccessToken().getTokenCode())
-                .when()
+            .when()
                 .get("/users/check-duplication")
-                .then()
+            .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("isDuplicated", is(false));
+    }
+
+    @Test
+    @DisplayName("만료된 access token과 만료되지 않은 refresh token을 헤더에 넣어 갱신을 요청하면 토큰이 갱신된다")
+    void refreshTest() {
+        Mockito.when(redisService.get(anyString())).thenReturn(token.getRefreshToken().getTokenCode());
+
+        RestAssured
+                .given(spec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .header("access-token", token.getAccessToken().getTokenCode())
+                .header("refresh-token", token.getRefreshToken().getTokenCode())
+            .when()
+                .post("/login/refresh")
+            .then()
+                .statusCode(HttpStatus.OK.value())
+                .log();
     }
 }
