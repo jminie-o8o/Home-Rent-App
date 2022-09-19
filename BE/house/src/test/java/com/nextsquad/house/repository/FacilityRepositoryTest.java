@@ -35,14 +35,10 @@ class FacilityRepositoryTest {
     @Test
     @DisplayName("findByName()을 호출하면 해당하는 이름의 Facility를 반환해야 한다.")
     public void findByNameTest() {
-        Facility facility = new Facility(null, "냉장고");
-        facilityRepository.save(facility);
-
         Facility refrigerator = facilityRepository.findByName("냉장고").orElse(null);
         assertThat(refrigerator).isNotNull();
-        assertThat(refrigerator).isEqualTo(facility);
 
-        Facility laundryMachine = facilityRepository.findByName("세탁기").orElse(null);
+        Facility laundryMachine = facilityRepository.findByName("인덕션").orElse(null);
         assertThat(laundryMachine).isNull();
     }
 
