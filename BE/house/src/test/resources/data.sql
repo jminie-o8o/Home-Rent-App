@@ -7,7 +7,7 @@ INSERT INTO facility (facility_id, name)
 VALUES ( 1, '에어컨'), ( 2, '세탁기'), ( 3, '침대'), ( 4, '냉장고'), (5, 'TV');
 
 INSERT INTO security_facility(security_facility_id, name)
-VALUES (1, 'CCTV'), (2, '비디오픈'), (3, '공동현관');
+VALUES (1, 'CCTV'), (2, '비디오폰'), (3, '공동현관');
 
 INSERT INTO wanted_article (id, address, content, created_at, deposit_budget, is_completed, is_deleted, modified_at, move_in_date, move_out_date, rent_budget, title, view_count, user_user_id)
 VALUES
