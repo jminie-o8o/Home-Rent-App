@@ -151,7 +151,7 @@ private fun setDefaultResult() {
 - View와 Model 사이의 의존성이 없음
 - View는 ViewModel을 참조하지만 ViewModel은 View를 참조하지 않음
 - 각각 부분이 독립적이라 모듈화 개발에 적합
-- DataBinding을 함께 활용하면 View와 ViewModel 간의 의존성을 낮추고 View에서 처리하는 로직을 감소시킬 수 있
+- DataBinding을 함께 활용하면 View와 ViewModel 간의 의존성을 낮추고 View에서 처리하는 로직을 감소시킬 수 있음
 
 이에 따라 집넘기기는 MVVM 패턴을 사용하게 되었습니다.
 
