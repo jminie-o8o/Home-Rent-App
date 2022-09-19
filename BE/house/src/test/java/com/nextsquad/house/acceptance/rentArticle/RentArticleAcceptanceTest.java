@@ -82,19 +82,19 @@ public class RentArticleAcceptanceTest {
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
                 .body("rentArticles", hasSize(1))
-                .body("rentArticles[0].id", equalTo(12))
-                .body("rentArticles[0].title", equalTo("왕십리 원룸(1000/65)"))
+                .body("rentArticles[0].id", equalTo(14))
+                .body("rentArticles[0].title", equalTo("왕십리역 원룸(1000/50)"))
                 .body("rentArticles[0].address", equalTo("서울특별시 성동구"))
-                .body("rentArticles[0].houseImages", hasSize(2))
+                .body("rentArticles[0].houseImages", hasSize(1))
                 .body("rentArticles[0].deposit", equalTo(0))
-                .body("rentArticles[0].rentFee", equalTo(650000))
+                .body("rentArticles[0].rentFee", equalTo(500000))
                 .body("rentArticles[0].availableFrom", equalTo("2022-08-01"))
-                .body("rentArticles[0].bookmarkCount", equalTo(0))
+                .body("rentArticles[0].bookmarkCount", equalTo(null))
                 .body("rentArticles[0].contractExpiresAt", equalTo("2023-02-02"))
-                .body("rentArticles[0].createdAt", equalTo("2022-08-19T02:59:10.736606"))
+                .body("rentArticles[0].createdAt", equalTo("2022-08-19T02:57:46.239433"))
                 .body("rentArticles[0].completed", equalTo(false))
                 .body("rentArticles[0].deleted", equalTo(false))
-                .body("rentArticles[0].bookmarked", equalTo(false))
+                .body("rentArticles[0].bookmarked", equalTo(true))
                 .body("hasNext", equalTo(true));
     }
     @Test
@@ -140,8 +140,8 @@ public class RentArticleAcceptanceTest {
                 .body("hasElevator", equalTo(true))
                 .body("houseImages", hasSize(2))
                 .body("securityFacilities", hasSize(0))
-                .body("createdAt", equalTo("2022-08-19T02:59:10.736606"))
-                .body("modifiedAt", equalTo("2022-08-19T02:59:10.736613"))
+                .body("createdAt", equalTo("2022-08-19T02:57:20.736606"))
+                .body("modifiedAt", equalTo("2022-08-19T02:56:10.736613"))
                 .body("completed", equalTo(false))
                 .body("bookmarked", equalTo(false));
     }
@@ -236,7 +236,7 @@ public class RentArticleAcceptanceTest {
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
-                .body("id", equalTo(13));
+                .body("id", equalTo(15));
 
 
     }

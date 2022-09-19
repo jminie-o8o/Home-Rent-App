@@ -21,7 +21,7 @@ public class CustomWantedArticleRepositoryImpl implements CustomWantedArticleRep
     @Override
     public List<WantedArticle> findByKeyword(SearchConditionDto searchCondition, Pageable pageable) {
 
-        List<WantedArticle> content = jpaQueryFactory
+        return jpaQueryFactory
                 .select(wantedArticle)
                 .from(wantedArticle)
                 .where(wantedArticle.isDeleted.eq(false),
@@ -32,8 +32,6 @@ public class CustomWantedArticleRepositoryImpl implements CustomWantedArticleRep
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
-
-        return content;
     }
 
     private BooleanExpression checkAddressAndTitle(String keyword) {

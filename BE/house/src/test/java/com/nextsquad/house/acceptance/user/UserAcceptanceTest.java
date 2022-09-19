@@ -166,7 +166,7 @@ public class UserAcceptanceTest {
                 .body("rentArticles[0].address", equalTo("서울특별시 성동구")) // 이미지 추가
                 .body("rentArticles[0].availableFrom", equalTo("2022-08-01"))
                 .body("rentArticles[0].contractType", equalTo("MONTHLY"))
-                .body("rentArticles[0].createdAt", equalTo("2022-08-19T02:55:06.239433"))
+                .body("rentArticles[0].createdAt", equalTo("2022-08-19T02:57:36.239433"))
                 .body("rentArticles[0].deposit", equalTo(0))
                 .body("rentArticles[0].completed", equalTo(false))
                 .body("rentArticles[0].deleted", equalTo(false))
@@ -197,7 +197,7 @@ public class UserAcceptanceTest {
                 .body("wantedArticles[0].moveOutDate", equalTo("2023-02-02"))
                 .body("wantedArticles[0].rentBudget", equalTo(550000))
                 .body("wantedArticles[0].depositBudget", equalTo(10000000))
-                .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:57:51"))
+                .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:59:51"))
                 .body("wantedArticles[0].bookmarked", equalTo(true));
     }
 
