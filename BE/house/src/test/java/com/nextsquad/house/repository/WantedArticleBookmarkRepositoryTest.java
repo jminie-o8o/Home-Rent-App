@@ -101,5 +101,20 @@ class WantedArticleBookmarkRepositoryTest {
         assertThat(listByUser.get(2).getWantedArticle().getId()).isEqualTo(wantedArticle.getId());
 
     }
-}
 
+    @Test
+    @DisplayName("유저가 찜한 글을 찜리스트에서 삭제한다")
+    void deleteByWantedArticle(){
+        //given 유저의 찜 리스트 길이를 구하고 찜한 글 하나(리스트의 0번째)를 선택한다
+        List<WantedArticleBookmark> listByUser = wantedArticleBookmarkRepository.findListByUser(user);
+        int before = listByUser.size();
+        WantedArticleBookmark bookmark = listByUser.get(0);
+
+        //when 유저가 선택한 글을 유저의 찜리스트에서 삭제하고 해당 유저의 찜리스트 길이를 구한다.
+        wantedArticleBookmarkRepository.deleteByWantedArticle(bookmark.getWantedArticle());
+        int after = wantedArticleBookmarkRepository.findListByUser(user).size();
+
+        //then 삭제 후의 찜리스트 길이는 삭제 전의 찜리스트 길이보다 1 작아야 한다.
+        assertThat(after).isEqualTo(before - 1);
+    }
+}
