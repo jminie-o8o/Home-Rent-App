@@ -6,11 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.user.User;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.impl.crypto.JwtSignatureValidator;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -66,31 +63,5 @@ public class JwtProvider {
 
     public DecodedJWT decode(String token) {
         return JWT.decode(token);
-    }
-
-    public Claims parseClaims(String token) {
-        try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (SecurityException e) {
-            log.info("⚠️Invalid JWT signature.");
-            throw new RuntimeException();
-        } catch (MalformedJwtException e) {
-            log.info("⚠️Invalid JWT token.");
-            throw new RuntimeException();
-        } catch (ExpiredJwtException e) {
-            // TODO : 만료된 토큰 처리
-            log.info("⚠️Expired JWT token.");
-            throw new RuntimeException();
-        } catch (UnsupportedJwtException e) {
-            log.info("⚠️Unsupported JWT token.");
-            throw new RuntimeException();
-        } catch (IllegalArgumentException e) {
-            log.info("⚠️JWT token compact of handler are invalid.");
-            throw new RuntimeException();
-        }
     }
 }
