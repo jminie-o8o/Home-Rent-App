@@ -3,34 +3,35 @@ package com.nextsquad.house.repository;
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.RentArticleSecurityFacility;
 import com.nextsquad.house.domain.house.SecurityFacility;
+import com.nextsquad.house.exception.ArticleNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class SecurityInHomeRepositoryTest {
 
     @Autowired
     private SecurityInHomeRepository securityInHomeRepository;
-
     @Autowired
     private RentArticleRepository rentArticleRepository;
-
     @Autowired
     private SecurityRepository securityRepository;
+    private RentArticle articleOne;
+    private RentArticle articleTwo;
 
     @TestConfiguration
     static class TestConfig {
@@ -40,20 +41,21 @@ class SecurityInHomeRepositoryTest {
         public JPAQueryFactory jpaQueryFactory(){
             return new JPAQueryFactory(em);
         }
+
+    }
+
+    @BeforeEach
+    public void articleSetup() {
+        articleOne = rentArticleRepository.findById(1L).orElseThrow(ArticleNotFoundException::new);
+        articleTwo = rentArticleRepository.findById(2L).orElseThrow(ArticleNotFoundException::new);
     }
 
     @Test
-    @DisplayName("deleteAllByRentArticle() 이 호출되면 특정 RentArticle에 해당하는 보안시설이 전부 삭제되어야 한다.")
+    @Order(1)
+    @DisplayName("securityInHome.deleteAll()을 호출하면 해당 게시글의 보안시설이 모두 삭제되어야 한다.")
     public void deleteAllByRentArticleTest() {
-        RentArticle articleOne = new RentArticle();
-        RentArticle articleTwo = new RentArticle();
-        rentArticleRepository.save(articleOne);
-        rentArticleRepository.save(articleTwo);
-
-        SecurityFacility securityOne = new SecurityFacility();
-        SecurityFacility securityTwo = new SecurityFacility();
-        securityRepository.save(securityOne);
-        securityRepository.save(securityTwo);
+        SecurityFacility securityOne = securityRepository.findById(1L).orElseThrow(EntityNotFoundException::new);
+        SecurityFacility securityTwo = securityRepository.findById(2L).orElseThrow(EntityNotFoundException::new);
 
         RentArticleSecurityFacility securityInHomeOne = new RentArticleSecurityFacility(articleOne, securityOne);
         RentArticleSecurityFacility securityInHomeTwo = new RentArticleSecurityFacility(articleOne, securityTwo);
@@ -62,6 +64,7 @@ class SecurityInHomeRepositoryTest {
         securityInHomeRepository.save(securityInHomeOne);
         securityInHomeRepository.save(securityInHomeTwo);
         securityInHomeRepository.save(securityInHomeThree);
+
         List<RentArticleSecurityFacility> before = securityInHomeRepository.findAll();
 
         securityInHomeRepository.deleteAllByRentArticle(articleOne);
@@ -74,3 +77,4 @@ class SecurityInHomeRepositoryTest {
     }
 
 }
+
