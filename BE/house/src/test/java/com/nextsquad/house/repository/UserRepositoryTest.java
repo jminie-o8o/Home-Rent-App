@@ -1,7 +1,6 @@
 package com.nextsquad.house.repository;
 
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.login.oauth.OauthClientType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
