@@ -31,6 +31,9 @@ spring:
     username: SA
     password:
 
+  test:
+    database.replace: none
+
   sql:
     init:
       mode: always
