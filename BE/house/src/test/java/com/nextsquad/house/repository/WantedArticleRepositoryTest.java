@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class WantedArticleRepositoryTest {
     @Autowired
     private WantedArticleRepository wantedArticleRepository;
@@ -72,7 +74,7 @@ class WantedArticleRepositoryTest {
         Page<WantedArticle> byUser = wantedArticleRepository.findByUser(writer, pageable);
 
         //then 목록 확인
-        assertThat(byUser.getTotalElements()).isEqualTo(9);
+        assertThat(byUser.getTotalElements()).isEqualTo(10);
     }
 
     @Test
@@ -95,7 +97,7 @@ class WantedArticleRepositoryTest {
     }
 
     @Test
-    @DisplayName("2명의 유저가 각각 10개의 글을 썼을 때 글 전체 목록 조회시 20개의 글이 반환된다")
+    @DisplayName("2명의 유저가 각각 10개의 글을 썼을 때 글 전체 목록 조회시 기존에 있던 14개의 글과 20개의 글, 총 34개의 글이 반환된다")
     void findAll(){
         //given wantedArticle 저장
         for (int i = 0; i < 10; i++) {
@@ -117,6 +119,6 @@ class WantedArticleRepositoryTest {
         Page<WantedArticle> all = wantedArticleRepository.findAll(pageable);
 
         //then 게시글 갯수 확인
-        assertThat(all.getTotalElements()).isEqualTo(20);
+        assertThat(all.getTotalElements()).isEqualTo(34);
     }
 }
