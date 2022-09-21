@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="200dp"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/iv_main_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintHeight_percent="0.92"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_launcher_background"
+            android:scaleType="fitXY"
+            android:contentDescription="mainPic" />
+
+        <ImageView
+            android:id="@+id/iv_btn_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_remove"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_close"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_main_label"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/lightBlack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintHeight_percent="0.2"
+            android:visibility="gone"
+            android:text="대표사진"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

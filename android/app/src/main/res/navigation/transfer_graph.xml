@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transfer_graph"
+    app:startDestination="@id/homeDescriptionFragment">
+
+    <fragment
+        android:id="@+id/homeDescriptionFragment"
+        android:name="com.example.home_rent_app.ui.renthome.step1.HomeDescriptionFragment"
+        android:label="fragment_first_input"
+        tools:layout="@layout/fragment_home_description" >
+
+        <action
+            android:id="@+id/action_homeDescriptionFragment_to_picChoiceFragment"
+            app:destination="@id/picChoiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/picChoiceFragment"
+        android:name="com.example.home_rent_app.ui.renthome.step2.PicChoiceFragment"
+        android:label="fragment_pic_choice"
+        tools:layout="@layout/fragment_pic_choice" >
+        <action
+            android:id="@+id/action_picChoiceFragment_to_addressSearchFragment"
+            app:destination="@id/addressSearchFragment" />
+        <action
+            android:id="@+id/action_picChoiceFragment_to_homeDescriptionFragment"
+            app:destination="@id/homeDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressSearchFragment"
+        android:name="com.example.home_rent_app.ui.renthome.step3.AddressSearchFragment"
+        android:label="fragment_address_search"
+        tools:layout="@layout/fragment_address_search" >
+        <action
+            android:id="@+id/action_addressSearchFragment_to_picChoiceFragment"
+            app:destination="@id/picChoiceFragment" />
+        <action
+            android:id="@+id/action_addressSearchFragment_to_homeDescriptionFragment"
+            app:destination="@id/homeDescriptionFragment" />
+        <action
+            android:id="@+id/action_addressSearchFragment_to_rentHomeDescriptionFragment"
+            app:destination="@id/rentHomeDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rentHomeDescriptionFragment"
+        android:name="com.example.home_rent_app.ui.renthome.step4.RentHomeDescriptionFragment"
+        android:label="fragment_rent_home_description"
+        tools:layout="@layout/fragment_rent_home_description" >
+        <action
+            android:id="@+id/action_rentHomeDescriptionFragment_to_addressSearchFragment"
+            app:destination="@id/addressSearchFragment" />
+    </fragment>
+</navigation>

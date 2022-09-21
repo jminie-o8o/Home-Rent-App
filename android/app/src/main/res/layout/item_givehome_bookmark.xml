@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="rentArticleBookmark"
+            type="com.example.home_rent_app.data.dto.RentArticleBookmark" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_thumb_nail_list"
+            android:layout_width="328dp"
+            android:layout_height="180dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/tv_upload_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_upload_date"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="43dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            formattingTime="@{rentArticleBookmark.createdAt}"
+            tools:text="4일전"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginStart="43dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/vp_thumb_nail_list"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@{rentArticleBookmark.title}"
+            tools:text="부산광역 남구 대연동"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:layout_marginStart="43dp"
+            tools:text="부경대 정문 10분거리"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_address"
+            android:layout_marginStart="43dp"
+            android:textColor="@color/black"
+            android:text="@{@string/term_of_a_contract(rentArticleBookmark.availableFrom, rentArticleBookmark.contractExpiresAt)}"
+            tools:text="7월 23일이후 - 12월 23일"/>
+
+        <TextView
+            android:id="@+id/tv_monthly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/tv_date"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="43dp"
+            priceLabelAtGiveHome="@{rentArticleBookmark}"
+            tools:text="월세 100/35"/>
+
+        <CheckBox
+            android:id="@+id/cb_recommend"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="43dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/heart_selector"
+            android:button="@android:color/transparent"
+            android:checked="false"
+            app:layout_constraintTop_toBottomOf="@id/vp_thumb_nail_list"/>
+
+        <TextView
+            android:id="@+id/tv_recommend_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cb_recommend"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="48dp"
+            android:text="@{String.valueOf(rentArticleBookmark.bookmarkCount)}"
+            tools:text="14"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_monthly"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

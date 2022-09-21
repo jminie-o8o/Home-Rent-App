@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.wanthome.step1.WantHomeFirstStepFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/abb_bar_want_home_first_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_want_home_first_step"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <ImageButton
+                    android:id="@+id/btn_close"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="btn_back"
+                    android:src="@drawable/ic_baseline_clear_26"
+                    app:tint="@color/gray03" />
+
+                <TextView
+                    android:id="@+id/tv_toolbar_title"
+                    style="@style/TextSubtitle1.18.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="방 양도받기"
+                    tools:text="방 양도받기" />
+
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/abb_bar_want_home_first_step">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_step_one"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:clickable="false"
+                android:text="@string/step_one" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_step_two"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:clickable="false"
+                android:text="@string/step_two" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/tv_date_range_want_home_first_step"
+            style="@style/TextSubtitle1.18.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="기간"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cg_step" />
+
+        <TextView
+            android:id="@+id/tv_go_in_date"
+            style="@style/TextSubtitle1.14.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="입주 희망일"
+            app:layout_constraintStart_toStartOf="@+id/tv_date_range_want_home_first_step"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_range_want_home_first_step" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/gray02"
+            app:layout_constraintStart_toEndOf="@+id/til_go_in"
+            app:layout_constraintTop_toTopOf="@+id/til_go_in" />
+
+        <TextView
+            android:id="@+id/tv_go_out_date"
+            style="@style/TextSubtitle1.14.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="107dp"
+            android:layout_marginTop="16dp"
+            android:text="퇴거 희망일"
+            app:layout_constraintStart_toEndOf="@+id/tv_go_in_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_range_want_home_first_step" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_go_in"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="156dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="4dp"
+            app:hintEnabled="false"
+            app:layout_constraintStart_toStartOf="@+id/tv_go_in_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_go_in"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_go_out"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="156dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="70dp"
+            app:hintEnabled="false"
+            app:layout_constraintStart_toStartOf="@+id/tv_go_out_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_go_in_date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_go_out"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_budget"
+            style="@style/TextSubtitle1.18.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="예산"
+            app:layout_constraintStart_toStartOf="@+id/tv_date_range_want_home_first_step"
+            app:layout_constraintTop_toBottomOf="@+id/til_go_in" />
+
+        <TextView
+            android:id="@+id/tv_deposit"
+            style="@style/TextSubtitle1.14.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="보증금(최대)"
+            app:layout_constraintStart_toStartOf="@+id/tv_date_range_want_home_first_step"
+            app:layout_constraintTop_toBottomOf="@+id/tv_budget" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_deposit"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="156dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="4dp"
+            app:hintEnabled="false"
+            app:layout_constraintStart_toStartOf="@+id/tv_deposit"
+            app:layout_constraintTop_toBottomOf="@+id/tv_deposit">
+
+            <com.example.home_rent_app.ui.custom.LabelEditText
+                android:id="@+id/et_deposit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:labelText="만원"
+                android:hint="0"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_monthly_rent"
+            style="@style/TextSubtitle1.14.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="101dp"
+            android:text="월세(최대)"
+            app:layout_constraintStart_toEndOf="@+id/tv_deposit"
+            app:layout_constraintTop_toTopOf="@+id/tv_deposit" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_monthly_rent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="156dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="4dp"
+            app:hintEnabled="false"
+            app:layout_constraintStart_toStartOf="@+id/tv_monthly_rent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_monthly_rent">
+
+            <com.example.home_rent_app.ui.custom.LabelEditText
+                android:id="@+id/et_monthly_rent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:labelText="만원"
+                android:hint="0"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_go_back"
+            android:layout_width="164dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/custom_button_background"
+            android:text="이전으로"
+            android:textColor="@color/gray03"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_go_second_step"
+            android:layout_width="164dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/custom_button_background"
+            android:text="다음으로"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
