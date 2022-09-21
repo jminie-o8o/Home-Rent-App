@@ -7,7 +7,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class RentArticleRepositoryTest {
     @Autowired
     private RentArticleRepository rentArticleRepository;
@@ -86,23 +84,9 @@ class RentArticleRepositoryTest {
 
         assertThat(collect.size()).isEqualTo(5);
 
-
         for (int i = 0; i < 5; i++) {
             assertThat(collect.get(i).isDeleted()).isFalse();
         }
-//
-//        assertThat(pages.hasNext()).isTrue();
-//        pageable = pageable.next();
-//        pages = rentArticleRepository.findByUser(user, pageable);
-//
-//        collect = pages.get().collect(Collectors.toList());
-//
-//        for (int i = 0; i < 5; i++) {
-//            assertThat(collect.get(i)).isEqualTo(articles.get(i + 5));
-//            assertThat(collect.get(i).getUser()).isEqualTo(user);
-//        }
-//
-//        assertThat(pages.hasNext()).isFalse();
     }
 
     @Test
@@ -111,13 +95,14 @@ class RentArticleRepositoryTest {
         List<RentArticle> articles = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             RentArticle article = RentArticle.builder()
+                    .title("sortedByRentFeeTest")
                     .rentFee(1000000 - (i * 1000))
                     .build();
             articles.add(article);
         }
         rentArticleRepository.saveAll(articles);
 
-        SearchConditionDto condition = new SearchConditionDto(null, "rentFee", null);
+        SearchConditionDto condition = new SearchConditionDto(null, "rentFee", "sortedByRentFeeTest");
 
         int previousRentFee = Integer.MIN_VALUE;
         PageRequest pageable = PageRequest.of(0, 10);
@@ -135,13 +120,14 @@ class RentArticleRepositoryTest {
         List<RentArticle> articles = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             RentArticle article = RentArticle.builder()
+                    .title("sortedByDepositTest")
                     .deposit(1000000 - (i * 1000))
                     .build();
             articles.add(article);
         }
         rentArticleRepository.saveAll(articles);
 
-        SearchConditionDto condition = new SearchConditionDto(null, "deposit", null);
+        SearchConditionDto condition = new SearchConditionDto(null, "deposit", "sortedByDepositTest");
 
         int previousDeposit = Integer.MIN_VALUE;
         PageRequest pageable = PageRequest.of(0, 10);
@@ -159,13 +145,14 @@ class RentArticleRepositoryTest {
         List<RentArticle> articles = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             RentArticle article = RentArticle.builder()
+                    .title("filteredByAvailableOnlyTest")
                     .isCompleted(i > 5)
                     .build();
             articles.add(article);
         }
         rentArticleRepository.saveAll(articles);
 
-        SearchConditionDto condition = new SearchConditionDto(true, null, null);
+        SearchConditionDto condition = new SearchConditionDto(true, null, "filteredByAvailableOnlyTest");
 
         PageRequest pageable = PageRequest.of(0, 10);
 
@@ -175,7 +162,7 @@ class RentArticleRepositoryTest {
             assertThat(foundArticle.isCompleted()).isFalse();
         }
 
-        condition = new SearchConditionDto(false, null, null);
+        condition = new SearchConditionDto(false, null, "filteredByAvailableOnlyTest");
         foundArticles = rentArticleRepository.findByKeyword(condition, pageable);
         assertThat(foundArticles).isEqualTo(articles);
     }
