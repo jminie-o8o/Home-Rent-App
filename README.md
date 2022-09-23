@@ -23,6 +23,10 @@
 
 </br>
 
+## 🗓 개발 기간
+- 핵심기능 구현: 2022년 7월 25~8월 26일
+- 리팩토링, 테스트코드 작성: 8월 30일 ~
+
 ## 📃 Project Rule
 
 리포지토리 내 위키에 프로젝트를 진행하면서 준수할 규칙들을 정리해놓았습니다.
@@ -419,6 +423,39 @@ fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
 </details>
 
 </br>
+    
+## 🛠 백엔드 기술 스택
+
+[https://img.shields.io/badge/GitHub-181717?style-flat-square&logo=GitHub&logoColor=white](https://img.shields.io/badge/GitHub-181717?style-flat-square&logo=GitHub&logoColor=white)
+
+### Server
+![https://img.shields.io/badge/SpringBoot-6DB33F?style-flat-square&logo=SpringBoot&logoColor=white](https://img.shields.io/badge/SpringBoot-6DB33F?style-flat-square&logo=SpringBoot&logoColor=white)
+
+### Database
+![https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style-flat-square&logo=Spring&logoColor=white](https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style-flat-square&logo=Spring&logoColor=white)
+![https://img.shields.io/badge/MySQL-4479A1?style-flat-square&logo=Spring&logoColor=white](https://img.shields.io/badge/MySQL-4479A1?style-flat-square&logo=Spring&logoColor=white)
+![https://img.shields.io/badge/Redis-DC382D?style-flat-square&logo=Redis&logoColor=white](https://img.shields.io/badge/Redis-DC382D?style-flat-square&logo=Redis&logoColor=white)
+
+### Infra
+![https://img.shields.io/badge/Amazon_EC2-FF9900?style-flat-square&logo=AmazonEC2&logoColor=white](https://img.shields.io/badge/Amazon_EC2-FF9900?style-flat-square&logo=AmazonEC2&logoColor=white)
+![https://img.shields.io/badge/Amazon_S3-569A31?style-flat-square&logo=AmazonS3&logoColor=white](https://img.shields.io/badge/Amazon_S3-569A31?style-flat-square&logo=AmazonS3&logoColor=white)
+![https://img.shields.io/badge/Docker-2496ED?style-flat-square&logo=Docker&logoColor=white](https://img.shields.io/badge/Docker-2496ED?style-flat-square&logo=Docker&logoColor=white)
+![https://img.shields.io/badge/Docker_Hub-2496ED?style-flat-square&logo=Docker&logoColor=white](https://img.shields.io/badge/Docker_Hub-2496ED?style-flat-square&logo=Docker&logoColor=white)
+![https://img.shields.io/badge/GitHub_Actions-2088FF?style-flat-square&logo=GitHubActions&logoColor=white](https://img.shields.io/badge/GitHub_Actions-2088FF?style-flat-square&logo=GitHubActions&logoColor=white)
+
+### Test
+![https://img.shields.io/badge/JUnit5-25A162?style-flat-square&logo=JUnit5&logoColor=white](https://img.shields.io/badge/JUnit5-25A162?style-flat-square&logo=JUnit5&logoColor=white)
+![https://img.shields.io/badge/Mockito-FFDD00?style-flat-square&logo=&logoColor=white](https://img.shields.io/badge/Mockito-25A162?style-flat-square&logo=&logoColor=white)
+![https://img.shields.io/badge/RestAssured-F11111?style-flat-square&logo=&logoColor=white](https://img.shields.io/badge/RestAssured-25A162?style-flat-square&logo=&logoColor=white)
+
+## 배포 아키텍쳐
+![2022-09-23_11 29 26](https://user-images.githubusercontent.com/15515249/191885482-b4cc28e6-caee-4528-9b55-d15233df0849.png)
+
+
+## 테이블 다이어그램
+![house-rent (2)](https://user-images.githubusercontent.com/15515249/191885504-f0b07328-b565-41fb-9755-9aa02973a2a8.png)
+
+
 
 ## 시연영상
 <Blockquote>
