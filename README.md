@@ -425,9 +425,6 @@ fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
 </br>
     
 ## 🛠 백엔드 기술 스택
-
-[https://img.shields.io/badge/GitHub-181717?style-flat-square&logo=GitHub&logoColor=white](https://img.shields.io/badge/GitHub-181717?style-flat-square&logo=GitHub&logoColor=white)
-
 ### Server
 ![https://img.shields.io/badge/SpringBoot-6DB33F?style-flat-square&logo=SpringBoot&logoColor=white](https://img.shields.io/badge/SpringBoot-6DB33F?style-flat-square&logo=SpringBoot&logoColor=white)
 
@@ -448,11 +445,11 @@ fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
 ![https://img.shields.io/badge/Mockito-FFDD00?style-flat-square&logo=&logoColor=white](https://img.shields.io/badge/Mockito-25A162?style-flat-square&logo=&logoColor=white)
 ![https://img.shields.io/badge/RestAssured-F11111?style-flat-square&logo=&logoColor=white](https://img.shields.io/badge/RestAssured-25A162?style-flat-square&logo=&logoColor=white)
 
-## 배포 아키텍쳐
+## 백엔드 배포 아키텍쳐
 ![2022-09-23_11 29 26](https://user-images.githubusercontent.com/15515249/191885482-b4cc28e6-caee-4528-9b55-d15233df0849.png)
 
 
-## 테이블 다이어그램
+## 백엔드 테이블 다이어그램
 ![house-rent (2)](https://user-images.githubusercontent.com/15515249/191885504-f0b07328-b565-41fb-9755-9aa02973a2a8.png)
 
 
