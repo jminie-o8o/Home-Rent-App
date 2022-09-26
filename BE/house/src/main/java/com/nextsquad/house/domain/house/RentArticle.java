@@ -49,15 +49,11 @@ public class RentArticle {
     private LocalDateTime createdAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime modifiedAt;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "house_facility_id")
+    private HouseFacility houseFacility;
     private int maxFloor;
     private int thisFloor;
-    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
-    private List<RentArticleFacility> facilities;
-    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
-    private List<RentArticleSecurityFacility> securityFacilities;
-    private boolean hasParkingLot;
-    private boolean hasBalcony;
-    private boolean hasElevator;
     private boolean isCompleted;
     private boolean isDeleted;
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
