@@ -1,11 +1,18 @@
 package com.nextsquad.house.domain.house;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class HouseFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

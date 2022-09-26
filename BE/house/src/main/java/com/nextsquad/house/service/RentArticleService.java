@@ -34,12 +34,16 @@ public class RentArticleService {
     private final SecurityRepository securityRepository;
     private final SecurityInHomeRepository securityInHomeRepository;
     private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
+
+    private final HouseFacilityRepository houseFacilityRepository;
     private final JwtProvider jwtProvider;
 
     public RentArticleCreationResponse writeRentArticle(RentArticleRequest request){
         log.info("writing {}... ", request.getTitle());
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new UserNotFoundException());
         List<String> houseImageUrls = request.getHouseImages();
+        HouseFacility houseFacility = request.extractHouseFacility();
+        houseFacilityRepository.save(houseFacility);
 
         RentArticle rentArticle = RentArticle.builder()
                 .user(user)
@@ -56,21 +60,17 @@ public class RentArticleService {
                 .addressDescription(request.getAddressDescription())
                 .latitude(request.getLatitude())
                 .longitude(request.getLongitude())
+                .houseFacility(houseFacility)
                 .content(request.getContent())
                 .contractType(ContractType.valueOf(request.getContractType()))
                 .maxFloor(request.getMaxFloor())
                 .thisFloor(request.getThisFloor())
-                .hasParkingLot(request.isHasParkingLot())
-                .hasBalcony(request.isHasBalcony())
-                .hasElevator(request.isHasElevator())
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .build();
         rentArticleRepository.save(rentArticle);
 
         saveHouseImage(rentArticle, houseImageUrls);
-        saveFacilityInHome(request.getFacilities(), rentArticle);
-        saveSecurityInHome(request.getSecurityFacilities(), rentArticle);
 
         return new RentArticleCreationResponse(rentArticle.getId());
     }
