@@ -99,9 +99,6 @@ public class RentArticle {
         this.contractExpiresAt = request.getContractExpiresAt();
         this.maxFloor = request.getMaxFloor();
         this.thisFloor = request.getThisFloor();
-        this.hasParkingLot = request.isHasParkingLot();
-        this.hasBalcony = request.isHasBalcony();
-        this.hasElevator = request.isHasElevator();
     }
 }
 

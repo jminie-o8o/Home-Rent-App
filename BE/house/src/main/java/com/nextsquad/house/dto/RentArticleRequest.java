@@ -1,5 +1,6 @@
 package com.nextsquad.house.dto;
 
+import com.nextsquad.house.domain.house.HouseFacility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,8 +23,6 @@ public class RentArticleRequest {
     private String content;
     private String contractType;
     private String houseType;
-    private List<String> facilities;
-    private List<String> securityFacilities;
     private int deposit;
     private int rentFee;
     private int maintenanceFee;
@@ -32,8 +31,23 @@ public class RentArticleRequest {
     private LocalDate contractExpiresAt;
     private int maxFloor;
     private int thisFloor;
-    private boolean hasParkingLot;
-    private boolean hasBalcony;
-    private boolean hasElevator;
     private List<String> houseImages;
+    private HouseFacilityListDto facility;
+
+
+    public HouseFacility extractHouseFacility() {
+        return HouseFacility.builder()
+                .hasAircon(facility.isHasAircon())
+                .hasBed(facility.isHasBed())
+                .hasCctv(facility.isHasCctv())
+                .hasElevator(facility.isHasElevator())
+                .hasLaundry(facility.isHasLaundry())
+                .hasLobby(facility.isHasLobby())
+                .hasParkingLot(facility.isHasParkingLot())
+                .hasRefriedge(facility.isHasRefriedge())
+                .hasTv(facility.isHasTv())
+                .hasValcony(facility.isHasValcony())
+                .hasVideoPhone(facility.isHasVideoPhone())
+                .build();
+    }
 }
