@@ -121,10 +121,13 @@ public class WantedArticleService {
         return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
     }
 
-    public GeneralResponseDto addWantedBookmark(BookmarkRequestDto bookmarkRequestDto) {
+    public GeneralResponseDto addWantedBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
         WantedArticle wantedArticle = wantedArticleRepository.findById(bookmarkRequestDto.getArticleId())
                 .orElseThrow(() -> new ArticleNotFoundException());
-        User user = userRepository.findById(bookmarkRequestDto.getUserId())
+
+        Long loginedId = jwtProvider.decode(token).getClaim("id").asLong();
+
+        User user = userRepository.findById(loginedId)
                 .orElseThrow(() -> new UserNotFoundException());
 
         if (wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, wantedArticle).isPresent()) {
@@ -142,10 +145,12 @@ public class WantedArticleService {
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
     }
 
-    public GeneralResponseDto deleteWantedBookmark(BookmarkRequestDto bookmarkRequestDto) {
+    public GeneralResponseDto deleteWantedBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
+        Long loginedId = jwtProvider.decode(token).getClaim("id").asLong();
+
         WantedArticle wantedArticle = wantedArticleRepository.findById(bookmarkRequestDto.getArticleId())
                 .orElseThrow(() -> new ArticleNotFoundException());
-        User user = userRepository.findById(bookmarkRequestDto.getUserId())
+        User user = userRepository.findById(loginedId)
                 .orElseThrow(() -> new UserNotFoundException());
         WantedArticleBookmark bookmark = wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, wantedArticle)
                 .orElseThrow(() -> new BookmarkNotFoundException());
