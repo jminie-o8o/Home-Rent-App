@@ -27,13 +27,13 @@ public class WantedArticleController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id, @RequestHeader(value = "access-token")String token) {
+    public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(wantedArticleService.getWantedArticle(id, token));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> updateWantedArticle(@PathVariable Long id, @RequestBody WantedArticleRequest request) {
-        return ResponseEntity.ok(wantedArticleService.updateWantedArticle(id, request));
+    public ResponseEntity<GeneralResponseDto> updateWantedArticle(@PathVariable Long id, @RequestBody WantedArticleRequest request, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(wantedArticleService.updateWantedArticle(id, request, token));
     }
 
     @GetMapping
@@ -43,8 +43,8 @@ public class WantedArticleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> deleteWantedArticle(@PathVariable Long id){
-        return ResponseEntity.ok(wantedArticleService.deleteWantedArticle(id));
+    public ResponseEntity<GeneralResponseDto> deleteWantedArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token){
+        return ResponseEntity.ok(wantedArticleService.deleteWantedArticle(id, token));
     }
 
     @PostMapping("/bookmarks")

@@ -2,6 +2,7 @@ package com.nextsquad.house.acceptance.wantedArticle;
 
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
+import com.nextsquad.house.exception.AccessDeniedException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.repository.UserRepository;
@@ -141,6 +142,23 @@ public class WantedArticleAcceptanceTest {
     }
 
     @Test
+    void 다른_유저의_게시글을_삭제하면_예외가_발생한다(){
+        given(documentationSpec)
+                .filter(document("delete-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .delete("houses/wanted/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
+    @Test
     void id가_2번인_양수글을_수정한다(){
         WantedArticleRequest request = new WantedArticleRequest(1L, "주소 수정 테스트", "제목 수정 테스트"
         , "내용 수정 테스트", LocalDate.now(), LocalDate.now(), 500, 20000);
@@ -159,6 +177,27 @@ public class WantedArticleAcceptanceTest {
                 .assertThat()
                 .body("code", equalTo(200))
                 .body("message", equalTo("게시글이 수정되었습니다."));
+    }
+
+    @Test
+    void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
+        WantedArticleRequest request = new WantedArticleRequest(1L, "주소 수정 테스트", "제목 수정 테스트"
+                , "내용 수정 테스트", LocalDate.now(), LocalDate.now(), 500, 20000);
+        given(documentationSpec)
+                .filter(document("update-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("houses/wanted/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
     }
 
     @Test
