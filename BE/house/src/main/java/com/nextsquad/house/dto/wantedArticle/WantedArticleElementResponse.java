@@ -24,6 +24,7 @@ public class WantedArticleElementResponse {
     private int depositBudget;
     private LocalDateTime createdAt;
     private boolean bookmarked;
+    private int bookmarkCount;
 
     public static WantedArticleElementResponse from(WantedArticle article) {
         return WantedArticleElementResponse.builder()
@@ -36,6 +37,7 @@ public class WantedArticleElementResponse {
                 .rentBudget(article.getRentBudget())
                 .depositBudget(article.getDepositBudget())
                 .createdAt(article.getCreatedAt())
+                .bookmarkCount(article.getBookmarks().size())
                 .build();
     }
 
