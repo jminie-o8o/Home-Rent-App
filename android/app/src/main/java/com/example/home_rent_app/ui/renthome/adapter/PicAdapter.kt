@@ -50,8 +50,9 @@ class PicAdapter(
             setRemoveClick()
             drag()
             drop(itemView, bindingAdapterPosition)
-            logger("bind : $bindingAdapterPosition ${itemView.id}")
+            logger("bind : $bindingAdapterPosition ${itemView.hashCode()}")
             // bind 후에 포지션이 변하지 않음
+            // submitList bind 찾아보기
         }
 
         private fun setRemoveClick() {

@@ -253,7 +253,7 @@ class PicChoiceFragment : Fragment(), PicControlListener {
                 .setHighlightColor(ContextCompat.getColor(binding.root.context, R.color.lightGray))
                 .build()
         ) { _, payload ->
-            logger("drop : $targetPosition")
+            logger("drop : ${itemView.hashCode()} $targetPosition")
             val item = payload.clip.getItemAt(0)
             val (_, remaining) = payload.partition { it == item }
 

@@ -16,7 +16,7 @@ data class RentArticleProfile(
     @field:Json(name = "availableFrom")
     val availableFrom: String,
     @field:Json(name = "bookmarkCount")
-    val bookmarkCount: Int,
+    val bookmarkCount: Int = 0,
     @field:Json(name = "completed")
     val completed: Boolean,
     @field:Json(name = "contractExpiresAt")

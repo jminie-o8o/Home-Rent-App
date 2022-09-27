@@ -162,6 +162,7 @@ class LoginProfileFragment : Fragment() {
             setUserProfile()
             val activity = activity as LoginActivity
             activity.moveToHomeActivity()
+            loginViewModel.connectUser()
         }
     }
 

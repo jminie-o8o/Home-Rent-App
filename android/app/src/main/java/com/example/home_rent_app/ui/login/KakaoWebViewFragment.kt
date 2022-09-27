@@ -66,6 +66,7 @@ class KakaoWebViewFragment : Fragment() {
             } else if (gender != Constants.GENDER_DEFAULT) {
                 val activity = activity as LoginActivity
                 activity.moveToHomeActivity()
+                viewModel.connectUser()
             }
         }
     }
