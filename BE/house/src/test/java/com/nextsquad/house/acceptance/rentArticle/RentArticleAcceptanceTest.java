@@ -174,6 +174,33 @@ public class RentArticleAcceptanceTest {
     }
 
     @Test
+    void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
+        List<String> images = new ArrayList<>();
+        List<String> facilities = new ArrayList<>();
+        List<String> securityFacilities = new ArrayList<>();
+        images.add("테스트 이미지 주소");
+        RentArticleRequest request = new RentArticleRequest(1L, "테스트 주소", "테스트 주소 디테일", "주소 설명",
+                109.32, 2342.44, "제목", "내용", "MONTHLY", "ONEROOM", facilities, securityFacilities,
+                0, 340000, 50000, "전기 포함", LocalDate.now(), LocalDate.of(2023, 9, 10),
+                5, 2, false, false, false, images);
+        given(documentationSpec)
+                .filter(document("modify-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("/houses/rent/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
+    @Test
     void id가_11번인_양도글을_거래완료_처리한다(){
         given(documentationSpec)
                 .filter(document("completed-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
@@ -192,6 +219,24 @@ public class RentArticleAcceptanceTest {
     }
 
     @Test
+    void 다른_유저의_게시글을_완료_처리하면_예외가_발생한다(){
+        given(documentationSpec)
+                .filter(document("completed-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .patch("/houses/rent/13/isCompleted")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
+    @Test
     void id가_11번인_양도글을_삭제한다(){
         given(documentationSpec)
                 .filter(document("deleted-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
@@ -207,6 +252,24 @@ public class RentArticleAcceptanceTest {
                 .assertThat()
                 .body("code", equalTo(200))
                 .body("message", equalTo("게시글이 삭제되었습니다."));
+    }
+
+    @Test
+    void 다른_유저의_게시글을_삭제하면_예외가_발생한다(){
+        given(documentationSpec)
+                .filter(document("deleted-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .delete("/houses/rent/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
     }
 
     @Test

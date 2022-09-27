@@ -34,18 +34,18 @@ public class RentArticleController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> modifyRentArticle(@PathVariable Long id, @RequestBody RentArticleRequest request) {
-        return ResponseEntity.ok(rentArticleService.modifyRentArticle(id, request));
+    public ResponseEntity<GeneralResponseDto> modifyRentArticle(@PathVariable Long id, @RequestBody RentArticleRequest request, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(rentArticleService.modifyRentArticle(id, request, token));
     }
 
     @PatchMapping("/{id}/isCompleted")
-    public ResponseEntity<GeneralResponseDto> toggleIsCompleted(@PathVariable Long id) {
-        return ResponseEntity.ok(rentArticleService.toggleIsCompleted(id));
+    public ResponseEntity<GeneralResponseDto> toggleIsCompleted(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(rentArticleService.toggleIsCompleted(id, token));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> deleteArticle(@PathVariable Long id) {
-        return ResponseEntity.ok(rentArticleService.deleteArticle(id));
+    public ResponseEntity<GeneralResponseDto> deleteArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(rentArticleService.deleteArticle(id, token));
     }
 
     @PostMapping("/bookmarks")

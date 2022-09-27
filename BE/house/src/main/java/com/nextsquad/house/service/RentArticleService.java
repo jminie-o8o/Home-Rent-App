@@ -136,16 +136,22 @@ public class RentArticleService {
         return new RentArticleResponse(rentArticle, isBookmarked);
     }
 
-    public GeneralResponseDto toggleIsCompleted(Long id) {
+    public GeneralResponseDto toggleIsCompleted(Long id, String accessToken) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException());
+
+        authorizeArticleOwner(accessToken, rentArticle);
+
         rentArticle.toggleIsCompleted();
         return new GeneralResponseDto(200, "게시글 상태가 변경되었습니다.");
     }
 
-    public GeneralResponseDto deleteArticle(Long id) {
+    public GeneralResponseDto deleteArticle(Long id, String accessToken) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException());
+
+        authorizeArticleOwner(accessToken, rentArticle);
+
         rentArticle.markAsDeleted();
         rentArticleBookmarkRepository.deleteByRentArticle(rentArticle);
         return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
@@ -180,10 +186,12 @@ public class RentArticleService {
         return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
     }
 
-    public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request) {
+    public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request, String accessToken) {
         log.info("updating {}... ", request.getTitle());
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException());
+
+        authorizeArticleOwner(accessToken, rentArticle);
 
         facilityInHomeRepository.deleteAllByRentArticle(rentArticle);
         securityInHomeRepository.deleteAllByRentArticle(rentArticle);
