@@ -5,10 +5,7 @@ import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
-import com.nextsquad.house.exception.ArticleNotFoundException;
-import com.nextsquad.house.exception.BookmarkNotFoundException;
-import com.nextsquad.house.exception.DuplicateBookmarkException;
-import com.nextsquad.house.exception.UserNotFoundException;
+import com.nextsquad.house.exception.*;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -204,6 +201,16 @@ public class RentArticleService {
     private void saveHouseImage(RentArticle rentArticle, List<String> houseImageUrls) {
         for (int i = 0; i < houseImageUrls.size(); i++) {
             houseImageRepository.save(new HouseImage(houseImageUrls.get(i), rentArticle, i));
+        }
+    }
+
+    private void authorizeArticleOwner(String accessToken, RentArticle article) {
+        Long loggedInId = jwtProvider.decode(accessToken).getClaim("id").asLong();
+        User user = userRepository.findById(loggedInId)
+                .orElseThrow(UserNotFoundException::new);
+
+        if (!user.equals(article.getUser())) {
+            throw new AccessDeniedException();
         }
     }
 }
