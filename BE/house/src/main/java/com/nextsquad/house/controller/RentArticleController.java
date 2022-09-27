@@ -49,13 +49,13 @@ public class RentArticleController {
     }
 
     @PostMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> addBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto){
-        return ResponseEntity.ok(rentArticleService.addBookmark(bookmarkRequestDto));
+    public ResponseEntity<GeneralResponseDto> addBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token){
+        return ResponseEntity.ok(rentArticleService.addBookmark(bookmarkRequestDto, token));
     }
 
     @DeleteMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> deleteBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto) {
-        return ResponseEntity.ok(rentArticleService.deleteBookmark(bookmarkRequestDto));
+    public ResponseEntity<GeneralResponseDto> deleteBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(rentArticleService.deleteBookmark(bookmarkRequestDto, token));
     }
 
 }
