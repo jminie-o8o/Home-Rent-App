@@ -89,6 +89,7 @@ public class WantedArticleAcceptanceTest {
                 .body("wantedArticles[0].depositBudget", equalTo(10000000))
                 .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:59:52"))
                 .body("wantedArticles[0].bookmarked", equalTo(true))
+                .body("wantedArticles[0].bookmarkCount", equalTo(1))
                 .body("hasNext", equalTo(true));
     }
 

@@ -89,12 +89,13 @@ public class RentArticleAcceptanceTest {
                 .body("rentArticles[0].deposit", equalTo(0))
                 .body("rentArticles[0].rentFee", equalTo(500000))
                 .body("rentArticles[0].availableFrom", equalTo("2022-08-01"))
-                .body("rentArticles[0].bookmarkCount", equalTo(null))
+                .body("rentArticles[0].bookmarkCount", equalTo(1))
                 .body("rentArticles[0].contractExpiresAt", equalTo("2023-02-02"))
                 .body("rentArticles[0].createdAt", equalTo("2022-08-19T02:57:46.239433"))
                 .body("rentArticles[0].completed", equalTo(false))
                 .body("rentArticles[0].deleted", equalTo(false))
                 .body("rentArticles[0].bookmarked", equalTo(true))
+                .body("rentArticles[0].bookmarkCount", equalTo(1))
                 .body("hasNext", equalTo(true));
     }
     @Test
