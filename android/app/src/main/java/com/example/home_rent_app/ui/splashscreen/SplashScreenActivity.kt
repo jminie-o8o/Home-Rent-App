@@ -28,22 +28,97 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
         val content: View = findViewById(android.R.id.content)
         checkIsLogin(content)
+        logger("SplashScreenActivity onCreate")
     }
+
+    override fun onStart() {
+        super.onStart()
+        logger("SplashScreenActivity onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logger("SplashScreenActivity onResume")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        logger("SplashScreenActivity onRestart")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        logger("SplashScreenActivity onStop")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        logger("SplashScreenActivity onPause")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        logger("SplashScreenActivity onDestroy")
+    }
+
+    private fun checIsLogin(content: View) {
+        collectStateFlow(viewModel.isLogin) { isLogin ->
+            when (isLogin) {
+                true -> {
+                    logger("isLogin HomeActivity: $isLogin")
+                    val intent =
+                        Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finishAffinity()
+                }
+                false -> {
+                    logger("isLogin LoginActivity: $isLogin")
+                    val intent =
+                        Intent(this@SplashScreenActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finishAffinity()
+                }
+            }
+        }
+    }
+
 
     private fun checkIsLogin(content: View) {
         collectStateFlow(viewModel.isLogin) { isLogin ->
-            content.viewTreeObserver.addOnPreDrawListener(
-                object : ViewTreeObserver.OnPreDrawListener {
-                    override fun onPreDraw(): Boolean {
-                        return when (isLogin) {
+            content.viewTreeObserver.addOnGlobalLayoutListener (
+                object : ViewTreeObserver.OnGlobalLayoutListener {
+//                    override fun onPreDraw(): Boolean {
+//                        return when (isLogin) {
+//                            true -> {
+//                                logger("isLogin HomeActivity: $isLogin")
+//                                val intent =
+//                                    Intent(this@SplashScreenActivity, HomeActivity::class.java)
+//                                startActivity(intent)
+//                                finishAffinity()
+//                                content.viewTreeObserver.removeOnPreDrawListener(this)
+//                                false
+//                            }
+//                            false -> {
+//                                logger("isLogin LoginActivity: $isLogin")
+//                                val intent =
+//                                    Intent(this@SplashScreenActivity, LoginActivity::class.java)
+//                                startActivity(intent)
+//                                finishAffinity()
+//                                content.viewTreeObserver.removeOnPreDrawListener(this)
+//                                false
+//                            }
+//                        }
+//                    }
+
+                    override fun onGlobalLayout() {
+                        when (isLogin) {
                             true -> {
                                 logger("isLogin HomeActivity: $isLogin")
                                 val intent =
                                     Intent(this@SplashScreenActivity, HomeActivity::class.java)
                                 startActivity(intent)
                                 finishAffinity()
-                                content.viewTreeObserver.removeOnPreDrawListener(this)
-                                false
+                                content.viewTreeObserver.removeOnGlobalLayoutListener(this)
                             }
                             false -> {
                                 logger("isLogin LoginActivity: $isLogin")
@@ -51,8 +126,7 @@ class SplashScreenActivity : AppCompatActivity() {
                                     Intent(this@SplashScreenActivity, LoginActivity::class.java)
                                 startActivity(intent)
                                 finishAffinity()
-                                content.viewTreeObserver.removeOnPreDrawListener(this)
-                                false
+                                content.viewTreeObserver.removeOnGlobalLayoutListener(this)
                             }
                         }
                     }
@@ -61,3 +135,4 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 }
+
