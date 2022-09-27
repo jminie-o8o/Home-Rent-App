@@ -5,10 +5,7 @@ import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
-import com.nextsquad.house.exception.ArticleNotFoundException;
-import com.nextsquad.house.exception.BookmarkNotFoundException;
-import com.nextsquad.house.exception.DuplicateBookmarkException;
-import com.nextsquad.house.exception.UserNotFoundException;
+import com.nextsquad.house.exception.*;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -139,23 +136,31 @@ public class RentArticleService {
         return new RentArticleResponse(rentArticle, isBookmarked);
     }
 
-    public GeneralResponseDto toggleIsCompleted(Long id) {
+    public GeneralResponseDto toggleIsCompleted(Long id, String accessToken) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException());
+
+        authorizeArticleOwner(accessToken, rentArticle);
+
         rentArticle.toggleIsCompleted();
         return new GeneralResponseDto(200, "게시글 상태가 변경되었습니다.");
     }
 
-    public GeneralResponseDto deleteArticle(Long id) {
+    public GeneralResponseDto deleteArticle(Long id, String accessToken) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException());
+
+        authorizeArticleOwner(accessToken, rentArticle);
+
         rentArticle.markAsDeleted();
         rentArticleBookmarkRepository.deleteByRentArticle(rentArticle);
         return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
     }
 
-    public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto) {
-        User user = userRepository.findById(bookmarkRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException());
+    public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
+        Long loginedId = jwtProvider.decode(token).getClaim("id").asLong();
+
+        User user = userRepository.findById(loginedId).orElseThrow(() -> new UserNotFoundException());
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new ArticleNotFoundException());
 
         if (rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle).isPresent()) {
@@ -172,8 +177,10 @@ public class RentArticleService {
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
     }
 
-    public GeneralResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequestDto) {
-        User user = userRepository.findById(bookmarkRequestDto.getUserId())
+    public GeneralResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
+        Long loginedId = jwtProvider.decode(token).getClaim("id").asLong();
+
+        User user = userRepository.findById(loginedId)
                 .orElseThrow(() -> new UserNotFoundException());
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId())
                 .orElseThrow(() -> new ArticleNotFoundException());
@@ -183,10 +190,12 @@ public class RentArticleService {
         return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
     }
 
-    public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request) {
+    public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request, String accessToken) {
         log.info("updating {}... ", request.getTitle());
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException());
+
+        authorizeArticleOwner(accessToken, rentArticle);
 
         facilityInHomeRepository.deleteAllByRentArticle(rentArticle);
         securityInHomeRepository.deleteAllByRentArticle(rentArticle);
@@ -204,6 +213,16 @@ public class RentArticleService {
     private void saveHouseImage(RentArticle rentArticle, List<String> houseImageUrls) {
         for (int i = 0; i < houseImageUrls.size(); i++) {
             houseImageRepository.save(new HouseImage(houseImageUrls.get(i), rentArticle, i));
+        }
+    }
+
+    private void authorizeArticleOwner(String accessToken, RentArticle article) {
+        Long loggedInId = jwtProvider.decode(accessToken).getClaim("id").asLong();
+        User user = userRepository.findById(loggedInId)
+                .orElseThrow(UserNotFoundException::new);
+
+        if (!user.equals(article.getUser())) {
+            throw new AccessDeniedException();
         }
     }
 }

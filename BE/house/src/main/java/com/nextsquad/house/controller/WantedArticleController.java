@@ -27,13 +27,13 @@ public class WantedArticleController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id, @RequestHeader(value = "access-token")String token) {
+    public ResponseEntity<WantedArticleResponse> getWantedArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(wantedArticleService.getWantedArticle(id, token));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> updateWantedArticle(@PathVariable Long id, @RequestBody WantedArticleRequest request) {
-        return ResponseEntity.ok(wantedArticleService.updateWantedArticle(id, request));
+    public ResponseEntity<GeneralResponseDto> updateWantedArticle(@PathVariable Long id, @RequestBody WantedArticleRequest request, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(wantedArticleService.updateWantedArticle(id, request, token));
     }
 
     @GetMapping
@@ -43,18 +43,18 @@ public class WantedArticleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> deleteWantedArticle(@PathVariable Long id){
-        return ResponseEntity.ok(wantedArticleService.deleteWantedArticle(id));
+    public ResponseEntity<GeneralResponseDto> deleteWantedArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token){
+        return ResponseEntity.ok(wantedArticleService.deleteWantedArticle(id, token));
     }
 
     @PostMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> addWantedBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto) {
-        return ResponseEntity.ok(wantedArticleService.addWantedBookmark(bookmarkRequestDto));
+    public ResponseEntity<GeneralResponseDto> addWantedBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(wantedArticleService.addWantedBookmark(bookmarkRequestDto, token));
     }
 
     @DeleteMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> deleteWantedBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto) {
-        return ResponseEntity.ok(wantedArticleService.deleteWantedBookmark(bookmarkRequestDto));
+    public ResponseEntity<GeneralResponseDto> deleteWantedBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(wantedArticleService.deleteWantedBookmark(bookmarkRequestDto, token));
     }
 
 }

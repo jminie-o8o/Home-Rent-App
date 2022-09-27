@@ -50,4 +50,9 @@ public class RuntimeExceptionHandler {
     public ResponseEntity<GeneralResponseDto> handleDuplicateBookmarkException(DuplicateBookmarkException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GeneralResponseDto(400, e.getMessage()));
     }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public ResponseEntity<GeneralResponseDto> handleAccessDeniedException(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GeneralResponseDto(401, e.getMessage()));
+    }
 }
