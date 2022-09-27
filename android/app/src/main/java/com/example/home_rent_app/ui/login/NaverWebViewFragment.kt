@@ -63,6 +63,7 @@ class NaverWebViewFragment : Fragment() {
             } else {
                 val activity = activity as LoginActivity
                 activity.moveToHomeActivity()
+                viewModel.connectUser()
             }
         }
     }

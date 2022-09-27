@@ -21,12 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
@@ -54,6 +49,9 @@ class LoginViewModel @Inject constructor(
     private val _gender = MutableStateFlow<String>(GENDER_DEFAULT)
     val gender: StateFlow<String?> get() = _gender
 
+    private val _userId = MutableStateFlow(-1)
+    val userId = _userId.asStateFlow()
+
     private val _error = MutableSharedFlow<CEHModel>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -76,13 +74,12 @@ class LoginViewModel @Inject constructor(
     private fun setUserSession(userId: Int) {
         viewModelScope.launch(exceptionHandler) {
             loginRepository.setUserIdAtUserSession(userId)
-            getUserInfo(userId)
         }
     }
 
-    private fun getUserInfo(userId: Int) {
+    fun connectUser() {
         viewModelScope.launch {
-            loginProfileRepository.connectUserInfo(userId) { name, image ->
+            loginProfileRepository.connectUserInfo(userId.value) { name, image ->
                 connectUser(name, image) // 채팅 관련
             }
         }
@@ -198,7 +195,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun checkLogin() {
+    private fun checkLogin() {
         viewModelScope.launch(exceptionHandler) {
             loginRepository.getIsLogin().collect { isLogin ->
                 if (isLogin) { // 자동로그인이 되어있는 경우
