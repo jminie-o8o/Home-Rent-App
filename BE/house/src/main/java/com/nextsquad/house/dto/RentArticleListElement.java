@@ -28,6 +28,7 @@ public class RentArticleListElement {
     private boolean isCompleted;
     private boolean isDeleted;
     private boolean bookmarked;
+    private int bookmarkCount;
 
     public static RentArticleListElement from(RentArticle article) {
 
@@ -44,6 +45,7 @@ public class RentArticleListElement {
                 .createdAt(article.getCreatedAt())
                 .isCompleted(article.isCompleted())
                 .isDeleted(article.isDeleted())
+                .bookmarkCount(article.getBookmarks().size())
                 .build();
     }
 
