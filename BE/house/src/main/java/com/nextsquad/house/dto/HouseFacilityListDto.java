@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Accessors(fluent = true)
 @Getter
 public class HouseFacilityListDto {
     private boolean hasParkingLot;
