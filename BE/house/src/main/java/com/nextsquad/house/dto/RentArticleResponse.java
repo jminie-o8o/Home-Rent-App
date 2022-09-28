@@ -2,8 +2,6 @@ package com.nextsquad.house.dto;
 
 import com.nextsquad.house.domain.house.HouseImage;
 import com.nextsquad.house.domain.house.RentArticle;
-import com.nextsquad.house.domain.house.RentArticleFacility;
-import com.nextsquad.house.domain.house.RentArticleSecurityFacility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +26,6 @@ public class RentArticleResponse {
     private String content;
     private String contractType;
     private String houseType;
-    private List<String> facilities;
     private int deposit;
     private int rentFee;
     private int maintenanceFee;
@@ -38,11 +35,8 @@ public class RentArticleResponse {
     private int bookmarkCount;
     private int maxFloor;
     private int thisFloor;
-    private boolean hasParkingLot;
-    private boolean hasBalcony;
-    private boolean hasElevator;
+    private HouseFacilityListDto houseFacility;
     private List<String> houseImages;
-    private List<String> securityFacilities;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime createdAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
@@ -64,7 +58,6 @@ public class RentArticleResponse {
         this.content = rentArticle.getContent();
         this.contractType = String.valueOf(rentArticle.getContractType());
         this.houseType = String.valueOf(rentArticle.getHouseType());
-        this.facilities = convertFacilityList(rentArticle.getFacilities());
         this.deposit = rentArticle.getDeposit();
         this.rentFee = rentArticle.getRentFee();
         this.maintenanceFee = rentArticle.getMaintenanceFee();
@@ -74,37 +67,18 @@ public class RentArticleResponse {
         this.bookmarkCount = rentArticle.getBookmarks().size();
         this.maxFloor = rentArticle.getMaxFloor();
         this.thisFloor = rentArticle.getThisFloor();
-        this.hasParkingLot = rentArticle.isHasParkingLot();
-        this.hasBalcony = rentArticle.isHasBalcony();
-        this.hasElevator = rentArticle.isHasElevator();
+        this.houseFacility = HouseFacilityListDto.from(rentArticle.getHouseFacility());
         this.houseImages = convertHouseImageList(rentArticle.getHouseImages());
-        this.securityFacilities = convertSecurityFacilityList(rentArticle.getSecurityFacilities());
         this.createdAt = rentArticle.getCreatedAt();
         this.modifiedAt = rentArticle.getModifiedAt();
         this.isCompleted = rentArticle.isCompleted();
         this.isBookmarked = isBookmarked;
     }
 
-    private static List<String> convertFacilityList(List<RentArticleFacility> facilityList){
-        List<String> list = new ArrayList<>();
-        for (RentArticleFacility rentArticleFacility : facilityList) {
-            list.add(rentArticleFacility.getFacility().getName());
-        }
-        return list;
-    }
-
     private static List<String> convertHouseImageList(List<HouseImage> houseImageList) {
         List<String> list = new ArrayList<>();
         for (HouseImage houseImage : houseImageList) {
             list.add(houseImage.getImageUrl());
-        }
-        return list;
-    }
-
-    private static List<String> convertSecurityFacilityList(List<RentArticleSecurityFacility> securityFacilityList) {
-        List<String> list = new ArrayList<>();
-        for (RentArticleSecurityFacility securityFacility : securityFacilityList) {
-            list.add(securityFacility.getSecurityFacility().getName());
         }
         return list;
     }
