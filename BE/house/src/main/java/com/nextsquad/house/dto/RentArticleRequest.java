@@ -37,17 +37,17 @@ public class RentArticleRequest {
 
     public HouseFacility extractHouseFacility() {
         return HouseFacility.builder()
-                .hasAircon(facility.isHasAircon())
-                .hasBed(facility.isHasBed())
-                .hasCctv(facility.isHasCctv())
-                .hasElevator(facility.isHasElevator())
-                .hasLaundry(facility.isHasLaundry())
-                .hasLobby(facility.isHasLobby())
-                .hasParkingLot(facility.isHasParkingLot())
-                .hasRefriedge(facility.isHasRefriedge())
-                .hasTv(facility.isHasTv())
-                .hasValcony(facility.isHasValcony())
-                .hasVideoPhone(facility.isHasVideoPhone())
+경                .hasAircon(facility.hasAircon())
+                .hasBed(facility.hasBed())
+                .hasCctv(facility.hasCctv())
+                .hasElevator(facility.hasElevator())
+                .hasLaundry(facility.hasLaundry())
+                .hasLobby(facility.hasLobby())
+                .hasParkingLot(facility.hasParkingLot())
+                .hasFridge(facility.hasFridge())
+                .hasTv(facility.hasTv())
+                .hasBalcony(facility.hasBalcony())
+                .hasVideoPhone(facility.hasVideoPhone())
                 .build();
     }
 }

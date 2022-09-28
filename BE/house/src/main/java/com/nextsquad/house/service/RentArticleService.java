@@ -201,8 +201,8 @@ public class RentArticleService {
         securityInHomeRepository.deleteAllByRentArticle(rentArticle);
         houseImageRepository.deleteAllByArticle(rentArticle);
 
-        saveFacilityInHome(request.getFacilities(), rentArticle);
-        saveSecurityInHome(request.getSecurityFacilities(), rentArticle);
+//        saveFacilityInHome(request.getFacilities(), rentArticle);
+//        saveSecurityInHome(request.getSecurityFacilities(), rentArticle);
         saveHouseImage(rentArticle, request.getHouseImages());
 
         rentArticle.modifyArticle(request);
