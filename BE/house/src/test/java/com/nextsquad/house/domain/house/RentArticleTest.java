@@ -90,11 +90,7 @@ class RentArticleTest {
                 .modifiedAt(LocalDateTime.now())
                 .maxFloor(5)
                 .thisFloor(3)
-                .facilities(new ArrayList<>())
                 .bookmarks(new ArrayList<>())
-                .hasParkingLot(true)
-                .hasBalcony(true)
-                .hasElevator(true)
                 .isCompleted(false)
                 .isDeleted(false)
                 .build();
@@ -122,9 +118,9 @@ class RentArticleTest {
         assertThat(article.getContractExpiresAt()).isNull();
         assertThat(article.getMaxFloor()).isEqualTo(0);
         assertThat(article.getThisFloor()).isEqualTo(0);
-        assertThat(article.isHasParkingLot()).isEqualTo(false);
-        assertThat(article.isHasBalcony()).isEqualTo(false);
-        assertThat(article.isHasElevator()).isEqualTo(false);
+//        assertThat(article.isHasParkingLot()).isEqualTo(false);
+//        assertThat(article.isHasBalcony()).isEqualTo(false);
+//        assertThat(article.isHasElevator()).isEqualTo(false);
 
         assertThat(article.getUser()).isEqualTo(user);
         assertThat(article.getViewCount()).isEqualTo(VIEW_COUNT);
