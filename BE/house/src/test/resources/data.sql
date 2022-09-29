@@ -3,12 +3,6 @@ VALUES
 ( 1, 'street62',  'lee', 'KAKAO', 'lucas.com', 'MALE'),
 ( 2, 'honux77',  'honux', 'KAKAO', 'lucas.com', 'MALE');
 
--- INSERT INTO facility (facility_id, name)
--- VALUES ( 1, '에어컨'), ( 2, '세탁기'), ( 3, '침대'), ( 4, '냉장고'), (5, 'TV');
---
--- INSERT INTO security_facility(security_facility_id, name)
--- VALUES (1, 'CCTV'), (2, '비디오폰'), (3, '공동현관');
-
 INSERT INTO house_facility(id, has_parking_lot,has_balcony, has_elevator,has_aircon, has_laundry, has_bed, has_fridge, has_tv, has_cctv, has_video_phone, has_lobby)
 VALUES (1, true, true, true, true, false, false, false, false, true, true, false),
  (2, true, true, true, true, false, false, false, false, true, true, false),

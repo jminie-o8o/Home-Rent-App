@@ -28,13 +28,8 @@ public class RentArticleService {
 
     private final RentArticleRepository rentArticleRepository;
     private final UserRepository userRepository;
-    private final FacilityRepository facilityRepository;
-    private final FacilityInHomeRepository facilityInHomeRepository;
     private final HouseImageRepository houseImageRepository;
-    private final SecurityRepository securityRepository;
-    private final SecurityInHomeRepository securityInHomeRepository;
     private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
-
     private final HouseFacilityRepository houseFacilityRepository;
     private final JwtProvider jwtProvider;
 
