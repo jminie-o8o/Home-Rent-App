@@ -32,4 +32,19 @@ public class HouseFacility {
     private boolean hasCctv;
     private boolean hasVideoPhone;
     private boolean hasLobby;
+
+    public void updateHouseFacility(HouseFacility facility) {
+        this.hasAircon = facility.hasAircon();
+        this.hasBed = facility.hasBed();
+        this.hasCctv = facility.hasCctv();
+        this.hasElevator = facility.hasElevator();
+        this.hasLaundry = facility.hasLaundry();
+        this.hasLobby = facility.hasLobby();
+        this.hasParkingLot = facility.hasParkingLot();
+        this.hasFridge = facility.hasFridge();
+        this.hasTv = facility.hasTv();
+        this.hasBalcony = facility.hasBalcony();
+        this.hasVideoPhone = facility.hasVideoPhone();
+    }
 }
+

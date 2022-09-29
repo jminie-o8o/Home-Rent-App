@@ -154,59 +154,59 @@ public class RentArticleAcceptanceTest {
                 .body("bookmarked", equalTo(false));
     }
 
-//    @Test
-//    void id가_11번인_양도글을_수정한다(){
-//        List<String> images = new ArrayList<>();
-//        List<String> facilities = new ArrayList<>();
-//        List<String> securityFacilities = new ArrayList<>();
-//        images.add("테스트 이미지 주소");
-////        RentArticleRequest request = new RentArticleRequest(1L, "테스트 주소", "테스트 주소 디테일", "주소 설명",
-////                109.32, 2342.44, "제목", "내용", "MONTHLY", "ONEROOM", facilities, securityFacilities,
-////                0, 340000, 50000, "전기 포함", LocalDate.now(), LocalDate.of(2023, 9, 10),
-////                5, 2, false, false, false, images);
-//        given(documentationSpec)
-//                .filter(document("modify-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-//                .accept(MediaType.APPLICATION_JSON_VALUE)
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .header("access-token", jwtToken.getAccessToken().getTokenCode())
-////                .body(request)
-//
-//                .when()
-//                .patch("/houses/rent/11")
-//
-//                .then()
-//                .statusCode(HttpStatus.OK.value())
-//                .assertThat()
-//                .body("code", equalTo(200))
-//                .body("message", equalTo("게시글이 수정되었습니다."));
-//    }
+    @Test
+    void id가_11번인_양도글을_수정한다(){
+        List<String> images = new ArrayList<>();
 
-//    @Test
-//    void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
-//        List<String> images = new ArrayList<>();
-//        List<String> facilities = new ArrayList<>();
-//        List<String> securityFacilities = new ArrayList<>();
-//        images.add("테스트 이미지 주소");
-//        RentArticleRequest request = new RentArticleRequest(1L, "테스트 주소", "테스트 주소 디테일", "주소 설명",
-//                109.32, 2342.44, "제목", "내용", "MONTHLY", "ONEROOM", facilities, securityFacilities,
-//                0, 340000, 50000, "전기 포함", LocalDate.now(), LocalDate.of(2023, 9, 10),
-//                5, 2, false, false, false, images);
-//        given(documentationSpec)
-//                .filter(document("modify-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-//                .accept(MediaType.APPLICATION_JSON_VALUE)
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .header("access-token", jwtToken.getAccessToken().getTokenCode())
-//                .body(request)
-//
-//                .when()
-//                .patch("/houses/rent/13")
-//
-//                .then()
-//                .statusCode(HttpStatus.UNAUTHORIZED.value())
-//                .assertThat()
-//                .body("code", equalTo(401))
-//                .body("message", equalTo("접근 권한이 없습니다."));
-//    }
+        HouseFacilityListDto facility = new HouseFacilityListDto(true, true, true, true, true, false, false, false, false, false, false);
+        RentArticleRequest request = new RentArticleRequest(1L, "대전 서구 둔산동", "둔산 하이츠",
+                "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
+                "MONTHLY", "ONEROOM", 1000000, 300000,
+                140000, "전기,수도,인터넷 등 모두 포함", LocalDate.of(2022, 9, 20),
+                LocalDate.of(2023, 4,10), 10, 5, images, facility);
+
+        given(documentationSpec)
+                .filter(document("modify-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("/houses/rent/11")
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("code", equalTo(200))
+                .body("message", equalTo("게시글이 수정되었습니다."));
+    }
+
+    @Test
+    void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
+        List<String> images = new ArrayList<>();
+        HouseFacilityListDto facility = new HouseFacilityListDto(true, true, true, true, true, false, false, false, false, false, false);
+        RentArticleRequest request = new RentArticleRequest(1L, "대전 서구 둔산동", "둔산 하이츠",
+                "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
+                "MONTHLY", "ONEROOM", 1000000, 300000,
+                140000, "전기,수도,인터넷 등 모두 포함", LocalDate.of(2022, 9, 20),
+                LocalDate.of(2023, 4,10), 10, 5, images, facility);
+        given(documentationSpec)
+                .filter(document("modify-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("/houses/rent/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
 
     @Test
     void id가_11번인_양도글을_거래완료_처리한다(){

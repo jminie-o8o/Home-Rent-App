@@ -75,21 +75,6 @@ public class RentArticleService {
         return new RentArticleCreationResponse(rentArticle.getId());
     }
 
-    private void saveSecurityInHome(List<String> securityFacilities, RentArticle rentArticle) {
-        for (String securityFacilityName : securityFacilities) {
-            SecurityFacility securityFacility = securityRepository.findByName(securityFacilityName)
-                    .orElseThrow(() -> new RuntimeException());
-            securityInHomeRepository.save(new RentArticleSecurityFacility(rentArticle, securityFacility));
-        }
-    }
-
-    private void saveFacilityInHome(List<String> facilities, RentArticle rentArticle) {
-        for (String facilityName : facilities) {
-            Facility facility = facilityRepository.findByName(facilityName)
-                    .orElseThrow(() -> new RuntimeException());
-            facilityInHomeRepository.save(new RentArticleFacility(rentArticle, facility));
-        }
-    }
 
     public RentArticleListResponse getRentArticles(SearchConditionDto searchCondition, Pageable pageable, String token) {
 
@@ -197,12 +182,9 @@ public class RentArticleService {
 
         authorizeArticleOwner(accessToken, rentArticle);
 
-        facilityInHomeRepository.deleteAllByRentArticle(rentArticle);
-        securityInHomeRepository.deleteAllByRentArticle(rentArticle);
-        houseImageRepository.deleteAllByArticle(rentArticle);
+        rentArticle.getHouseFacility().updateHouseFacility(request.extractHouseFacility());
 
-//        saveFacilityInHome(request.getFacilities(), rentArticle);
-//        saveSecurityInHome(request.getSecurityFacilities(), rentArticle);
+        houseImageRepository.deleteAllByArticle(rentArticle);
         saveHouseImage(rentArticle, request.getHouseImages());
 
         rentArticle.modifyArticle(request);
