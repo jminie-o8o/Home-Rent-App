@@ -1,6 +1,5 @@
 package com.nextsquad.house.service;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
@@ -58,16 +57,11 @@ public class RentArticleService {
         User user = getUserFromAccessToken(token);
 
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
-        Map<Long, Boolean> bookmarkHashMap = new HashMap<Long, Boolean>();
-        for (RentArticleBookmark rentArticleBookmark : listByUser) {
-            bookmarkHashMap.put(rentArticleBookmark.getRentArticle().getId(), true);
-        }
+        Map<Long, Boolean> bookmarkHashMap = getBookmarkedArticleMap(listByUser);
 
         List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(searchCondition, pageable);
-        boolean hasNext = hasNext(pageable, rentArticles);
-        if (hasNext) {
-            rentArticles = rentArticles.subList(0, rentArticles.size()-1);
-        }
+        boolean hasNext = checkHasNext(pageable, rentArticles);
+
         List<RentArticleListElement> responseElements = rentArticles.stream()
                 .map(RentArticleListElement::from)
                 .peek(element -> {element.setBookmarked(bookmarkHashMap.get(element.getId()) != null);})
@@ -157,14 +151,26 @@ public class RentArticleService {
         return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
     }
 
+    private boolean checkHasNext(Pageable pageable, List<RentArticle> rentArticles) {
+        boolean checkHasNext = pageable.getPageSize() < rentArticles.size();
+        if (checkHasNext) {
+            rentArticles.remove(rentArticles.size() - 1);
+        }
+        return checkHasNext;
+    }
+
+    private Map<Long, Boolean> getBookmarkedArticleMap(List<RentArticleBookmark> listByUser) {
+        Map<Long, Boolean> bookmarkHashMap = new HashMap<Long, Boolean>();
+        for (RentArticleBookmark rentArticleBookmark : listByUser) {
+            bookmarkHashMap.put(rentArticleBookmark.getRentArticle().getId(), true);
+        }
+        return bookmarkHashMap;
+    }
+
     private User getUserFromAccessToken(String token) {
         Long id = jwtProvider.decode(token).getClaim("id").asLong();
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
         return user;
-    }
-
-    private boolean hasNext(Pageable pageable, List<RentArticle> rentArticles) {
-        return pageable.getPageSize() < rentArticles.size();
     }
 
     private void saveHouseImage(RentArticle rentArticle, List<String> houseImageUrls) {
