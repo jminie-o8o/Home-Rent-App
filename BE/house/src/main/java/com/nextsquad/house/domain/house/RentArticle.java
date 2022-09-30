@@ -56,8 +56,12 @@ public class RentArticle {
     private int thisFloor;
     private boolean isCompleted;
     private boolean isDeleted;
+
+    @Builder.Default
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<HouseImage> houseImages = new ArrayList<>();
+
+    @Builder.Default
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<RentArticleBookmark> bookmarks = new ArrayList<>();
 
