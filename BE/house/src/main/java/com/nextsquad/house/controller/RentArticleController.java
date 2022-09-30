@@ -22,8 +22,8 @@ public class RentArticleController {
     private final RentArticleService rentArticleService;
 
     @PostMapping
-    public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@RequestBody RentArticleRequest rentArticleRequest){
-        return ResponseEntity.ok(rentArticleService.writeRentArticle(rentArticleRequest));
+    public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@RequestBody RentArticleRequest rentArticleRequest, @RequestHeader(value = "access-token") String token){
+        return ResponseEntity.ok(rentArticleService.writeRentArticle(rentArticleRequest, token));
     }
 
     @GetMapping
@@ -34,7 +34,7 @@ public class RentArticleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<RentArticleResponse> getRentArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
-        return ResponseEntity.ok(rentArticleService.getRentArticle(id, token));
+        return ResponseEntity.ok(rentArticleService.generateRentArticle(id, token));
     }
 
     @PatchMapping("/{id}")

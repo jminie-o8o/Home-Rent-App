@@ -38,36 +38,14 @@ public class RentArticleService {
     private final HouseFacilityRepository houseFacilityRepository;
     private final JwtProvider jwtProvider;
 
-    public RentArticleCreationResponse writeRentArticle(RentArticleRequest request){
-        log.info("writing {}... ", request.getTitle());
-        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new UserNotFoundException());
+    public RentArticleCreationResponse writeRentArticle(RentArticleRequest request, String token){
+        User user = getUserFromAccessToken(token);
+
         List<String> houseImageUrls = request.getHouseImages();
         HouseFacility houseFacility = request.extractHouseFacility();
         houseFacilityRepository.save(houseFacility);
 
-        RentArticle rentArticle = RentArticle.builder()
-                .user(user)
-                .title(request.getTitle())
-                .houseType(HouseType.valueOf(request.getHouseType()))
-                .rentFee(request.getRentFee())
-                .deposit(request.getDeposit())
-                .availableFrom(request.getAvailableFrom())
-                .contractExpiresAt(request.getContractExpiresAt())
-                .maintenanceFee(request.getMaintenanceFee())
-                .maintenanceFeeDescription(request.getMaintenanceFeeDescription())
-                .address(request.getAddress())
-                .addressDetail(request.getAddressDetail())
-                .addressDescription(request.getAddressDescription())
-                .latitude(request.getLatitude())
-                .longitude(request.getLongitude())
-                .houseFacility(houseFacility)
-                .content(request.getContent())
-                .contractType(ContractType.valueOf(request.getContractType()))
-                .maxFloor(request.getMaxFloor())
-                .thisFloor(request.getThisFloor())
-                .createdAt(LocalDateTime.now())
-                .modifiedAt(LocalDateTime.now())
-                .build();
+        RentArticle rentArticle = generateRentArticle(request, user, houseFacility);
         rentArticleRepository.save(rentArticle);
 
         saveHouseImage(rentArticle, houseImageUrls);
@@ -75,13 +53,10 @@ public class RentArticleService {
         return new RentArticleCreationResponse(rentArticle.getId());
     }
 
-
     public RentArticleListResponse getRentArticles(SearchConditionDto searchCondition, Pageable pageable, String token) {
 
-        //유저로 찜리스트 조회
-        DecodedJWT decode = jwtProvider.decode(token);
-        Long id = decode.getClaim("id").asLong();
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+        User user = getUserFromAccessToken(token);
+
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
         Map<Long, Boolean> bookmarkHashMap = new HashMap<Long, Boolean>();
         for (RentArticleBookmark rentArticleBookmark : listByUser) {
@@ -101,20 +76,14 @@ public class RentArticleService {
         return new RentArticleListResponse(responseElements, hasNext);
     }
 
-    private boolean hasNext(Pageable pageable, List<RentArticle> rentArticles) {
-        return pageable.getPageSize() < rentArticles.size();
-    }
-
-    public RentArticleResponse getRentArticle(Long id, String token){
+    public RentArticleResponse generateRentArticle(Long id, String token){
         RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new ArticleNotFoundException());
         if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
             throw new IllegalArgumentException("삭제되었거나 거래가 완료된 글입니다.");
         }
         rentArticle.addViewCount();
 
-        Long userId = jwtProvider.decode(token).getClaim("id").asLong();
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException());
+        User user = getUserFromAccessToken(token);
 
         boolean isBookmarked = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle).isPresent();
 
@@ -143,9 +112,7 @@ public class RentArticleService {
     }
 
     public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
-        Long loginedId = jwtProvider.decode(token).getClaim("id").asLong();
-
-        User user = userRepository.findById(loginedId).orElseThrow(() -> new UserNotFoundException());
+        User user = getUserFromAccessToken(token);
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new ArticleNotFoundException());
 
         if (rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle).isPresent()) {
@@ -163,10 +130,8 @@ public class RentArticleService {
     }
 
     public GeneralResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
-        Long loginedId = jwtProvider.decode(token).getClaim("id").asLong();
+        User user = getUserFromAccessToken(token);
 
-        User user = userRepository.findById(loginedId)
-                .orElseThrow(() -> new UserNotFoundException());
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId())
                 .orElseThrow(() -> new ArticleNotFoundException());
         RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle)
@@ -192,6 +157,16 @@ public class RentArticleService {
         return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
     }
 
+    private User getUserFromAccessToken(String token) {
+        Long id = jwtProvider.decode(token).getClaim("id").asLong();
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+        return user;
+    }
+
+    private boolean hasNext(Pageable pageable, List<RentArticle> rentArticles) {
+        return pageable.getPageSize() < rentArticles.size();
+    }
+
     private void saveHouseImage(RentArticle rentArticle, List<String> houseImageUrls) {
         for (int i = 0; i < houseImageUrls.size(); i++) {
             houseImageRepository.save(new HouseImage(houseImageUrls.get(i), rentArticle, i));
@@ -206,5 +181,32 @@ public class RentArticleService {
         if (!user.equals(article.getUser())) {
             throw new AccessDeniedException();
         }
+    }
+
+    private RentArticle generateRentArticle(RentArticleRequest request, User user, HouseFacility houseFacility) {
+        RentArticle rentArticle = RentArticle.builder()
+                .user(user)
+                .title(request.getTitle())
+                .houseType(HouseType.valueOf(request.getHouseType()))
+                .rentFee(request.getRentFee())
+                .deposit(request.getDeposit())
+                .availableFrom(request.getAvailableFrom())
+                .contractExpiresAt(request.getContractExpiresAt())
+                .maintenanceFee(request.getMaintenanceFee())
+                .maintenanceFeeDescription(request.getMaintenanceFeeDescription())
+                .address(request.getAddress())
+                .addressDetail(request.getAddressDetail())
+                .addressDescription(request.getAddressDescription())
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
+                .houseFacility(houseFacility)
+                .content(request.getContent())
+                .contractType(ContractType.valueOf(request.getContractType()))
+                .maxFloor(request.getMaxFloor())
+                .thisFloor(request.getThisFloor())
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build();
+        return rentArticle;
     }
 }
