@@ -1,7 +1,7 @@
 package com.nextsquad.house.domain.house;
 
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.RentArticleRequest;
+import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

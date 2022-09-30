@@ -1,4 +1,4 @@
-package com.nextsquad.house.dto;
+package com.nextsquad.house.dto.login;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nextsquad.house.login.oauth.OauthClientType;

@@ -3,7 +3,7 @@ package com.nextsquad.house.domain.user;
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.RentArticleBookmark;
 import com.nextsquad.house.domain.house.WantedArticle;
-import com.nextsquad.house.dto.UserInfoDto;
+import com.nextsquad.house.dto.user.UserInfoDto;
 import com.nextsquad.house.login.oauth.OauthClientType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

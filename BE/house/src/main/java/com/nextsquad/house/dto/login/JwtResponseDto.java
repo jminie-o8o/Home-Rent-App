@@ -1,6 +1,7 @@
-package com.nextsquad.house.dto;
+package com.nextsquad.house.dto.login;
 
 import com.nextsquad.house.domain.user.User;
+import com.nextsquad.house.dto.user.UserInfoDto;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.login.jwt.Token;
 import lombok.AllArgsConstructor;

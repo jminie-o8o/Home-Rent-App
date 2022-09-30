@@ -1,4 +1,4 @@
-package com.nextsquad.house.repository;
+package com.nextsquad.house.repository.wantedarticle;
 
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.dto.SearchConditionDto;
@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static com.nextsquad.house.domain.house.QRentArticle.rentArticle;
 import static com.nextsquad.house.domain.house.QWantedArticle.wantedArticle;
 
 @Slf4j

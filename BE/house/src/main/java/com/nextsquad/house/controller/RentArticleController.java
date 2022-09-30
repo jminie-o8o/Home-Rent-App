@@ -2,6 +2,10 @@ package com.nextsquad.house.controller;
 
 import com.nextsquad.house.dto.*;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.dto.rentarticle.RentArticleCreationResponse;
+import com.nextsquad.house.dto.rentarticle.RentArticleListResponse;
+import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
+import com.nextsquad.house.dto.rentarticle.RentArticleResponse;
 import com.nextsquad.house.service.RentArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.nextsquad.house.dto;
+package com.nextsquad.house.dto.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,12 +1,10 @@
 package com.nextsquad.house.login.oauth;
 
 import com.google.gson.Gson;
-import com.nextsquad.house.dto.GithubAccessTokenResponseDto;
+import com.nextsquad.house.dto.login.GithubAccessTokenResponseDto;
 import com.nextsquad.house.login.userinfo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;

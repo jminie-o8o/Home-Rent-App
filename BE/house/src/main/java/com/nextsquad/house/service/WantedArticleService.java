@@ -1,7 +1,6 @@
 package com.nextsquad.house.service;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
@@ -11,9 +10,9 @@ import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
 import com.nextsquad.house.dto.wantedArticle.*;
 import com.nextsquad.house.exception.*;
 import com.nextsquad.house.login.jwt.JwtProvider;
-import com.nextsquad.house.repository.UserRepository;
-import com.nextsquad.house.repository.WantedArticleBookmarkRepository;
-import com.nextsquad.house.repository.WantedArticleRepository;
+import com.nextsquad.house.repository.user.UserRepository;
+import com.nextsquad.house.repository.wantedarticle.WantedArticleBookmarkRepository;
+import com.nextsquad.house.repository.wantedarticle.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.nextsquad.house.dto.wantedArticle;
 
 import com.nextsquad.house.domain.house.WantedArticle;
-import com.nextsquad.house.dto.UserInfoDto;
+import com.nextsquad.house.dto.user.UserInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

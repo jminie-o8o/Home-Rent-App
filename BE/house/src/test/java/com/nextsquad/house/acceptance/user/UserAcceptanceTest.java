@@ -1,11 +1,11 @@
 package com.nextsquad.house.acceptance.user;
 
 import com.nextsquad.house.config.RestDocsConfiguration;
-import com.nextsquad.house.dto.UserInfoDto;
+import com.nextsquad.house.dto.user.UserInfoDto;
 import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
-import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.repository.user.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;

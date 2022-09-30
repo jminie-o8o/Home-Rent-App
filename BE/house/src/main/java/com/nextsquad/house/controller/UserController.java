@@ -1,10 +1,9 @@
 package com.nextsquad.house.controller;
 
-import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.dto.GeneralResponseDto;
-import com.nextsquad.house.dto.RentArticleListResponse;
-import com.nextsquad.house.dto.UserInfoDto;
-import com.nextsquad.house.dto.UserResponseDto;
+import com.nextsquad.house.dto.rentarticle.RentArticleListResponse;
+import com.nextsquad.house.dto.user.UserInfoDto;
+import com.nextsquad.house.dto.user.UserResponseDto;
 import com.nextsquad.house.dto.user.DuplicationCheckResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.service.UserService;

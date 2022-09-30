@@ -1,18 +1,13 @@
 package com.nextsquad.house.login.oauth;
 
-import com.google.gson.Gson;
-import com.nextsquad.house.dto.KakaoAccessTokenResponseDto;
-import com.nextsquad.house.dto.KakaoUserInfoDto;
-import com.nextsquad.house.dto.NaverUserInfoDto;
+import com.nextsquad.house.dto.login.KakaoAccessTokenResponseDto;
+import com.nextsquad.house.dto.login.KakaoUserInfoDto;
 import com.nextsquad.house.login.userinfo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
-import java.util.Map;
 
 @Slf4j
 public class KakaoOauthClient extends OauthClient {

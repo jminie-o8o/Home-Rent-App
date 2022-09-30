@@ -1,13 +1,11 @@
 package com.nextsquad.house.controller;
 
-import com.nextsquad.house.dto.JwtResponseDto;
-import com.nextsquad.house.dto.OauthLoginRequestDto;
+import com.nextsquad.house.dto.login.JwtResponseDto;
+import com.nextsquad.house.dto.login.OauthLoginRequestDto;
 import com.nextsquad.house.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.NoSuchAlgorithmException;
 
 @RequiredArgsConstructor
 @RestController

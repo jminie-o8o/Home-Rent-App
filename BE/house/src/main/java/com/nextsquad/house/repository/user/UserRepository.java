@@ -1,4 +1,4 @@
-package com.nextsquad.house.repository;
+package com.nextsquad.house.repository.user;
 
 import com.nextsquad.house.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,13 +1,11 @@
 package com.nextsquad.house.login.oauth;
 
-import com.nextsquad.house.dto.NaverAccessTokenResponseDto;
-import com.nextsquad.house.dto.NaverUserInfoDto;
+import com.nextsquad.house.dto.login.NaverAccessTokenResponseDto;
+import com.nextsquad.house.dto.login.NaverUserInfoDto;
 import com.nextsquad.house.login.userinfo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;

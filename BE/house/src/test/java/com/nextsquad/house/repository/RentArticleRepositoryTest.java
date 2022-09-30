@@ -3,6 +3,8 @@ package com.nextsquad.house.repository;
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.SearchConditionDto;
+import com.nextsquad.house.repository.rentarticle.RentArticleRepository;
+import com.nextsquad.house.repository.user.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

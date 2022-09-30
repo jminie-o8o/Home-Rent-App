@@ -1,4 +1,4 @@
-package com.nextsquad.house.repository;
+package com.nextsquad.house.repository.rentarticle;
 
 import com.nextsquad.house.domain.house.HouseFacility;
 import org.springframework.data.repository.CrudRepository;

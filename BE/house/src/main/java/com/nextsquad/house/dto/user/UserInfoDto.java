@@ -1,6 +1,5 @@
-package com.nextsquad.house.dto;
+package com.nextsquad.house.dto.user;
 
-import com.nextsquad.house.domain.user.Gender;
 import com.nextsquad.house.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,8 @@
-package com.nextsquad.house.dto;
+package com.nextsquad.house.dto.rentarticle;
 
 import com.nextsquad.house.domain.house.HouseImage;
 import com.nextsquad.house.domain.house.RentArticle;
+import com.nextsquad.house.dto.user.UserInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

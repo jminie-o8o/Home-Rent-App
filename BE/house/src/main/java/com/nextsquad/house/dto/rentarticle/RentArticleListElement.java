@@ -1,4 +1,4 @@
-package com.nextsquad.house.dto;
+package com.nextsquad.house.dto.rentarticle;
 
 import com.nextsquad.house.domain.house.ContractType;
 import com.nextsquad.house.domain.house.RentArticle;
