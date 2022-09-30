@@ -60,7 +60,7 @@ VALUES
 
 
 
-INSERT INTO  house_image (house_image_id, image_url, order_in_list, rent_article_id)
+INSERT INTO  house_image (id, image_url, order_in_list, rent_article_id)
 VALUES
 (1, 'https://house-image-bucket.s3.ap-northeast-2.amazonaws.com/david-schultz-q3809Vl_XDY-unsplash.jpg', 1, 1),
 (2, 'https://house-image-bucket.s3.ap-northeast-2.amazonaws.com/erick-palacio-_B9J6abAHPA-unsplash.jpg', 2, 1),
