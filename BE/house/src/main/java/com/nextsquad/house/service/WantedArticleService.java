@@ -7,7 +7,10 @@ import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.GeneralResponseDto;
 import com.nextsquad.house.dto.SearchConditionDto;
 import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
-import com.nextsquad.house.dto.wantedArticle.*;
+import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
+import com.nextsquad.house.dto.wantedArticle.WantedArticleResponse;
 import com.nextsquad.house.exception.*;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.repository.user.UserRepository;
@@ -22,7 +25,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,7 +49,7 @@ public class WantedArticleService {
         User user = getUserFromAccessToken(token);
 
         WantedArticle article = wantedArticleRepository.findById(articleId)
-                .orElseThrow(() -> new ArticleNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
         if (article.isDeleted()) {
             throw new IllegalArgumentException("삭제된 글 입니다.");
         }
@@ -73,7 +75,7 @@ public class WantedArticleService {
 
     public GeneralResponseDto deleteWantedArticle(Long id, String accessToken) {
         WantedArticle wantedArticle = wantedArticleRepository.findById(id)
-                .orElseThrow(() -> new ArticleNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
 
         authorizeArticleOwner(accessToken, wantedArticle);
 
@@ -84,7 +86,7 @@ public class WantedArticleService {
 
     public GeneralResponseDto updateWantedArticle(Long id, WantedArticleRequest request, String accessToken) {
         WantedArticle article = wantedArticleRepository.findById(id)
-                .orElseThrow(() -> new ArticleNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
 
         authorizeArticleOwner(accessToken, article);
 
@@ -94,7 +96,7 @@ public class WantedArticleService {
 
     public GeneralResponseDto addWantedBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
         WantedArticle wantedArticle = wantedArticleRepository.findById(bookmarkRequestDto.getArticleId())
-                .orElseThrow(() -> new ArticleNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
 
         User user = getUserFromAccessToken(token);
 
@@ -102,29 +104,31 @@ public class WantedArticleService {
             throw new DuplicateBookmarkException();
         }
 
-        if (wantedArticle.isDeleted()) {
-            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
-        }
-        if (wantedArticle.isCompleted()) {
-            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
-        }
+        checkIsAvailable(wantedArticle);
 
         wantedArticleBookmarkRepository.save(new WantedArticleBookmark(user, wantedArticle));
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
     }
 
     public GeneralResponseDto deleteWantedBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
-        Long loginedId = jwtProvider.decode(token).getClaim("id").asLong();
+        User user = getUserFromAccessToken(token);
 
         WantedArticle wantedArticle = wantedArticleRepository.findById(bookmarkRequestDto.getArticleId())
-                .orElseThrow(() -> new ArticleNotFoundException());
-        User user = userRepository.findById(loginedId)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
         WantedArticleBookmark bookmark = wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, wantedArticle)
-                .orElseThrow(() -> new BookmarkNotFoundException());
+                .orElseThrow(BookmarkNotFoundException::new);
 
         wantedArticleBookmarkRepository.delete(bookmark);
         return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
+    }
+
+    private void checkIsAvailable(WantedArticle wantedArticle) {
+        if (wantedArticle.isDeleted()) {
+            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
+        }
+        if (wantedArticle.isCompleted()) {
+            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
+        }
     }
 
     private void authorizeArticleOwner(String accessToken, WantedArticle article) {
@@ -140,7 +144,7 @@ public class WantedArticleService {
     private User getUserFromAccessToken(String token) {
         DecodedJWT decode = jwtProvider.decode(token);
         Long id = decode.getClaim("id").asLong();
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         return user;
     }
 
