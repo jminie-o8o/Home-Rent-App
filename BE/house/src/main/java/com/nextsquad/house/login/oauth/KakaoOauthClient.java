@@ -19,7 +19,7 @@ public class KakaoOauthClient extends OauthClient {
     protected String getAccessToken(String authCode) {
         KakaoAccessTokenResponseDto rawToken = webClient.post()
                 .uri(authServerUrl, uriBuilder -> uriBuilder
-                        .queryParam("client_id", "9dc5e51153cd29428199781510c17a32")
+                        .queryParam("client_id", clientId)
                         .queryParam("redirect_url", "http://52.79.243.28:8080/login/oauth/callback")
                         .queryParam("code", authCode)
                         .queryParam("grant_type", "authorization_code")
