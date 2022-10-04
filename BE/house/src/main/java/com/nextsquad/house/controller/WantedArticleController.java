@@ -21,8 +21,8 @@ public class WantedArticleController {
     private final WantedArticleService wantedArticleService;
 
     @PostMapping
-    public ResponseEntity<SavedWantedArticleResponse> writeWantedArticle(@RequestBody WantedArticleRequest request) {
-        return ResponseEntity.ok(wantedArticleService.writeWantedArticle(request));
+    public ResponseEntity<SavedWantedArticleResponse> writeWantedArticle(@RequestBody WantedArticleRequest request, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(wantedArticleService.writeWantedArticle(request, token));
     }
 
 
