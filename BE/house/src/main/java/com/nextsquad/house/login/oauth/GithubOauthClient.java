@@ -48,7 +48,7 @@ public class GithubOauthClient implements OauthClient {
                 .bodyToFlux(GithubAccessTokenResponseDto.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return parseToken(rawToken.getAccessToken());
     }
 
@@ -61,7 +61,7 @@ public class GithubOauthClient implements OauthClient {
                 .bodyToFlux(String.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return convertToUserInfoFrom(response);
     }
 

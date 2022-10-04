@@ -52,7 +52,7 @@ public class NaverOauthClient implements OauthClient {
                 .bodyToFlux(NaverAccessTokenResponseDto.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return parseToken(rawToken.getAccessToken());
     }
 
@@ -65,7 +65,7 @@ public class NaverOauthClient implements OauthClient {
                 .bodyToFlux(NaverUserInfoDto.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return infoDto.toUserInfo();
     }
 

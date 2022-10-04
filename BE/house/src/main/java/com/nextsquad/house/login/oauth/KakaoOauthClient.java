@@ -47,7 +47,7 @@ public class KakaoOauthClient implements OauthClient {
                 .bodyToFlux(KakaoAccessTokenResponseDto.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return parseToken(rawToken.getAccessToken());
     }
 
@@ -60,7 +60,7 @@ public class KakaoOauthClient implements OauthClient {
                 .bodyToFlux(KakaoUserInfoDto.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return infoDto.toUserInfo();
     }
 
