@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -53,7 +52,6 @@ public class RentArticleService {
     }
 
     public RentArticleListResponse getRentArticles(SearchConditionDto searchCondition, Pageable pageable, String token) {
-
         User user = getUserFromAccessToken(token);
 
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
@@ -62,12 +60,7 @@ public class RentArticleService {
         List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(searchCondition, pageable);
         boolean hasNext = checkHasNext(pageable, rentArticles);
 
-        List<RentArticleListElement> responseElements = rentArticles.stream()
-                .map(RentArticleListElement::from)
-                .peek(element -> {element.setBookmarked(bookmarkHashMap.get(element.getId()) != null);})
-                .collect(Collectors.toList());
-
-        return new RentArticleListResponse(responseElements, hasNext);
+        return RentArticleListResponse.of(rentArticles, bookmarkHashMap, hasNext);
     }
 
     public RentArticleResponse generateRentArticle(Long id, String token){
