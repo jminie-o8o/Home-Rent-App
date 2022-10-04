@@ -5,18 +5,33 @@ import com.nextsquad.house.dto.login.KakaoUserInfoDto;
 import com.nextsquad.house.login.userinfo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 
 @Slf4j
-public class KakaoOauthClient extends OauthClient {
-    public KakaoOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
-        super(clientId, authServerUrl, resourceServerUrl, secretKey);
-    }
+public class KakaoOauthClient implements OauthClient {
+    private final String clientId;
+    private final String authServerUrl;
+    private final String resourceServerUrl;
+    private final String secretKey;
+    private final WebClient webClient = WebClient.create();
 
     @Override
-    protected String getAccessToken(String authCode) {
+    public UserInfo getUserInfo(String authCode) {
+        String accessToken = getAccessToken(authCode);
+        return getOauthUserInfo(accessToken);
+    }
+
+    public KakaoOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
+        this.clientId = clientId;
+        this.authServerUrl = authServerUrl;
+        this.resourceServerUrl = resourceServerUrl;
+        this.secretKey = secretKey;
+    }
+
+    private String getAccessToken(String authCode) {
         KakaoAccessTokenResponseDto rawToken = webClient.post()
                 .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("client_id", clientId)
@@ -36,8 +51,7 @@ public class KakaoOauthClient extends OauthClient {
         return parseToken(rawToken.getAccessToken());
     }
 
-    @Override
-    protected UserInfo getOauthUserInfo(String accessToken) {
+    private UserInfo getOauthUserInfo(String accessToken) {
         KakaoUserInfoDto infoDto = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)
@@ -50,8 +64,7 @@ public class KakaoOauthClient extends OauthClient {
         return infoDto.toUserInfo();
     }
 
-    @Override
-    protected String parseToken(String rawToken) {
+    private String parseToken(String rawToken) {
         return String.format("Bearer %s", rawToken);
     }
 }
