@@ -64,7 +64,7 @@ public class RentArticleService {
     }
 
     public RentArticleResponse generateRentArticle(Long id, String token){
-        RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(() -> new ArticleNotFoundException());
+        RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(ArticleNotFoundException::new);
         if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
             throw new IllegalArgumentException("삭제되었거나 거래가 완료된 글입니다.");
         }
@@ -100,7 +100,7 @@ public class RentArticleService {
 
     public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
         User user = getUserFromAccessToken(token);
-        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(() -> new ArticleNotFoundException());
+        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(ArticleNotFoundException::new);
 
         if (rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle).isPresent()) {
             throw new DuplicateBookmarkException();
@@ -157,7 +157,7 @@ public class RentArticleService {
     }
 
     private Map<Long, Boolean> getBookmarkedArticleMap(List<RentArticleBookmark> listByUser) {
-        Map<Long, Boolean> bookmarkHashMap = new HashMap<Long, Boolean>();
+        Map<Long, Boolean> bookmarkHashMap = new HashMap<>();
         for (RentArticleBookmark rentArticleBookmark : listByUser) {
             bookmarkHashMap.put(rentArticleBookmark.getRentArticle().getId(), true);
         }
@@ -166,8 +166,7 @@ public class RentArticleService {
 
     private User getUserFromAccessToken(String token) {
         Long id = jwtProvider.decode(token).getClaim("id").asLong();
-        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        return user;
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     private void saveHouseImage(RentArticle rentArticle, List<String> houseImageUrls) {
@@ -187,7 +186,7 @@ public class RentArticleService {
     }
 
     private RentArticle generateRentArticle(RentArticleRequest request, User user, HouseFacility houseFacility) {
-        RentArticle rentArticle = RentArticle.builder()
+        return RentArticle.builder()
                 .user(user)
                 .title(request.getTitle())
                 .houseType(HouseType.valueOf(request.getHouseType()))
@@ -210,6 +209,5 @@ public class RentArticleService {
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .build();
-        return rentArticle;
     }
 }
