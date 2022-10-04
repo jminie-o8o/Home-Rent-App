@@ -86,7 +86,7 @@ public class RentArticleService {
 
     public GeneralResponseDto toggleIsCompleted(Long id, String accessToken) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
-                .orElseThrow(() -> new ArticleNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
 
         authorizeArticleOwner(accessToken, rentArticle);
 
@@ -96,7 +96,7 @@ public class RentArticleService {
 
     public GeneralResponseDto deleteArticle(Long id, String accessToken) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
-                .orElseThrow(() -> new ArticleNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
 
         authorizeArticleOwner(accessToken, rentArticle);
 
@@ -113,12 +113,7 @@ public class RentArticleService {
             throw new DuplicateBookmarkException();
         }
 
-        if (rentArticle.isDeleted()) {
-            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
-        }
-        if (rentArticle.isCompleted()) {
-            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
-        }
+        checkIsAvailable(rentArticle);
         rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
         return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
     }
@@ -127,9 +122,9 @@ public class RentArticleService {
         User user = getUserFromAccessToken(token);
 
         RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId())
-                .orElseThrow(() -> new ArticleNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
         RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle)
-                .orElseThrow(() -> new BookmarkNotFoundException());
+                .orElseThrow(BookmarkNotFoundException::new);
         rentArticleBookmarkRepository.delete(bookmark);
         return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
     }
@@ -137,7 +132,7 @@ public class RentArticleService {
     public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request, String accessToken) {
         log.info("updating {}... ", request.getTitle());
         RentArticle rentArticle = rentArticleRepository.findById(id)
-                .orElseThrow(() -> new ArticleNotFoundException());
+                .orElseThrow(ArticleNotFoundException::new);
 
         authorizeArticleOwner(accessToken, rentArticle);
 
@@ -149,6 +144,15 @@ public class RentArticleService {
         rentArticle.modifyArticle(request);
 
         return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
+    }
+
+    private void checkIsAvailable(RentArticle rentArticle) {
+        if (rentArticle.isDeleted()) {
+            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
+        }
+        if (rentArticle.isCompleted()) {
+            throw new IllegalArgumentException("삭제된 게시글은 추가할 수 없습니다.");
+        }
     }
 
     private boolean checkHasNext(Pageable pageable, List<RentArticle> rentArticles) {
@@ -169,7 +173,7 @@ public class RentArticleService {
 
     private User getUserFromAccessToken(String token) {
         Long id = jwtProvider.decode(token).getClaim("id").asLong();
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         return user;
     }
 
