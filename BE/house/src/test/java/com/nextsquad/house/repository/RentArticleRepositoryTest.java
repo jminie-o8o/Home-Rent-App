@@ -3,7 +3,6 @@ package com.nextsquad.house.repository;
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.SearchConditionDto;
-import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.repository.rentarticle.RentArticleRepository;
 import com.nextsquad.house.repository.user.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -168,14 +167,5 @@ class RentArticleRepositoryTest {
         condition = new SearchConditionDto(false, null, "filteredByAvailableOnlyTest");
         foundArticles = rentArticleRepository.findByKeyword(condition, pageable);
         assertThat(foundArticles).isEqualTo(articles);
-    }
-
-    @Test
-    @DisplayName("findBookmarkedArticleByUser()를 호출하면 해당 유저가 북마크 처리한 게시글 목록이 반환된다")
-    public void findBookmarkedArticleByUserTest() {
-        User user = userRepository.findById(2L).orElseThrow(UserNotFoundException::new);
-        List<RentArticle> bookmarkedArticleByUser = rentArticleRepository.findBookmarkedArticleByUser(user);
-        assertThat(bookmarkedArticleByUser.size()).isEqualTo(1);
-        assertThat(bookmarkedArticleByUser.get(0).getId()).isEqualTo(1L);
     }
 }
