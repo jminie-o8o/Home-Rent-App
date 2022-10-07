@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/login")
@@ -20,7 +22,7 @@ public class LoginController {
     }
 
     @PostMapping("/oauth")
-    public ResponseEntity<JwtResponseDto> loginWithOauth(@RequestBody OauthLoginRequestDto requestDto) {
+    public ResponseEntity<JwtResponseDto> loginWithOauth(@Valid @RequestBody OauthLoginRequestDto requestDto) {
         return ResponseEntity.ok(loginService.loginWithOauth(requestDto));
     }
 

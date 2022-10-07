@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/houses/wanted")
@@ -48,7 +50,7 @@ public class WantedArticleController {
     }
 
     @PostMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> addWantedBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
+    public ResponseEntity<GeneralResponseDto> addWantedBookmark(@Valid @RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(wantedArticleService.addWantedBookmark(bookmarkRequestDto, token));
     }
 
