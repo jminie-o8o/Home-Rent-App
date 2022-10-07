@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -173,9 +174,10 @@ class RentArticleRepositoryTest {
     @Test
     @DisplayName("findBookmarkedArticleByUser()를 호출하면 해당 유저가 북마크 처리한 게시글 목록이 반환된다")
     public void findBookmarkedArticleByUserTest() {
-        User user = userRepository.findById(2L).orElseThrow(UserNotFoundException::new);
-        List<RentArticle> bookmarkedArticleByUser = rentArticleRepository.findBookmarkedArticleByUser(user);
-        assertThat(bookmarkedArticleByUser.size()).isEqualTo(1);
-        assertThat(bookmarkedArticleByUser.get(0).getId()).isEqualTo(1L);
+        User user = userRepository.findById(1L).orElseThrow(UserNotFoundException::new);
+        Pageable pageable = PageRequest.of(0, 2);
+        Page<RentArticle> bookmarkedArticleByUser = rentArticleRepository.findBookmarkedArticleByUser(user, pageable);
+        assertThat(bookmarkedArticleByUser.getTotalPages()).isEqualTo(1);
+        assertThat(bookmarkedArticleByUser.hasNext()).isFalse();
     }
 }

@@ -61,11 +61,8 @@ public class UserService {
 
     public RentArticleListResponse getRentBookmark(long userId, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
-        Page<RentArticleBookmark> bookmarks = rentArticleBookmarkRepository.findByUser(user, pageable);
-        List<RentArticleListElement> elements = bookmarks.stream()
-                .map(RentArticleListElement::from)
-                .collect(Collectors.toList());
-        return new RentArticleListResponse(elements, hasNext(pageable, bookmarks));
+        Page<RentArticle> bookmarkedArticles = rentArticleRepository.findBookmarkedArticleByUser(user, pageable);
+        return RentArticleListResponse.of(bookmarkedArticles);
     }
 
     public DuplicationCheckResponse checkDuplication(String nickname) {
@@ -86,13 +83,8 @@ public class UserService {
     public RentArticleListResponse getMyRentArticles(long userId, Pageable pageable) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException());
-
         Page<RentArticle> rentArticles = rentArticleRepository.findByUser(user, pageable);
-        List<RentArticleListElement> responseElements = rentArticles.stream()
-                .map(RentArticleListElement::from)
-                .collect(Collectors.toList());
-
-        return new RentArticleListResponse(responseElements, hasNext(pageable, rentArticles));
+        return RentArticleListResponse.of(rentArticles);
     }
     
     public WantedArticleListResponse getMyWantedArticles(long userId, Pageable pageable) {
