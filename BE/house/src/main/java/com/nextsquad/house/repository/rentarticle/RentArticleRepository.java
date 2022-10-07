@@ -18,5 +18,5 @@ public interface RentArticleRepository extends JpaRepository<RentArticle, Long>,
     Page<RentArticle> findByUser(@Param("user") User user, Pageable pageable);
 
     @Query("select r from RentArticle r join RentArticleBookmark b on r.id = b.rentArticle.id where b.user = :user")
-    Page<RentArticle> findBookmarkedArticleByUser(@Param("user") User user, Pageable pageable);
+    List<RentArticle> findBookmarkedArticleByUser(@Param("user") User user);
 }

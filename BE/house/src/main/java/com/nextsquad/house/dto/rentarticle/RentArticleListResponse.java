@@ -3,7 +3,6 @@ package com.nextsquad.house.dto.rentarticle;
 import com.nextsquad.house.domain.house.RentArticle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -22,12 +21,5 @@ public class RentArticleListResponse {
                 .collect(Collectors.toList());
 
         return new RentArticleListResponse(responseElements, hasNext);
-    }
-
-    public static RentArticleListResponse of(Page<RentArticle> rentArticles) {
-        List<RentArticleListElement> responseElements = rentArticles.stream()
-                .map(RentArticleListElement::from)
-                .collect(Collectors.toList());
-        return new RentArticleListResponse(responseElements, rentArticles.hasNext());
     }
 }
