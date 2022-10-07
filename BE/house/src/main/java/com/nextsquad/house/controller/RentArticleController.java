@@ -40,7 +40,7 @@ public class RentArticleController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> modifyRentArticle(@PathVariable Long id, @RequestBody RentArticleRequest request, @RequestHeader(value = "access-token") String token) {
+    public ResponseEntity<GeneralResponseDto> modifyRentArticle(@PathVariable Long id, @RequestBody @Valid RentArticleRequest request, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(rentArticleService.modifyRentArticle(id, request, token));
     }
 
