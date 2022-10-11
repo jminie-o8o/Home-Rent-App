@@ -8,8 +8,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 public class BookmarkRequestDto {
-    @NotNull
-    private Long userId;
 
     @NotNull
     private Long articleId;
