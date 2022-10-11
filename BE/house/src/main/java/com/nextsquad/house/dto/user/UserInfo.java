@@ -6,16 +6,16 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserInfoDto {
+public class UserInfo {
     private Long userId;
     private String displayName;
     private String profileImageUrl;
     private String gender;
 
-    public static UserInfoDto from(User user) {
+    public static UserInfo from(User user) {
         if (user.getGender() != null) {
-            return new UserInfoDto(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), String.valueOf(user.getGender()));
+            return new UserInfo(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), String.valueOf(user.getGender()));
         }
-        return new UserInfoDto(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), null);
+        return new UserInfo(user.getId(), user.getDisplayName(), user.getProfileImageUrl(), null);
     }
 }

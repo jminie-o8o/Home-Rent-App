@@ -1,8 +1,8 @@
 package com.nextsquad.house.login.oauth;
 
 import com.google.gson.Gson;
-import com.nextsquad.house.dto.login.GithubAccessTokenResponseDto;
-import com.nextsquad.house.login.userinfo.UserInfo;
+import com.nextsquad.house.dto.login.GithubAccessTokenResponse;
+import com.nextsquad.house.login.userinfo.OauthUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -28,13 +28,13 @@ public class GithubOauthClient implements OauthClient {
     }
 
     @Override
-    public UserInfo getUserInfo(String authCode) {
+    public OauthUserInfo getUserInfo(String authCode) {
         String accessToken = getAccessToken(authCode);
         return getOauthUserInfo(accessToken);
     }
 
     private String getAccessToken(String authCode) {
-        GithubAccessTokenResponseDto rawToken = webClient.post()
+        GithubAccessTokenResponse rawToken = webClient.post()
                 .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("client_id", clientId)
                         .queryParam("client_secret", secretKey)
@@ -45,14 +45,14 @@ public class GithubOauthClient implements OauthClient {
                 .ifNoneMatch("*")
                 .ifModifiedSince(ZonedDateTime.now())
                 .retrieve()
-                .bodyToFlux(GithubAccessTokenResponseDto.class)
+                .bodyToFlux(GithubAccessTokenResponse.class)
                 .toStream()
                 .findFirst()
                 .orElseThrow(RuntimeException::new);
         return parseToken(rawToken.getAccessToken());
     }
 
-    private UserInfo getOauthUserInfo(String accessToken) {
+    private OauthUserInfo getOauthUserInfo(String accessToken) {
         String response = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)
@@ -69,9 +69,9 @@ public class GithubOauthClient implements OauthClient {
         return String.format("token %s", rawToken);
     }
 
-    private UserInfo convertToUserInfoFrom(String rawInfo) {
+    private OauthUserInfo convertToUserInfoFrom(String rawInfo) {
         Map<String, String> infoMap = new Gson().fromJson(rawInfo, Map.class);
-        return new UserInfo(infoMap.get("login"), infoMap.get("login"), null, OauthClientType.GITHUB);
+        return new OauthUserInfo(infoMap.get("login"), infoMap.get("login"), null, OauthClientType.GITHUB);
     }
 }
 

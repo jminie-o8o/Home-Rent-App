@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.nextsquad.house.dto.ImageResponseDto;
+import com.nextsquad.house.dto.ImageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +22,13 @@ public class FileUploadService {
     private final AmazonS3Client s3Client;
     private final String bucket = "house-image-bucket";
 
-    public ImageResponseDto uploadFile(List<MultipartFile> multipartFiles) throws IOException {
+    public ImageResponse uploadFile(List<MultipartFile> multipartFiles) throws IOException {
         List<String> imageUrls = new ArrayList<>();
         for (int i = 0; i < multipartFiles.size(); i++) {
             String imageUrl = uploadSingleFile(multipartFiles.get(i));
             imageUrls.add(imageUrl);
         }
-        return new ImageResponseDto(imageUrls);
+        return new ImageResponse(imageUrls);
     }
 
     public String uploadSingleFile(MultipartFile multipartFile) throws IOException {

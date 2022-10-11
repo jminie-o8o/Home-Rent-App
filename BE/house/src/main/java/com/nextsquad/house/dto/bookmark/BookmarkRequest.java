@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
-public class BookmarkRequestDto {
+public class BookmarkRequest {
 
     @NotNull
     private Long articleId;

@@ -1,7 +1,7 @@
 package com.nextsquad.house.dto.wantedArticle;
 
 import com.nextsquad.house.domain.house.WantedArticle;
-import com.nextsquad.house.dto.user.UserInfoDto;
+import com.nextsquad.house.dto.user.UserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 public class WantedArticleResponse {
     private Long id;
-    private UserInfoDto user;
+    private UserInfo user;
     private String address;
     private String title;
     private String content;
@@ -33,10 +33,10 @@ public class WantedArticleResponse {
 
 
     public static WantedArticleResponse from(WantedArticle article, boolean isBookmarked) {
-        UserInfoDto userInfoDto = UserInfoDto.from(article.getUser());
+        UserInfo userInfo = UserInfo.from(article.getUser());
         return WantedArticleResponse.builder()
                 .id(article.getId())
-                .user(userInfoDto)
+                .user(userInfo)
                 .address(article.getAddress())
                 .title(article.getTitle())
                 .content(article.getContent())
@@ -53,9 +53,9 @@ public class WantedArticleResponse {
     }
 
     public WantedArticleResponse(WantedArticle wantedArticle, boolean isBookmarked) {
-        UserInfoDto userInfoDto = UserInfoDto.from(wantedArticle.getUser());
+        UserInfo userInfo = UserInfo.from(wantedArticle.getUser());
         this.id = wantedArticle.getId();
-        this.user = userInfoDto;
+        this.user = userInfo;
         this.address = wantedArticle.getAddress();
         this.title = wantedArticle.getTitle();
         this.content = wantedArticle.getContent();

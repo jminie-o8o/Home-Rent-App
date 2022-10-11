@@ -1,7 +1,7 @@
 package com.nextsquad.house.repository.rentarticle;
 
 import com.nextsquad.house.domain.house.RentArticle;
-import com.nextsquad.house.dto.SearchConditionDto;
+import com.nextsquad.house.dto.SearchCondition;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -21,7 +21,7 @@ public class CustomRentArticleRepositoryImpl implements CustomRentArticleReposit
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<RentArticle> findByKeyword(SearchConditionDto searchCondition, Pageable pageable) {
+    public List<RentArticle> findByKeyword(SearchCondition searchCondition, Pageable pageable) {
         log.info("keyword: {}, isCompleted: {}, sortedBy: {}", searchCondition.getKeyword(), searchCondition.getAvailableOnly(), searchCondition.getSortedBy());
         List<RentArticle> content = jpaQueryFactory
                 .select(rentArticle)

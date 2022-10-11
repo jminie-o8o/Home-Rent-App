@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
-public class HouseFacilityListDto {
+public class HouseFacilityList {
     private boolean hasParkingLot;
     private boolean hasBalcony;
     private boolean hasElevator;
@@ -23,8 +23,8 @@ public class HouseFacilityListDto {
     private boolean hasVideoPhone;
     private boolean hasLobby;
 
-    public static HouseFacilityListDto from(HouseFacility houseFacility) {
-        return HouseFacilityListDto.builder()
+    public static HouseFacilityList from(HouseFacility houseFacility) {
+        return HouseFacilityList.builder()
             .hasParkingLot(houseFacility.hasParkingLot())
             .hasBalcony(houseFacility.hasBalcony())
             .hasElevator(houseFacility.hasElevator())

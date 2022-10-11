@@ -1,8 +1,8 @@
 package com.nextsquad.house.login.oauth;
 
-import com.nextsquad.house.login.userinfo.UserInfo;
+import com.nextsquad.house.login.userinfo.OauthUserInfo;
 
 public interface OauthClient {
 
-    UserInfo getUserInfo(String authCode);
+    OauthUserInfo getUserInfo(String authCode);
 }

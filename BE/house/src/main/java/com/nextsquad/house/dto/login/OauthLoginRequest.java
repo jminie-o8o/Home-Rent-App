@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
-public class OauthLoginRequestDto {
+public class OauthLoginRequest {
     @NotNull
     private String authCode;
 

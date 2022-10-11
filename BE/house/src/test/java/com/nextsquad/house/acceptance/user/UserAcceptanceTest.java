@@ -1,7 +1,7 @@
 package com.nextsquad.house.acceptance.user;
 
 import com.nextsquad.house.config.RestDocsConfiguration;
-import com.nextsquad.house.dto.user.UserInfoDto;
+import com.nextsquad.house.dto.user.UserInfo;
 import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
@@ -81,7 +81,7 @@ public class UserAcceptanceTest {
     @Test
     @DisplayName("사용자 정보를 수정한다")
     void modifyUserInfoTest() {
-        UserInfoDto dto = new UserInfoDto(1L, "testName", "test.com", "MALE");
+        UserInfo dto = new UserInfo(1L, "testName", "test.com", "MALE");
         RestAssured
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)

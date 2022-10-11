@@ -1,8 +1,8 @@
 package com.nextsquad.house.acceptance.rentArticle;
 
-import com.nextsquad.house.dto.rentarticle.HouseFacilityListDto;
+import com.nextsquad.house.dto.rentarticle.HouseFacilityList;
 import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
-import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.repository.user.UserRepository;
@@ -158,7 +158,7 @@ public class RentArticleAcceptanceTest {
     void id가_11번인_양도글을_수정한다(){
         List<String> images = new ArrayList<>();
 
-        HouseFacilityListDto facility = new HouseFacilityListDto(true, true, true, true, true, false, false, false, false, false, false);
+        HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
         RentArticleRequest request = new RentArticleRequest(1L, "대전 서구 둔산동", "둔산 하이츠",
                 "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
                 "MONTHLY", "ONEROOM", 1000000, 300000,
@@ -185,7 +185,7 @@ public class RentArticleAcceptanceTest {
     @Test
     void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
         List<String> images = new ArrayList<>();
-        HouseFacilityListDto facility = new HouseFacilityListDto(true, true, true, true, true, false, false, false, false, false, false);
+        HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
         RentArticleRequest request = new RentArticleRequest(1L, "대전 서구 둔산동", "둔산 하이츠",
                 "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
                 "MONTHLY", "ONEROOM", 1000000, 300000,
@@ -283,7 +283,7 @@ public class RentArticleAcceptanceTest {
     @Test
     void 양도글을_작성하고_저장하면_글id_13번을_리턴한다(){
         List<String> images = new ArrayList<>();
-        HouseFacilityListDto facility = new HouseFacilityListDto(true, true, true, true, true, false, false, false, false, false, false);
+        HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
 
         RentArticleRequest request = new RentArticleRequest(1L, "대전 서구 둔산동", "둔산 하이츠",
                 "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
@@ -310,7 +310,7 @@ public class RentArticleAcceptanceTest {
     @Order(2)
     @Test
     void id가_1번인_사용자가_id_10번_양도글을_북마크에_추가한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        BookmarkRequest request = new BookmarkRequest(1L, 10L);
         given(documentationSpec)
                 .filter(document("add-bookmark-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -330,7 +330,7 @@ public class RentArticleAcceptanceTest {
 
     @Test
     void id가_1번인_사용자가_id_10번_양도글을_북마크에서_해제한다() {
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        BookmarkRequest request = new BookmarkRequest(1L, 10L);
         given(documentationSpec)
                 .filter(document("delete-bookmark-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -351,7 +351,7 @@ public class RentArticleAcceptanceTest {
     //Restdocs 생성하지 않는 테스트(예외 확인용 테스트)
     @Test
     void 사용자가_삭제된_11번_양도글을_북마크에_추가하면_예외가_발생한다() {
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 11L);
+        BookmarkRequest request = new BookmarkRequest(1L, 11L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -368,7 +368,7 @@ public class RentArticleAcceptanceTest {
     @Order(3)
     @Test
     void 사용자가_이미_북마크에_존재하는_양도글을_다시_추가하면_예외가_발생한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        BookmarkRequest request = new BookmarkRequest(1L, 10L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -384,7 +384,7 @@ public class RentArticleAcceptanceTest {
 
     @Test
     void 존재하지_않는_북마크를_삭제하면_예외가_발생한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 9L);
+        BookmarkRequest request = new BookmarkRequest(1L, 9L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -400,7 +400,7 @@ public class RentArticleAcceptanceTest {
 
     @Test
     void 존재하지_않는_양도글을_북마크에서_삭제하면_예외가_발생한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 18L);
+        BookmarkRequest request = new BookmarkRequest(1L, 18L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

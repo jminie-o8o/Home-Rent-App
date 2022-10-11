@@ -1,6 +1,6 @@
 package com.nextsquad.house.acceptance.wantedArticle;
 
-import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
@@ -223,7 +223,7 @@ public class WantedArticleAcceptanceTest {
     @Order(1)
     @Test
     void 양수글_한개를_북마크에_저장한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 12L);
+        BookmarkRequest request = new BookmarkRequest(1L, 12L);
         given(documentationSpec)
                 .filter(document("save-wanted-article-bookmark", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -243,7 +243,7 @@ public class WantedArticleAcceptanceTest {
     @Order(2)
     @Test
     void 저장한_양수글_북마크_한개를_삭제한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 12L);
+        BookmarkRequest request = new BookmarkRequest(1L, 12L);
         given(documentationSpec)
                 .filter(document("delete-wanted-article-bookmark", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -263,7 +263,7 @@ public class WantedArticleAcceptanceTest {
 
     @Test
     void 삭제된_글을_북마크에_추가하려하면_예외가_발생한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 1L);
+        BookmarkRequest request = new BookmarkRequest(1L, 1L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

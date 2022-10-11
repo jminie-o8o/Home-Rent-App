@@ -2,7 +2,7 @@ package com.nextsquad.house.dto.rentarticle;
 
 import com.nextsquad.house.domain.house.HouseImage;
 import com.nextsquad.house.domain.house.RentArticle;
-import com.nextsquad.house.dto.user.UserInfoDto;
+import com.nextsquad.house.dto.user.UserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RentArticleResponse {
     private Long id;
-    private UserInfoDto user;
+    private UserInfo user;
     private String address;
     private String addressDetail;
     private String addressDescription;
@@ -36,7 +36,7 @@ public class RentArticleResponse {
     private int bookmarkCount;
     private int maxFloor;
     private int thisFloor;
-    private HouseFacilityListDto houseFacility;
+    private HouseFacilityList houseFacility;
     private List<String> houseImages;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime createdAt;
@@ -49,7 +49,7 @@ public class RentArticleResponse {
     @Builder
     public RentArticleResponse(RentArticle rentArticle, boolean isBookmarked) {
         this.id = rentArticle.getId();
-        this.user = UserInfoDto.from(rentArticle.getUser());
+        this.user = UserInfo.from(rentArticle.getUser());
         this.address = rentArticle.getAddress();
         this.addressDetail = rentArticle.getAddressDetail();
         this.addressDescription = rentArticle.getAddressDescription();
@@ -68,7 +68,7 @@ public class RentArticleResponse {
         this.bookmarkCount = rentArticle.getBookmarks().size();
         this.maxFloor = rentArticle.getMaxFloor();
         this.thisFloor = rentArticle.getThisFloor();
-        this.houseFacility = HouseFacilityListDto.from(rentArticle.getHouseFacility());
+        this.houseFacility = HouseFacilityList.from(rentArticle.getHouseFacility());
         this.houseImages = convertHouseImageList(rentArticle.getHouseImages());
         this.createdAt = rentArticle.getCreatedAt();
         this.modifiedAt = rentArticle.getModifiedAt();

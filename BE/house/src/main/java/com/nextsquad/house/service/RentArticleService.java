@@ -3,7 +3,7 @@ package com.nextsquad.house.service;
 import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
-import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.dto.rentarticle.*;
 import com.nextsquad.house.exception.*;
 import com.nextsquad.house.login.jwt.JwtProvider;
@@ -51,7 +51,7 @@ public class RentArticleService {
         return new RentArticleCreationResponse(rentArticle.getId());
     }
 
-    public RentArticleListResponse getRentArticles(SearchConditionDto searchCondition, Pageable pageable, String token) {
+    public RentArticleListResponse getRentArticles(SearchCondition searchCondition, Pageable pageable, String token) {
         User user = getUserFromAccessToken(token);
 
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
@@ -77,17 +77,17 @@ public class RentArticleService {
         return new RentArticleResponse(rentArticle, isBookmarked);
     }
 
-    public GeneralResponseDto toggleIsCompleted(Long id, String token) {
+    public GeneralResponse toggleIsCompleted(Long id, String token) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
         authorizeArticleOwner(token, rentArticle);
 
         rentArticle.toggleIsCompleted();
-        return new GeneralResponseDto(200, "게시글 상태가 변경되었습니다.");
+        return new GeneralResponse(200, "게시글 상태가 변경되었습니다.");
     }
 
-    public GeneralResponseDto deleteArticle(Long id, String token) {
+    public GeneralResponse deleteArticle(Long id, String token) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
@@ -95,12 +95,12 @@ public class RentArticleService {
 
         rentArticle.markAsDeleted();
         rentArticleBookmarkRepository.deleteByRentArticle(rentArticle);
-        return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
+        return new GeneralResponse(200, "게시글이 삭제되었습니다.");
     }
 
-    public GeneralResponseDto addBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
+    public GeneralResponse addBookmark(BookmarkRequest request, String token) {
         User user = getUserFromAccessToken(token);
-        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId()).orElseThrow(ArticleNotFoundException::new);
+        RentArticle rentArticle = rentArticleRepository.findById(request.getArticleId()).orElseThrow(ArticleNotFoundException::new);
 
         if (rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle).isPresent()) {
             throw new DuplicateBookmarkException();
@@ -108,21 +108,21 @@ public class RentArticleService {
 
         checkIsAvailable(rentArticle);
         rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
-        return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
+        return new GeneralResponse(200, "북마크에 추가 되었습니다.");
     }
 
-    public GeneralResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
+    public GeneralResponse deleteBookmark(BookmarkRequest request, String token) {
         User user = getUserFromAccessToken(token);
 
-        RentArticle rentArticle = rentArticleRepository.findById(bookmarkRequestDto.getArticleId())
+        RentArticle rentArticle = rentArticleRepository.findById(request.getArticleId())
                 .orElseThrow(ArticleNotFoundException::new);
         RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle)
                 .orElseThrow(BookmarkNotFoundException::new);
         rentArticleBookmarkRepository.delete(bookmark);
-        return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
+        return new GeneralResponse(200, "북마크가 삭제되었습니다.");
     }
 
-    public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request, String token) {
+    public GeneralResponse modifyRentArticle(Long id, RentArticleRequest request, String token) {
         log.info("updating {}... ", request.getTitle());
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
@@ -136,7 +136,7 @@ public class RentArticleService {
 
         rentArticle.modifyArticle(request);
 
-        return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
+        return new GeneralResponse(200, "게시글이 수정되었습니다.");
     }
 
     private void checkIsAvailable(RentArticle rentArticle) {

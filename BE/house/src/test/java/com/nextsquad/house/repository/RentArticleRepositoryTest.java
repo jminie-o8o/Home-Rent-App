@@ -2,7 +2,7 @@ package com.nextsquad.house.repository;
 
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.SearchConditionDto;
+import com.nextsquad.house.dto.SearchCondition;
 import com.nextsquad.house.repository.rentarticle.RentArticleRepository;
 import com.nextsquad.house.repository.user.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -104,7 +104,7 @@ class RentArticleRepositoryTest {
         }
         rentArticleRepository.saveAll(articles);
 
-        SearchConditionDto condition = new SearchConditionDto(null, "rentFee", "sortedByRentFeeTest");
+        SearchCondition condition = new SearchCondition(null, "rentFee", "sortedByRentFeeTest");
 
         int previousRentFee = Integer.MIN_VALUE;
         PageRequest pageable = PageRequest.of(0, 10);
@@ -129,7 +129,7 @@ class RentArticleRepositoryTest {
         }
         rentArticleRepository.saveAll(articles);
 
-        SearchConditionDto condition = new SearchConditionDto(null, "deposit", "sortedByDepositTest");
+        SearchCondition condition = new SearchCondition(null, "deposit", "sortedByDepositTest");
 
         int previousDeposit = Integer.MIN_VALUE;
         PageRequest pageable = PageRequest.of(0, 10);
@@ -154,7 +154,7 @@ class RentArticleRepositoryTest {
         }
         rentArticleRepository.saveAll(articles);
 
-        SearchConditionDto condition = new SearchConditionDto(true, null, "filteredByAvailableOnlyTest");
+        SearchCondition condition = new SearchCondition(true, null, "filteredByAvailableOnlyTest");
 
         PageRequest pageable = PageRequest.of(0, 10);
 
@@ -164,7 +164,7 @@ class RentArticleRepositoryTest {
             assertThat(foundArticle.isCompleted()).isFalse();
         }
 
-        condition = new SearchConditionDto(false, null, "filteredByAvailableOnlyTest");
+        condition = new SearchCondition(false, null, "filteredByAvailableOnlyTest");
         foundArticles = rentArticleRepository.findByKeyword(condition, pageable);
         assertThat(foundArticles).isEqualTo(articles);
     }

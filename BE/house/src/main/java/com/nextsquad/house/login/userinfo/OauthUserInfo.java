@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.Random;
 
 @Getter
-public class UserInfo {
+public class OauthUserInfo {
     protected String accountId;
     protected String displayName;
 
@@ -15,7 +15,7 @@ public class UserInfo {
     private OauthClientType oauthClientType;
     private static final String DEFAULT_PROFILE_IMAGE = "https://house-image-bucket.s3.ap-northeast-2.amazonaws.com/default_profile.png";
 
-    public UserInfo(String accountId, String displayName, String profileImageUrl, OauthClientType oauthClientType) {
+    public OauthUserInfo(String accountId, String displayName, String profileImageUrl, OauthClientType oauthClientType) {
         String identifier = String.valueOf(new Random().nextInt(9999));
 
         this.accountId = accountId;

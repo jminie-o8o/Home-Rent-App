@@ -1,7 +1,7 @@
 package com.nextsquad.house.repository.wantedarticle;
 
 import com.nextsquad.house.domain.house.WantedArticle;
-import com.nextsquad.house.dto.SearchConditionDto;
+import com.nextsquad.house.dto.SearchCondition;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class CustomWantedArticleRepositoryImpl implements CustomWantedArticleRep
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<WantedArticle> findByKeyword(SearchConditionDto searchCondition, Pageable pageable) {
+    public List<WantedArticle> findByKeyword(SearchCondition searchCondition, Pageable pageable) {
 
         return jpaQueryFactory
                 .select(wantedArticle)

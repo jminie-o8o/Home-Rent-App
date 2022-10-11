@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchConditionDto {
+public class SearchCondition {
     private Boolean availableOnly;
     private String sortedBy;
     private String keyword;

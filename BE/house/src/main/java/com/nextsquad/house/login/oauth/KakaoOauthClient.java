@@ -1,8 +1,8 @@
 package com.nextsquad.house.login.oauth;
 
-import com.nextsquad.house.dto.login.KakaoAccessTokenResponseDto;
-import com.nextsquad.house.dto.login.KakaoUserInfoDto;
-import com.nextsquad.house.login.userinfo.UserInfo;
+import com.nextsquad.house.dto.login.KakaoAccessTokenResponse;
+import com.nextsquad.house.dto.login.KakaoUserInfo;
+import com.nextsquad.house.login.userinfo.OauthUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -26,13 +26,13 @@ public class KakaoOauthClient implements OauthClient {
     }
 
     @Override
-    public UserInfo getUserInfo(String authCode) {
+    public OauthUserInfo getUserInfo(String authCode) {
         String accessToken = getAccessToken(authCode);
         return getOauthUserInfo(accessToken);
     }
 
     private String getAccessToken(String authCode) {
-        KakaoAccessTokenResponseDto rawToken = webClient.post()
+        KakaoAccessTokenResponse rawToken = webClient.post()
                 .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("client_id", clientId)
                         .queryParam("redirect_url", "http://52.79.243.28:8080/login/oauth/callback")
@@ -44,20 +44,20 @@ public class KakaoOauthClient implements OauthClient {
                 .ifNoneMatch("*")
                 .ifModifiedSince(ZonedDateTime.now())
                 .retrieve()
-                .bodyToFlux(KakaoAccessTokenResponseDto.class)
+                .bodyToFlux(KakaoAccessTokenResponse.class)
                 .toStream()
                 .findFirst()
                 .orElseThrow(RuntimeException::new);
         return parseToken(rawToken.getAccessToken());
     }
 
-    private UserInfo getOauthUserInfo(String accessToken) {
-        KakaoUserInfoDto infoDto = webClient.get()
+    private OauthUserInfo getOauthUserInfo(String accessToken) {
+        KakaoUserInfo infoDto = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(KakaoUserInfoDto.class)
+                .bodyToFlux(KakaoUserInfo.class)
                 .toStream()
                 .findFirst()
                 .orElseThrow(RuntimeException::new);

@@ -1,8 +1,8 @@
 package com.nextsquad.house.login.oauth;
 
-import com.nextsquad.house.dto.login.NaverAccessTokenResponseDto;
-import com.nextsquad.house.dto.login.NaverUserInfoDto;
-import com.nextsquad.house.login.userinfo.UserInfo;
+import com.nextsquad.house.dto.login.NaverAccessTokenResponse;
+import com.nextsquad.house.dto.login.NaverUserInfo;
+import com.nextsquad.house.login.userinfo.OauthUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -30,13 +30,13 @@ public class NaverOauthClient implements OauthClient {
     }
 
     @Override
-    public UserInfo getUserInfo(String authCode) {
+    public OauthUserInfo getUserInfo(String authCode) {
         String accessToken = getAccessToken(authCode);
         return getOauthUserInfo(accessToken);
     }
 
     private String getAccessToken(String authCode) {
-        NaverAccessTokenResponseDto rawToken = webClient.post()
+        NaverAccessTokenResponse rawToken = webClient.post()
                 .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("grant_type", "authorization_code")
                         .queryParam("client_id", clientId)
@@ -49,20 +49,20 @@ public class NaverOauthClient implements OauthClient {
                 .ifNoneMatch("*")
                 .ifModifiedSince(ZonedDateTime.now())
                 .retrieve()
-                .bodyToFlux(NaverAccessTokenResponseDto.class)
+                .bodyToFlux(NaverAccessTokenResponse.class)
                 .toStream()
                 .findFirst()
                 .orElseThrow(RuntimeException::new);
         return parseToken(rawToken.getAccessToken());
     }
 
-    private UserInfo getOauthUserInfo(String accessToken) {
-        NaverUserInfoDto infoDto = webClient.get()
+    private OauthUserInfo getOauthUserInfo(String accessToken) {
+        NaverUserInfo infoDto = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(NaverUserInfoDto.class)
+                .bodyToFlux(NaverUserInfo.class)
                 .toStream()
                 .findFirst()
                 .orElseThrow(RuntimeException::new);

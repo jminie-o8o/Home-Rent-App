@@ -61,7 +61,7 @@ public class RentArticleRequest {
     private int thisFloor;
     private List<String> houseImages;
     @NotNull
-    private HouseFacilityListDto facility;
+    private HouseFacilityList facility;
 
 
     public HouseFacility extractHouseFacility() {

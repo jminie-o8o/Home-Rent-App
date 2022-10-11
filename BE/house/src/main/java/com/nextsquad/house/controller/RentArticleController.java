@@ -1,7 +1,7 @@
 package com.nextsquad.house.controller;
 
 import com.nextsquad.house.dto.*;
-import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.dto.rentarticle.RentArticleCreationResponse;
 import com.nextsquad.house.dto.rentarticle.RentArticleListResponse;
 import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
@@ -24,12 +24,12 @@ public class RentArticleController {
     private final RentArticleService rentArticleService;
 
     @PostMapping
-    public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@Valid @RequestBody RentArticleRequest rentArticleRequest, @RequestHeader(value = "access-token") String token){
-        return ResponseEntity.ok(rentArticleService.writeRentArticle(rentArticleRequest, token));
+    public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@Valid @RequestBody RentArticleRequest request, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(rentArticleService.writeRentArticle(request, token));
     }
 
     @GetMapping
-    public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchConditionDto searchCondition, Pageable pageable,
+    public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchCondition searchCondition, Pageable pageable,
                                                                    @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable, token));
     }
@@ -40,28 +40,28 @@ public class RentArticleController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> modifyRentArticle(@PathVariable Long id, @RequestBody @Valid RentArticleRequest request, @RequestHeader(value = "access-token") String token) {
+    public ResponseEntity<GeneralResponse> modifyRentArticle(@PathVariable Long id, @RequestBody @Valid RentArticleRequest request, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(rentArticleService.modifyRentArticle(id, request, token));
     }
 
     @PatchMapping("/{id}/isCompleted")
-    public ResponseEntity<GeneralResponseDto> toggleIsCompleted(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
+    public ResponseEntity<GeneralResponse> toggleIsCompleted(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(rentArticleService.toggleIsCompleted(id, token));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GeneralResponseDto> deleteArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
+    public ResponseEntity<GeneralResponse> deleteArticle(@PathVariable Long id, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(rentArticleService.deleteArticle(id, token));
     }
 
     @PostMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> addBookmark(@Valid @RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token){
-        return ResponseEntity.ok(rentArticleService.addBookmark(bookmarkRequestDto, token));
+    public ResponseEntity<GeneralResponse> addBookmark(@Valid @RequestBody BookmarkRequest request, @RequestHeader(value = "access-token") String token){
+        return ResponseEntity.ok(rentArticleService.addBookmark(request, token));
     }
 
     @DeleteMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> deleteBookmark(@Valid @RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
-        return ResponseEntity.ok(rentArticleService.deleteBookmark(bookmarkRequestDto, token));
+    public ResponseEntity<GeneralResponse> deleteBookmark(@Valid @RequestBody BookmarkRequest request, @RequestHeader(value = "access-token") String token) {
+        return ResponseEntity.ok(rentArticleService.deleteBookmark(request, token));
     }
 
 }

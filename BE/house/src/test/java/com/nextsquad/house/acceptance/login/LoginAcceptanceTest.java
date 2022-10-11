@@ -2,12 +2,12 @@ package com.nextsquad.house.acceptance.login;
 
 import com.nextsquad.house.config.RestDocsConfiguration;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.login.OauthLoginRequestDto;
+import com.nextsquad.house.dto.login.OauthLoginRequest;
 import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.login.oauth.*;
-import com.nextsquad.house.login.userinfo.UserInfo;
+import com.nextsquad.house.login.userinfo.OauthUserInfo;
 import com.nextsquad.house.repository.user.UserRepository;
 import com.nextsquad.house.service.RedisService;
 import io.restassured.RestAssured;
@@ -73,10 +73,10 @@ public class LoginAcceptanceTest {
     @DisplayName("Oauth 서버에서 발급받은 authCode로 로그인을 요청하면 OK 응답이 온다.")
     void registerUserTest() {
         KakaoOauthClient kakaoClient = Mockito.mock(KakaoOauthClient.class);
-        Mockito.when(kakaoClient.getUserInfo("authCode")).thenReturn(new UserInfo(user.getAccountId(), user.getDisplayName(), user.getProfileImageUrl(), user.getOauthClientType()));
+        Mockito.when(kakaoClient.getUserInfo("authCode")).thenReturn(new OauthUserInfo(user.getAccountId(), user.getDisplayName(), user.getProfileImageUrl(), user.getOauthClientType()));
         Mockito.when(oauthClientMapper.getOauthClient("KAKAO")).thenReturn(Optional.of(kakaoClient));
 
-        OauthLoginRequestDto requestDto = new OauthLoginRequestDto("authCode", "KAKAO");
+        OauthLoginRequest requestDto = new OauthLoginRequest("authCode", "KAKAO");
 
         RestAssured
             .given(spec)

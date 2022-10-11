@@ -4,9 +4,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.GeneralResponseDto;
-import com.nextsquad.house.dto.SearchConditionDto;
-import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.dto.GeneralResponse;
+import com.nextsquad.house.dto.SearchCondition;
+import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.dto.wantedArticle.SavedWantedArticleResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
@@ -60,7 +60,7 @@ public class WantedArticleService {
         return new WantedArticleResponse(article, isBookmarked);
     }
 
-    public WantedArticleListResponse getWantedArticleList(SearchConditionDto searchCondition, Pageable pageable, String token) {
+    public WantedArticleListResponse getWantedArticleList(SearchCondition searchCondition, Pageable pageable, String token) {
 
         User user = getUserFromAccessToken(token);
         List<WantedArticleBookmark> listByUser = wantedArticleBookmarkRepository.findListByUser(user);
@@ -73,7 +73,7 @@ public class WantedArticleService {
     }
 
 
-    public GeneralResponseDto deleteWantedArticle(Long id, String token) {
+    public GeneralResponse deleteWantedArticle(Long id, String token) {
         WantedArticle wantedArticle = wantedArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
@@ -81,21 +81,21 @@ public class WantedArticleService {
 
         wantedArticle.markAsDeleted();
         wantedArticleBookmarkRepository.deleteByWantedArticle(wantedArticle);
-        return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
+        return new GeneralResponse(200, "게시글이 삭제되었습니다.");
     }
 
-    public GeneralResponseDto updateWantedArticle(Long id, WantedArticleRequest request, String token) {
+    public GeneralResponse updateWantedArticle(Long id, WantedArticleRequest request, String token) {
         WantedArticle article = wantedArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
         authorizeArticleOwner(token, article);
 
         article.modifyArticle(request);
-        return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
+        return new GeneralResponse(200, "게시글이 수정되었습니다.");
     }
 
-    public GeneralResponseDto addWantedBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
-        WantedArticle wantedArticle = wantedArticleRepository.findById(bookmarkRequestDto.getArticleId())
+    public GeneralResponse addWantedBookmark(BookmarkRequest request, String token) {
+        WantedArticle wantedArticle = wantedArticleRepository.findById(request.getArticleId())
                 .orElseThrow(ArticleNotFoundException::new);
 
         User user = getUserFromAccessToken(token);
@@ -107,19 +107,19 @@ public class WantedArticleService {
         checkIsAvailable(wantedArticle);
 
         wantedArticleBookmarkRepository.save(new WantedArticleBookmark(user, wantedArticle));
-        return new GeneralResponseDto(200, "북마크에 추가 되었습니다.");
+        return new GeneralResponse(200, "북마크에 추가 되었습니다.");
     }
 
-    public GeneralResponseDto deleteWantedBookmark(BookmarkRequestDto bookmarkRequestDto, String token) {
+    public GeneralResponse deleteWantedBookmark(BookmarkRequest request, String token) {
         User user = getUserFromAccessToken(token);
 
-        WantedArticle wantedArticle = wantedArticleRepository.findById(bookmarkRequestDto.getArticleId())
+        WantedArticle wantedArticle = wantedArticleRepository.findById(request.getArticleId())
                 .orElseThrow(ArticleNotFoundException::new);
         WantedArticleBookmark bookmark = wantedArticleBookmarkRepository.findByUserAndWantedArticle(user, wantedArticle)
                 .orElseThrow(BookmarkNotFoundException::new);
 
         wantedArticleBookmarkRepository.delete(bookmark);
-        return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
+        return new GeneralResponse(200, "북마크가 삭제되었습니다.");
     }
 
     private void checkIsAvailable(WantedArticle wantedArticle) {
