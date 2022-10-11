@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestControllerAdvice
 public class RuntimeExceptionHandler {
-    //TODO: 어느정도 구현 된 후 excpetion 정리해서 추가하기
+
     @ExceptionHandler(value = OauthClientNotFoundException.class)
     public ResponseEntity<GeneralResponseDto> handleOauthClientNotFoundException(OauthClientNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new GeneralResponseDto(404, e.getMessage()));

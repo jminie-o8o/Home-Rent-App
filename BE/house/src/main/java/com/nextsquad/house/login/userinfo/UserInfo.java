@@ -2,11 +2,9 @@ package com.nextsquad.house.login.userinfo;
 
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.login.oauth.OauthClientType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Random;
-import java.util.UUID;
 
 @Getter
 public class UserInfo {

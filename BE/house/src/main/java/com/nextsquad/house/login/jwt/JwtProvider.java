@@ -31,9 +31,9 @@ public class JwtProvider {
         return new JwtToken(accessToken, refreshToken);
     }
 
-    public JwtToken createRefreshedToken(User user, String refeshToken) {
+    public JwtToken createRefreshedToken(User user, String refreshTokenCode) {
         Token accessToken = createToken(user, JwtTokenType.ACCESS);
-        Token refreshToken = new Token(refeshToken, decode(refeshToken).getExpiresAt());
+        Token refreshToken = new Token(refreshTokenCode, decode(refreshTokenCode).getExpiresAt());
 
         return new JwtToken(accessToken, refreshToken);
     }

@@ -36,7 +36,7 @@ public class FileUploadService {
         objectMetadata.setContentType(multipartFile.getContentType());
         objectMetadata.setContentLength(multipartFile.getSize());
 
-        String key = String.valueOf(UUID.randomUUID()) + ".jpg";
+        String key = UUID.randomUUID() + ".jpg";
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
             s3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)

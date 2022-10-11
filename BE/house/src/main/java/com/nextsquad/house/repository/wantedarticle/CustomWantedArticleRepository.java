@@ -1,6 +1,5 @@
 package com.nextsquad.house.repository.wantedarticle;
 
-import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.dto.SearchConditionDto;
 import org.springframework.data.domain.Pageable;

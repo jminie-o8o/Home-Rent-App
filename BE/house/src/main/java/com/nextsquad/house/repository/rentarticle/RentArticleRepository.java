@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface RentArticleRepository extends JpaRepository<RentArticle, Long>, CustomRentArticleRepository {
-    @Query("select r from RentArticle r where r.isDeleted = false and r.isCompleted = false")
-    Page<RentArticle> findAllAvailable(Pageable pageable);
 
     @Query("select r from RentArticle r where r.user = :user and r.isDeleted = false")
     Page<RentArticle> findByUser(@Param("user") User user, Pageable pageable);

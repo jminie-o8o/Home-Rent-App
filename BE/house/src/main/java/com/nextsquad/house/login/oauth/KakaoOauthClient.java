@@ -18,17 +18,17 @@ public class KakaoOauthClient implements OauthClient {
     private final String secretKey;
     private final WebClient webClient = WebClient.create();
 
-    @Override
-    public UserInfo getUserInfo(String authCode) {
-        String accessToken = getAccessToken(authCode);
-        return getOauthUserInfo(accessToken);
-    }
-
     public KakaoOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
         this.clientId = clientId;
         this.authServerUrl = authServerUrl;
         this.resourceServerUrl = resourceServerUrl;
         this.secretKey = secretKey;
+    }
+
+    @Override
+    public UserInfo getUserInfo(String authCode) {
+        String accessToken = getAccessToken(authCode);
+        return getOauthUserInfo(accessToken);
     }
 
     private String getAccessToken(String authCode) {

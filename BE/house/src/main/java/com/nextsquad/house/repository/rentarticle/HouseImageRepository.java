@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface HouseImageRepository extends JpaRepository <HouseImage, Long> {
-    List<HouseImage> findAllByImageUrlIn(List<String> imageUrls);
 
     @Modifying
     @Query("delete from HouseImage i where i.rentArticle = :rentArticle")

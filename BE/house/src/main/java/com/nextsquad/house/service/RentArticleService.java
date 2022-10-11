@@ -77,21 +77,21 @@ public class RentArticleService {
         return new RentArticleResponse(rentArticle, isBookmarked);
     }
 
-    public GeneralResponseDto toggleIsCompleted(Long id, String accessToken) {
+    public GeneralResponseDto toggleIsCompleted(Long id, String token) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
-        authorizeArticleOwner(accessToken, rentArticle);
+        authorizeArticleOwner(token, rentArticle);
 
         rentArticle.toggleIsCompleted();
         return new GeneralResponseDto(200, "게시글 상태가 변경되었습니다.");
     }
 
-    public GeneralResponseDto deleteArticle(Long id, String accessToken) {
+    public GeneralResponseDto deleteArticle(Long id, String token) {
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
-        authorizeArticleOwner(accessToken, rentArticle);
+        authorizeArticleOwner(token, rentArticle);
 
         rentArticle.markAsDeleted();
         rentArticleBookmarkRepository.deleteByRentArticle(rentArticle);
@@ -122,12 +122,12 @@ public class RentArticleService {
         return new GeneralResponseDto(200, "북마크가 삭제되었습니다.");
     }
 
-    public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request, String accessToken) {
+    public GeneralResponseDto modifyRentArticle(Long id, RentArticleRequest request, String token) {
         log.info("updating {}... ", request.getTitle());
         RentArticle rentArticle = rentArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
-        authorizeArticleOwner(accessToken, rentArticle);
+        authorizeArticleOwner(token, rentArticle);
 
         rentArticle.getHouseFacility().updateHouseFacility(request.extractHouseFacility());
 
@@ -175,8 +175,8 @@ public class RentArticleService {
         }
     }
 
-    private void authorizeArticleOwner(String accessToken, RentArticle article) {
-        Long loggedInId = jwtProvider.decode(accessToken).getClaim("id").asLong();
+    private void authorizeArticleOwner(String token, RentArticle article) {
+        Long loggedInId = jwtProvider.decode(token).getClaim("id").asLong();
         User user = userRepository.findById(loggedInId)
                 .orElseThrow(UserNotFoundException::new);
 

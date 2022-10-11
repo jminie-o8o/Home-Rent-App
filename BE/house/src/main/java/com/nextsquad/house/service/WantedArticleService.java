@@ -73,22 +73,22 @@ public class WantedArticleService {
     }
 
 
-    public GeneralResponseDto deleteWantedArticle(Long id, String accessToken) {
+    public GeneralResponseDto deleteWantedArticle(Long id, String token) {
         WantedArticle wantedArticle = wantedArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
-        authorizeArticleOwner(accessToken, wantedArticle);
+        authorizeArticleOwner(token, wantedArticle);
 
         wantedArticle.markAsDeleted();
         wantedArticleBookmarkRepository.deleteByWantedArticle(wantedArticle);
         return new GeneralResponseDto(200, "게시글이 삭제되었습니다.");
     }
 
-    public GeneralResponseDto updateWantedArticle(Long id, WantedArticleRequest request, String accessToken) {
+    public GeneralResponseDto updateWantedArticle(Long id, WantedArticleRequest request, String token) {
         WantedArticle article = wantedArticleRepository.findById(id)
                 .orElseThrow(ArticleNotFoundException::new);
 
-        authorizeArticleOwner(accessToken, article);
+        authorizeArticleOwner(token, article);
 
         article.modifyArticle(request);
         return new GeneralResponseDto(200, "게시글이 수정되었습니다.");
@@ -131,8 +131,8 @@ public class WantedArticleService {
         }
     }
 
-    private void authorizeArticleOwner(String accessToken, WantedArticle article) {
-        Long loggedInId = jwtProvider.decode(accessToken).getClaim("id").asLong();
+    private void authorizeArticleOwner(String token, WantedArticle article) {
+        Long loggedInId = jwtProvider.decode(token).getClaim("id").asLong();
         User user = userRepository.findById(loggedInId)
                 .orElseThrow(UserNotFoundException::new);
 
