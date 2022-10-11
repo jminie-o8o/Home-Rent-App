@@ -24,7 +24,7 @@ public class RentArticleController {
     private final RentArticleService rentArticleService;
 
     @PostMapping
-    public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@RequestBody RentArticleRequest rentArticleRequest, @RequestHeader(value = "access-token") String token){
+    public ResponseEntity<RentArticleCreationResponse> writeRentArticle(@Valid @RequestBody RentArticleRequest rentArticleRequest, @RequestHeader(value = "access-token") String token){
         return ResponseEntity.ok(rentArticleService.writeRentArticle(rentArticleRequest, token));
     }
 
@@ -60,7 +60,7 @@ public class RentArticleController {
     }
 
     @DeleteMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> deleteBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
+    public ResponseEntity<GeneralResponseDto> deleteBookmark(@Valid @RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(rentArticleService.deleteBookmark(bookmarkRequestDto, token));
     }
 

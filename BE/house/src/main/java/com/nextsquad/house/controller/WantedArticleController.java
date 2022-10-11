@@ -23,7 +23,7 @@ public class WantedArticleController {
     private final WantedArticleService wantedArticleService;
 
     @PostMapping
-    public ResponseEntity<SavedWantedArticleResponse> writeWantedArticle(@RequestBody WantedArticleRequest request, @RequestHeader(value = "access-token") String token) {
+    public ResponseEntity<SavedWantedArticleResponse> writeWantedArticle(@Valid @RequestBody WantedArticleRequest request, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(wantedArticleService.writeWantedArticle(request, token));
     }
 
@@ -55,7 +55,7 @@ public class WantedArticleController {
     }
 
     @DeleteMapping("/bookmarks")
-    public ResponseEntity<GeneralResponseDto> deleteWantedBookmark(@RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
+    public ResponseEntity<GeneralResponseDto> deleteWantedBookmark(@Valid @RequestBody BookmarkRequestDto bookmarkRequestDto, @RequestHeader(value = "access-token") String token) {
         return ResponseEntity.ok(wantedArticleService.deleteWantedBookmark(bookmarkRequestDto, token));
     }
 
