@@ -17,8 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class RentArticleRequest {
 
-    private Long userId;
-
     @NotBlank
     @Length(max = 255, message = "주소는 255자 이내로 작성해주세요")
     private String address;
@@ -53,6 +51,7 @@ public class RentArticleRequest {
     private String maintenanceFeeDescription;
 
     @NotNull
+    @Future
     private LocalDate availableFrom;
 
     @NotNull
