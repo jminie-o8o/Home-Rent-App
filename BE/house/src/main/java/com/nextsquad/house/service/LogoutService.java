@@ -14,11 +14,11 @@ public class LogoutService {
 
     private final JwtProvider jwtProvider;
 
-    public GeneralResponse logout(String accessToken, String refreshToken){
+    public GeneralResponse logout(String accessToken, String refreshToken) {
         DecodedJWT decodedJWT = jwtProvider.decode(accessToken);
         String accountId = decodedJWT.getClaim("accountId").asString();
         redisService.delete(accountId);
-        redisService.save(accessToken, "abcdef", 15);
+        redisService.save(accessToken, "denied", 15);
         return new GeneralResponse(200, "성공");
     }
 
