@@ -51,7 +51,6 @@ public class RentArticleRequest {
     private String maintenanceFeeDescription;
 
     @NotNull
-    @Future
     private LocalDate availableFrom;
 
     @NotNull
