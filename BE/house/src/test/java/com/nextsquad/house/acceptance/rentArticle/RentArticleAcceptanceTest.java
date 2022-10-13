@@ -183,35 +183,9 @@ public class RentArticleAcceptanceTest {
     }
 
     @Test
-    void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
-        List<String> images = new ArrayList<>();
-        HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
-        RentArticleRequest request = new RentArticleRequest("대전 서구 둔산동", "둔산 하이츠",
-                "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
-                "MONTHLY", "ONEROOM", 1000000, 300000,
-                140000, "전기,수도,인터넷 등 모두 포함", LocalDate.of(2022, 9, 20),
-                LocalDate.of(2023, 4,10), 10, 5, images, facility);
-        given(documentationSpec)
-                .filter(document("modify-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .header("access-token", jwtToken.getAccessToken().getTokenCode())
-                .body(request)
-
-                .when()
-                .patch("/houses/rent/13")
-
-                .then()
-                .statusCode(HttpStatus.UNAUTHORIZED.value())
-                .assertThat()
-                .body("code", equalTo(401))
-                .body("message", equalTo("접근 권한이 없습니다."));
-    }
-
-    @Test
     void id가_11번인_양도글을_거래완료_처리한다(){
         given(documentationSpec)
-                .filter(document("completed-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(document("complete-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
@@ -227,27 +201,9 @@ public class RentArticleAcceptanceTest {
     }
 
     @Test
-    void 다른_유저의_게시글을_완료_처리하면_예외가_발생한다(){
-        given(documentationSpec)
-                .filter(document("completed-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .header("access-token", jwtToken.getAccessToken().getTokenCode())
-
-                .when()
-                .patch("/houses/rent/13/isCompleted")
-
-                .then()
-                .statusCode(HttpStatus.UNAUTHORIZED.value())
-                .assertThat()
-                .body("code", equalTo(401))
-                .body("message", equalTo("접근 권한이 없습니다."));
-    }
-
-    @Test
     void id가_11번인_양도글을_삭제한다(){
         given(documentationSpec)
-                .filter(document("deleted-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(document("delete-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
@@ -260,24 +216,6 @@ public class RentArticleAcceptanceTest {
                 .assertThat()
                 .body("code", equalTo(200))
                 .body("message", equalTo("게시글이 삭제되었습니다."));
-    }
-
-    @Test
-    void 다른_유저의_게시글을_삭제하면_예외가_발생한다(){
-        given(documentationSpec)
-                .filter(document("deleted-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .header("access-token", jwtToken.getAccessToken().getTokenCode())
-
-                .when()
-                .delete("/houses/rent/13")
-
-                .then()
-                .statusCode(HttpStatus.UNAUTHORIZED.value())
-                .assertThat()
-                .body("code", equalTo(401))
-                .body("message", equalTo("접근 권한이 없습니다."));
     }
 
     @Test
@@ -311,6 +249,7 @@ public class RentArticleAcceptanceTest {
     @Test
     void id가_1번인_사용자가_id_10번_양도글을_북마크에_추가한다(){
         BookmarkRequest request = new BookmarkRequest(10L);
+
         given(documentationSpec)
                 .filter(document("add-bookmark-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -348,7 +287,67 @@ public class RentArticleAcceptanceTest {
                 .body("message", equalTo("북마크가 삭제되었습니다."));
     }
 
+
     //Restdocs 생성하지 않는 테스트(예외 확인용 테스트)
+
+    @Test
+    void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
+        List<String> images = new ArrayList<>();
+        HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
+        RentArticleRequest request = new RentArticleRequest("대전 서구 둔산동", "둔산 하이츠",
+                "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
+                "MONTHLY", "ONEROOM", 1000000, 300000,
+                140000, "전기,수도,인터넷 등 모두 포함", LocalDate.of(2022, 9, 20),
+                LocalDate.of(2023, 4,10), 10, 5, images, facility);
+        given(documentationSpec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("/houses/rent/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+    @Test
+    void 다른_유저의_게시글을_완료_처리하면_예외가_발생한다(){
+        given(documentationSpec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .patch("/houses/rent/13/isCompleted")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
+    @Test
+    void 다른_유저의_게시글을_삭제하면_예외가_발생한다(){
+        given(documentationSpec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .delete("/houses/rent/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
     @Test
     void 사용자가_삭제된_11번_양도글을_북마크에_추가하면_예외가_발생한다() {
         BookmarkRequest request = new BookmarkRequest( 11L);
