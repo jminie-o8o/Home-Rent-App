@@ -4,6 +4,91 @@ endif::[]
 
 = 집넘기기 API
 
+= 로그인 관련
+
+== 로그인
+=== Request
+include::{snippets}/login-with-authcode/http-request.adoc[]
+
+=== Response
+include::{snippets}/login-with-authcode/response-body.adoc[]
+
+== 로그아웃
+
+=== Request
+include::{snippets}/logout-with-token/http-request.adoc[]
+
+=== Response
+include::{snippets}/logout-with-token/response-body.adoc[]
+
+
+== 액세스 토큰 갱신
+헤더에 access-token과 refresh-token을 모두 넣어 요청.
+
+=== Request
+include::{snippets}/refresh-access-token/http-request.adoc[]
+
+=== Response
+include::{snippets}/refresh-access-token/response-body.adoc[]
+== 유저 정보 조회
+
+=== Request
+include::{snippets}/get-user-info/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-user-info/response-body.adoc[]
+
+
+= 양도글 관련
+
+== 양도글 목록 보기
+=== Request
+include::{snippets}/get-rent-article-list/http-request.adoc[]
+=== Response
+include::{snippets}/get-rent-article-list/response-body.adoc[]
+
+== 양도글 상세보기
+=== Request
+include::{snippets}/get-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/get-rent-article/response-body.adoc[]
+
+== 양도글 작성
+=== Request
+include::{snippets}/write-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/write-rent-article/response-body.adoc[]
+
+== 양도글 수정하기
+=== Request
+include::{snippets}/modify-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/modify-rent-article/response-body.adoc[]
+
+== 양도글 거래완료 처리
+=== Request
+include::{snippets}/complete-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/complete-rent-article/response-body.adoc[]
+
+== 양도글 삭제
+=== Request
+include::{snippets}/delete-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/delete-rent-article/response-body.adoc[]
+
+== 양도글 북마크 추가
+=== Request
+include::{snippets}/add-bookmark-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/add-bookmark-rent-article/response-body.adoc[]
+
+== 양도글 북마크 해제
+=== Request
+include::{snippets}/delete-bookmark-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/delete-bookmark-rent-article/response-body.adoc[]
+
 == 유저 정보 조회
 
 === Request
