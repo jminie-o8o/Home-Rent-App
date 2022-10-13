@@ -160,7 +160,7 @@ public class WantedArticleAcceptanceTest {
 
     @Test
     void id가_2번인_양수글을_수정한다(){
-        WantedArticleRequest request = new WantedArticleRequest(1L, "주소 수정 테스트", "제목 수정 테스트"
+        WantedArticleRequest request = new WantedArticleRequest("주소 수정 테스트", "제목 수정 테스트"
         , "내용 수정 테스트", LocalDate.now(), LocalDate.now(), 500, 20000);
         given(documentationSpec)
                 .filter(document("update-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
@@ -181,7 +181,7 @@ public class WantedArticleAcceptanceTest {
 
     @Test
     void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
-        WantedArticleRequest request = new WantedArticleRequest(1L, "주소 수정 테스트", "제목 수정 테스트"
+        WantedArticleRequest request = new WantedArticleRequest("주소 수정 테스트", "제목 수정 테스트"
                 , "내용 수정 테스트", LocalDate.now(), LocalDate.now(), 500, 20000);
         given(documentationSpec)
                 .filter(document("update-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
@@ -202,7 +202,7 @@ public class WantedArticleAcceptanceTest {
 
     @Test
     void 양수글을_작성하고_저장했을_때_글번호_13을_리턴한다(){
-        WantedArticleRequest request = new WantedArticleRequest(1L, "글작성 테스트 주소",
+        WantedArticleRequest request = new WantedArticleRequest("글작성 테스트 주소",
                 "글쓰기 테스트", "양도글 작성 테스트 본문", LocalDate.now(), LocalDate.now(), 100, 100);
         given(documentationSpec)
                 .filter(document("write-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
@@ -223,7 +223,7 @@ public class WantedArticleAcceptanceTest {
     @Order(1)
     @Test
     void 양수글_한개를_북마크에_저장한다(){
-        BookmarkRequest request = new BookmarkRequest(1L, 12L);
+        BookmarkRequest request = new BookmarkRequest(12L);
         given(documentationSpec)
                 .filter(document("save-wanted-article-bookmark", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -243,7 +243,7 @@ public class WantedArticleAcceptanceTest {
     @Order(2)
     @Test
     void 저장한_양수글_북마크_한개를_삭제한다(){
-        BookmarkRequest request = new BookmarkRequest(1L, 12L);
+        BookmarkRequest request = new BookmarkRequest(12L);
         given(documentationSpec)
                 .filter(document("delete-wanted-article-bookmark", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -263,7 +263,7 @@ public class WantedArticleAcceptanceTest {
 
     @Test
     void 삭제된_글을_북마크에_추가하려하면_예외가_발생한다(){
-        BookmarkRequest request = new BookmarkRequest(1L, 1L);
+        BookmarkRequest request = new BookmarkRequest(1L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
