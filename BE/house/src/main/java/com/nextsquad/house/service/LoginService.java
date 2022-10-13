@@ -29,7 +29,7 @@ public class LoginService {
     public JwtResponse loginWithOauth(OauthLoginRequest requestDto) {
         log.info("login started!");
         OauthClient oauthClient = oauthClientMapper.getOauthClient(requestDto.getOauthClientName())
-                .orElseThrow(() -> new OauthClientNotFoundException());
+                .orElseThrow(OauthClientNotFoundException::new);
         OauthUserInfo oauthUserInfo = oauthClient.getUserInfo(requestDto.getAuthCode());
 
         User user = userRepository.findByAccountId(oauthUserInfo.getAccountId())
@@ -47,7 +47,7 @@ public class LoginService {
     }
 
     public JwtResponse refreshJwtToken(String accessToken, String refreshToken) {
-        DecodedJWT decode = jwtProvider.decode(refreshToken);
+        DecodedJWT decode = jwtProvider.verifyToken(refreshToken);
         String accountId = decode.getClaim("accountId").asString();
 
         log.info(accountId);
@@ -57,7 +57,7 @@ public class LoginService {
         validateRefreshToken(refreshToken, storedRefreshToken);
 
         User user = userRepository.findByAccountId(accountId)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
         JwtToken newJwtToken = jwtProvider.createRefreshedToken(user, refreshToken);
 
         return JwtResponse.from(user, newJwtToken);
