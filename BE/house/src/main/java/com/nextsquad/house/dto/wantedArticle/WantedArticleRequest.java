@@ -25,7 +25,6 @@ public class WantedArticleRequest {
     private String content;
 
     @NotNull
-    @Future
     private LocalDate moveInDate;
 
     @NotNull

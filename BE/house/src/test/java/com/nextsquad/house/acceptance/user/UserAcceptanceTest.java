@@ -208,7 +208,7 @@ public class UserAcceptanceTest {
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .filter(RestAssuredRestDocumentation.document("check-nickname-duplication-ture", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(RestAssuredRestDocumentation.document("check-nickname-duplication-true", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .param("nickname", "lee")
                 .header("access-token", token.getAccessToken().getTokenCode())
             .when()
