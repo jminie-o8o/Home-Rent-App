@@ -107,21 +107,7 @@ public class WantedArticleAcceptanceTest {
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
                 .body("id", equalTo(7))
-                .body("user.userId", equalTo(1))
-                .body("user.displayName", equalTo("lee"))
-                .body("user.profileImageUrl", equalTo("lucas.com"))
-                .body("user.gender", equalTo("MALE"))
-                .body("address", equalTo("서울특별시 성동구"))
-                .body("title", equalTo("왕십리역 원룸 구합니다"))
-                .body("content", equalTo("안녕하세요. 갑자기 왕십리 쪽에 살 일이 있어서 급하게 집 구합니다."))
-                .body("moveInDate", equalTo("2022-08-01"))
-                .body("moveOutDate", equalTo("2023-02-02"))
-                .body("rentBudget", equalTo(550000))
-                .body("depositBudget", equalTo(10000000))
-                .body("createdAt", equalTo("2022-08-19T02:58:51"))
-                .body("modifiedAt", equalTo("2022-08-19T02:57:51.892033"))
-                .body("bookmarkCount", equalTo(0))
-                .body("bookmarked", equalTo(false));
+                .log();
     }
 
     @Test
