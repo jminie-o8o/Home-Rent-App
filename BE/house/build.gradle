@@ -81,12 +81,12 @@ ext {
 asciidoctor {
 	dependsOn test
 	inputs.dir snippetsDir
+	sourceDir file('/Users/kylechoi/Documents/Dev/Home-Rent-App/BE/house/src/docs/asciidoc')
+	sources {
+		include 'index.adoc'
+	}
+	outputDir file('/Users/kylechoi/Documents/Dev/Home-Rent-App/BE/house/build/docs/asciidoc')
 }
-
-asciidoctor.doFirst {
-	delete file('src/main/resources/static/docs')
-}
-
 
 task copyDocument(type: Copy) {
 	dependsOn asciidoctor
@@ -95,12 +95,8 @@ task copyDocument(type: Copy) {
 }
 
 build {
-	dependsOn copyDocument
+	dependsOn test
 	dependsOn asciidoctor
-	copy {
-		from "${asciidoctor.outputDir}"
-		into 'src/main/resources/static/docs'
-	}
 }
 
 jar {
