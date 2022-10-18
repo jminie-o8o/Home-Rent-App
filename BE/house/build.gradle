@@ -81,11 +81,11 @@ ext {
 asciidoctor {
 	dependsOn test
 	inputs.dir snippetsDir
-	sourceDir file('/Users/kylechoi/Documents/Dev/Home-Rent-App/BE/house/src/docs/asciidoc')
+	sourceDir file('src/docs/asciidoc')
 	sources {
 		include 'index.adoc'
 	}
-	outputDir file('/Users/kylechoi/Documents/Dev/Home-Rent-App/BE/house/build/docs/asciidoc')
+	outputDir file('build/docs/asciidoc')
 }
 
 task copyDocument(type: Copy) {
