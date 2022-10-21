@@ -2,8 +2,10 @@ package com.nextsquad.house.repository;
 
 import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.SearchConditionDto;
+import com.nextsquad.house.dto.SearchCondition;
 import com.nextsquad.house.login.oauth.OauthClientType;
+import com.nextsquad.house.repository.user.UserRepository;
+import com.nextsquad.house.repository.wantedarticle.WantedArticleRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -89,7 +91,7 @@ class WantedArticleRepositoryTest {
         wantedArticleRepository.save(wantedArticle);
 
         //when
-        SearchConditionDto searchCondition = new SearchConditionDto(null, null, "대전");
+        SearchCondition searchCondition = new SearchCondition(null, null, "대전");
         List<WantedArticle> byKeyword = wantedArticleRepository.findByKeyword(searchCondition, pageable);
 
         //then 검색어와 실제 글 확인

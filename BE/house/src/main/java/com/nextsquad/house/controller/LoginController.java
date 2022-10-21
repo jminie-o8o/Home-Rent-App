@@ -1,13 +1,13 @@
 package com.nextsquad.house.controller;
 
-import com.nextsquad.house.dto.JwtResponseDto;
-import com.nextsquad.house.dto.OauthLoginRequestDto;
+import com.nextsquad.house.dto.login.JwtResponse;
+import com.nextsquad.house.dto.login.OauthLoginRequest;
 import com.nextsquad.house.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,12 +22,12 @@ public class LoginController {
     }
 
     @PostMapping("/oauth")
-    public ResponseEntity<JwtResponseDto> loginWithOauth(@RequestBody OauthLoginRequestDto requestDto) {
+    public ResponseEntity<JwtResponse> loginWithOauth(@Valid @RequestBody OauthLoginRequest requestDto) {
         return ResponseEntity.ok(loginService.loginWithOauth(requestDto));
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<JwtResponseDto> refreshJwtToken(@RequestHeader(value = "access-token") String accessToken, @RequestHeader(value = "refresh-token") String refreshToken) {
+    public ResponseEntity<JwtResponse> refreshJwtToken(@RequestHeader(value = "access-token") String accessToken, @RequestHeader(value = "refresh-token") String refreshToken) {
         return ResponseEntity.ok(loginService.refreshJwtToken(accessToken, refreshToken));
     }
 }

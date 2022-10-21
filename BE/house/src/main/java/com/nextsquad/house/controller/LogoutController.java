@@ -1,6 +1,6 @@
 package com.nextsquad.house.controller;
 
-import com.nextsquad.house.dto.GeneralResponseDto;
+import com.nextsquad.house.dto.GeneralResponse;
 import com.nextsquad.house.service.LogoutService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +17,8 @@ public class LogoutController {
     private final LogoutService logoutService;
 
     @PostMapping("/logout")
-    public ResponseEntity<GeneralResponseDto> logout(@RequestHeader(value = "access-token") String accessToken,
-                                                     @RequestHeader(value = "refresh-token") String refreshToken){
+    public ResponseEntity<GeneralResponse> logout(@RequestHeader(value = "access-token") String accessToken,
+                                                  @RequestHeader(value = "refresh-token") String refreshToken){
         log.info("access-token: {}, refresh-token: {}", accessToken, refreshToken);
         return ResponseEntity.ok(logoutService.logout(accessToken, refreshToken));
     }

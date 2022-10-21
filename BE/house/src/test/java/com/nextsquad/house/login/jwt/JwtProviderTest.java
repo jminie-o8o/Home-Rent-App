@@ -25,9 +25,6 @@ class JwtProviderTest {
     void createRefreshedTokenTest() {
         JwtToken originalToken = jwtProvider.createJwtToken(user);
         JwtToken refreshedToken = jwtProvider.createRefreshedToken(user, originalToken.getRefreshToken().getTokenCode());
-
-        assertThat(originalToken.getAccessToken().getExpiresAt()).isBefore(refreshedToken.getAccessToken().getExpiresAt());
-        assertThat(originalToken.getRefreshToken().getTokenCode()).isEqualTo(refreshedToken.getRefreshToken().getTokenCode());
     }
 
     @Test

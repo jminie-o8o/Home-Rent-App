@@ -6,11 +6,19 @@ import com.nextsquad.house.domain.house.WantedArticle;
 import com.nextsquad.house.domain.house.WantedArticleBookmark;
 import com.nextsquad.house.domain.user.User;
 import com.nextsquad.house.dto.*;
+import com.nextsquad.house.dto.rentarticle.RentArticleListElement;
+import com.nextsquad.house.dto.rentarticle.RentArticleListResponse;
 import com.nextsquad.house.dto.user.DuplicationCheckResponse;
+import com.nextsquad.house.dto.user.UserInfo;
+import com.nextsquad.house.dto.user.UserResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleElementResponse;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleListResponse;
 import com.nextsquad.house.exception.UserNotFoundException;
-import com.nextsquad.house.repository.*;
+import com.nextsquad.house.repository.rentarticle.RentArticleBookmarkRepository;
+import com.nextsquad.house.repository.rentarticle.RentArticleRepository;
+import com.nextsquad.house.repository.user.UserRepository;
+import com.nextsquad.house.repository.wantedarticle.WantedArticleBookmarkRepository;
+import com.nextsquad.house.repository.wantedarticle.WantedArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,22 +41,22 @@ public class UserService {
     private final WantedArticleRepository wantedArticleRepository;
     private final RentArticleRepository rentArticleRepository;
 
-    public UserResponseDto getUserInfo(Long id) {
+    public UserResponse getUserInfo(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
-        return UserResponseDto.from(user);
+        return UserResponse.from(user);
     }
 
-    public GeneralResponseDto modifyUserInfo(Long id, UserInfoDto userInfoDto){
+    public GeneralResponse modifyUserInfo(Long id, UserInfo userInfo){
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
-        if (checkDuplicated(userInfoDto, user)) {
+        if (checkDuplicated(userInfo, user)) {
             throw new IllegalArgumentException("중복된 닉네임 입니다.");
         }
-        user.modifyInfo(userInfoDto);
-        return new GeneralResponseDto(200, "정보가 수정되었습니다");
+        user.modifyInfo(userInfo);
+        return new GeneralResponse(200, "정보가 수정되었습니다");
     }
 
-    private boolean checkDuplicated(UserInfoDto userInfoDto, User user) {
-        return !user.getDisplayName().equals(userInfoDto.getDisplayName()) && userRepository.existsUserByDisplayName(userInfoDto.getDisplayName());
+    private boolean checkDuplicated(UserInfo userInfo, User user) {
+        return !user.getDisplayName().equals(userInfo.getDisplayName()) && userRepository.existsUserByDisplayName(userInfo.getDisplayName());
     }
 
     public RentArticleListResponse getRentBookmark(long userId, Pageable pageable) {

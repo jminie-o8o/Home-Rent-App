@@ -3,7 +3,7 @@ package com.nextsquad.house.domain.user;
 import com.nextsquad.house.domain.house.RentArticle;
 import com.nextsquad.house.domain.house.RentArticleBookmark;
 import com.nextsquad.house.domain.house.WantedArticle;
-import com.nextsquad.house.dto.UserInfoDto;
+import com.nextsquad.house.dto.user.UserInfo;
 import com.nextsquad.house.login.oauth.OauthClientType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,10 +43,10 @@ public class User {
         this.oauthClientType = oauthClientType;
     }
 
-    public void modifyInfo(UserInfoDto userInfoDto){
-        this.displayName = userInfoDto.getDisplayName();
-        this.profileImageUrl = userInfoDto.getProfileImageUrl();
-        this.gender = Gender.valueOf(userInfoDto.getGender());
+    public void modifyInfo(UserInfo userInfo){
+        this.displayName = userInfo.getDisplayName();
+        this.profileImageUrl = userInfo.getProfileImageUrl();
+        this.gender = Gender.valueOf(userInfo.getGender());
     }
 }
 

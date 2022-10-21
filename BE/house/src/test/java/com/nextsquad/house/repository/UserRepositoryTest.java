@@ -1,6 +1,7 @@
 package com.nextsquad.house.repository;
 
 import com.nextsquad.house.domain.user.User;
+import com.nextsquad.house.repository.user.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

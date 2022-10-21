@@ -44,6 +44,7 @@ public class WantedArticle {
     private LocalDateTime modifiedAt;
     private boolean isDeleted;
 
+    @Builder.Default
     @OneToMany(mappedBy = "wantedArticle")
     private List<WantedArticleBookmark> bookmarks = new ArrayList<>();
 

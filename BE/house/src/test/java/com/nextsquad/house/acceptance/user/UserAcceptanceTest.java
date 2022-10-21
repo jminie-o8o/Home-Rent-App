@@ -1,11 +1,11 @@
 package com.nextsquad.house.acceptance.user;
 
 import com.nextsquad.house.config.RestDocsConfiguration;
-import com.nextsquad.house.dto.UserInfoDto;
+import com.nextsquad.house.dto.user.UserInfo;
 import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
-import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.repository.user.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -81,7 +81,7 @@ public class UserAcceptanceTest {
     @Test
     @DisplayName("사용자 정보를 수정한다")
     void modifyUserInfoTest() {
-        UserInfoDto dto = new UserInfoDto(1L, "testName", "test.com", "MALE");
+        UserInfo dto = new UserInfo(1L, "testName", "test.com", "MALE");
         RestAssured
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -102,7 +102,7 @@ public class UserAcceptanceTest {
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .filter(RestAssuredRestDocumentation.document("modify-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(RestAssuredRestDocumentation.document("get-user-rent-articles", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .header("access-token", token.getAccessToken().getTokenCode())
             .when()
                 .get("/users/{userId}/articles/rent", 1)
@@ -129,7 +129,7 @@ public class UserAcceptanceTest {
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .filter(RestAssuredRestDocumentation.document("modify-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(RestAssuredRestDocumentation.document("get-user-wanted-articles", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .header("access-token", token.getAccessToken().getTokenCode())
             .when()
                 .get("/users/{userId}/articles/wanted", 1)
@@ -155,7 +155,7 @@ public class UserAcceptanceTest {
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .filter(RestAssuredRestDocumentation.document("modify-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(RestAssuredRestDocumentation.document("get-user-rent-bookmarks", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .header("access-token", token.getAccessToken().getTokenCode())
             .when()
                 .get("/users/{userId}/bookmarks/rent", 1)
@@ -182,7 +182,7 @@ public class UserAcceptanceTest {
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .filter(RestAssuredRestDocumentation.document("modify-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(RestAssuredRestDocumentation.document("get-user-wanted-bookmarks", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .header("access-token", token.getAccessToken().getTokenCode())
             .when()
                 .get("/users/{userId}/bookmarks/wanted", 1)
@@ -208,7 +208,7 @@ public class UserAcceptanceTest {
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(RestAssuredRestDocumentation.document("check-nickname-duplication-true", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .param("nickname", "lee")
                 .header("access-token", token.getAccessToken().getTokenCode())
             .when()
@@ -225,7 +225,7 @@ public class UserAcceptanceTest {
             .given(spec)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .filter(RestAssuredRestDocumentation.document("get-user-info", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(RestAssuredRestDocumentation.document("check-nickname-duplication-false", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .param("nickname", "testnickname")
                 .header("access-token", token.getAccessToken().getTokenCode())
             .when()

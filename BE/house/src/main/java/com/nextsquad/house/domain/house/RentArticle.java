@@ -1,7 +1,7 @@
 package com.nextsquad.house.domain.house;
 
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.RentArticleRequest;
+import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,19 +49,19 @@ public class RentArticle {
     private LocalDateTime createdAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime modifiedAt;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "house_facility_id")
+    private HouseFacility houseFacility;
     private int maxFloor;
     private int thisFloor;
-    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
-    private List<RentArticleFacility> facilities;
-    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
-    private List<RentArticleSecurityFacility> securityFacilities;
-    private boolean hasParkingLot;
-    private boolean hasBalcony;
-    private boolean hasElevator;
     private boolean isCompleted;
     private boolean isDeleted;
+
+    @Builder.Default
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<HouseImage> houseImages = new ArrayList<>();
+
+    @Builder.Default
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<RentArticleBookmark> bookmarks = new ArrayList<>();
 
@@ -103,9 +103,6 @@ public class RentArticle {
         this.contractExpiresAt = request.getContractExpiresAt();
         this.maxFloor = request.getMaxFloor();
         this.thisFloor = request.getThisFloor();
-        this.hasParkingLot = request.isHasParkingLot();
-        this.hasBalcony = request.isHasBalcony();
-        this.hasElevator = request.isHasElevator();
     }
 }
 

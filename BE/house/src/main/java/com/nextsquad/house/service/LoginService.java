@@ -2,16 +2,16 @@ package com.nextsquad.house.service;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.JwtResponseDto;
-import com.nextsquad.house.dto.OauthLoginRequestDto;
+import com.nextsquad.house.dto.login.JwtResponse;
+import com.nextsquad.house.dto.login.OauthLoginRequest;
 import com.nextsquad.house.exception.OauthClientNotFoundException;
 import com.nextsquad.house.exception.UserNotFoundException;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
 import com.nextsquad.house.login.oauth.OauthClient;
 import com.nextsquad.house.login.oauth.OauthClientMapper;
-import com.nextsquad.house.login.userinfo.UserInfo;
-import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.login.userinfo.OauthUserInfo;
+import com.nextsquad.house.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,28 +26,28 @@ public class LoginService {
     private final JwtProvider jwtProvider;
     private final RedisService redisService;
 
-    public JwtResponseDto loginWithOauth(OauthLoginRequestDto requestDto) {
+    public JwtResponse loginWithOauth(OauthLoginRequest requestDto) {
         log.info("login started!");
         OauthClient oauthClient = oauthClientMapper.getOauthClient(requestDto.getOauthClientName())
-                .orElseThrow(() -> new OauthClientNotFoundException());
-        UserInfo userInfo = oauthClient.getUserInfo(requestDto.getAuthCode());
+                .orElseThrow(OauthClientNotFoundException::new);
+        OauthUserInfo oauthUserInfo = oauthClient.getUserInfo(requestDto.getAuthCode());
 
-        User user = userRepository.findByAccountId(userInfo.getAccountId())
-                .orElseGet(() -> registerUser(userInfo));
+        User user = userRepository.findByAccountId(oauthUserInfo.getAccountId())
+                .orElseGet(() -> registerUser(oauthUserInfo));
 
         JwtToken jwtToken = jwtProvider.createJwtToken(user);
         log.info("saving refresh token... key: {}, value: {}", user.getAccountId(), jwtToken.getRefreshToken().getTokenCode());
         redisService.save(user.getAccountId(), jwtToken.getRefreshToken().getTokenCode());
-        return JwtResponseDto.from(user, jwtToken);
+        return JwtResponse.from(user, jwtToken);
     }
 
-    private User registerUser(UserInfo userInfo) {
-        User user = userInfo.toUser();
+    private User registerUser(OauthUserInfo oauthUserInfo) {
+        User user = oauthUserInfo.toUser();
         return userRepository.save(user);
     }
 
-    public JwtResponseDto refreshJwtToken(String accessToken, String refreshToken) {
-        DecodedJWT decode = jwtProvider.decode(refreshToken);
+    public JwtResponse refreshJwtToken(String accessToken, String refreshToken) {
+        DecodedJWT decode = jwtProvider.verifyToken(refreshToken);
         String accountId = decode.getClaim("accountId").asString();
 
         log.info(accountId);
@@ -57,10 +57,10 @@ public class LoginService {
         validateRefreshToken(refreshToken, storedRefreshToken);
 
         User user = userRepository.findByAccountId(accountId)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
         JwtToken newJwtToken = jwtProvider.createRefreshedToken(user, refreshToken);
 
-        return JwtResponseDto.from(user, newJwtToken);
+        return JwtResponse.from(user, newJwtToken);
 
     }
 
