@@ -78,6 +78,13 @@ ext {
 	snippetsDir = file('build/generated-snippets')
 }
 
+test {
+	testLogging {
+		events "failed"
+		exceptionFormat "full"
+	}
+}
+
 asciidoctor {
 	dependsOn test
 	inputs.dir snippetsDir
