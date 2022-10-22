@@ -1,10 +1,11 @@
 package com.nextsquad.house.acceptance.rentArticle;
 
-import com.nextsquad.house.dto.RentArticleRequest;
-import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.dto.rentarticle.HouseFacilityList;
+import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
+import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
-import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.repository.user.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -89,12 +90,13 @@ public class RentArticleAcceptanceTest {
                 .body("rentArticles[0].deposit", equalTo(0))
                 .body("rentArticles[0].rentFee", equalTo(500000))
                 .body("rentArticles[0].availableFrom", equalTo("2022-08-01"))
-                .body("rentArticles[0].bookmarkCount", equalTo(null))
+                .body("rentArticles[0].bookmarkCount", equalTo(1))
                 .body("rentArticles[0].contractExpiresAt", equalTo("2023-02-02"))
                 .body("rentArticles[0].createdAt", equalTo("2022-08-19T02:57:46.239433"))
                 .body("rentArticles[0].completed", equalTo(false))
                 .body("rentArticles[0].deleted", equalTo(false))
                 .body("rentArticles[0].bookmarked", equalTo(true))
+                .body("rentArticles[0].bookmarkCount", equalTo(1))
                 .body("hasNext", equalTo(true));
     }
     @Test
@@ -125,7 +127,6 @@ public class RentArticleAcceptanceTest {
                 .body("content", equalTo("사정이 있어서 계약기간 못 채우고 양도합니다."))
                 .body("contractType", equalTo("MONTHLY"))
                 .body("houseType", equalTo("ONEROOM"))
-                .body("facilities", hasSize(0))
                 .body("deposit", equalTo(0))
                 .body("rentFee", equalTo(650000))
                 .body("maintenanceFee", equalTo(50000))
@@ -135,11 +136,18 @@ public class RentArticleAcceptanceTest {
                 .body("bookmarkCount", equalTo(0))
                 .body("maxFloor", equalTo(4))
                 .body("thisFloor", equalTo(2))
-                .body("hasParkingLot", equalTo(true))
-                .body("hasBalcony", equalTo(false))
-                .body("hasElevator", equalTo(true))
+                .body("houseFacility.hasParkingLot", equalTo(true))
+                .body("houseFacility.hasBalcony", equalTo(true))
+                .body("houseFacility.hasElevator", equalTo(true))
+                .body("houseFacility.hasAircon", equalTo(true))
+                .body("houseFacility.hasLaundry", equalTo(false))
+                .body("houseFacility.hasBed", equalTo(false))
+                .body("houseFacility.hasFridge", equalTo(false))
+                .body("houseFacility.hasTv", equalTo(false))
+                .body("houseFacility.hasCctv", equalTo(true))
+                .body("houseFacility.hasVideoPhone", equalTo(true))
+                .body("houseFacility.hasLobby", equalTo(false))
                 .body("houseImages", hasSize(2))
-                .body("securityFacilities", hasSize(0))
                 .body("createdAt", equalTo("2022-08-19T02:57:20.736606"))
                 .body("modifiedAt", equalTo("2022-08-19T02:56:10.736613"))
                 .body("completed", equalTo(false))
@@ -149,13 +157,14 @@ public class RentArticleAcceptanceTest {
     @Test
     void id가_11번인_양도글을_수정한다(){
         List<String> images = new ArrayList<>();
-        List<String> facilities = new ArrayList<>();
-        List<String> securityFacilities = new ArrayList<>();
-        images.add("테스트 이미지 주소");
-        RentArticleRequest request = new RentArticleRequest(1L, "테스트 주소", "테스트 주소 디테일", "주소 설명",
-                109.32, 2342.44, "제목", "내용", "MONTHLY", "ONEROOM", facilities, securityFacilities,
-                0, 340000, 50000, "전기 포함", LocalDate.now(), LocalDate.of(2023, 9, 10),
-                5, 2, false, false, false, images);
+
+        HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
+        RentArticleRequest request = new RentArticleRequest("대전 서구 둔산동", "둔산 하이츠",
+                "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
+                "MONTHLY", "ONEROOM", 1000000, 300000,
+                140000, "전기,수도,인터넷 등 모두 포함", LocalDate.of(2022, 9, 20),
+                LocalDate.of(2023, 4,10), 10, 5, images, facility);
+
         given(documentationSpec)
                 .filter(document("modify-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -176,7 +185,7 @@ public class RentArticleAcceptanceTest {
     @Test
     void id가_11번인_양도글을_거래완료_처리한다(){
         given(documentationSpec)
-                .filter(document("completed-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(document("complete-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
@@ -194,7 +203,7 @@ public class RentArticleAcceptanceTest {
     @Test
     void id가_11번인_양도글을_삭제한다(){
         given(documentationSpec)
-                .filter(document("deleted-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .filter(document("delete-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
@@ -212,16 +221,13 @@ public class RentArticleAcceptanceTest {
     @Test
     void 양도글을_작성하고_저장하면_글id_13번을_리턴한다(){
         List<String> images = new ArrayList<>();
-        List<String> facilities = new ArrayList<>();
-        facilities.add("에어컨");
-        List<String> securityFacilities = new ArrayList<>();
-        securityFacilities.add("공동현관");
-        RentArticleRequest request = new RentArticleRequest(1L, "대전 서구 둔산동", "둔산 하이츠",
+        HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
+
+        RentArticleRequest request = new RentArticleRequest("대전 서구 둔산동", "둔산 하이츠",
                 "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
-                "MONTHLY", "ONEROOM", facilities, securityFacilities, 1000000, 300000,
+                "MONTHLY", "ONEROOM", 1000000, 300000,
                 140000, "전기,수도,인터넷 등 모두 포함", LocalDate.of(2022, 9, 20),
-                LocalDate.of(2023, 4,10), 10, 5, true, true, true,
-                images);
+                LocalDate.of(2023, 4,10), 10, 5, images, facility);
 
         given(documentationSpec)
                 .filter(document("write-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
@@ -237,14 +243,13 @@ public class RentArticleAcceptanceTest {
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
                 .body("id", equalTo(15));
-
-
     }
 
     @Order(2)
     @Test
     void id가_1번인_사용자가_id_10번_양도글을_북마크에_추가한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        BookmarkRequest request = new BookmarkRequest(10L);
+
         given(documentationSpec)
                 .filter(document("add-bookmark-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -264,7 +269,7 @@ public class RentArticleAcceptanceTest {
 
     @Test
     void id가_1번인_사용자가_id_10번_양도글을_북마크에서_해제한다() {
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        BookmarkRequest request = new BookmarkRequest(10L);
         given(documentationSpec)
                 .filter(document("delete-bookmark-rent-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -282,10 +287,70 @@ public class RentArticleAcceptanceTest {
                 .body("message", equalTo("북마크가 삭제되었습니다."));
     }
 
+
     //Restdocs 생성하지 않는 테스트(예외 확인용 테스트)
+
+    @Test
+    void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
+        List<String> images = new ArrayList<>();
+        HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
+        RentArticleRequest request = new RentArticleRequest("대전 서구 둔산동", "둔산 하이츠",
+                "갤러리아 백화점 5분거리", 115.323, 221.3432, "급히 방 양도합니다.", "사정이 생겨 양도합니다",
+                "MONTHLY", "ONEROOM", 1000000, 300000,
+                140000, "전기,수도,인터넷 등 모두 포함", LocalDate.of(2022, 9, 20),
+                LocalDate.of(2023, 4,10), 10, 5, images, facility);
+        given(documentationSpec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("/houses/rent/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+    @Test
+    void 다른_유저의_게시글을_완료_처리하면_예외가_발생한다(){
+        given(documentationSpec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .patch("/houses/rent/13/isCompleted")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
+    @Test
+    void 다른_유저의_게시글을_삭제하면_예외가_발생한다(){
+        given(documentationSpec)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .delete("/houses/rent/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
     @Test
     void 사용자가_삭제된_11번_양도글을_북마크에_추가하면_예외가_발생한다() {
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 11L);
+        BookmarkRequest request = new BookmarkRequest( 11L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -302,7 +367,7 @@ public class RentArticleAcceptanceTest {
     @Order(3)
     @Test
     void 사용자가_이미_북마크에_존재하는_양도글을_다시_추가하면_예외가_발생한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 10L);
+        BookmarkRequest request = new BookmarkRequest(10L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -318,7 +383,7 @@ public class RentArticleAcceptanceTest {
 
     @Test
     void 존재하지_않는_북마크를_삭제하면_예외가_발생한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 9L);
+        BookmarkRequest request = new BookmarkRequest(9L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -334,7 +399,7 @@ public class RentArticleAcceptanceTest {
 
     @Test
     void 존재하지_않는_양도글을_북마크에서_삭제하면_예외가_발생한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 18L);
+        BookmarkRequest request = new BookmarkRequest(18L);
         given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

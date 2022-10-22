@@ -1,10 +1,10 @@
 package com.nextsquad.house.acceptance.wantedArticle;
 
-import com.nextsquad.house.dto.bookmark.BookmarkRequestDto;
+import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.dto.wantedArticle.WantedArticleRequest;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.login.jwt.JwtToken;
-import com.nextsquad.house.repository.UserRepository;
+import com.nextsquad.house.repository.user.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -89,6 +89,7 @@ public class WantedArticleAcceptanceTest {
                 .body("wantedArticles[0].depositBudget", equalTo(10000000))
                 .body("wantedArticles[0].createdAt", equalTo("2022-08-19T02:59:52"))
                 .body("wantedArticles[0].bookmarked", equalTo(true))
+                .body("wantedArticles[0].bookmarkCount", equalTo(1))
                 .body("hasNext", equalTo(true));
     }
 
@@ -106,21 +107,7 @@ public class WantedArticleAcceptanceTest {
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
                 .body("id", equalTo(7))
-                .body("user.userId", equalTo(1))
-                .body("user.displayName", equalTo("lee"))
-                .body("user.profileImageUrl", equalTo("lucas.com"))
-                .body("user.gender", equalTo("MALE"))
-                .body("address", equalTo("서울특별시 성동구"))
-                .body("title", equalTo("왕십리역 원룸 구합니다"))
-                .body("content", equalTo("안녕하세요. 갑자기 왕십리 쪽에 살 일이 있어서 급하게 집 구합니다."))
-                .body("moveInDate", equalTo("2022-08-01"))
-                .body("moveOutDate", equalTo("2023-02-02"))
-                .body("rentBudget", equalTo(550000))
-                .body("depositBudget", equalTo(10000000))
-                .body("createdAt", equalTo("2022-08-19T02:58:51"))
-                .body("modifiedAt", equalTo("2022-08-19T02:57:51.892033"))
-                .body("bookmarkCount", equalTo(0))
-                .body("bookmarked", equalTo(false));
+                .log();
     }
 
     @Test
@@ -141,8 +128,25 @@ public class WantedArticleAcceptanceTest {
     }
 
     @Test
+    void 다른_유저의_게시글을_삭제하면_예외가_발생한다(){
+        given(documentationSpec)
+                .filter(document("delete-wanted-article-error", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .delete("houses/wanted/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
+    @Test
     void id가_2번인_양수글을_수정한다(){
-        WantedArticleRequest request = new WantedArticleRequest(1L, "주소 수정 테스트", "제목 수정 테스트"
+        WantedArticleRequest request = new WantedArticleRequest("주소 수정 테스트", "제목 수정 테스트"
         , "내용 수정 테스트", LocalDate.now(), LocalDate.now(), 500, 20000);
         given(documentationSpec)
                 .filter(document("update-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
@@ -162,9 +166,30 @@ public class WantedArticleAcceptanceTest {
     }
 
     @Test
+    void 다른_유저의_게시글을_수정하면_예외가_발생한다(){
+        WantedArticleRequest request = new WantedArticleRequest("주소 수정 테스트", "제목 수정 테스트"
+                , "내용 수정 테스트", LocalDate.now(), LocalDate.now(), 500, 20000);
+        given(documentationSpec)
+                .filter(document("update-wanted-article-error", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+                .body(request)
+
+                .when()
+                .patch("houses/wanted/13")
+
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .assertThat()
+                .body("code", equalTo(401))
+                .body("message", equalTo("접근 권한이 없습니다."));
+    }
+
+    @Test
     void 양수글을_작성하고_저장했을_때_글번호_13을_리턴한다(){
-        WantedArticleRequest request = new WantedArticleRequest(1L, "글작성 테스트 주소",
-                "글쓰기 테스트", "양도글 작성 테스트 본문", LocalDate.now(), LocalDate.now(), 100, 100);
+        WantedArticleRequest request = new WantedArticleRequest("글작성 테스트 주소",
+                "글쓰기 테스트", "양도글 작성 테스트 본문", LocalDate.of(2022, 11, 12), LocalDate.of(2023, 11, 12), 100, 100);
         given(documentationSpec)
                 .filter(document("write-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -184,7 +209,7 @@ public class WantedArticleAcceptanceTest {
     @Order(1)
     @Test
     void 양수글_한개를_북마크에_저장한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 12L);
+        BookmarkRequest request = new BookmarkRequest(1L);
         given(documentationSpec)
                 .filter(document("save-wanted-article-bookmark", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -204,7 +229,7 @@ public class WantedArticleAcceptanceTest {
     @Order(2)
     @Test
     void 저장한_양수글_북마크_한개를_삭제한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 12L);
+        BookmarkRequest request = new BookmarkRequest(1L);
         given(documentationSpec)
                 .filter(document("delete-wanted-article-bookmark", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -224,8 +249,9 @@ public class WantedArticleAcceptanceTest {
 
     @Test
     void 삭제된_글을_북마크에_추가하려하면_예외가_발생한다(){
-        BookmarkRequestDto request = new BookmarkRequestDto(1L, 1L);
-        given()
+        BookmarkRequest request = new BookmarkRequest(1L);
+        given(documentationSpec)
+                .filter(document("add-bookmark-error", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
@@ -237,18 +263,4 @@ public class WantedArticleAcceptanceTest {
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
-
-//    @Test // 이렇게 하면 문서까지 예쁘게 작성이 되는데 로그를 가져오는 것이라서 사실상 의미가 없지 않나...
-//    void 양수글을_상세조회한다() {
-//        given(documentationSpec)
-//                .filter(document("get-wanted-article", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-//                .log().all()
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .header("access-token", jwtToken.getAccessToken().getTokenCode())
-//                .when()
-//                .get("/houses/wanted/1")
-//                .then()
-//                .log().all()
-//                .extract();
-//    }
 }

@@ -4,6 +4,35 @@ endif::[]
 
 = 집넘기기 API
 
+= 로그인 관련
+
+== 로그인
+=== Request
+include::{snippets}/login-with-authcode/http-request.adoc[]
+
+=== Response
+include::{snippets}/login-with-authcode/response-body.adoc[]
+
+== 로그아웃
+
+=== Request
+include::{snippets}/logout-with-token/http-request.adoc[]
+
+=== Response
+include::{snippets}/logout-with-token/response-body.adoc[]
+
+
+== 액세스 토큰 갱신
+헤더에 access-token과 refresh-token을 모두 넣어 요청.
+
+=== Request
+include::{snippets}/refresh-access-token/http-request.adoc[]
+
+=== Response
+include::{snippets}/refresh-access-token/response-body.adoc[]
+
+
+= 유저 관련
 == 유저 정보 조회
 
 === Request
@@ -12,7 +41,109 @@ include::{snippets}/get-user-info/http-request.adoc[]
 === Response
 include::{snippets}/get-user-info/response-body.adoc[]
 
+== 유저 정보 수정
 
+=== Request
+include::{snippets}/modify-user-info/http-request.adoc[]
+
+=== Response
+include::{snippets}/modify-user-info/response-body.adoc[]
+
+== 유저 양도 게시글 목록 보기
+
+=== Request
+include::{snippets}/get-user-rent-articles/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-user-rent-articles/response-body.adoc[]
+
+== 유저 양수 게시글 목록 보기
+
+=== Request
+include::{snippets}/get-user-wanted-articles/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-user-wanted-articles/response-body.adoc[]
+
+== 유저 양도 게시글 북마크 목록 보기
+
+=== Request
+include::{snippets}/get-user-rent-bookmarks/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-user-rent-bookmarks/response-body.adoc[]
+
+== 유저 양수 게시글 북마크 목록 보기
+
+=== Request
+include::{snippets}/get-user-wanted-bookmarks/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-user-wanted-bookmarks/response-body.adoc[]
+
+== 유저 닉네임 중복 검사
+
+=== Request
+include::{snippets}/check-nickname-duplication-true/http-request.adoc[]
+
+=== Response (성공 - 닉네임이 중복되지 않음)
+include::{snippets}/check-nickname-duplication-false/response-body.adoc[]
+=== Response (실패 - 닉네임이 중복됨)
+include::{snippets}/check-nickname-duplication-true/response-body.adoc[]
+
+
+= 양도글 관련
+
+== 양도글 목록 보기
+=== Request
+include::{snippets}/get-rent-article-list/http-request.adoc[]
+=== Response
+include::{snippets}/get-rent-article-list/response-body.adoc[]
+
+== 양도글 상세보기
+=== Request
+include::{snippets}/get-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/get-rent-article/response-body.adoc[]
+
+== 양도글 작성
+=== Request
+include::{snippets}/write-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/write-rent-article/response-body.adoc[]
+
+== 양도글 수정하기
+=== Request
+include::{snippets}/modify-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/modify-rent-article/response-body.adoc[]
+
+== 양도글 거래완료 처리
+=== Request
+include::{snippets}/complete-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/complete-rent-article/response-body.adoc[]
+
+== 양도글 삭제
+=== Request
+include::{snippets}/delete-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/delete-rent-article/response-body.adoc[]
+
+== 양도글 북마크 추가
+=== Request
+include::{snippets}/add-bookmark-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/add-bookmark-rent-article/response-body.adoc[]
+
+== 양도글 북마크 해제
+=== Request
+include::{snippets}/delete-bookmark-rent-article/http-request.adoc[]
+=== Response
+include::{snippets}/delete-bookmark-rent-article/response-body.adoc[]
+
+
+= 양수글 관련
 == 양수글 목록 조회
 
 === Request
@@ -34,16 +165,20 @@ include::{snippets}/get-wanted-article/http-response.adoc[]
 === Request
 include::{snippets}/delete-wanted-article/http-request.adoc[]
 
-=== Response
+=== Response (성공)
 include::{snippets}/delete-wanted-article/http-response.adoc[]
+=== Response (실패 - 다른 유저의 게시글을 삭제하려고 할 때)
+include::{snippets}/delete-wanted-article-error/http-response.adoc[]
 
 == 양수글 수정
 
 === Request
 include::{snippets}/update-wanted-article/http-request.adoc[]
 
-=== Response
+=== Response (성공)
 include::{snippets}/update-wanted-article/http-response.adoc[]
+=== Response (실패 - 다른 유저의 게시글을 수정하려고 할 때)
+include::{snippets}/update-wanted-article-error/http-response.adoc[]
 
 == 양수글 쓰기
 
@@ -58,8 +193,10 @@ include::{snippets}/write-wanted-article/http-response.adoc[]
 === Request
 include::{snippets}/save-wanted-article-bookmark/http-request.adoc[]
 
-=== Response
+=== Response (성공)
 include::{snippets}/save-wanted-article-bookmark/http-response.adoc[]
+=== Response (실패 - 삭제된 글을 북마크에 추가 하려고 할 때)
+include::{snippets}/add-bookmark-error/http-response.adoc[]
 
 == 양수글 찜하기 해제
 
@@ -68,68 +205,3 @@ include::{snippets}/delete-wanted-article-bookmark/http-request.adoc[]
 
 === Response
 include::{snippets}/delete-wanted-article-bookmark/http-response.adoc[]
-
-== 양도글
-== 양도글 목록 조회
-
-=== Request
-include::{snippets}/get-rent-article-list/http-request.adoc[]
-
-=== Response
-include::{snippets}/get-rent-article-list/http-response.adoc[]
-
-== 양도글 상세 보기
-
-=== Request
-include::{snippets}/get-rent-article/http-request.adoc[]
-
-=== Response
-include::{snippets}/get-rent-article/http-response.adoc[]
-
-== 양도글 쓰기
-
-=== Request
-include::{snippets}/write-rent-article/http-request.adoc[]
-
-=== Response
-include::{snippets}/write-rent-article/http-response.adoc[]
-
-== 양도글 수정
-
-=== Request
-include::{snippets}/modify-rent-article/http-request.adoc[]
-
-=== Response
-include::{snippets}/modify-rent-article/http-response.adoc[]
-
-== 양도글 삭제
-
-=== Request
-include::{snippets}/deleted-rent-article/http-request.adoc[]
-
-=== Response
-include::{snippets}/deleted-rent-article/http-response.adoc[]
-
-== 양도글 찜하기
-
-=== Request
-include::{snippets}/add-bookmark-rent-article/http-request.adoc[]
-
-=== Response
-include::{snippets}/add-bookmark-rent-article/http-response.adoc[]
-
-== 양도글 찜하기 해제
-
-=== Request
-include::{snippets}/delete-bookmark-rent-article/http-request.adoc[]
-
-=== Response
-include::{snippets}/delete-bookmark-rent-article/http-response.adoc[]
-
-== 양도글 거래완료
-
-=== Request
-include::{snippets}/completed-rent-article/http-request.adoc[]
-
-=== Response
-include::{snippets}/completed-rent-article/http-response.adoc[]

@@ -64,6 +64,9 @@ dependencies {
 	//restdocs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+
+	//validation
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
 }
 
 tasks.named('test') {
@@ -75,15 +78,22 @@ ext {
 	snippetsDir = file('build/generated-snippets')
 }
 
+test {
+	testLogging {
+		events "failed"
+		exceptionFormat "full"
+	}
+}
+
 asciidoctor {
 	dependsOn test
 	inputs.dir snippetsDir
+	sourceDir file('src/docs/asciidoc')
+	sources {
+		include 'index.adoc'
+	}
+	outputDir file('build/docs/asciidoc')
 }
-
-asciidoctor.doFirst {
-	delete file('src/main/resources/static/docs')
-}
-
 
 task copyDocument(type: Copy) {
 	dependsOn asciidoctor
@@ -92,12 +102,8 @@ task copyDocument(type: Copy) {
 }
 
 build {
-	dependsOn copyDocument
+	dependsOn test
 	dependsOn asciidoctor
-	copy {
-		from "${asciidoctor.outputDir}"
-		into 'src/main/resources/static/docs'
-	}
 }
 
 jar {

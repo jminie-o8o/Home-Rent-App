@@ -1,11 +1,10 @@
 package com.nextsquad.house.login.oauth;
 
-import com.nextsquad.house.dto.NaverAccessTokenResponseDto;
-import com.nextsquad.house.dto.NaverUserInfoDto;
-import com.nextsquad.house.login.userinfo.UserInfo;
+import com.nextsquad.house.dto.login.NaverAccessTokenResponse;
+import com.nextsquad.house.dto.login.NaverUserInfo;
+import com.nextsquad.house.login.userinfo.OauthUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -13,18 +12,31 @@ import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 
 @Slf4j
-public class NaverOauthClient extends OauthClient{
+public class NaverOauthClient implements OauthClient {
+    private final String clientId;
+    private final String authServerUrl;
+    private final String resourceServerUrl;
+    private final String secretKey;
+    private final WebClient webClient = WebClient.create();
 
     @Value("${spring.oauth.naver.state}")
     private String state;
 
     public NaverOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
-        super(clientId, authServerUrl, resourceServerUrl, secretKey);
+        this.clientId = clientId;
+        this.authServerUrl = authServerUrl;
+        this.resourceServerUrl = resourceServerUrl;
+        this.secretKey = secretKey;
     }
 
     @Override
-    protected String getAccessToken(String authCode) {
-        NaverAccessTokenResponseDto rawToken = webClient.post()
+    public OauthUserInfo getUserInfo(String authCode) {
+        String accessToken = getAccessToken(authCode);
+        return getOauthUserInfo(accessToken);
+    }
+
+    private String getAccessToken(String authCode) {
+        NaverAccessTokenResponse rawToken = webClient.post()
                 .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("grant_type", "authorization_code")
                         .queryParam("client_id", clientId)
@@ -37,29 +49,27 @@ public class NaverOauthClient extends OauthClient{
                 .ifNoneMatch("*")
                 .ifModifiedSince(ZonedDateTime.now())
                 .retrieve()
-                .bodyToFlux(NaverAccessTokenResponseDto.class)
+                .bodyToFlux(NaverAccessTokenResponse.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return parseToken(rawToken.getAccessToken());
     }
 
-    @Override
-    protected UserInfo getOauthUserInfo(String accessToken) {
-        NaverUserInfoDto infoDto = webClient.get()
+    private OauthUserInfo getOauthUserInfo(String accessToken) {
+        NaverUserInfo infoDto = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(NaverUserInfoDto.class)
+                .bodyToFlux(NaverUserInfo.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return infoDto.toUserInfo();
     }
 
-    @Override
-    protected String parseToken(String rawToken) {
+    private String parseToken(String rawToken) {
         return String.format("Bearer %s", rawToken);
     }
 

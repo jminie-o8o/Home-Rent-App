@@ -1,8 +1,7 @@
 package com.nextsquad.house.domain.house;
 
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.RentArticleRequest;
-import org.assertj.core.api.Assertions;
+import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RentArticleTest {
 
@@ -90,11 +88,7 @@ class RentArticleTest {
                 .modifiedAt(LocalDateTime.now())
                 .maxFloor(5)
                 .thisFloor(3)
-                .facilities(new ArrayList<>())
                 .bookmarks(new ArrayList<>())
-                .hasParkingLot(true)
-                .hasBalcony(true)
-                .hasElevator(true)
                 .isCompleted(false)
                 .isDeleted(false)
                 .build();
@@ -122,9 +116,9 @@ class RentArticleTest {
         assertThat(article.getContractExpiresAt()).isNull();
         assertThat(article.getMaxFloor()).isEqualTo(0);
         assertThat(article.getThisFloor()).isEqualTo(0);
-        assertThat(article.isHasParkingLot()).isEqualTo(false);
-        assertThat(article.isHasBalcony()).isEqualTo(false);
-        assertThat(article.isHasElevator()).isEqualTo(false);
+//        assertThat(article.isHasParkingLot()).isEqualTo(false);
+//        assertThat(article.isHasBalcony()).isEqualTo(false);
+//        assertThat(article.isHasElevator()).isEqualTo(false);
 
         assertThat(article.getUser()).isEqualTo(user);
         assertThat(article.getViewCount()).isEqualTo(VIEW_COUNT);

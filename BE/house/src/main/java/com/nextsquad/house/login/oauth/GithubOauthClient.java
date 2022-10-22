@@ -1,10 +1,9 @@
 package com.nextsquad.house.login.oauth;
 
 import com.google.gson.Gson;
-import com.nextsquad.house.dto.GithubAccessTokenResponseDto;
-import com.nextsquad.house.login.userinfo.UserInfo;
+import com.nextsquad.house.dto.login.GithubAccessTokenResponse;
+import com.nextsquad.house.login.userinfo.OauthUserInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -13,14 +12,29 @@ import java.time.ZonedDateTime;
 import java.util.Map;
 
 @Slf4j
-public class GithubOauthClient extends OauthClient {
+public class GithubOauthClient implements OauthClient {
+
+    private final String clientId;
+    private final String authServerUrl;
+    private final String resourceServerUrl;
+    private final String secretKey;
+    private final WebClient webClient = WebClient.create();
+
     public GithubOauthClient(String clientId, String authServerUrl, String resourceServerUrl, String secretKey) {
-        super(clientId, authServerUrl, resourceServerUrl, secretKey);
+        this.clientId = clientId;
+        this.authServerUrl = authServerUrl;
+        this.resourceServerUrl = resourceServerUrl;
+        this.secretKey = secretKey;
     }
 
     @Override
-    protected String getAccessToken(String authCode) {
-        GithubAccessTokenResponseDto rawToken = webClient.post()
+    public OauthUserInfo getUserInfo(String authCode) {
+        String accessToken = getAccessToken(authCode);
+        return getOauthUserInfo(accessToken);
+    }
+
+    private String getAccessToken(String authCode) {
+        GithubAccessTokenResponse rawToken = webClient.post()
                 .uri(authServerUrl, uriBuilder -> uriBuilder
                         .queryParam("client_id", clientId)
                         .queryParam("client_secret", secretKey)
@@ -31,15 +45,14 @@ public class GithubOauthClient extends OauthClient {
                 .ifNoneMatch("*")
                 .ifModifiedSince(ZonedDateTime.now())
                 .retrieve()
-                .bodyToFlux(GithubAccessTokenResponseDto.class)
+                .bodyToFlux(GithubAccessTokenResponse.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return parseToken(rawToken.getAccessToken());
     }
 
-    @Override
-    protected UserInfo getOauthUserInfo(String accessToken) {
+    private OauthUserInfo getOauthUserInfo(String accessToken) {
         String response = webClient.get()
                 .uri(resourceServerUrl)
                 .header("authorization", accessToken)
@@ -48,18 +61,17 @@ public class GithubOauthClient extends OauthClient {
                 .bodyToFlux(String.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
         return convertToUserInfoFrom(response);
     }
 
-    @Override
-    protected String parseToken(String rawToken) {
+    private String parseToken(String rawToken) {
         return String.format("token %s", rawToken);
     }
 
-    protected UserInfo convertToUserInfoFrom(String rawInfo) {
+    private OauthUserInfo convertToUserInfoFrom(String rawInfo) {
         Map<String, String> infoMap = new Gson().fromJson(rawInfo, Map.class);
-        return new UserInfo(infoMap.get("login"), infoMap.get("login"), null, OauthClientType.GITHUB);
+        return new OauthUserInfo(infoMap.get("login"), infoMap.get("login"), null, OauthClientType.GITHUB);
     }
 }
 
