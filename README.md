@@ -450,9 +450,8 @@ fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
 
 
 ## 백엔드 테이블 다이어그램
-![house-rent (2)](https://user-images.githubusercontent.com/15515249/191885504-f0b07328-b565-41fb-9755-9aa02973a2a8.png)
-
-
+![house-rent-refactor (1)](https://user-images.githubusercontent.com/15515249/197781835-9e36f911-9133-4937-9a04-522cf8ebaf51.png)
+- [이전 테이블 구조](https://user-images.githubusercontent.com/15515249/191885504-f0b07328-b565-41fb-9755-9aa02973a2a8.png)는 양도글의 시설 정보를 파악하기 위해 중간 테이블을 통한 다대다 관계로 구성되어 있었는데, 프로젝트에서 사용하는 시설 정보의 변화가 적다고 판단하여 일대일 구조로 변경한 상황입니다.
 
 ## 시연영상
 <Blockquote>
