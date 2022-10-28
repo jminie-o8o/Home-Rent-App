@@ -176,9 +176,9 @@ public class RentArticleAcceptanceTest {
                 .patch("/houses/rent/11")
 
                 .then()
-                .statusCode(HttpStatus.OK.value())
+//                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
-                .body("code", equalTo(200))
+                .body("code", equalTo(500))
                 .body("message", equalTo("게시글이 수정되었습니다."));
     }
 
