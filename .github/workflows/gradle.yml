@@ -34,7 +34,7 @@ jobs:
         run: chmod +x gradlew
         working-directory: ${{ env.working-directory }}
       - name: Build with Gradle
-        run: ./gradlew -x test bootjar
+        run: MY_DATABASE_USERNAME=${{ secrets.MY_DATABASE_USERNAME }} MY_DATABASE_PASSWORD=${{ secrets.MY_DATABASE_PASSWORD }} S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }} S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }} NAVER_USER_URL=${{ secrets.NAVER_USER_URL }} NAVER_STATE=${{ secrets.NAVER_STATE }} NAVER_SECRET_KEY=${{ secrets.NAVER_SECRET_KEY }} NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} NAVER_AUTH_URL=${{ secrets.NAVER_AUTH_URL }} KAKAO_USER_URL=${{ secrets.KAKAO_USER_URL }} KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }} KAKAO_AUTH_URL=${{ secrets.KAKAO_AUTH_URL }} JWT_SECRET=${{ secrets.JWT_SECRET }} REDIS_HOST=${{ secrets.REDIS_HOST }} REDIS_PORT=${{ secrets.REDIS_PORT }} MY_DATABASE_URL=${{ secrets.MY_DATABASE_URL }} ./gradlew build
         working-directory: ${{ env.working-directory }}
 
 
