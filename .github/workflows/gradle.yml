@@ -39,8 +39,10 @@ jobs:
       #레디스 연결
       - name: Connect to Redis
         env:
-          REDIS_HOST: redis
-          REDIS_PORT: ${{ secrets.REDIS_PORT }}
+            REDIS_HOST: redis
+            REDIS_PORT: ${{ secrets.REDIS_PORT }}
+        run: redis-cli -h ${{ env.REDIS_HOST }} -p ${{ env.REDIS_PORT }}
+       
 
       # JDK11로 gradle 빌드
       - name: Set up JDK 11
