@@ -178,7 +178,7 @@ public class RentArticleAcceptanceTest {
                 .then()
 //                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
-//                .body("code", equalTo(500))
+                .body("code", equalTo(500))
                 .body("message", equalTo("게시글이 수정되었습니다."));
     }
 
