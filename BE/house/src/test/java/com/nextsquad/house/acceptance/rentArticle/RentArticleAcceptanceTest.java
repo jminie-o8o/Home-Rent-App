@@ -66,7 +66,7 @@ public class RentArticleAcceptanceTest {
 
     @Order(1)
     @Test
-    void 삭제되지_않은_양도글의_목록을_조회한다() {
+    void 삭제되지_않은_양도글의_목록을_조회한다(){
         given(documentationSpec)
                 .filter(document("get-rent-article-list", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -341,9 +341,9 @@ public class RentArticleAcceptanceTest {
                 .delete("/houses/rent/13")
 
                 .then()
-                // .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
                 .assertThat()
-                .body("code", equalTo(400))
+                .body("code", equalTo(401))
                 .body("message", equalTo("접근 권한이 없습니다."));
     }
 
@@ -418,21 +418,6 @@ public class RentArticleAcceptanceTest {
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
-
-                .when()
-                .get("houses/rent/22")
-
-                .then()
-                .statusCode(HttpStatus.NOT_FOUND.value());
-    }
-
-    @Test
-    void 토큰이_없으면_예외_발생() {
-        given()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .header("access-token", jwtToken.getAccessToken().getTokenCode())
-                .header("access-token", "우하하")
 
                 .when()
                 .get("houses/rent/22")
