@@ -14,18 +14,6 @@ on:
     branches: [ "backend_develop" ]
 
 jobs:
-  #레디스 추가를 위한 부분
-  container-job:
-    runs-on: ubuntu-latest
-    container: house-rent-app:1.0
-    
-    services:
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        
-        
   build:
 
     runs-on: ubuntu-latest
@@ -35,14 +23,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      #레디스 연결
-      - name: Connect to Redis
-        env:
-            REDIS_HOST: redis
-            REDIS_PORT: ${{ secrets.REDIS_PORT }}
-        run: redis-cli -h ${{ env.REDIS_HOST }} -p ${{ env.REDIS_PORT }}
-       
 
       # JDK11로 gradle 빌드
       - name: Set up JDK 11
@@ -53,8 +33,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         working-directory: ${{ env.working-directory }}
+      - name: Set up redis in Runner
+        run : |
+            sudo apt-get update
+            sudo apt-get upgrade
+            sudo apt-get install redis-server
       - name: Build with Gradle
-        run: MY_DATABASE_USERNAME=${{ secrets.MY_DATABASE_USERNAME }} MY_DATABASE_PASSWORD=${{ secrets.MY_DATABASE_PASSWORD }} S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }} S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }} NAVER_USER_URL=${{ secrets.NAVER_USER_URL }} NAVER_STATE=${{ secrets.NAVER_STATE }} NAVER_SECRET_KEY=${{ secrets.NAVER_SECRET_KEY }} NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} NAVER_AUTH_URL=${{ secrets.NAVER_AUTH_URL }} KAKAO_USER_URL=${{ secrets.KAKAO_USER_URL }} KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }} KAKAO_AUTH_URL=${{ secrets.KAKAO_AUTH_URL }} JWT_SECRET=${{ secrets.JWT_SECRET }} REDIS_HOST=${{ secrets.REDIS_HOST }} REDIS_PORT=${{ secrets.REDIS_PORT }} MY_DATABASE_URL=${{ secrets.MY_DATABASE_URL }} ./gradlew build
+        run: ./gradlew -x test bootjar
         working-directory: ${{ env.working-directory }}
 
 
@@ -66,7 +51,6 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/house-rent-app:1.0 .
           docker push ${{ secrets.DOCKER_USERNAME }}/house-rent-app:1.0
           docker rmi ${{ secrets.DOCKER_USERNAME }}/house-rent-app:1.0
-
       # 도커 이미지 배포 및 실행(EC2 ubuntu20.04로 배포)
       - name: Deploy
         uses: appleboy/ssh-action@master
