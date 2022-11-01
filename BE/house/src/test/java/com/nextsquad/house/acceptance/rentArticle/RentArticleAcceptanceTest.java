@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
@@ -175,7 +176,7 @@ public class RentArticleAcceptanceTest {
                 .patch("/houses/rent/11")
 
                 .then()
-                 .statusCode(describedAs("테스트 실패: ", is(HttpStatus.OK.value())))
+//                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
 //                .body("code", equalTo(500))
                 .body("message", equalTo("게시글이 수정되었습니다."));
