@@ -1,6 +1,7 @@
 package com.nextsquad.house.config;
 
 import com.nextsquad.house.login.jwt.JwtProvider;
+import com.nextsquad.house.login.jwt.MockJwtProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,6 @@ public class JwtProviderConfiguration {
 
     @Bean
     public JwtProvider jwtProvider() {
-        return new JwtProvider(jwtSecret);
+        return new MockJwtProvider(jwtSecret);
     }
 }
