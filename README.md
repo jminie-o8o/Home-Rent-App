@@ -23,6 +23,10 @@
 
 </br>
 
+## 🗓 개발 기간
+- 핵심기능 구현: 2022년 7월 25~8월 26일
+- 리팩토링, 테스트코드 작성: 8월 30일 ~
+
 ## 📃 Project Rule
 
 리포지토리 내 위키에 프로젝트를 진행하면서 준수할 규칙들을 정리해놓았습니다.
@@ -61,7 +65,7 @@
 </br>
 
 ## 😎 안드로이드 기술적 고민
-### 📌 코드 컨벤션 통일
+### 📌 ktlint를 통한 코드 컨벤션 통일
 <details>
 <summary>토글 접기/펼치기</summary>
 <div markdown="1">
@@ -159,7 +163,7 @@ private fun setDefaultResult() {
 </details>
 
 
-### 📌 의존성 주입 DI
+### 📌 Hilt를 이용한 의존성 주입 DI
 
 <details>
 <summary>토글 접기/펼치기</summary>
@@ -210,7 +214,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
 </div>
 </details>
 
-### 📌 페이징
+### 📌 다양한 방법으로 페이징 
 
 <details>
 <summary>토글 접기/펼치기</summary>
@@ -283,7 +287,7 @@ fun <E> MutableStateFlow<MutableList<E>>.removeElement(element: E) {
 </details>
 
 
-### 📌 자동 로그인
+### 📌 DataStore를 통한 자동 로그인
 
 <details>
 <summary>토글 접기/펼치기</summary>
@@ -330,7 +334,7 @@ SharedPreferences에 비교하여 DataStore의 장점은 이러했습니다.
 </div>
 </details>
 
-### 📌 JWT 갱신
+### 📌 OkHttp Authenticator를 이용한 JWT 갱신
 
 <details>
 <summary>토글 접기/펼치기</summary>
@@ -362,7 +366,7 @@ JWT를 이용할 경우 클라이언트에서 Access Token을 헤더에 넣어�
 </div>
 </details>
 
-### 📌 Flow를 이용한 다양한 기능
+### 📌 Flow를 이용한 다양한 기능(실시간 검색, 다중 클릭 방지)
 
 <details>
 <summary>토글 접기/펼치기</summary>
@@ -419,7 +423,7 @@ fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
 </details>
 
 </br>
-
+    
 ## 시연영상
 <Blockquote>
 이미지를 클릭하면 시연영상 링크로 이동합니다. 
