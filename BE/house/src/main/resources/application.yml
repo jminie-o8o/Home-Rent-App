@@ -6,6 +6,7 @@ spring:
     password: ${MY_DATABASE_PASSWORD}
   config:
     import: classpath:oauth.yml, classpath:s3.yml
+  cache: redis
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
