@@ -14,6 +14,7 @@ import com.nextsquad.house.repository.rentarticle.RentArticleRepository;
 import com.nextsquad.house.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +52,7 @@ public class RentArticleService {
         return new RentArticleCreationResponse(rentArticle.getId());
     }
 
+    @Cacheable(value = "rentArticle", key = "#pageable")
     public RentArticleListResponse getRentArticles(SearchCondition searchCondition, Pageable pageable, String token) {
         User user = getUserFromAccessToken(token);
 
