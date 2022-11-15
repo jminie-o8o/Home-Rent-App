@@ -52,7 +52,7 @@ public class RentArticleService {
         return new RentArticleCreationResponse(rentArticle.getId());
     }
 
-    @Cacheable(value = "rentArticle", key = "#pageable")
+    @Cacheable(value = "rentArticle", key = "#searchCondition.keyword + #searchCondition.availableOnly + #searchCondition.sortedBy + #pageable")
     public RentArticleListResponse getRentArticles(SearchCondition searchCondition, Pageable pageable, String token) {
         User user = getUserFromAccessToken(token);
 
