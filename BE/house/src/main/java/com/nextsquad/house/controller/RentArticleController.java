@@ -31,7 +31,8 @@ public class RentArticleController {
     @GetMapping
     public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchCondition searchCondition, Pageable pageable,
                                                                    @RequestHeader(value = "access-token") String token) {
-        return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable, token));
+        int cacheCount = rentArticleService.getCacheCount(searchCondition, pageable);
+        return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable, token, cacheCount));
     }
 
     @GetMapping("/{id}")

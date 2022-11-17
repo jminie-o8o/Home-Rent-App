@@ -14,6 +14,9 @@ import com.nextsquad.house.repository.rentarticle.RentArticleRepository;
 import com.nextsquad.house.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -36,8 +40,9 @@ public class RentArticleService {
     private final RentArticleBookmarkRepository rentArticleBookmarkRepository;
     private final HouseFacilityRepository houseFacilityRepository;
     private final JwtProvider jwtProvider;
+    private final CacheManager cacheManager;
 
-    public RentArticleCreationResponse writeRentArticle(RentArticleRequest request, String token){
+    public RentArticleCreationResponse writeRentArticle(RentArticleRequest request, String token) {
         User user = getUserFromAccessToken(token);
 
         List<String> houseImageUrls = request.getHouseImages();
@@ -52,10 +57,9 @@ public class RentArticleService {
         return new RentArticleCreationResponse(rentArticle.getId());
     }
 
-    @Cacheable(value = "rentArticle", key = "#searchCondition.keyword + #searchCondition.availableOnly + #searchCondition.sortedBy + #pageable")
-    public RentArticleListResponse getRentArticles(SearchCondition searchCondition, Pageable pageable, String token) {
+    @Cacheable(value = "rentArticle", key = "#searchCondition.keyword + #searchCondition.availableOnly + #searchCondition.sortedBy + #pageable", condition = "#count > 5")
+    public RentArticleListResponse getRentArticles(SearchCondition searchCondition, Pageable pageable, String token, Integer count) {
         User user = getUserFromAccessToken(token);
-
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
         Map<Long, Boolean> bookmarkHashMap = getBookmarkedArticleMap(listByUser);
 
@@ -65,7 +69,17 @@ public class RentArticleService {
         return RentArticleListResponse.of(rentArticles, bookmarkHashMap, hasNext);
     }
 
-    public RentArticleResponse generateRentArticle(Long id, String token){
+    @CachePut(value = "cacheCount", key = "#searchCondition.keyword + #searchCondition.availableOnly + #searchCondition.sortedBy + #pageable")
+    public int getCacheCount(SearchCondition searchCondition, Pageable pageable) {
+        Cache cache = Optional.ofNullable(cacheManager.getCache("cacheCount")).orElseThrow(() -> new IllegalStateException("해당하는 redis 캐시가 존재하지 않습니다."));
+        String key = searchCondition.getKeyword() + searchCondition.getAvailableOnly() + searchCondition.getSortedBy() + pageable;
+        Integer count = Optional.ofNullable(cache.get(key, Integer.class)).orElse(0);
+        cache.put(key, ++count);
+        return count;
+    }
+
+
+    public RentArticleResponse generateRentArticle(Long id, String token) {
         RentArticle rentArticle = rentArticleRepository.findById(id).orElseThrow(ArticleNotFoundException::new);
         if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
             throw new IllegalArgumentException("삭제되었거나 거래가 완료된 글입니다.");
