@@ -11,11 +11,11 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableCaching
@@ -46,9 +46,16 @@ public class RedisConfiguration extends CachingConfigurerSupport {
     public CacheManager cacheManager() {
         RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder
                 .fromConnectionFactory(redisConnectionFactory());
-        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(5L));
-        builder.cacheDefaults(configuration);
-        return builder.build();
+        RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(6L));
+        builder.cacheDefaults(defaultConfig);
+
+        Map<String, RedisCacheConfiguration> additionalConfig = new HashMap<>();
+        additionalConfig.put("articles", defaultConfig.entryTtl(Duration.ofHours(6L)));
+        additionalConfig.put("cacheCount", defaultConfig.entryTtl(Duration.ofHours(3L)));
+
+        return builder.cacheDefaults(defaultConfig).withInitialCacheConfigurations(additionalConfig).build();
     }
+
+
 }
