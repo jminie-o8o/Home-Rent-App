@@ -67,6 +67,9 @@ dependencies {
 
 	//validation
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
+
+	//elastic search
+	implementation 'org.springframework.data:spring-data-elasticsearch:4.4.5'
 }
 
 tasks.named('test') {

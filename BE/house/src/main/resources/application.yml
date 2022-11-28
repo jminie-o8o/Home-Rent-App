@@ -34,4 +34,5 @@ logging:
   level:
     org.hibernate.SQL: debug
     com.amazonaws.util.EC2MetadataUtils: error
+    org.springframework.data.elasticsearch.client.WIRE: trace
 
