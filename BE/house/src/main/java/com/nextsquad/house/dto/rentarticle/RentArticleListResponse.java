@@ -4,13 +4,14 @@ import com.nextsquad.house.domain.house.RentArticle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
-public class RentArticleListResponse {
+public class RentArticleListResponse implements Serializable {
     private List<RentArticleListElement> rentArticles;
     private boolean hasNext;
 

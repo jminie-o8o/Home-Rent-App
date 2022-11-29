@@ -219,7 +219,7 @@ public class RentArticleAcceptanceTest {
     }
 
     @Test
-    void 양도글을_작성하고_저장하면_글id_13번을_리턴한다(){
+    void 양도글을_작성하고_저장하면_글id_15번을_리턴한다(){
         List<String> images = new ArrayList<>();
         HouseFacilityList facility = new HouseFacilityList(true, true, true, true, true, false, false, false, false, false, false);
 
