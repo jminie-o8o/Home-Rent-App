@@ -14,4 +14,9 @@ public class SearchCondition {
         this.sortedBy = sortedBy == null ? "createdAt" : sortedBy;
         this.keyword = keyword == null ? "" : keyword;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[availableOnly: %s, sortedBy: %s, keyword: %s]", availableOnly, sortedBy, keyword);
+    }
 }

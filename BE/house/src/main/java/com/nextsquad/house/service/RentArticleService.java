@@ -57,7 +57,7 @@ public class RentArticleService {
         return new RentArticleCreationResponse(rentArticle.getId());
     }
 
-    @Cacheable(value = "rentArticle", key = "#searchCondition.keyword + #searchCondition.availableOnly + #searchCondition.sortedBy + #pageable", condition = "#count > 5")
+    @Cacheable(value = "rentArticle", key = "#searchCondition + ';' + #pageable", condition = "#count > 5")
     public RentArticleListResponse getRentArticles(SearchCondition searchCondition, Pageable pageable, String token, Integer count) {
         User user = getUserFromAccessToken(token);
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
@@ -69,12 +69,11 @@ public class RentArticleService {
         return RentArticleListResponse.of(rentArticles, bookmarkHashMap, hasNext);
     }
 
-    @CachePut(value = "cacheCount", key = "#searchCondition.keyword + #searchCondition.availableOnly + #searchCondition.sortedBy + #pageable")
+    @CachePut(value = "cacheCount", key = "#searchCondition + ';' + #pageable")
     public int getCacheCount(SearchCondition searchCondition, Pageable pageable) {
         Cache cache = Optional.ofNullable(cacheManager.getCache("cacheCount")).orElseThrow(() -> new IllegalStateException("해당하는 redis 캐시가 존재하지 않습니다."));
-        String key = searchCondition.getKeyword() + searchCondition.getAvailableOnly() + searchCondition.getSortedBy() + pageable;
-        Integer count = Optional.ofNullable(cache.get(key, Integer.class)).orElse(0);
-        cache.put(key, ++count);
+        Integer count = Optional.ofNullable(cache.get(searchCondition, Integer.class)).orElse(0);
+        cache.put(searchCondition, ++count);
         return count;
     }
 
