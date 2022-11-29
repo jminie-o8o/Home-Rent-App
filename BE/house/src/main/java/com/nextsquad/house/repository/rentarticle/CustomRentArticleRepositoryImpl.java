@@ -23,7 +23,8 @@ public class CustomRentArticleRepositoryImpl implements CustomRentArticleReposit
     @Override
     public List<RentArticle> findByKeyword(SearchCondition searchCondition, Pageable pageable) {
         log.info("keyword: {}, isCompleted: {}, sortedBy: {}", searchCondition.getKeyword(), searchCondition.getAvailableOnly(), searchCondition.getSortedBy());
-        List<RentArticle> content = jpaQueryFactory
+
+        return jpaQueryFactory
                 .select(rentArticle)
                 .from(rentArticle)
                 .where(rentArticle.isDeleted.eq(false),
@@ -34,8 +35,6 @@ public class CustomRentArticleRepositoryImpl implements CustomRentArticleReposit
                 .limit(pageable.getPageSize() + 1)
                 .orderBy(checkSortCondition(searchCondition.getSortedBy()))
                 .fetch();
-
-        return content;
     }
 
     private BooleanExpression checkAddressAndTitle(String keyword) {
@@ -53,7 +52,7 @@ public class CustomRentArticleRepositoryImpl implements CustomRentArticleReposit
     }
 
     private BooleanExpression checkTitle(String keyword) {
-        if (keyword == null) {
+        if (keyword.equals("")) {
             return null;
         }
         return rentArticle.title.like("%" + keyword + "%");

@@ -1,16 +1,22 @@
 package com.nextsquad.house.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class SearchCondition {
-    private Boolean availableOnly;
-    private String sortedBy;
-    private String keyword;
+
+    private final Boolean availableOnly;
+    private final String sortedBy;
+    private final String keyword;
+        public SearchCondition(Boolean availableOnly, String sortedBy, String keyword) {
+        this.availableOnly = availableOnly == null ? true : availableOnly;
+        this.sortedBy = sortedBy == null ? "createdAt" : sortedBy;
+        this.keyword = keyword == null ? "" : keyword;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[availableOnly: %s, sortedBy: %s, keyword: %s]", availableOnly, sortedBy, keyword);
+    }
 }
