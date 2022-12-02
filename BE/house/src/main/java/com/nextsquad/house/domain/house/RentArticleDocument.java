@@ -1,25 +1,29 @@
 package com.nextsquad.house.domain.house;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nextsquad.house.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @Document(indexName = "rent_article")
@@ -57,20 +61,23 @@ public class RentArticleDocument {
     private int maintenanceFee;
     @Field(name = "maintenance_fee_description")
     private String maintenanceFeeDescription;
-    @Field(name = "available_from")
+
+    @Field(name = "available_from", type = FieldType.Date)
     private LocalDate availableFrom;
-    @Field(name = "contract_expires_at")
+    @Field(name = "contract_expires_at", type = FieldType.Date)
     private LocalDate contractExpiresAt;
+
     @Field(name = "status")
     private ArticleStatus status;
     @Field(name = "view_count")
     private int viewCount;
-    @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
-    @Field(name = "created_at", type = FieldType.Date, format = DateFormat.custom, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+    @Field(name = "created_at", type = FieldType.Date, format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
     private LocalDateTime createdAt;
-    @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
-    @Field(name = "modified_at", type = FieldType.Date, format = DateFormat.custom, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+    @Field(name = "modified_at", type = FieldType.Date, format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
     private LocalDateTime modifiedAt;
+
     @Field(name = "house_facility")
     private HouseFacility houseFacility;
     @Field(name = "max_floor")
