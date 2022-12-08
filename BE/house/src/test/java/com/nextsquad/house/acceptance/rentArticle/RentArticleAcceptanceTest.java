@@ -426,4 +426,19 @@ public class RentArticleAcceptanceTest {
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
+
+    @Test
+    void 엘라스틱서치_키워드로_검색() {
+        given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .get("houses/rent?page=0&size=5&keyword=동해물&availableOnly=false")
+
+                .then()
+                .body("rentArticles", hasSize(1))
+                .body("rentArticles[0].title", equalTo("동해물과 백두산이"));
+    }
 }

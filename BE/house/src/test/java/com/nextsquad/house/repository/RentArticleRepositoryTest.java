@@ -168,4 +168,14 @@ class RentArticleRepositoryTest {
         foundArticles = rentArticleRepository.findByKeyword(condition, pageable);
         assertThat(foundArticles).isEqualTo(articles);
     }
+
+    @Test
+    void 아이디로_검색() {
+        List<Long> ids = List.of(98L);
+        List<RentArticle> allById = rentArticleRepository.findAllById(ids);
+
+        for (int i = 0; i < allById.size(); i++) {
+            assertThat(allById.get(i).getId()).isEqualTo(98);
+        }
+    }
 }
