@@ -1,14 +1,9 @@
 package com.nextsquad.house.domain.house;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nextsquad.house.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.joda.time.format.DateTimeFormat;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -18,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +20,7 @@ import java.util.List;
 @Setter
 @Builder
 @AllArgsConstructor
-@Document(indexName = "rent_article")
+@Document(indexName = "noritest_rent_article")
 public class RentArticleDocument {
 
     @Id
