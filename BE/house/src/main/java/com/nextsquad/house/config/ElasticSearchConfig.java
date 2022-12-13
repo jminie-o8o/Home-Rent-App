@@ -1,6 +1,7 @@
 package com.nextsquad.house.config;
 
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
@@ -16,6 +17,10 @@ import org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy;
 @EnableElasticsearchRepositories
 @Configuration
 public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
+
+
+    @Value("${ELASTIC_SEARCH_INDEX}")
+    private String indexName;
 
     @Override
     public ElasticsearchOperations elasticsearchOperations(ElasticsearchConverter elasticsearchConverter, RestHighLevelClient elasticsearchClient) {
@@ -34,5 +39,9 @@ public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
     @Override
     protected FieldNamingStrategy fieldNamingStrategy() {
         return new SnakeCaseFieldNamingStrategy();
+    }
+
+    public String getIndexName() {
+        return indexName;
     }
 }
