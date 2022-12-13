@@ -435,10 +435,10 @@ public class RentArticleAcceptanceTest {
                 .header("access-token", jwtToken.getAccessToken().getTokenCode())
 
                 .when()
-                .get("houses/rent?page=0&size=5&keyword=동해물&availableOnly=false")
+                .get("houses/rent?page=0&size=5&keyword=왕십리&availableOnly=false")
 
                 .then()
-                .body("rentArticles", hasSize(1))
-                .body("rentArticles[0].title", equalTo("동해물과 백두산이"));
+                .body("rentArticles", hasSize(5))
+                .body("rentArticles[0].title", equalTo("왕십리역 원룸(1000/50)"));
     }
 }

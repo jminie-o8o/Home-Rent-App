@@ -20,7 +20,7 @@ public class RentArticleDocumentRepositoryTest {
     @Test
     @DisplayName("엘라스틱서치 테스트")
     void findBytitle() {
-        SearchCondition condition = new SearchCondition(false, null, "동해물");
+        SearchCondition condition = new SearchCondition(false, "createdAt", "왕십리");
 
         List<RentArticleDocument> articles = rentArticleDocumentRepository.findByTitle(condition.getKeyword(), condition.getAvailableOnly(), PageRequest.of(0, 5));
         for (int i = 0; i < articles.size(); i++) {
