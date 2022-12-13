@@ -6,11 +6,13 @@ import com.nextsquad.house.dto.rentarticle.RentArticleCreationResponse;
 import com.nextsquad.house.dto.rentarticle.RentArticleListResponse;
 import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
 import com.nextsquad.house.dto.rentarticle.RentArticleResponse;
+import com.nextsquad.house.exception.InvalidSearchConditionException;
 import com.nextsquad.house.service.RentArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,7 +31,7 @@ public class RentArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchCondition searchCondition, Pageable pageable,
+    public ResponseEntity<RentArticleListResponse> getRentArticles(@Valid @ModelAttribute SearchCondition searchCondition, Pageable pageable,
                                                                    @RequestHeader(value = "access-token") String token) {
         int cacheCount = rentArticleService.getCacheCount(searchCondition, pageable);
         return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable, token, cacheCount));
