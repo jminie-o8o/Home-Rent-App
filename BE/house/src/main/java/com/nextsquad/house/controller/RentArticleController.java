@@ -1,18 +1,17 @@
 package com.nextsquad.house.controller;
 
-import com.nextsquad.house.dto.*;
+import com.nextsquad.house.dto.GeneralResponse;
+import com.nextsquad.house.dto.SearchCondition;
 import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.dto.rentarticle.RentArticleCreationResponse;
 import com.nextsquad.house.dto.rentarticle.RentArticleListResponse;
 import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
 import com.nextsquad.house.dto.rentarticle.RentArticleResponse;
-import com.nextsquad.house.exception.InvalidSearchConditionException;
 import com.nextsquad.house.service.RentArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
