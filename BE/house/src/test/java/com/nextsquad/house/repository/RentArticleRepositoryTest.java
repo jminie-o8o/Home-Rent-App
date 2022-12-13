@@ -171,13 +171,11 @@ class RentArticleRepositoryTest {
 
     @Test
     void 아이디로_검색() {
-        List<Long> ids = new ArrayList<>();
-        ids.add(98L);
-        List<RentArticle> allById = rentArticleRepository.findAllById(ids);
+        List<Long> ids = List.of(1L, 3L, 5L, 7L, 9L);
+        List<RentArticle> articles = rentArticleRepository.findAllById(ids);
 
-        for (int i = 0; i < allById.size(); i++) {
-            System.out.println("확인할 아이디" + allById.get(i).getId());
-            assertThat(allById.get(i).getId()).isEqualTo(98);
+        for (int i = 0; i < articles.size(); i++) {
+            assertThat(articles.get(i).getId()).isEqualTo(ids.get(i));
         }
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 public class RentArticleDocumentRepositoryTest {
 
@@ -19,14 +21,11 @@ public class RentArticleDocumentRepositoryTest {
 
     @Test
     @DisplayName("엘라스틱서치 테스트")
-    void findBytitle() {
+    void findByTitle() {
         SearchCondition condition = new SearchCondition(false, "createdAt", "왕십리");
 
-        List<RentArticleDocument> articles = rentArticleDocumentRepository.findByTitle(condition.getKeyword(), condition.getAvailableOnly(), PageRequest.of(0, 5));
-        for (int i = 0; i < articles.size(); i++) {
-            System.out.println("title: " + articles.get(i).getTitle());
-        }
-
+        List<RentArticleDocument> articles = rentArticleDocumentRepository.findByTitle(condition.getKeyword(), condition.getAvailableOnly(), PageRequest.of(0, 10));
+        assertThat(articles.size()).isEqualTo(9);
     }
 
 }
