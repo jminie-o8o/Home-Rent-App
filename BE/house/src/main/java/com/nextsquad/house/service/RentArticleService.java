@@ -62,9 +62,7 @@ public class RentArticleService {
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
         Map<Long, Boolean> bookmarkHashMap = getBookmarkedArticleMap(listByUser);
 
-//        origin List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(searchCondition, pageable);
         List<RentArticle> rentArticles = getArticlesFromDocuments(searchCondition, pageable);
-        System.out.println("rentArticles = " + rentArticles);
         boolean hasNext = checkHasNext(pageable, rentArticles);
 
         return RentArticleListResponse.of(rentArticles, bookmarkHashMap, hasNext);
@@ -73,7 +71,6 @@ public class RentArticleService {
     private List<RentArticle> getArticlesFromDocuments(SearchCondition searchCondition, Pageable pageable) {
         List<RentArticleDocument> documents = rentArticleDocumentRepository.findByTitle(searchCondition.getKeyword(), searchCondition.getAvailableOnly(), pageable);
         List<Long> ids = documents.stream().map(RentArticleDocument::getId).collect(Collectors.toList());
-        System.out.println("ids = " + ids);
         return rentArticleRepository.findAllById(ids);
     }
 
