@@ -5,6 +5,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.nextsquad.house.dto.GeneralResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -68,4 +69,11 @@ public class RuntimeExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GeneralResponse(400, message));
     }
 
+    @ExceptionHandler(value = BindException.class)
+    public ResponseEntity<GeneralResponse> testException(BindException e) {
+        FieldError fieldError = Optional.ofNullable(e.getBindingResult().getFieldError())
+                .orElseGet(() -> new FieldError("Bad Request", "Error Field", "검색어를 확인하세요"));
+        String message = fieldError.getDefaultMessage();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GeneralResponse(400, message));
+    }
 }

@@ -7,10 +7,7 @@ import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.dto.rentarticle.*;
 import com.nextsquad.house.exception.*;
 import com.nextsquad.house.login.jwt.JwtProvider;
-import com.nextsquad.house.repository.rentarticle.HouseFacilityRepository;
-import com.nextsquad.house.repository.rentarticle.HouseImageRepository;
-import com.nextsquad.house.repository.rentarticle.RentArticleBookmarkRepository;
-import com.nextsquad.house.repository.rentarticle.RentArticleRepository;
+import com.nextsquad.house.repository.rentarticle.*;
 import com.nextsquad.house.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -41,6 +39,7 @@ public class RentArticleService {
     private final HouseFacilityRepository houseFacilityRepository;
     private final JwtProvider jwtProvider;
     private final CacheManager cacheManager;
+    private final RentArticleDocumentRepository rentArticleDocumentRepository;
 
     public RentArticleCreationResponse writeRentArticle(RentArticleRequest request, String token) {
         User user = getUserFromAccessToken(token);
@@ -63,10 +62,16 @@ public class RentArticleService {
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
         Map<Long, Boolean> bookmarkHashMap = getBookmarkedArticleMap(listByUser);
 
-        List<RentArticle> rentArticles = rentArticleRepository.findByKeyword(searchCondition, pageable);
+        List<RentArticle> rentArticles = getArticlesFromDocuments(searchCondition, pageable);
         boolean hasNext = checkHasNext(pageable, rentArticles);
 
         return RentArticleListResponse.of(rentArticles, bookmarkHashMap, hasNext);
+    }
+
+    private List<RentArticle> getArticlesFromDocuments(SearchCondition searchCondition, Pageable pageable) {
+        List<RentArticleDocument> documents = rentArticleDocumentRepository.findByTitle(searchCondition.getKeyword(), searchCondition.getAvailableOnly(), pageable);
+        List<Long> ids = documents.stream().map(RentArticleDocument::getId).collect(Collectors.toList());
+        return rentArticleRepository.findAllById(ids);
     }
 
     @CachePut(value = "cacheCount", key = "#searchCondition + ';' + #pageable")

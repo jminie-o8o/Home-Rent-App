@@ -426,4 +426,19 @@ public class RentArticleAcceptanceTest {
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
+
+    @Test
+    void 엘라스틱서치_키워드로_검색() {
+        given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("access-token", jwtToken.getAccessToken().getTokenCode())
+
+                .when()
+                .get("houses/rent?page=0&size=5&keyword=왕십리&availableOnly=false")
+
+                .then()
+                .body("rentArticles", hasSize(5))
+                .body("rentArticles[0].title", equalTo("왕십리역 원룸(1000/50)"));
+    }
 }
