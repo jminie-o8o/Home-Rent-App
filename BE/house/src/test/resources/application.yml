@@ -1,6 +1,8 @@
 spring:
   config:
     import: classpath:oauth.yml, classpath:s3.yml
+  profiles:
+    active: deploy
 
   h2:
     console:

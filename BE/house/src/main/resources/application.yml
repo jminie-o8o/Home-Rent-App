@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: ${ACTIVE_PROFILE}
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MY_DATABASE_URL}
