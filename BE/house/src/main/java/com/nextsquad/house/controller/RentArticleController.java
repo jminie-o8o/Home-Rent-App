@@ -1,6 +1,7 @@
 package com.nextsquad.house.controller;
 
-import com.nextsquad.house.dto.*;
+import com.nextsquad.house.dto.GeneralResponse;
+import com.nextsquad.house.dto.SearchCondition;
 import com.nextsquad.house.dto.bookmark.BookmarkRequest;
 import com.nextsquad.house.dto.rentarticle.RentArticleCreationResponse;
 import com.nextsquad.house.dto.rentarticle.RentArticleListResponse;
@@ -29,7 +30,7 @@ public class RentArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<RentArticleListResponse> getRentArticles(@ModelAttribute SearchCondition searchCondition, Pageable pageable,
+    public ResponseEntity<RentArticleListResponse> getRentArticles(@Valid @ModelAttribute SearchCondition searchCondition, Pageable pageable,
                                                                    @RequestHeader(value = "access-token") String token) {
         int cacheCount = rentArticleService.getCacheCount(searchCondition, pageable);
         return ResponseEntity.ok(rentArticleService.getRentArticles(searchCondition, pageable, token, cacheCount));
