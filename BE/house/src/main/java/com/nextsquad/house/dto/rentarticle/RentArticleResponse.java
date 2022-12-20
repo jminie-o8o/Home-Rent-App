@@ -65,7 +65,7 @@ public class RentArticleResponse {
         this.maintenanceFeeDescription = rentArticle.getMaintenanceFeeDescription();
         this.availableFrom = rentArticle.getAvailableFrom();
         this.contractExpiresAt = rentArticle.getContractExpiresAt();
-        this.bookmarkCount = rentArticle.getBookmarks().size();
+        this.bookmarkCount = rentArticle.getBookmarkCount();
         this.maxFloor = rentArticle.getMaxFloor();
         this.thisFloor = rentArticle.getThisFloor();
         this.houseFacility = HouseFacilityList.from(rentArticle.getHouseFacility());

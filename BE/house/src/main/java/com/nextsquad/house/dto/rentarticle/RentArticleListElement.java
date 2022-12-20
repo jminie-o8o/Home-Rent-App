@@ -46,7 +46,7 @@ public class RentArticleListElement implements Serializable{
                 .createdAt(article.getCreatedAt())
                 .isCompleted(article.isCompleted())
                 .isDeleted(article.isDeleted())
-                .bookmarkCount(article.getBookmarks().size())
+                .bookmarkCount(article.getBookmarkCount())
                 .build();
     }
 

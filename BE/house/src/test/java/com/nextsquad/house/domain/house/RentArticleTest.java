@@ -88,7 +88,7 @@ class RentArticleTest {
                 .modifiedAt(LocalDateTime.now())
                 .maxFloor(5)
                 .thisFloor(3)
-                .bookmarks(new ArrayList<>())
+                .bookmarkCount(0)
                 .isCompleted(false)
                 .isDeleted(false)
                 .build();

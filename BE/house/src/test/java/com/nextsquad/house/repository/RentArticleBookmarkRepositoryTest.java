@@ -92,11 +92,11 @@ class RentArticleBookmarkRepositoryTest {
     @DisplayName("유저가 찜한 양도글 리스트를 조회한다")
     void findListByUser() {
         //given 유저가 양도글 하나를 찜한다.
-        int before = rentArticleBookmarkRepository.findListByUser(user).size();
+        int before = rentArticleBookmarkRepository.findByUserId(user.getId()).size();
         rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
 
         //when 유저의 양도글 찜 리스트를 조회한다.
-        List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
+        List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findByUserId(user.getId());
 
         //then 유저의 양도글 찜 리스트 길이는 before보다 1 커야 하며 리스트의 마지막 글은 given에서 저장한 글이어야 한다.
         assertThat(listByUser.size()).isEqualTo(before + 1);
