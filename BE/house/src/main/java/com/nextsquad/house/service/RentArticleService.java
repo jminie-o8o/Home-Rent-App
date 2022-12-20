@@ -131,7 +131,7 @@ public class RentArticleService {
     }
 
     @Scheduled(cron = "0 0/3 * * * ?")
-    private void SynchronizeRedisCountToDatabase() {
+    public void SynchronizeRedisCountToDatabase() {
         Set<String> keys = redisService.getKeys("rentBookmarkCount*");
 
         for (String key : keys) {
