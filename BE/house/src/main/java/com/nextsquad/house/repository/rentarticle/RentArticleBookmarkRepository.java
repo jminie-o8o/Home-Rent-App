@@ -6,6 +6,7 @@ import com.nextsquad.house.domain.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,8 @@ public interface RentArticleBookmarkRepository extends JpaRepository<RentArticle
 
     Optional<RentArticleBookmark> findByUserAndRentArticle(User user, RentArticle rentArticle);
 
-    List<RentArticleBookmark> findListByUser(User user);
+    @Query("SELECT b FROM RentArticleBookmark b WHERE b.user.id = :id")
+    List<RentArticleBookmark> findByUserId(Long id);
 
     void deleteByRentArticle(RentArticle rentArticle);
 }

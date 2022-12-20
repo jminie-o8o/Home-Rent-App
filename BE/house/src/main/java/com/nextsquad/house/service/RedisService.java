@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -22,6 +23,17 @@ public class RedisService {
 
     public void save(String key, String value, int minutes) {
         redisTemplate.opsForValue().set(key, value, Duration.ofMinutes(minutes));
+    }
+
+    public void increment(String key) {
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
+        values.setIfAbsent(key, String.valueOf(0));
+
+        values.increment(key);
+    }
+
+    public Set<String> getKeys(String pattern) {
+        return redisTemplate.keys(pattern);
     }
 
     public void delete(String key){

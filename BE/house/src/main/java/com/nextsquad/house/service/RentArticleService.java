@@ -16,14 +16,12 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,7 +29,7 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class RentArticleService {
-
+    private final RedisService redisService;
     private final RentArticleRepository rentArticleRepository;
     private final UserRepository userRepository;
     private final HouseImageRepository houseImageRepository;
@@ -58,8 +56,7 @@ public class RentArticleService {
 
     @Cacheable(value = "rentArticle", key = "#searchCondition + ';' + #pageable", condition = "#count > 5")
     public RentArticleListResponse getRentArticles(SearchCondition searchCondition, Pageable pageable, String token, Integer count) {
-        User user = getUserFromAccessToken(token);
-        List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findListByUser(user);
+        List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findByUserId(getUserIdFromAccessToken(token));
         Map<Long, Boolean> bookmarkHashMap = getBookmarkedArticleMap(listByUser);
 
         List<RentArticle> rentArticles = getArticlesFromDocuments(searchCondition, pageable);
@@ -88,6 +85,7 @@ public class RentArticleService {
         if (rentArticle.isDeleted() || rentArticle.isCompleted()) {
             throw new IllegalArgumentException("삭제되었거나 거래가 완료된 글입니다.");
         }
+
         rentArticle.addViewCount();
 
         User user = getUserFromAccessToken(token);
@@ -121,6 +119,7 @@ public class RentArticleService {
     public GeneralResponse addBookmark(BookmarkRequest request, String token) {
         User user = getUserFromAccessToken(token);
         RentArticle rentArticle = rentArticleRepository.findById(request.getArticleId()).orElseThrow(ArticleNotFoundException::new);
+        redisService.increment("rentBookmarkCount::" + rentArticle.getId());
 
         if (rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle).isPresent()) {
             throw new DuplicateBookmarkException();
@@ -129,6 +128,23 @@ public class RentArticleService {
         checkIsAvailable(rentArticle);
         rentArticleBookmarkRepository.save(new RentArticleBookmark(rentArticle, user));
         return new GeneralResponse(200, "북마크에 추가 되었습니다.");
+    }
+
+    @Scheduled(cron = "0 0/3 * * * ?")
+    private void SynchronizeRedisCountToDatabase() {
+        Set<String> keys = redisService.getKeys("rentBookmarkCount*");
+
+        for (String key : keys) {
+            long id = Long.parseLong(key.split("::")[1]);
+            int count = Integer.parseInt(redisService.get(key));
+
+            RentArticle article = rentArticleRepository.findById(id)
+                    .orElseThrow(ArticleNotFoundException::new);
+
+            article.setBookmarkCount(article.getBookmarkCount() + count);
+
+            redisService.delete(key);
+        }
     }
 
     public GeneralResponse deleteBookmark(BookmarkRequest request, String token) {
@@ -187,6 +203,10 @@ public class RentArticleService {
     private User getUserFromAccessToken(String token) {
         Long id = jwtProvider.decode(token).getClaim("id").asLong();
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    private Long getUserIdFromAccessToken(String token) {
+        return jwtProvider.decode(token).getClaim("id").asLong();
     }
 
     private void saveHouseImage(RentArticle rentArticle, List<String> houseImageUrls) {
