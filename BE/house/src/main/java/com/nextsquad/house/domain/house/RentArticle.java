@@ -45,6 +45,7 @@ public class RentArticle {
     private LocalDate contractExpiresAt;
     private ArticleStatus status;
     private int viewCount;
+    private int bookmarkCount;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private LocalDateTime createdAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
@@ -60,10 +61,6 @@ public class RentArticle {
     @Builder.Default
     @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
     private List<HouseImage> houseImages = new ArrayList<>();
-
-    @Builder.Default
-    @OneToMany(mappedBy = "rentArticle", fetch = FetchType.LAZY)
-    private List<RentArticleBookmark> bookmarks = new ArrayList<>();
 
     public List<String> getHouseImageUrls() {
         List<String> houseImages = new ArrayList<>();
@@ -83,6 +80,10 @@ public class RentArticle {
 
     public void addViewCount(){
         viewCount++;
+    }
+
+    public void setBookmarkCount(int count) {
+        bookmarkCount = count;
     }
 
     public void modifyArticle(RentArticleRequest request) {
