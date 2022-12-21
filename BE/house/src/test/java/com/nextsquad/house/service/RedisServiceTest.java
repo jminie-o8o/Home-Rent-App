@@ -26,5 +26,12 @@ class RedisServiceTest {
         assertThat(redisService.get("CountTest::" + 1L)).isNull();
     }
 
+    @Test
+    public void decrementTest() {
+        redisService.increment("CountTest::" + 1L);
+        assertThat(redisService.get("CountTest::" + 1L)).isEqualTo("1");
+        redisService.decrement("CountTest::" + 1L);
+        assertThat(redisService.get("CountTest::" + 1L)).isEqualTo("0");
+    }
 
 }
