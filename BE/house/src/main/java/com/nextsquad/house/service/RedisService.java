@@ -32,6 +32,11 @@ public class RedisService {
         values.increment(key);
     }
 
+    public void decrement(String key) {
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
+        values.decrement(key);
+    }
+
     public Set<String> getKeys(String pattern) {
         return redisTemplate.keys(pattern);
     }

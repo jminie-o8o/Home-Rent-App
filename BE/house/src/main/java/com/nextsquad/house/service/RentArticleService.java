@@ -54,7 +54,7 @@ public class RentArticleService {
         return new RentArticleCreationResponse(rentArticle.getId());
     }
 
-    @Cacheable(value = "rentArticle", key = "#searchCondition + ';' + #pageable", condition = "#count > 5")
+//    @Cacheable(value = "rentArticle", key = "#searchCondition + ';' + #pageable", condition = "#count > 5")
     public RentArticleListResponse getRentArticles(SearchCondition searchCondition, Pageable pageable, String token, Integer count) {
         List<RentArticleBookmark> listByUser = rentArticleBookmarkRepository.findByUserId(getUserIdFromAccessToken(token));
         Map<Long, Boolean> bookmarkHashMap = getBookmarkedArticleMap(listByUser);
@@ -118,6 +118,7 @@ public class RentArticleService {
 
     public GeneralResponse addBookmark(BookmarkRequest request, String token) {
         User user = getUserFromAccessToken(token);
+        log.info("user id: {}", user.getId());
         RentArticle rentArticle = rentArticleRepository.findById(request.getArticleId()).orElseThrow(ArticleNotFoundException::new);
         redisService.increment("rentBookmarkCount::" + rentArticle.getId());
 
@@ -155,6 +156,7 @@ public class RentArticleService {
         RentArticleBookmark bookmark = rentArticleBookmarkRepository.findByUserAndRentArticle(user, rentArticle)
                 .orElseThrow(BookmarkNotFoundException::new);
         rentArticleBookmarkRepository.delete(bookmark);
+        redisService.decrement("rentBookmarkCount::" + rentArticle.getId());
         return new GeneralResponse(200, "북마크가 삭제되었습니다.");
     }
 
