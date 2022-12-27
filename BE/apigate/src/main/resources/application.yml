@@ -1,0 +1,17 @@
+server:
+  port: 8082
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: all
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1
+                redis-rate-limiter.requestedTokens: 1
