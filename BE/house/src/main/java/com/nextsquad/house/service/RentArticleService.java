@@ -2,9 +2,13 @@ package com.nextsquad.house.service;
 
 import com.nextsquad.house.domain.house.*;
 import com.nextsquad.house.domain.user.User;
-import com.nextsquad.house.dto.*;
+import com.nextsquad.house.dto.GeneralResponse;
+import com.nextsquad.house.dto.SearchCondition;
 import com.nextsquad.house.dto.bookmark.BookmarkRequest;
-import com.nextsquad.house.dto.rentarticle.*;
+import com.nextsquad.house.dto.rentarticle.RentArticleCreationResponse;
+import com.nextsquad.house.dto.rentarticle.RentArticleListResponse;
+import com.nextsquad.house.dto.rentarticle.RentArticleRequest;
+import com.nextsquad.house.dto.rentarticle.RentArticleResponse;
 import com.nextsquad.house.exception.*;
 import com.nextsquad.house.login.jwt.JwtProvider;
 import com.nextsquad.house.repository.rentarticle.*;
@@ -14,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -66,7 +69,7 @@ public class RentArticleService {
     }
 
     private List<RentArticle> getArticlesFromDocuments(SearchCondition searchCondition, Pageable pageable) {
-        List<RentArticleDocument> documents = rentArticleDocumentRepository.findByTitle(searchCondition.getKeyword(), searchCondition.getAvailableOnly(), pageable);
+        List<RentArticleDocument> documents = rentArticleDocumentRepository.findByTitle(searchCondition, pageable);
         List<Long> ids = documents.stream().map(RentArticleDocument::getId).collect(Collectors.toList());
         return rentArticleRepository.findAllById(ids);
     }
